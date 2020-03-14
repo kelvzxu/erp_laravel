@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Login V2</title>
+	<title>@yield('title')</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
@@ -18,14 +18,14 @@
 </head>
 <body>
 @yield('content')
-	<script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>@yield('content')
-	<script src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>@yield('content')
+	<script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+	<script src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>
 	<script src="{{ asset('vendor/bootstrap/js/popper.js') }}"></script>
-	<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>@yield('content')
-	<script src="{{ asset('vendor/select2/select2.min.js') }}"></script>@yield('content')
+	<script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
 	<script src="{{ asset('vendor/daterangepicker/moment.min.js') }}"></script>
-	<script src="{{ asset('vendor/daterangepicker/daterangepicker.js') }}"></script>@yield('content')
-	<script src="{{ asset('vendor/countdowntime/countdowntime.js') }}"></script>@yield('content')
+	<script src="{{ asset('vendor/daterangepicker/daterangepicker.js') }}"></script>
+	<script src="{{ asset('vendor/countdowntime/countdowntime.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
 
 </body>
