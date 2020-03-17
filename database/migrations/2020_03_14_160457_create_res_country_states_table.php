@@ -15,6 +15,9 @@ class CreateResCountryStatesTable extends Migration
     {
         Schema::create('res_country_states', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('country_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

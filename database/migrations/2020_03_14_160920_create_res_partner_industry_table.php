@@ -15,6 +15,9 @@ class CreateResPartnerIndustryTable extends Migration
     {
         Schema::create('res_partner_industry', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('active')->nullable();
             $table->timestamps();
         });
     }

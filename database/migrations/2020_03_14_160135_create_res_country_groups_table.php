@@ -15,6 +15,7 @@ class CreateResCountryGroupsTable extends Migration
     {
         Schema::create('res_country_groups', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
             $table->timestamps();
         });
     }

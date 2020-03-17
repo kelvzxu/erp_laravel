@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrDepartmentsTable extends Migration
+class CreateResCompanyBankTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,16 @@ class CreateHrDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('hr_departments', function (Blueprint $table) {
+        Schema::create('res_company_bank', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('complete_name')->nullable();
-            $table->boolean('active')->nullable();
+            $table->string('acc_number')->unique();
+            $table->string('sanitized_acc_number')->nullable();
+            $table->string('acc_holder_name')->nullable();
             $table->integer('company_id')->nullable()->index();
-            $table->integer('parent_id')->nullable();
-            $table->integer('manager_id')->nullable()->index();
-            $table->string('note')->nullable();
+            $table->integer('bank_id')->nullable()->index();
+            $table->integer('currency_id')->nullable()->index();
+            $table->string('branch_office')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +34,6 @@ class CreateHrDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hr_departments');
+        Schema::dropIfExists('res_company_bank');
     }
 }

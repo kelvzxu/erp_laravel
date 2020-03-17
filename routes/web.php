@@ -17,4 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/admin', 'HomeController@index')->name('admin');
+Route::get('/home', 'HomeController@index')->name('home')->Middleware('verified');
+
+// ==== Purchase =====
+Route::get('/partner', 'ResPartnersController@index')->Middleware('verified');
+Route::get('/partner/new', 'ResPartnersController@create')->Middleware('verified');

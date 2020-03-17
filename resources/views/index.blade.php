@@ -34,9 +34,9 @@
 				<ul class="navbar-nav nav ml-auto">
 						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="home"><span>Home</span></a></li>
 						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="about"><span>About</span></a></li>
-						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="projects"><span>Partner</span></a></li>
-						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="team"><span>Activity</span></a></li>
-						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="blog"><span>customer</span></a></li>
+						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="partner"><span>Partner</span></a></li>
+						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="activity"><span>Activity</span></a></li>
+						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="customer"><span>customer</span></a></li>
 						<li class="nav-item"><a href="#" class="nav-link" data-nav-section="contact"><span>Contact</span></a></li>
 				</ul>
 			  </div>
@@ -199,7 +199,7 @@
     </section>
 
 	{{-- partner --}}
-    <section class="ftco-section ftco-project bg-light" data-section="projects">
+    <section class="ftco-section ftco-project bg-light" data-section="partner">
     	<div class="container-fluid px-md-5">
     		<div class="row justify-content-center pb-5">
           <div class="col-md-12 heading-section text-center ftco-animate">
@@ -326,8 +326,8 @@
     	</div>
     </section>
 
-	{{-- team activity --}}
-    <section class="ftco-section" data-section="team">
+	{{-- activity --}}
+    <section class="ftco-section" data-section="activity">
     	<div class="container-fluid p-0">
     		<div class="row no-gutters justify-content-center pb-5">
           <div class="col-md-12 heading-section text-center ftco-animate">
@@ -402,7 +402,7 @@
 	</section>
 	
 	{{-- Customer --}}
-	 <section class="ftco-section ftco-project bg-light" data-section="blog">
+	 <section class="ftco-section ftco-project bg-light" data-section="customer">
     	<div class="container-fluid px-md-5">
     		<div class="row justify-content-center pb-5">
           <div class="col-md-12 heading-section text-center ftco-animate">
@@ -551,9 +551,9 @@
           
           </div>
 
-          {{-- <div class="col-md-6 d-flex">
+          <div class="col-md-6 d-flex">
           	<div id="map" class="bg-white"></div>
-          </div> --}}
+          </div>
         </div>
       </div>
     </section>
@@ -624,8 +624,9 @@
               <ul class="list-unstyled">
                 <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Home</a></li>
                 <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>About</a></li>
-                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Services</a></li>
-                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Projects</a></li>
+                <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>partner</a></li>
+				<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>activity</a></li>
+				<li><a href="#"><span class="icon-long-arrow-right mr-2"></span>customer</a></li>
                 <li><a href="#"><span class="icon-long-arrow-right mr-2"></span>Contact</a></li>
               </ul>
             </div>
@@ -659,8 +660,7 @@
 
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
   Copyright &copy;<script>document.write(new Date().getFullYear());</script> | All rights reserved to <a class="white"
-                        href="https://kltechgroup.xyz">KLTECHGROUP</a> Designed by <a class="white" href="https://www.instagram.com/kelvin_leonardi/">Kelvinzxu</a>.
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        href="https://kltechgroup.xyz">KLTECHGROUP</a> Designed by <a class="white" href="https://www.instagram.com/kelvin_leonardi/">Kelvinzxu</a>.</p>
           </div>
         </div>
       </div>
@@ -684,9 +684,9 @@
 	<script type="text/javascript" src="{{asset('portal/js/aos.js')}}"></script>
 	<script type="text/javascript" src="{{asset('portal/js/jquery.animateNumber.min.js')}}"></script>
 	<script type="text/javascript" src="{{asset('portal/js/scrollax.min.js')}}"></script>
-	{{-- <script type="text/javascript"
+	<script type="text/javascript"
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-	<script type="text/javascript" src="{{asset('js/portal/google-map.js')}}"></script> --}}
+	<script type="text/javascript" src="{{asset('portal/js/google-map.js')}}"></script>
 	<script type="text/javascript" src="{{asset('portal/js/main.js')}}"></script>
     
   </body>

@@ -15,10 +15,37 @@ class CreateResCompaniesTable extends Migration
     {
         Schema::create('res_companies', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name')->nullable();
+            $table->string('display_name')->nullable();
+            $table->integer('currency_id')->nullable()->index();
+            $table->integer('parent_id')->nullable();
+            $table->integer('industry_id')->nullable()->index();
+            $table->string('email')->nullable();
+            $table->string('Phone')->nullable();
+            $table->string('website')->nullable();
+            $table->string('logo_web')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('company_registry')->nullable();
+            $table->string('address')->nullable();
+            $table->string('street')->nullable();
+            $table->string('street2')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('city')->nullable();
+            $table->integer('state_id')->nullable()->index();
+            $table->string('country_id')->nullable()->index();
+            $table->string('partner_latitude')->nullable();
+            $table->string('partner_longitude')->nullable();
+            $table->string('social_twitter')->nullable();
+            $table->string('social_facebook')->nullable();
+            $table->string('social_youtube')->nullable();
+            $table->string('social_github')->nullable();
+            $table->string('social_linkedin')->nullable();
+            $table->string('tax_id')->nullable();
+            $table->integer('bank_account')->nullable();
+            $table->integer('bank_account2')->nullable();
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

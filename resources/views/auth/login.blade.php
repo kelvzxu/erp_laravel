@@ -1,4 +1,4 @@
-@extends('layouts.apps')
+@extends('layouts.app')
 @section('title','SK-ERP Login')
 @section('content')
 <div class="limiter">

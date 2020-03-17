@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\res_partner;
+use App\res_bank;
 use Illuminate\Http\Request;
 
-class ResPartnersController extends Controller
+class ResBankController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ResPartnersController extends Controller
      */
     public function index()
     {
-        return view('res_partner.index');
+        //
     }
 
     /**
@@ -24,7 +24,7 @@ class ResPartnersController extends Controller
      */
     public function create()
     {
-        return view('res_partner.create_partner');
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class ResPartnersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\res_partner  $res_partner
+     * @param  \App\res_bank  $res_bank
      * @return \Illuminate\Http\Response
      */
-    public function show(res_partner $res_partner)
+    public function show(res_bank $res_bank)
     {
         //
     }
@@ -52,10 +52,10 @@ class ResPartnersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\res_partner  $res_partner
+     * @param  \App\res_bank  $res_bank
      * @return \Illuminate\Http\Response
      */
-    public function edit(res_partner $res_partner)
+    public function edit(res_bank $res_bank)
     {
         //
     }
@@ -64,10 +64,10 @@ class ResPartnersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\res_partner  $res_partner
+     * @param  \App\res_bank  $res_bank
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, res_partner $res_partner)
+    public function update(Request $request, res_bank $res_bank)
     {
         //
     }
@@ -75,10 +75,10 @@ class ResPartnersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\res_partner  $res_partner
+     * @param  \App\res_bank  $res_bank
      * @return \Illuminate\Http\Response
      */
-    public function destroy(res_partner $res_partner)
+    public function destroy(res_bank $res_bank)
     {
         //
     }
