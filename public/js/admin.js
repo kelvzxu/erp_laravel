@@ -33329,3 +33329,16 @@
         (r.ga.q = r.ga.q || []).push(arguments)
     }, r.ga.l = 1 * new Date, s = a.createElement(o), d = a.getElementsByTagName(o)[0], s.async = 1, s.src = "//www.google-analytics.com/analytics.js", d.parentNode.insertBefore(s, d), ga("create", "UA-28909194-3", "auto"), ga("send", "pageview"))
 }, function (e, t) {}]);
+
+$('#is_company').click(function () {
+    if ($(this).prop("checked") == true) {
+        $(function () {
+            $('#company').css("display", "");
+        });
+    } else if ($(this).prop("checked") == false) {
+        $(function () {
+            $('#company').css('display', 'none');
+        });
+    }
+});
+

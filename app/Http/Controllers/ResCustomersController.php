@@ -14,7 +14,7 @@ class ResCustomersController extends Controller
      */
     public function index()
     {
-        //
+        return view('res_customer.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ResCustomersController extends Controller
      */
     public function create()
     {
-        //
+        return view('res_customer.create_customer');
     }
 
     /**

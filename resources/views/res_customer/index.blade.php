@@ -10,7 +10,7 @@
     <!-- header -->
     <div class="row">
         <div class="col-12 col-md-7">
-            <h3>Supplier List</h3>
+            <h3>Customer List</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
             <div class="input-group mb-3">
@@ -24,7 +24,7 @@
     <!-- header button -->
     <div class="row">
         <div class="col-3">
-            <a href="{{url('/partner/new')}}" class="btn btn-primary">Create</a>
+            <a href="{{url('/customer/new')}}" class="btn btn-primary">Create</a>
         </div>
     </div>
 

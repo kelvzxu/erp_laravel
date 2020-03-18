@@ -45,10 +45,7 @@ class CreateResCustomersTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
-            $table->boolean('is_company')->nullable();
             $table->integer('industry_id')->nullable()->index();
-            $table->string('commercial_company_name')->nullable();
-            $table->string('company_name')->nullable();
             $table->string('additional_info')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();

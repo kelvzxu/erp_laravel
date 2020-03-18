@@ -51,7 +51,7 @@ class CreateResPartnersTable extends Migration
             $table->string('additional_info')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
-        });
+        }); 
     }
 
     /**

@@ -22,3 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home')->Middleware('verified'
 // ==== Purchase =====
 Route::get('/partner', 'ResPartnersController@index')->Middleware('verified');
 Route::get('/partner/new', 'ResPartnersController@create')->Middleware('verified');
+
+// ==== Customer ====
+Route::get('/customer','ResCustomersController@index')->Middleware('verified');
+Route::get('/customer/new', 'ResCustomersController@create')->Middleware('verified');

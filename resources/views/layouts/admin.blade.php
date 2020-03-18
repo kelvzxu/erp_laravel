@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
     <link href="{{asset('css/admin.css')}}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('fonts/fontawesome-free-5.12.1/css/font-awesome.min.css')}}">
+    @yield('css')
 </head>
 
 <body>
@@ -543,12 +543,12 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
                             <li>
-                                <a href="index.html" class="mm-active">
+                                <a href="{{url('/home')}}" class="mm-active">
                                     <i class="metismenu-icon fa fa-home"></i>
                                     Home
                                 </a>
                             </li>
-                            <li class="app-sidebar__heading">Selling</li>
+                            <li class="app-sidebar__heading">Sales</li>
                                 <li>
                                     <a href="dashboard-boxes.html">
                                         <i class="metismenu-icon fa fa-shopping-bag"></i>
@@ -562,7 +562,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="dashboard-boxes.html">
+                                    <a href="{{ url ('/customer')}}">
                                         <i class="metismenu-icon fa fa-user"></i>
                                         Customer
                                     </a>
@@ -641,7 +641,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                            <li class="app-sidebar__heading">Product</li>
+                            <li class="app-sidebar__heading">Inventory</li>
                                 <li>
                                     <a href="forms-controls.html">
                                         <i class="metismenu-icon fa fa-cubes">
@@ -706,14 +706,25 @@
                                         </i>ChartJS
                                     </a>
                                 </li>
-                            <li class="app-sidebar__heading">Employee</li>
-                            <li>
-                                <a href="https://dashboardpack.com/theme-details/architectui-dashboard-html-pro/"
-                                    target="_blank">
-                                    <i class="metismenu-icon pe-7s-graph2">
-                                    </i>
-                                    Upgrade to PRO
-                                </a>
+                            <li class="app-sidebar__heading">Human Resource</li>
+                                <li>
+                                    <a href="forms-controls.html">
+                                        <i class="metismenu-icon fa fa-users">
+                                        </i>Employee
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="forms-layouts.html">
+                                        <i class="metismenu-icon fa fa-user-plus">
+                                        </i>Recruitment
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="forms-validation.html">
+                                        <i class="metismenu-icon fa fa-suitcase ">
+                                        </i>Department
+                                    </a>
+                                </li>
                             </li>
                         </ul>
                     </div>
@@ -767,6 +778,7 @@
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/loadimg.js')}}"></script>
+    @yield('js')
 </body>
 
 </html>
