@@ -550,7 +550,7 @@
                             </li>
                             <li class="app-sidebar__heading">Sales</li>
                                 <li>
-                                    <a href="dashboard-boxes.html">
+                                    <a href="{{ url ('/invoice')}}">
                                         <i class="metismenu-icon fa fa-shopping-bag"></i>
                                         Invoices
                                     </a>
@@ -708,7 +708,7 @@
                                 </li>
                             <li class="app-sidebar__heading">Human Resource</li>
                                 <li>
-                                    <a href="forms-controls.html">
+                                    <a href="{{url('employee')}}">
                                         <i class="metismenu-icon fa fa-users">
                                         </i>Employee
                                     </a>
@@ -720,10 +720,67 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="forms-validation.html">
-                                        <i class="metismenu-icon fa fa-suitcase ">
-                                        </i>Department
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        System Management
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
+                                    <ul>
+                                        <li>
+                                            <a href="elements-buttons-standard.html">
+                                                <i class="metismenu-icon"></i>
+                                                Departement
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="elements-dropdowns.html">
+                                                <i class="metismenu-icon">
+                                                </i>Jobs
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-car"></i>
+                                        Payroll Management
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="components-tabs.html">
+                                                <i class="metismenu-icon">
+                                                </i>employee salary
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="metismenu-icon fa fa-file-pdf-o"></i>
+                                        Report
+                                        <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="elements-buttons-standard.html">
+                                                <i class="metismenu-icon"></i>
+                                                Purchase Order Report
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="elements-buttons-standard.html">
+                                                <i class="metismenu-icon"></i>
+                                                Purchase Return
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="elements-buttons-standard.html">
+                                                <i class="metismenu-icon"></i>
+                                                Supplier Report
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </li>
                         </ul>

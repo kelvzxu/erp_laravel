@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','SK - Partner List')
+@section('title','SK - Employee')
 @section('content')
 <div class="container">
     @if (session('status'))
@@ -14,11 +14,11 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('customer')}}">Customer</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="{{route('employee')}}">Employee</a></li>
                     </ol>
                 </nav>
             </div>
-            <h3>Customer List</h3>
+            <h3>Employee List</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
             <div class="input-group mb-3">
@@ -32,7 +32,7 @@
     <!-- header button -->
     <div class="row">
         <div class="col-3">
-            <a href="{{route('customer.new')}}" class="btn btn-primary">Create</a>
+            <a href="{{route('employee.new')}}" class="btn btn-primary">Create</a>
         </div>
     </div>
 

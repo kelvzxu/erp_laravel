@@ -14,15 +14,25 @@
 Route::get('/', function () {
     return view('index');
 });
-
+Route::group(['middleware' => 'auth'], function (){
+    Route::get('/home', 'HomeController@index')->name('home');
+    
+    // ==== Purchase =====
+    Route::get('/partner', 'ResPartnersController@index');
+    Route::get('/partner/new', 'ResPartnersController@create');
+    
+    // ==== Customer ====
+    Route::get('/customer','ResCustomersController@index')->name('customer');
+    Route::get('/customer/new','ResCustomersController@create')->name('customer.new');
+    
+    // ==== Invoices ====
+    Route::get('/invoice','InvoicesController@index');
+    Route::get('/invoice/new','InvoicesController@create');
+    
+    // ==== Employee ====
+    Route::get('employee','HrEmployeesController@index')->name('employee');
+    Route::get('employee/new','HrEmployeesController@create')->name('employee.new');
+});  
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->Middleware('verified');
 
-// ==== Purchase =====
-Route::get('/partner', 'ResPartnersController@index')->Middleware('verified');
-Route::get('/partner/new', 'ResPartnersController@create')->Middleware('verified');
-
-// ==== Customer ====
-Route::get('/customer','ResCustomersController@index')->Middleware('verified');
-Route::get('/customer/new', 'ResCustomersController@create')->Middleware('verified');

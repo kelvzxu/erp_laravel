@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\hr_employee;
+use App\invoice;
 use Illuminate\Http\Request;
 
-class HrEmployeesController extends Controller
+class InvoicesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class HrEmployeesController extends Controller
      */
     public function index()
     {
-        return view('hr_employee.index');
+        return view('invoice.index');
     }
 
     /**
@@ -24,7 +24,7 @@ class HrEmployeesController extends Controller
      */
     public function create()
     {
-        return view('hr_employee.create_employee');
+        return view('invoice.create_invoice');
     }
 
     /**
@@ -41,10 +41,10 @@ class HrEmployeesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\hr_employee  $hr_employee
+     * @param  \App\invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function show(hr_employee $hr_employee)
+    public function show(invoice $invoice)
     {
         //
     }
@@ -52,10 +52,10 @@ class HrEmployeesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\hr_employee  $hr_employee
+     * @param  \App\invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function edit(hr_employee $hr_employee)
+    public function edit(invoice $invoice)
     {
         //
     }
@@ -64,10 +64,10 @@ class HrEmployeesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\hr_employee  $hr_employee
+     * @param  \App\invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, hr_employee $hr_employee)
+    public function update(Request $request, invoice $invoice)
     {
         //
     }
@@ -75,10 +75,10 @@ class HrEmployeesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\hr_employee  $hr_employee
+     * @param  \App\invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(hr_employee $hr_employee)
+    public function destroy(invoice $invoice)
     {
         //
     }
