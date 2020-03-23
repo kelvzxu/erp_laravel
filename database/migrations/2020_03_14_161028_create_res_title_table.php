@@ -15,7 +15,7 @@ class CreateResTitleTable extends Migration
     {
         Schema::create('res_title', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('title_name')->nullable();
             $table->string('shortcut')->nullable();
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ class CreateHrDepartmentsTable extends Migration
     {
         Schema::create('hr_departments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('department_name')->nullable();
             $table->string('complete_name')->nullable();
             $table->boolean('active')->nullable();
             $table->integer('company_id')->nullable()->index();

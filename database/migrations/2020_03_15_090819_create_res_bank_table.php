@@ -16,7 +16,7 @@ class CreateResBankTable extends Migration
         Schema::create('res_bank', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('code')->nullable();
-            $table->string('name')->nullable();
+            $table->string('bank_name')->nullable();
             $table->string('full_name')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();

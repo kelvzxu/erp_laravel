@@ -15,7 +15,7 @@ class CreateResCurrencyTable extends Migration
     {
         Schema::create('res_currency', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('currency_name')->nullable();
             $table->string('symbol')->nullable();
             $table->double('rounding')->nullable();
             $table->integer('decimal_places')->nullable();

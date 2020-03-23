@@ -36,9 +36,36 @@
         </div>
     </div>
 
-    <ul class="list-group mt-5">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-        </li>
-    </ul>
+    <div class="table-responsive-lg my-4">
+        <table class="table">
+        <caption>Employee List</caption>
+            <thead class="table table-sm">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">City</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Department</th>
+                    <th scope="col">action</th>
+                </tr>
+            </thead>
+            @foreach($employee as $emp)
+            <tbody>
+                <tr>
+                    <th scope="row">{{$loop->iteration}}
+                    <th >{{$emp->photo}}</th>
+                    <th >{{$emp->employee_name}}</th>
+                    <th >{{$emp->city}}</th>
+                    <th >{{$emp->state_name}}</th>
+                    <th >{{$emp->department_id}}</th>
+                    <th >
+                        <a href="" class="badge badge-success">view detail</a>
+                    </th>
+                </tr>
+            </tbody>
+            @endforeach
+        </table>
+    </div>
 </div>
 @endsection

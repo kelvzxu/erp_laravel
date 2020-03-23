@@ -15,7 +15,7 @@ class CreateResCompaniesTable extends Migration
     {
         Schema::create('res_companies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('company_name')->nullable();
             $table->string('display_name')->nullable();
             $table->integer('currency_id')->nullable()->index();
             $table->integer('parent_id')->nullable();

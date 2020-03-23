@@ -15,7 +15,7 @@ class CreateHrEmployeesTable extends Migration
     {
         Schema::create('hr_employees', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('employee_name')->nullable();
             $table->integer('user_id')->nullable()->index();
             $table->boolean('active')->nullable();
             $table->integer('country_id')->index();
@@ -49,11 +49,17 @@ class CreateHrEmployeesTable extends Migration
             $table->integer('job_id')->index()->nullable();
             $table->integer('company_id')->index()->nullable();
             $table->string('address')->nullable();
+            $table->string('street')->nullable();
+            $table->string('street2')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('city')->nullable();
+            $table->integer('state_id')->nullable()->index();
             $table->string('work_phone')->nullable();
             $table->string('mobile_phonee')->nullable();
             $table->string('work_email')->nullable();
             $table->string('work_location')->nullable();
             $table->string('photo')->nullable();
+            $table->string('salary')->nullable();
             $table->integer('parent_id')->nullable();
             $table->integer('coach_id')->nullable();
             $table->timestamps();

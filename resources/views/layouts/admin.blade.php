@@ -543,14 +543,14 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
                             <li>
-                                <a href="{{url('/home')}}" class="mm-active">
+                                <a href="{{route('/home')}}" class="mm-active">
                                     <i class="metismenu-icon fa fa-home"></i>
                                     Home
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Sales</li>
                                 <li>
-                                    <a href="{{ url ('/invoice')}}">
+                                    <a href="{{ route ('/invoice')}}">
                                         <i class="metismenu-icon fa fa-shopping-bag"></i>
                                         Invoices
                                     </a>
@@ -562,7 +562,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url ('/customer')}}">
+                                    <a href="{{ route ('/customer')}}">
                                         <i class="metismenu-icon fa fa-user"></i>
                                         Customer
                                     </a>
@@ -609,7 +609,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ url ('/partner')}}">
+                                    <a href="{{ route ('/partner')}}">
                                         <i class="metismenu-icon fa fa-building "></i>
                                         Supplier
                                     </a>
@@ -708,22 +708,22 @@
                                 </li>
                             <li class="app-sidebar__heading">Human Resource</li>
                                 <li>
-                                    <a href="{{url('employee')}}">
+                                    <a href="{{ route ('employee')}}">
                                         <i class="metismenu-icon fa fa-users">
                                         </i>Employee
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="forms-layouts.html">
+                                    <a href="{{ route ('Recruitment')}}">
                                         <i class="metismenu-icon fa fa-user-plus">
                                         </i>Recruitment
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        <i class="metismenu-icon fa fa-file-text"></i>
                                         System Management
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                                     </a>
                                     <ul>
                                         <li>
@@ -742,9 +742,9 @@
                                 </li>
                                 <li>
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-car"></i>
+                                        <i class="metismenu-icon fa fa-credit-card-alt"></i>
                                         Payroll Management
-                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                                     </a>
                                     <ul>
                                         <li>

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\hr_employee;
+use App\Models\Human_Resource\hr_employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class HrEmployeesController extends Controller
 {
@@ -14,7 +16,11 @@ class HrEmployeesController extends Controller
      */
     public function index()
     {
-        return view('hr_employee.index');
+        $employee = DB::table('hr_employees')
+                    ->join('res_country_state', 'hr_employees.state_id', '=', 'res_country_state.id')
+                    ->select('hr_employees.*', 'res_country_state.state_name')
+                    ->paginate(10);
+        return view ('hr_employee.index',compact('employee'));
     }
 
     /**

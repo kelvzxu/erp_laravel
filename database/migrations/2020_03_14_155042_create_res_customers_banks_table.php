@@ -15,7 +15,7 @@ class CreateResCustomersBanksTable extends Migration
     {
         Schema::create('res_customers_banks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('customer_bank_name')->nullable();
             $table->string('acc_number')->unique();
             $table->string('sanitized_acc_number')->nullable();
             $table->string('acc_holder_name')->nullable();

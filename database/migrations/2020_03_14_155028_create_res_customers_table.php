@@ -15,7 +15,7 @@ class CreateResCustomersTable extends Migration
     {
         Schema::create('res_customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
+            $table->string('customer_name')->nullable();
             $table->integer('company_id')->nullable()->index();
             $table->string('display_name')->nullable();
             $table->date('date')->nullable();
