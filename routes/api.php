@@ -16,3 +16,18 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('country','ResCountryController@index');
+Route::get('state','ResCountryStatesController@index');
+Route::get('state/search','ResCountryStatesController@search');
+Route::get('currency','ResCurrencyController@index');
+Route::get('industry','ResPartnerIndustryController@index');
+Route::get('lang','ResLangController@index');
+Route::get('tz','ResTimeZoneController@index');
+
+Route::get('/product/{id}', 'OrderController@getProduct');
+Route::post('/cart', 'OrderController@addToCart');
+Route::get('/cart', 'OrderController@getCart');
+Route::delete('/cart/{id}', 'OrderController@removeCart');
+Route::post('/customer/search', 'CustomerController@search');
+
+Route::get('/chart', 'HomeController@getChart');

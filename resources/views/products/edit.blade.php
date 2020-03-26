@@ -1,9 +1,5 @@
-@extends('layouts.master')
-
-@section('title')
-    <title>Edit Data Produk</title>
-@endsection
-
+@extends('layouts.admin')
+@section('title','SK - Edit Product')
 @section('content')
     <div class="content-wrapper">
         <div class="content-header">
@@ -14,8 +10,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('produk.index') }}">Produk</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('product') }}">Produk</a></li>
                             <li class="breadcrumb-item active">Edit</li>
                         </ol>
                     </div>
@@ -27,17 +23,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        @card
-                            @slot('title')
-                            
-                            @endslot
-                            
+                        <div class="card container bg_white">
                             @if (session('error'))
-                                @alert(['type' => 'danger'])
+                                <div class="alert alert-danger">
                                     {!! session('error') !!}
-                                @endalert
+                                </div>
                             @endif
-                            <form action="{{ route('produk.update', $product->id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="_method" value="PUT">
                                 <div class="form-group">
@@ -110,7 +102,8 @@
                             @slot('footer')
 
                             @endslot
-                        @endcard
+                            <br>
+                        </div>                 
                     </div>
                 </div>
             </div>

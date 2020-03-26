@@ -543,14 +543,14 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
                             <li>
-                                <a href="{{route('/home')}}" class="mm-active">
+                                <a href="{{route('home')}}" class="mm-active">
                                     <i class="metismenu-icon fa fa-home"></i>
                                     Home
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Sales</li>
                                 <li>
-                                    <a href="{{ route ('/invoice')}}">
+                                    <a href="{{ route ('invoice')}}">
                                         <i class="metismenu-icon fa fa-shopping-bag"></i>
                                         Invoices
                                     </a>
@@ -562,7 +562,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route ('/customer')}}">
+                                    <a href="{{ route ('customer')}}">
                                         <i class="metismenu-icon fa fa-user"></i>
                                         Customer
                                     </a>
@@ -609,7 +609,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route ('/partner')}}">
+                                    <a href="{{ route ('partner')}}">
                                         <i class="metismenu-icon fa fa-building "></i>
                                         Supplier
                                     </a>
@@ -643,9 +643,15 @@
                                 </li>
                             <li class="app-sidebar__heading">Inventory</li>
                                 <li>
-                                    <a href="forms-controls.html">
+                                    <a href="{{route('product')}}">
                                         <i class="metismenu-icon fa fa-cubes">
                                         </i>Product
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{'product-categories'}}">
+                                        <i class="metismenu-icon fa fa-cube">
+                                        </i>Product Categories
                                     </a>
                                 </li>
                                 <li>
@@ -699,13 +705,21 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="app-sidebar__heading">Accounting</li>
+                             <li class="app-sidebar__heading">Accounting</li>
                                 <li>
                                     <a href="charts-chartjs.html">
                                         <i class="metismenu-icon pe-7s-graph2">
                                         </i>ChartJS
                                     </a>
                                 </li>
+                            <li class="app-sidebar__heading">Point Of Sales</li>
+                                <li>
+                                    <a href="{{ route ('pos')}}">
+                                        <i class="metismenu-icon fa fa-shopping-cart"></i>
+                                        POS
+                                    </a>
+                                </li>
+                            </li>
                             <li class="app-sidebar__heading">Human Resource</li>
                                 <li>
                                     <a href="{{ route ('employee')}}">
@@ -714,7 +728,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route ('Recruitment')}}">
+                                    <a href="{{ route ('recruitment')}}">
                                         <i class="metismenu-icon fa fa-user-plus">
                                         </i>Recruitment
                                     </a>

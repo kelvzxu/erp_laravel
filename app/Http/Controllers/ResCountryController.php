@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\res_country;
+use App\Models\World_database\res_country;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ResCountryController extends Controller
 {
@@ -14,7 +16,7 @@ class ResCountryController extends Controller
      */
     public function index()
     {
-        //
+        return res_country::all();
     }
 
     /**
@@ -46,7 +48,7 @@ class ResCountryController extends Controller
      */
     public function show(res_country $res_country)
     {
-        //
+        
     }
 
     /**
@@ -81,5 +83,10 @@ class ResCountryController extends Controller
     public function destroy(res_country $res_country)
     {
         //
+    }
+    public function view()
+    {
+        // echo("ok");
+        // return res_country::all();
     }
 }

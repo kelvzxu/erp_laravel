@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\res_country_state;
+use App\Models\World_database\res_country_state;
 use Illuminate\Http\Request;
+use Response;
 
 class ResCountryStatesController extends Controller
 {
@@ -14,7 +15,17 @@ class ResCountryStatesController extends Controller
      */
     public function index()
     {
-        //
+        return res_country_state::all();
+    }
+    public function search(Request $request){
+        $data = $request->get('data');
+
+        $state = res_country_state::where('country_id',$data)
+                         ->get();
+
+        return Response::json([
+            'data' => $state
+        ]);   
     }
 
     /**

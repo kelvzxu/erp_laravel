@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\invoice_detail;
+use App\Models\Sales\invoice_detail;
 use Illuminate\Http\Request;
 
 class InvoicesDetailController extends Controller

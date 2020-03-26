@@ -77,7 +77,9 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Industry</label>
                         <div class="col-sm-10">
-                            <select name="industry_id" id="industry_id" class="form-control @error('industry_id') is-invalid @enderror" autofocus></select>
+                            <select name="industry_id" id="industry_id" class="form-control @error('industry_id') is-invalid @enderror" autofocus>
+                            <option value="">select</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -134,14 +136,18 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
+            <div class="col-6">
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Country</label>
                         <div class="col-sm-5">
-                            <select id="country" name="country" class="form-control"></select>
+                            <select id="country" name="country" class="form-control">
+                            <option value="NULL">Country</option>
+                            </select>
                         </div>
                         <div class="col-sm-4">
-                            <select id="state" name="state" class="form-control"></select>
+                            <select id="state" name="state" class="form-control">
+                            <option value="NULL">State</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -159,10 +165,12 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Zip Code</label>
                         <div class="col-sm-4">
-                            <select id="zip" name="zip" class="form-control"></select>
+                            <input id="zip" name="zip" class="form-control"></input>
                         </div>
                         <div class="col-sm-5">
-                            <select id="currency_id" name="currency_id" class="form-control"></select>
+                            <select id="currency_id" name="currency_id" class="form-control">
+                                <option value="NULL">Currency</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -180,10 +188,14 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">language</label>
                         <div class="col-sm-5">
-                            <select id="lag" name="lag" class="form-control"></select>
+                            <select id="lag" name="lag" class="form-control">
+                                <option value="NULL">Language</option>
+                            </select>
                         </div>
                         <div class="col-sm-4">
-                            <select id="tz" name="tz" class="form-control"></select>
+                            <select id="tz" name="tz" class="form-control">
+                                <option value="NULL">TimeZone</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -310,5 +322,5 @@
 </div>
 @endsection
 @section('js')
-
+@include('api.api')
 @endsection

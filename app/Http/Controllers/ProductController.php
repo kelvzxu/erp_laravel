@@ -49,7 +49,7 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
                 'photo' => $photo
             ]);
-            return redirect(route('produk.index'))
+            return redirect(route('product.index'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
         } catch (\Exception $e) {
             return redirect()->back()
@@ -79,14 +79,15 @@ class ProductController extends Controller
         return redirect()->back()->with(['success' => '<strong>' . $products->name . '</strong> Telah Dihapus!']);
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::findOrFail($request->id);
         $categories = Category::orderBy('name', 'ASC')->get();
+        // print_r($product);
         return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'code' => 'required|string|max:10|exists:products,code',
@@ -99,7 +100,7 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::findOrFail($id);
+            $product = Product::findOrFail( $request->code);
             $photo = $product->photo;
 
             if ($request->hasFile('photo')) {
@@ -116,7 +117,7 @@ class ProductController extends Controller
                 'photo' => $photo
             ]);
 
-            return redirect(route('produk.index'))
+            return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Diperbaharui']);
         } catch (\Exception $e) {
             return redirect()->back()

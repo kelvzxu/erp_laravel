@@ -15,8 +15,8 @@ class AddRelationshipsToOrdersTables extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->integer('customer_id')->unsigned()->change();
-            $table->foreign('customer_id')->references('id')->on('res_customers')
-                ->onUpdate('cascade')->onDelete('cascade');
+            // $table->foreign('customer_id')->references('id')->on('res_customers')
+            //     ->onUpdate('cascade')->onDelete('cascade');
             
             $table->integer('user_id')->unsigned()->change();
             $table->foreign('user_id')->references('id')->on('users')

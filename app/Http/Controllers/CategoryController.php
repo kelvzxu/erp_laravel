@@ -33,11 +33,11 @@ class CategoryController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $categories = Category::findOrFail($id);
+        $categories = Category::findOrFail($request->id);
         $categories->delete();
-        return redirect()->back()->with(['success' => 'Kategori: ' . $categories->name . ' Telah Dihapus']);
+        return redirect(route('product-categories'))->with(['success' => 'data berhasil Telah Dihapus']);
     }
 
     public function edit($id)
@@ -46,7 +46,7 @@ class CategoryController extends Controller
         return view('categories.edit', compact('categories'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //validasi form
         $this->validate($request, [
@@ -55,12 +55,12 @@ class CategoryController extends Controller
         ]);
 
         try {
-            $categories = Category::findOrFail($id);
-            $categories->update([
+            $categories = Category::where('id',$request->id)->update([
                 'name' => $request->name,
                 'description' => $request->description
             ]);
-            return redirect(route('kategori.index'))->with(['success' => 'Kategori: ' . $categories->name . ' Ditambahkan']);
+            // print_r($request->name);
+            return redirect(route('product-categories'))->with(['success' => 'Kategori: '.$request->name.' Ditambahkan']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }

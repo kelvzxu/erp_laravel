@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\res_currency;
+use App\Models\Currency\res_currency;
 use Illuminate\Http\Request;
 
 class ResCurrencyController extends Controller
@@ -14,7 +14,7 @@ class ResCurrencyController extends Controller
      */
     public function index()
     {
-        //
+        return res_currency::all();
     }
 
     /**

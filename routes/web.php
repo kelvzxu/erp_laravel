@@ -18,20 +18,44 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/home', 'HomeController@index')->name('home');
     
     // ==== Purchase =====
-    Route::get('/partner', 'ResPartnersController@index');
-    Route::get('/partner/new', 'ResPartnersController@create');
+    Route::get('/partner', 'ResPartnersController@index')->name('partner');
+    Route::get('/partner/new', 'ResPartnersController@create')->name('partner.new');
     
     // ==== Customer ====
     Route::get('/customer','ResCustomersController@index')->name('customer');
     Route::get('/customer/new','ResCustomersController@create')->name('customer.new');
     
     // ==== Invoices ====
-    Route::get('/invoice','InvoicesController@index');
-    Route::get('/invoice/new','InvoicesController@create');
+    Route::get('/invoice','InvoicesController@index')->name('invoice');
+    Route::get('/invoice/new','InvoicesController@create')->name('invoice.new');
     
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
     Route::get('employee/new','HrEmployeesController@create')->name('employee.new');
+
+    // ==== Recruitment ====
+    Route::get('recruitment','HrEmployeesController@index')->name('recruitment');
+
+    // ==== Product =====
+    Route::get('/product', 'ProductController@index')->name('product');
+    Route::get('/product/create', 'ProductController@create')->name('product.create');
+    Route::post('/product/store', 'ProductController@store')->name('product.store');
+    Route::get('/product/edit', 'ProductController@edit')->name('product.edit');
+    Route::get('/product/edit{id}', 'ProductController@edit')->name('product.edit');
+    Route::get('/product/destroy', 'ProductController@destroy')->name('product.destroy');
+    Route::put('/product/update', 'ProductController@update')->name('product.update');
+
+    Route::get('/product-categories', 'CategoryController@index')->name('product-categories');
+    Route::post('/product-categories/destroy', 'CategoryController@destroy')->name('product-categories.destroy');
+    Route::post('/product-categories/store', 'CategoryController@store')->name('product-categories.store');
+    Route::get('/product-categories/edit', 'CategoryController@edit')->name('product-categories.edit');
+    Route::get('/product-categories/edit{id}', 'CategoryController@edit')->name('product-categories.edit');
+    Route::put('/product-categories/update', 'CategoryController@update')->name('product-categories.update');
+
+    // ==== Point Of Sale ====
+    Route::get('/pos', 'OrderController@addOrder')->name('pos');
+    Route::get('/pos/checkout', 'OrderController@checkout')->name('order.checkout');
+    Route::post('/poscheckout', 'OrderController@storeOrder')->name('order.storeOrder');
 });  
 Auth::routes();
 

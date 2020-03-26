@@ -6,6 +6,11 @@
 			<div class="wrap-login100">
 				<form method="POST" action="{{ route('login') }}">
                     @csrf
+					@if (session('error'))
+						<div class="alert alert-danger">
+						{{ session('error') }}
+						</div>
+					@endif
 					<span class="login100-form-title">
 						<img src="{{asset('images/logo/sk-logo1.png')}}" alt="" width="90%">
 					</span>

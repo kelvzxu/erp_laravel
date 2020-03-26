@@ -1,21 +1,17 @@
-@extends('layouts.master')
-
-@section('title')
-    <title>Tambah Data Produk</title>
-@endsection
-
+@extends('layouts.admin')
+@section('title','SK - new Product')
 @section('content')
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Tambah Data</h1>
+                        <h1 class="m-0 text-dark">New Product</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('produk.index') }}">Produk</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('product') }}">Produk</a></li>
                             <li class="breadcrumb-item active">Tambah</li>
                         </ol>
                     </div>
@@ -27,7 +23,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
-                        @card
+                        <div class="container bg-white my-3">
                             @slot('title')
                             
                             @endslot
@@ -37,8 +33,9 @@
                                     {!! session('error') !!}
                                 @endalert
                             @endif
-                            <form action="{{ route('produk.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                <br>
                                 <div class="form-group">
                                     <label for="">Kode Produk</label>
                                     <input type="text" name="code" required 
@@ -89,14 +86,15 @@
                                 </div>
                                 <div class="form-group">
                                     <button class="btn btn-primary btn-sm">
-                                        <i class="fa fa-send"></i> Simpan
+                                        <i class="fa fa-send"></i> Save
                                     </button>
                                 </div>
                             </form>
                             @slot('footer')
 
                             @endslot
-                        @endcard
+                            <br>
+                        </div>
                     </div>
                 </div>
             </div>

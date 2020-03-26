@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer\res_customer;
+use App\Models\Data\res_lang;
 use Illuminate\Http\Request;
 
-class ResCustomersController extends Controller
+class ResLangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ResCustomersController extends Controller
      */
     public function index()
     {
-        return view('res_customer.index');
+        return res_lang::all();
     }
 
     /**
@@ -24,7 +24,7 @@ class ResCustomersController extends Controller
      */
     public function create()
     {
-        return view('res_customer.create_customer');
+        //
     }
 
     /**
@@ -41,10 +41,10 @@ class ResCustomersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\res_customer  $res_customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(res_customer $res_customer)
+    public function show($id)
     {
         //
     }
@@ -52,10 +52,10 @@ class ResCustomersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\res_customer  $res_customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(res_customer $res_customer)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +64,10 @@ class ResCustomersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\res_customer  $res_customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, res_customer $res_customer)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +75,10 @@ class ResCustomersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\res_customer  $res_customer
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(res_customer $res_customer)
+    public function destroy($id)
     {
         //
     }

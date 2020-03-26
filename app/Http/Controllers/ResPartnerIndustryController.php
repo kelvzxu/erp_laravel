@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\res_partner_industry;
+use App\Models\Data\res_partner_industry;
 use Illuminate\Http\Request;
 
 class ResPartnerIndustryController extends Controller
@@ -14,7 +14,7 @@ class ResPartnerIndustryController extends Controller
      */
     public function index()
     {
-        //
+        return res_partner_industry::all();
     }
 
     /**

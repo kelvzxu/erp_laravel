@@ -1,16 +1,12 @@
-@extends('layouts.master')
-
-@section('title')
-    <title>Manajemen Kategori</title>
-@endsection
-
+@extends('layouts.admin')
+@section('title','SK - Product Categories Managements')
 @section('content')
     <div class="content-wrapper">
         <div class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Manajemen Kategori</h1>
+                        <h3 class="m-0 text-dark"> Product Categories Managements</h3>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -26,21 +22,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4">
-                        @card
-                            @slot('title')
-                            Tambah
-                            @endslot
+                        <div class="card container">
+                            <div class="card-title mt-3">
+                                Create Product categories
+                            </div>
                             
                             @if (session('error'))
-                                @alert(['type' => 'danger'])
-                                    {!! session('error') !!}
-                                @endalert
+                                <div class="alert alert-danger">
+                                {{ session('error') }}
+                                </div>
                             @endif
-
-                            <form role="form" action="{{ route('kategori.store') }}" method="POST">
+                            <form role="form" action="{{ route('product-categories.store') }}" method="POST">
                                 @csrf
                                 <div class="form-group">
-                                    <label for="name">Kategori</label>
+                                    <label for="name">product-Categories</label>
                                     <input type="text" 
                                     name="name"
                                     class="form-control {{ $errors->has('name') ? 'is-invalid':'' }}" id="name" required>
@@ -49,24 +44,22 @@
                                     <label for="description">Deskripsi</label>
                                     <textarea name="description" id="description" cols="5" rows="5" class="form-control {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
                                 </div>
-                            @slot('footer')
                                 <div class="card-footer">
-                                    <button class="btn btn-primary">Simpan</button>
+                                    <button class="btn btn-primary"><i class="fa fa-send"></i> Save</button>
                                 </div>
                             </form>
-                            @endslot
-                        @endcard
+                        </div>
                     </div>
                     <div class="col-md-8">
-                        @card
-                            @slot('title')
-                            List Kategori
-                            @endslot
+                        <div class="card container">
+                            <div class="card-title mt-3">
+                            List Categories
+                            </div>
                             
                             @if (session('success'))
-                                @alert(['type' => 'success'])
-                                    {!! session('success') !!}
-                                @endalert
+                                <div class="alert alert-success">
+                                {{ session('success') }}
+                                </div>
                             @endif
                             
                             <div class="table-responsive">
@@ -74,7 +67,7 @@
                                     <thead>
                                         <tr>
                                             <td>#</td>
-                                            <td>Kategori</td>
+                                            <td>Categories</td>
                                             <td>Deskripsi</td>
                                             <td>Aksi</td>
                                         </tr>
@@ -87,10 +80,10 @@
                                             <td>{{ $row->name }}</td>
                                             <td>{{ $row->description }}</td>
                                             <td>
-                                                <form action="{{ route('kategori.destroy', $row->id) }}" method="POST">
+                                                <form action="{{ route('product-categories.destroy') }}" method="POST">
+                                                    <a href="{{ route('product-categories.edit', $row->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
                                                     @csrf
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <a href="{{ route('kategori.edit', $row->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
+                                                    <input type="hidden" name="id" value="{{ $row->id }}">
                                                     <button class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                                                 </form>
                                             </td>
@@ -106,7 +99,7 @@
                             @slot('footer')
 
                             @endslot
-                        @endcard
+                        </div>
                     </div>
                 </div>
             </div>

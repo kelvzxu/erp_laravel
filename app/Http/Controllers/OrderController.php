@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Exports\OrderInvoice;
 use Carbon\Carbon;
-use App\Customer;
-use App\Product;
-use App\Order;
+use App\Models\Customer\res_customer;
+use App\Models\Product\Product;
+use App\Models\Sales\Order;
 use App\User;
 use Cookie;
 use DB;
@@ -95,7 +95,7 @@ class OrderController extends Controller
 
         DB::beginTransaction();
         try {
-            $customer = Customer::firstOrCreate([
+            $customer =res_customer::firstOrCreate([
                 'email' => $request->email
             ], [
                 'name' => $request->name,
@@ -146,7 +146,7 @@ class OrderController extends Controller
 
     public function index(Request $request)
     {
-        $customers = Customer::orderBy('name', 'ASC')->get();
+        $customers = res_customer::orderBy('name', 'ASC')->get();
         $users = User::role('kasir')->orderBy('name', 'ASC')->get();
         $orders = Order::orderBy('created_at', 'DESC')->with('order_detail', 'customer');
 
