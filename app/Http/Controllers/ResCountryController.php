@@ -16,7 +16,7 @@ class ResCountryController extends Controller
      */
     public function index()
     {
-        return res_country::all();
+        return res_country::orderBy('country_name', 'ASC')->get();
     }
 
     /**

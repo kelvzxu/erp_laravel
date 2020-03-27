@@ -19,9 +19,9 @@
 @endsection
 @section('content')
 <div class="container">
-    @if (session('status'))
-        <div class="alert alert-success">
-        {{ session('status') }}
+    @if (session('error'))
+        <div class="alert alert-danger">
+        {{ session('error') }}
         </div>
     @endif
     <!-- header -->
@@ -39,15 +39,18 @@
         </div>
     </div>
     <!-- header button -->
+    <form action="{{ route('partner.store') }}" method="post" enctype="multipart/form-data">
+    @CSRF
     <div class="row">
         <div class="col-3">
-            <a href="" class="btn btn-primary">Save</a>
+            <button class="btn btn-primary btn-sm">
+                <i class="fa fa-send"></i> Save
+            </button>
         </div>
     </div>
 
     <div class="container bg-white my-4">
         <br>
-        <form>
             <div class="row">
                 <div class="col-sm-9">
                     <div class="form-check">
@@ -317,8 +320,8 @@
                     </div>
                 </div>
             </div>         
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
 @endsection
 @section('js')

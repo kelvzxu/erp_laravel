@@ -33341,7 +33341,6 @@ $('#is_company').click(function () {
         });
     }
 });
-
 $("#marital").change(function() {
     var status = $("#marital").val();
     if (status == "marriage"){

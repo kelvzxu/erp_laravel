@@ -68,7 +68,7 @@ class ProductController extends Controller
         Image::make($photo)->save($path . '/' . $images);
         return $images;
     }
-
+ 
     public function destroy($id)
     {
         $products = Product::findOrFail($id);
@@ -83,6 +83,7 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($request->id);
         $categories = Category::orderBy('name', 'ASC')->get();
+        $currency = res_currency::orderBy('currency_name', 'ASC')->get();
         // print_r($product);
         return view('products.edit', compact('product', 'categories'));
     }

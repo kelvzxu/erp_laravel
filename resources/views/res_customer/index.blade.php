@@ -36,9 +36,49 @@
         </div>
     </div>
 
-    <ul class="list-group mt-5">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-        </li>
-    </ul>
+    <div class="table-responsive-lg my-4">
+        <table class="table">
+        <caption>Customer List</caption>
+            <thead class="table table-sm">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">logo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">city</th>
+                    <th scope="col">country</th>
+                    <th scope="col">website</th>
+                    <th scope="col">action</th>
+                </tr>
+            </thead>
+            @forelse($customer as $cust)
+            <tbody>
+                <tr>
+                    <th scope="row">{{$loop->iteration}}
+                    <th ><img src="{{asset('uploads/customers/'.$cust->logo)}}" width=100px></th>
+                    <th >{{$cust->display_name}}</th>
+                    <th >{{$cust->parent_id}}</th>
+                    <th >{{$cust->city}}</th>
+                    <th >{{$cust->country_name}}</th>
+                    <th ><a href="https://{{$cust->website}}">{{$cust->website}}</a></th>
+                    <th >
+                        <a href="{{ route('customer.show', $cust->id) }}" class="btn btn-success btn-sm">
+                        <i class="fa fa-edit"> View Detail</i></a>
+                    </th>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center">Product is Empty</td>
+                </tr>
+            </tbody>
+            @endforelse
+        </table>
+        <br/>
+                Halaman : {{ $customer->currentPage() }} <br/>
+                Jumlah Data : {{ $customer->total() }} <br/>
+				Data Per Halaman : {{ $customer->perPage() }} <br/>
+				<br/>
+                {{ $customer->links() }}
+    </div>
 </div>
 @endsection

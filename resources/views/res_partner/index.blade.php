@@ -28,9 +28,43 @@
         </div>
     </div>
 
-    <ul class="list-group mt-5">
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-        </li>
-    </ul>
+    <div class="table-responsive-lg my-4">
+        <table class="table">
+        <caption>Customer List</caption>
+            <thead class="table table-sm">
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">logo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Company Name</th>
+                    <th scope="col">city</th>
+                    <th scope="col">country</th>
+                    <th scope="col">website</th>
+                    <th scope="col">action</th>
+                </tr>
+            </thead>
+            @forelse($partner as $part)
+            <tbody>
+                <tr>
+                    <th scope="row">{{$loop->iteration}}
+                    <th ><img src="{{asset('uploads/Partners/'.$part->logo)}}" width=100px></th>
+                    <th >{{$part->display_name}}</th>
+                    <th >{{$part->parent_id}}</th>
+                    <th >{{$part->city}}</th>
+                    <th >{{$part->country_name}}</th>
+                    <th ><a href="https://{{$part->website}}">{{$part->website}}</a></th>
+                    <th >
+                        <a href="{{ route('partner.show', $part->id) }}" class="btn btn-success btn-sm">
+                        <i class="fa fa-edit"> View Detail</i></a>
+                    </th>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center">Product is Empty</td>
+                </tr>
+            </tbody>
+            @endforelse
+        </table>
+    </div>
 </div>
 @endsection

@@ -15,7 +15,7 @@ class ResCountryStatesController extends Controller
      */
     public function index()
     {
-        return res_country_state::all();
+        return res_country_state::orderBy('state_name', 'ASC')->get();
     }
     public function search(Request $request){
         $data = $request->get('data');

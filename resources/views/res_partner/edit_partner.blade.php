@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','SK - New Customer')
+@section('title','SK - Edit Customer')
 @section('css')
 <!--  Maps CSS & JS -->
 <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
@@ -31,12 +31,12 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('customer')}}">Customer</a></li>
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('customer.new')}}">New</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('partner')}}">partner</a></li>
+                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('partner.show', $res_partner->id)}}">View Detail</a></li>
                     </ol>
                 </nav>
             </div>
-            <h3>Create New Customer</h3>
+            <h3>Update Customer</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
             <div class="input-group mb-3">
@@ -48,18 +48,21 @@
         </div>
     </div>
     <!-- header button -->
-    <form action="{{ route('customer.store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url('partner/update') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <input type="hidden" name="id" value="{{$res_partner -> id}}">
     <div class="row">
-        <div class="col-3">
+        <div class="col-4">
             <button class="btn btn-primary btn-sm">
-                <i class="fa fa-send"></i> Save
+                <i class="fa fa-send"></i> Save Record
             </button>
+            <a href="{{ route('partner.destroy', $res_partner -> id) }}" class="btn btn-danger btn-sm">
+                        <i class="fa fa-trash"> Delete Record</i></a>
         </div>
     </div>
 
     <div class="container bg-white my-4">
         <br>
-            @csrf
             <div class="row">
                 <div class="col-sm-9">
                     <div class="form-check">
@@ -71,26 +74,30 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                            <input type="text" name="name" id="name" placeholder="Customer Name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"  autocomplete="name" autofocus>
+                            <input type="text" name="name" id="name" placeholder="Customer Name" class="form-control @error('name') is-invalid @enderror" value="{{ $res_partner -> partner_name }}"  autocomplete="name" autofocus>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Display Name</label>
                         <div class="col-sm-10">
-                            <input type="text" name="display_name" id="display_name" class="form-control @error('display_name') is-invalid @enderror" value="{{ old('display_name') }}"  autocomplete="display_name" autofocus>
+                            <input type="text" name="display_name" id="display_name" class="form-control @error('display_name') is-invalid @enderror" value="{{ $res_partner -> display_name }}"  autocomplete="display_name" autofocus>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Parent Company</label>
                         <div class="col-sm-10">
-                            <input type="text" name="Parent_id" id="Parent_id" class="form-control @error('Parent_id') is-invalid @enderror" value="{{ old('Parent_id') }}"  autocomplete="Parent_id" autofocus>
+                            <input type="text" name="Parent_id" id="Parent_id" class="form-control @error('Parent_id') is-invalid @enderror" value="{{ $res_partner -> parent_id }}"  autocomplete="Parent_id" autofocus>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Industry</label>
                         <div class="col-sm-10">
                             <select name="industry_id" id="industry_id" class="form-control @error('industry_id') is-invalid @enderror" autofocus>
-                            <option value="">select</option>
+                            @foreach ($industry as $row)
+                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> industry_id ? 'selected':'' }}>
+                                    {{ ucfirst($row->industry_name) }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                     </div>
@@ -113,7 +120,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Address</label>
                         <div class="col-sm-9">
-                            <input type="text" name="address" id="address" placeholder="Address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}"  autocomplete="address" autofocus>
+                            <input type="text" name="address" id="address" placeholder="Address" class="form-control @error('address') is-invalid @enderror" value="{{ $res_partner -> address  }}"  autocomplete="address" autofocus>
                         </div>
                     </div>
                 </div>
@@ -121,7 +128,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" name="email" id="email" placeholder="mail@example.com" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"  autocomplete="email" autofocus>
+                            <input type="email" name="email" id="email" placeholder="mail@example.com" class="form-control @error('email') is-invalid @enderror" value="{{ $res_partner -> email  }}"  autocomplete="email" autofocus>
                         </div>
                     </div>
                 </div>
@@ -131,10 +138,10 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Street</label>
                         <div class="col-sm-5">
-                            <input type="text" name="street1" id="street1" placeholder="street" class="form-control @error('street') is-invalid @enderror" value="{{ old('street') }}"  autocomplete="street" autofocus>
+                            <input type="text" name="street1" id="street1" placeholder="street" class="form-control @error('street') is-invalid @enderror" value="{{ $res_partner -> street }}"  autocomplete="street" autofocus>
                         </div>
                         <div class="col-sm-4">
-                            <input type="text" name="street2" id="street2" placeholder="City" class="form-control @error('street2') is-invalid @enderror" value="{{ old('street2') }}"  autocomplete="street2" autofocus>
+                            <input type="text" name="street2" id="street2" placeholder="City" class="form-control @error('street2') is-invalid @enderror" value="{{ $res_partner -> city }}"  autocomplete="street2" autofocus>
                         </div>
                     </div>
                 </div>
@@ -142,7 +149,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Mobile</label>
                         <div class="col-sm-9">
-                            <input type="text" name="mobile" id="mobile" placeholder="08xxxxxxxxx" class="form-control @error('mobile') is-invalid @enderror" value="{{ old('mobile') }}"  autocomplete="mobile" autofocus>
+                            <input type="text" name="mobile" id="mobile" placeholder="08xxxxxxxxx" class="form-control @error('mobile') is-invalid @enderror" value="{{ $res_partner -> mobile }}"  autocomplete="mobile" autofocus>
                         </div>
                     </div>
                 </div>
@@ -152,13 +159,21 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Country</label>
                         <div class="col-sm-5">
-                            <select id="country" name="country" class="form-control">
-                            <option value="">Country</option>
+                            <select id="country" name="country" class="form-control @error('country') is-invalid @enderror">
+                            @foreach ($country as $row)
+                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> country_id ? 'selected':'' }}>
+                                    {{ ucfirst($row->country_name) }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <select id="state" name="state" class="form-control">
-                            <option value="">State</option>
+                            <select id="state" name="state" class="form-control @error('state') is-invalid @enderror">
+                            @foreach ($state as $row)
+                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> state_id ? 'selected':'' }}>
+                                    {{ ucfirst($row->state_name) }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                     </div>
@@ -167,7 +182,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Phone</label>
                         <div class="col-sm-9">
-                            <input type="text" name="phone" id="phone" placeholder="06xxxxxxxxx" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}"  autocomplete="phone" autofocus>
+                            <input type="text" name="phone" id="phone" placeholder="06xxxxxxxxx" class="form-control @error('phone') is-invalid @enderror" value="{{ $res_partner -> phone }}"  autocomplete="phone" autofocus>
                         </div>
                     </div>
                 </div>
@@ -177,11 +192,15 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Zip Code</label>
                         <div class="col-sm-4">
-                            <input id="zip" name="zip" class="form-control"></input>
+                            <input type="text" id="zip" name="zip" class="form-control @error('zip') is-invalid @enderror" value="{{$res_partner -> zip}}"></input>
                         </div>
                         <div class="col-sm-5">
-                            <select id="currency_id" name="currency_id" class="form-control">
-                                <option value="">Currency</option>
+                            <select id="currency_id" name="currency_id" class="form-control @error('currency_id') is-invalid @enderror">
+                            @foreach ($currency as $row)
+                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> currency_id ? 'selected':'' }}>
+                                    {{ ucfirst($row->currency_name) }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                     </div>
@@ -190,7 +209,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Website</label>
                         <div class="col-sm-9">
-                            <input type="text" name="website" id="website" placeholder="https://www.laravel.com" class="form-control @error('website') is-invalid @enderror" value="{{ old('website') }}"  autocomplete="website" autofocus>
+                            <input type="text" name="website" id="website" placeholder="https://www.laravel.com" class="form-control @error('website') is-invalid @enderror" value="{{ $res_partner -> website }}"  autocomplete="website" autofocus>
                         </div>
                     </div>
                 </div>
@@ -200,13 +219,21 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">language</label>
                         <div class="col-sm-5">
-                            <select id="lag" name="lag" class="form-control">
-                                <option value="">Language</option>
+                            <select id="lag" name="lag" class="form-control @error('lag') is-invalid @enderror">
+                            @foreach ($lang as $row)
+                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> lag ? 'selected':'' }}>
+                                    {{ ucfirst($row->lang_name) }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <select id="tz" name="tz" class="form-control">
-                                <option value="">TimeZone</option>
+                            <select id="tz" name="tz" class="form-control @error('tz') is-invalid @enderror">
+                            @foreach ($tz as $row)
+                                <option value="{{ $row->timezone }}" {{ $row->timezone == $res_partner -> tz ? 'selected':'' }}>
+                                    {{ ucfirst($row->timezone) }}
+                                </option>
+                            @endforeach
                             </select>
                         </div>
                     </div>
@@ -215,7 +242,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">reference</label>
                         <div class="col-sm-9">
-                            <input type="text" name="reference" id="reference" placeholder="reference" class="form-control @error('reference') is-invalid @enderror" value="{{ old('reference') }}"  autocomplete="reference" autofocus>
+                            <input type="text" name="reference" id="reference" placeholder="reference" class="form-control @error('reference') is-invalid @enderror" value="{{ $res_partner -> ref }}"  autocomplete="reference" autofocus>
                         </div>
                     </div>
                 </div>
@@ -225,7 +252,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Bank Account</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" name="bank_account" id="bank_account" placeholder="800XXXXX">
+                            <input type="text" class="form-control" name="bank_account" id="bank_account" placeholder="800XXXXX" value="{{$res_partner -> bank_account}}">
                         </div>
                     </div>
                 </div>
@@ -233,10 +260,36 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">limit</label>
                         <div class="col-sm-5">
-                            <input id="debit" name="debit" class="form-control" placeholder="Debit"></input>
+                            <input id="debit" name="debit" class="form-control" placeholder="Debit" value="{{$res_partner -> debit_limit}}"></input>
                         </div>
                         <div class="col-sm-4">
-                            <input id="credit" name="credit" class="form-control" placeholder="kredit"></input>
+                            <input id="credit" name="credit" class="form-control" placeholder="kredit" value="{{$res_partner -> credit_limit}}"></input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="is_company">
+                        <label class="form-check-label" for="defaultCheck1">
+                            is company
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="company" style="display: none">
+                <div class="col-sm-9">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Company Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="PT. Example" value="{{ $res_partner -> company_name }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">commercial company name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="commercial_company_name" id="commercial_company_name" value="{{ $res_partner -> commercial_company_name }}">
                         </div>
                     </div>
                 </div>
@@ -246,7 +299,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">latitude</label>
                         <div class="col-sm-9">
-                            <input id="partner_latitude" type="text" class="form-control @error('partner_latitude') is-invalid @enderror" name="partner_latitude" value="{{ old('partner_latitude') }}"  autocomplete="partner_latitude" autofocus>   
+                            <input id="partner_latitude" type="text" class="form-control @error('partner_latitude') is-invalid @enderror" name="partner_latitude" value="{{ $res_partner -> partner_latitude }}"  autocomplete="partner_latitude" autofocus>   
                         </div>
                     </div>
                 </div>
@@ -254,7 +307,7 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">longitude</label>
                         <div class="col-sm-9">
-                            <input id="partner_longitude" type="text" class="form-control @error('partner_longitude') is-invalid @enderror" name="partner_longitude" value="{{ old('partner_longitude') }}"  autocomplete="partner_longitude" autofocus>   
+                            <input id="partner_longitude" type="text" class="form-control @error('partner_longitude') is-invalid @enderror" name="partner_longitude" value="{{ $res_partner -> partner_longitude }}"  autocomplete="partner_longitude" autofocus>   
                         </div>
                     </div>
                 </div>              
@@ -303,8 +356,8 @@
                     </div>
                 </div>
             </div>         
-        </form>
     </div>
+    </form>
 </div>
 @endsection
 @section('js')

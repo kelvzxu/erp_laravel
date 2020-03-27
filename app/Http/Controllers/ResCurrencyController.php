@@ -14,7 +14,7 @@ class ResCurrencyController extends Controller
      */
     public function index()
     {
-        return res_currency::all();
+        return res_currency::orderBy('currency_name', 'ASC')->get();
     }
 
     /**

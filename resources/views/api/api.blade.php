@@ -118,5 +118,6 @@ $("#country").change(function() {
         statebycountry();
     }
 });
+$("#country").val("100");
 
 </script>

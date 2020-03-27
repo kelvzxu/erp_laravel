@@ -14,7 +14,7 @@ class ResPartnerIndustryController extends Controller
      */
     public function index()
     {
-        return res_partner_industry::all();
+        return res_partner_industry::orderBy('industry_name', 'ASC')->get();
     }
 
     /**

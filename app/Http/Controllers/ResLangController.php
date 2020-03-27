@@ -14,7 +14,7 @@ class ResLangController extends Controller
      */
     public function index()
     {
-        return res_lang::all();
+        return res_lang::orderBy('lang_name', 'ASC')->get();
     }
 
     /**

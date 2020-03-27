@@ -15,7 +15,7 @@ class ResTimeZoneController extends Controller
      */
     public function index()
     {
-        return timezone::all()->sortBy('timezone');
+        return timezone::orderBy('timezone', 'ASC')->get();
     }
 
     /**

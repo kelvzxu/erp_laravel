@@ -18,7 +18,6 @@ class CreateResCustomersTable extends Migration
             $table->string('customer_name')->nullable();
             $table->integer('company_id')->nullable()->index();
             $table->string('display_name')->nullable();
-            $table->date('date')->nullable();
             $table->string('title')->nullable();
             $table->string('parent_id')->nullable()->index();
             $table->string('ref')->nullable();
@@ -27,11 +26,11 @@ class CreateResCustomersTable extends Migration
             $table->string('user_id')->nullable();
             $table->string('tax_id')->nullable();
             $table->integer('currency_id')->nullable()->index();
-            $table->integer('bank_account')->nullable();
+            $table->string('bank_account')->nullable();
             $table->string('website')->nullable();
             $table->string('comment')->nullable();
-            $table->double('credit_limit')->nullable();
-            $table->double('debit_limit')->nullable();
+            $table->integer('credit_limit')->nullable();
+            $table->integer('debit_limit')->nullable();
             $table->boolean('active')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();
@@ -39,7 +38,7 @@ class CreateResCustomersTable extends Migration
             $table->string('zip')->nullable();
             $table->string('city')->nullable();
             $table->integer('state_id')->nullable()->index();
-            $table->string('country_id')->nullable()->index();
+            $table->integer('country_id')->nullable()->index();
             $table->string('partner_latitude')->nullable();
             $table->string('partner_longitude')->nullable();
             $table->string('email')->nullable();
@@ -49,9 +48,10 @@ class CreateResCustomersTable extends Migration
             $table->string('additional_info')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      *
