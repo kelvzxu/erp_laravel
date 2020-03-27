@@ -1,18 +1,11 @@
-@extends('admin.layout.master')
-
+@extends('layouts.admin')
+@section('title','SK - New Customer')
 @section('content')
-
-    @include('admin.includes.sidebar')
-
     <div class="page-wrapper">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+    @if (session('error'))
+        <div class="alert alert-danger">
+        {{ session('error') }}
+        </div>
     @endif
 
         <div class="page-breadcrumb">
@@ -22,8 +15,8 @@
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{route('dashboard')}}">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a href="{{route('employee')}}">Department</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="{{route('department')}}">Department</a></li>
                             </ol>
                         </nav>
                     </div>
@@ -46,10 +39,44 @@
                                             <input type="text" name="department_name" class="form-control" id="fname" placeholder="Enter a department name">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Complete Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="complete_name" class="form-control" id="fname" placeholder="Enter a department Complete name">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Parent Department</label>
+                                        <div class="col-sm-3">
+                                            <select id="parent_id" name="parent_id" class="form-control">
+                                                <option value="">Parent Dept</option>
+                                                @foreach ($departments as $row)
+                                                    <option value="{{ $row->id }}">{{ ucfirst($row->department_name) }}</option>
+                                                @endforeach
+                                            </select>                                        
+                                        </div>
+                                        <label for="fname" class="col-sm-2 text-right control-label col-form-label">Manager Name</label>
+                                        <div class="col-sm-4">
+                                            <select id="manager_id" name="manager_id" class="form-control">
+                                                <option value="">manager</option>
+                                                @foreach ($employee as $row)
+                                                    <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Complete Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="note" class="form-control" id="fname" placeholder="Description">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="border-top">
                                     <div class="card-body">
-                                        <button type="submit" class="btn btn-dark">Add</button>
+                                    <button class="btn btn-primary btn-sm">
+                                        <i class="fa fa-send"></i> Save
+                                    </button>
                                     </div>
                                 </div>
                             </form>
@@ -58,10 +85,6 @@
                 </div>
 
             </div>
-
-        <footer class="footer text-center">
-            All Rights Reserved by Khoz Informatics Pvt. Ltd. Designed and Developed by <a href="https://khozinfo.com/">Khozinfo</a>.
-        </footer>
 
     </div>
 

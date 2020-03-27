@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\hr_department;
+use App\Models\Human_Resource\hr_department;
+use App\Models\Human_Resource\hr_employee;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class HrDepartmentController extends Controller
 {
@@ -13,8 +15,9 @@ class HrDepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    { 
+        $departments = hr_department::paginate(15);
+        return view('department.index',compact('departments'));
     }
 
     /**
@@ -24,7 +27,9 @@ class HrDepartmentController extends Controller
      */
     public function create()
     {
-        //
+        $departments = hr_department::orderBy('department_name', 'ASC')->get();
+        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
+        return view('department.create',compact('departments','employee'));
     }
 
     /**
@@ -35,7 +40,19 @@ class HrDepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request -> validate([
+            'department_name' => 'required',
+         ]);
+         $department = new hr_department();
+         $department -> department_name = $request -> department_name;
+         $department -> complete_name = $request -> complete_name;
+         $department -> parent_id = $request -> parent_id;
+         $department -> manager_id = $request -> manager_id;
+         $department -> note = $request -> note;
+         $department -> save();
+         return redirect(route('department'))
+                ->with(['success' => 'Department <strong>' .$request->name. '</strong> successfully added!']);
+
     }
 
     /**
@@ -55,9 +72,12 @@ class HrDepartmentController extends Controller
      * @param  \App\hr_department  $hr_department
      * @return \Illuminate\Http\Response
      */
-    public function edit(hr_department $hr_department)
+    public function edit($id)
     {
-        //
+        $departments = hr_department::orderBy('department_name', 'ASC')->get();
+        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
+        $department = hr_department::find($id);
+        return view('department.edit',compact('department','departments','employee'));
     }
 
     /**
@@ -67,9 +87,20 @@ class HrDepartmentController extends Controller
      * @param  \App\hr_department  $hr_department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, hr_department $hr_department)
+    public function update(Request $request, $id)
     {
-        //
+        $request -> validate([
+            'department_name' => 'required',
+         ]);
+         $department = hr_department::find($id);
+         $department -> department_name = $request -> department_name;
+         $department -> complete_name = $request -> complete_name;
+         $department -> parent_id = $request -> parent_id;
+         $department -> manager_id = $request -> manager_id;
+         $department -> note = $request -> note;
+         $department -> save();
+         return redirect(route('department'))
+                ->with(['success' => 'Department successfully updated!']);
     }
 
     /**
@@ -78,8 +109,11 @@ class HrDepartmentController extends Controller
      * @param  \App\hr_department  $hr_department
      * @return \Illuminate\Http\Response
      */
-    public function destroy(hr_department $hr_department)
+    public function destroy($id)
     {
-        //
+        $department = hr_department::find($id);
+        $department -> delete();
+        return redirect(route('department'))
+                ->with(['success' => 'Department successfully deleted!']);
     }
 }

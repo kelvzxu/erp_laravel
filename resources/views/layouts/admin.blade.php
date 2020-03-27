@@ -741,9 +741,9 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="{{ route ('department')}}">
                                                 <i class="metismenu-icon"></i>
-                                                Departement
+                                                Department
                                             </a>
                                         </li>
                                         <li>

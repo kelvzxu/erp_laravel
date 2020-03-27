@@ -42,12 +42,12 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('employee/new','HrEmployeesController@create')->name('employee.new');
 
     // ==== HR Department ====
-    Route::get('department','DepartmentController@index')->name('department');
-    Route::get('department/create','DepartmentController@create')->name('department.create');
-    Route::post('department/store', 'DepartmentController@store')->name('department.store');
-    Route::get('department/edit/{id}','DepartmentController@edit')->name('department.edit');
-    Route::post('department/update/{id}','DepartmentController@update')->name('department.update');
-    Route::get('department/delete/{id}','DepartmentController@delete')->name('department.delete');
+    Route::get('department','HrDepartmentController@index')->name('department');
+    Route::get('department/create','HrDepartmentController@create')->name('department.create');
+    Route::post('department/store', 'HrDepartmentController@store')->name('department.store');
+    Route::get('department/edit/{id}','HrDepartmentController@edit')->name('department.edit');
+    Route::post('department/update/{id}','HrDepartmentController@update')->name('department.update');
+    Route::get('department/delete/{id}','HrDepartmentController@destroy')->name('department.delete');
 
 
     // ==== Recruitment ====

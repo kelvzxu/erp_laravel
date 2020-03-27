@@ -23,6 +23,7 @@ class CreateHrDepartmentsTable extends Migration
             $table->integer('manager_id')->nullable()->index();
             $table->string('note')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

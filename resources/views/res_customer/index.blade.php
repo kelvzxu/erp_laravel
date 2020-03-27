@@ -68,7 +68,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center">Product is Empty</td>
+                    <td colspan="7" class="text-center">Customer List is Empty</td>
                 </tr>
             </tbody>
             @endforelse
