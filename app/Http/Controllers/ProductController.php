@@ -125,4 +125,22 @@ class ProductController extends Controller
                 ->with(['error' => $e->getMessage()]);
         }
     }
+    public function searchapi(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+
+        $product = Product::where('id', $request->id)->first();
+        if ($product) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $product
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
+    }
 }

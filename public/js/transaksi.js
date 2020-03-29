@@ -395,7 +395,7 @@ new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         }).on('change', function () {
             _this.cart.product_id = $('#product_id').val();
         });
-        this.getCart();
+        console.log(this.getCart());
     },
 
     methods: {

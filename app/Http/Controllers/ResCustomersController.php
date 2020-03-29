@@ -27,6 +27,7 @@ class ResCustomersController extends Controller
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('customer_name', 'ASC')
                     ->paginate(10);
+        // return dd($customer);
         return view('res_customer.index',compact('customer'));
     }
 
@@ -60,6 +61,7 @@ class ResCustomersController extends Controller
             'mobile' => 'nullable|string|max:100',
             'country' => 'required|integer',
             'currency_id' => 'required|integer',
+            'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
@@ -73,7 +75,7 @@ class ResCustomersController extends Controller
             }
 
             $res_customer = res_customer::create([
-                'customer_name'=> $request->name,
+                'name'=> $request->name,
                 'display_name'=> $request->display_name,
                 'title'=> $request->code,
                 'parent_id'=> $request->Parent_id,
@@ -161,6 +163,7 @@ class ResCustomersController extends Controller
             'mobile' => 'nullable|string|max:100',
             'country' => 'required|integer',
             'currency_id' => 'required|integer',
+            'email' => 'required|email',
             'image' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
@@ -173,7 +176,7 @@ class ResCustomersController extends Controller
                 $request->file('image')->move($destination, $nama_file);
 
                 $res_customer = res_customer::where('id',$request->id)->update([
-                    'customer_name'=> $request->name,
+                    'name'=> $request->name,
                     'display_name'=> $request->display_name,
                     'title'=> $request->code,
                     'parent_id'=> $request->Parent_id,
@@ -205,7 +208,7 @@ class ResCustomersController extends Controller
             }
             else{
                 $res_customer = res_customer::where('id',$request->id)->update([
-                    'customer_name'=> $request->name,
+                    'name'=> $request->name,
                     'display_name'=> $request->display_name,
                     'title'=> $request->code,
                     'parent_id'=> $request->Parent_id,
@@ -254,5 +257,24 @@ class ResCustomersController extends Controller
         $customer->delete();
         $message="Customer data with name '$res_customer->id' Has been Delete successfully " ;
         return redirect('/customer')->with('status', $message);
+    }
+
+    public function searchapi(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+
+        $customer = res_customer::where('id', $request->id)->first();
+        if ($customer) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $customer
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
     }
 }

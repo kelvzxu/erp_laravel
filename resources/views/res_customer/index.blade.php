@@ -74,11 +74,8 @@
             @endforelse
         </table>
         <br/>
-                Halaman : {{ $customer->currentPage() }} <br/>
-                Jumlah Data : {{ $customer->total() }} <br/>
-				Data Per Halaman : {{ $customer->perPage() }} <br/>
-				<br/>
-                {{ $customer->links() }}
+        {!! $customer->links() !!}
+
     </div>
 </div>
 @endsection

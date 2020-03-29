@@ -34,12 +34,30 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
     
     // ==== Invoices ====
-    Route::get('/invoice','InvoicesController@index')->name('invoice');
-    Route::get('/invoice/new','InvoicesController@create')->name('invoice.new');
+    Route::get('/invoices', 'InvoiceController@index')->name('invoices');
+    Route::get('/invoices/create', 'InvoiceController@create')->name('invoices.create');
+    Route::post('/invoices', 'InvoiceController@store')->name('invoices.store');
+    Route::get('/invoices/show{id}', 'InvoiceController@show')->name('invoices.show');
+    Route::get('/invoices/edit{id}', 'InvoiceController@edit')->name('invoices.edit');
+    Route::put('/invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
+    Route::get('/invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
+
+    // ==== purchases ====
+    Route::get('/purchases', 'PurchaseController@index')->name('purchases');
+    Route::get('/purchases/create', 'PurchaseController@create')->name('purchases.create');
+    Route::post('/purchases', 'PurchaseController@store')->name('purchases.store');
+    Route::get('/purchases/show{id}', 'PurchaseController@show')->name('purchases.show');
+    Route::get('/purchases/edit{id}', 'PurchaseController@edit')->name('purchases.edit');
+    Route::put('/purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
+    Route::get('/purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
     
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
     Route::get('employee/new','HrEmployeesController@create')->name('employee.new');
+    Route::post('employee/store','HrEmployeesController@store')->name('employee.store');
+    Route::get('employee/edit/{hr_employee}','HrEmployeesController@edit')->name('employee.edit');
+    Route::post('employee/update','HrEmployeesController@update')->name('employee.update');
+    Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
 
     // ==== HR Department ====
     Route::get('department','HrDepartmentController@index')->name('department');
@@ -49,6 +67,13 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('department/update/{id}','HrDepartmentController@update')->name('department.update');
     Route::get('department/delete/{id}','HrDepartmentController@destroy')->name('department.delete');
 
+    // ==== HR Department ====
+    Route::get('jobs','HrJobsController@index')->name('jobs');
+    Route::get('jobs/create','HrJobsController@create')->name('jobs.create');
+    Route::post('jobs/store', 'HrJobsController@store')->name('jobs.store');
+    Route::get('jobs/edit/{id}','HrJobsController@edit')->name('jobs.edit');
+    Route::post('jobs/update/{id}','HrJobsController@update')->name('jobs.update');
+    Route::get('jobs/delete/{id}','HrJobsController@destroy')->name('jobs.delete');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrEmployeesController@index')->name('recruitment');
@@ -74,6 +99,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/pos', 'OrderController@addOrder')->name('pos');
     Route::get('/pos/checkout', 'OrderController@checkout')->name('order.checkout');
     Route::post('/poscheckout', 'OrderController@storeOrder')->name('order.storeOrder');
+    Route::get('/transaksi', 'OrderController@addOrder')->name('order.transaksi');
+    Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
+    Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 });  
 Auth::routes();
 

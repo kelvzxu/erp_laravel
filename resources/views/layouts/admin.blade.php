@@ -550,15 +550,9 @@
                             </li>
                             <li class="app-sidebar__heading">Sales</li>
                                 <li>
-                                    <a href="{{ route ('invoice')}}">
+                                    <a href="{{ route ('invoices')}}">
                                         <i class="metismenu-icon fa fa-shopping-bag"></i>
                                         Invoices
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="dashboard-boxes.html">
-                                        <i class="metismenu-icon fa fa-share"></i>
-                                        selling returns
                                     </a>
                                 </li>
                                 <li>
@@ -597,15 +591,9 @@
                             </li>
                             <li class="app-sidebar__heading">Purchase</li>
                                 <li>
-                                    <a href="dashboard-boxes.html">
+                                    <a href="{{ route ('purchases')}}">
                                         <i class="metismenu-icon fa fa-shopping-basket"></i>
                                         Purchase Order
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="dashboard-boxes.html">
-                                        <i class="metismenu-icon fa fa-reply"></i>
-                                        purchase return
                                     </a>
                                 </li>
                                 <li>
@@ -747,7 +735,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-dropdowns.html">
+                                            <a href="{{ route ('jobs')}}">
                                                 <i class="metismenu-icon">
                                                 </i>Jobs
                                             </a>

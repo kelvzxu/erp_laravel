@@ -68,7 +68,7 @@ class ResPartnersController extends Controller
             if ($request->hasFile('image')) {
                 $photo = $request->file('image')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/customers';
+                $destination = base_path() . '/public/uploads/Partners';
                 $request->file('image')->move($destination, $nama_file);
             }
             $res_partner = res_partner::create([
@@ -168,7 +168,7 @@ class ResPartnersController extends Controller
             if ($request->hasFile('image')) {
                 $photo = $request->file('image')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/customers';
+                $destination = base_path() . '/public/uploads/partners';
                 $request->file('image')->move($destination, $nama_file);
 
                 $res_partner = res_partner::where('id',$request->id)->update([

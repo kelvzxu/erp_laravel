@@ -18,7 +18,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page"><a href="{{route('department')}}">Department</a></li>
+                                <li class="breadcrumb-item active" aria-current="page"><a href="{{route('jobs')}}">Jobs</a></li>
                             </ol>
                         </nav>
                     </div>
@@ -30,50 +30,33 @@
             <div class="row">
                 <div class="col-md-10">
                     <div class="card">
-                        <form action="{{route('department.update',$department->id)}}" method="post" class="form-horizontal">
+                        <form action="{{route('jobs.update',$jobs->id)}}" method="post" class="form-horizontal">
                             @csrf
                             <div class="card-body">
                                     <h4 class="card-title">Department</h4>
                                     <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Jobs Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" name="jobs_name" class="form-control" id="fname" placeholder="Enter a jobs name" value="{{$jobs->jobs_name}}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Department Name</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="department_name" class="form-control" id="fname" placeholder="Enter a department name" value="{{$department->department_name}}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Complete Name</label>
-                                        <div class="col-sm-9">
-                                            <input type="text" name="complete_name" class="form-control" id="fname" placeholder="Enter a department Complete name" value="{{$department->complete_name}}">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">Parent Department</label>
                                         <div class="col-sm-3">
-                                            <select id="parent_id" name="parent_id" class="form-control">
-                                                <option value="">Parent Dept</option>
+                                            <select id="department_id" name="department_id" class="form-control">
+                                                <option value="">Departments</option>
                                                 @foreach ($departments as $row)
-                                                    <option value="{{ $row->id }}" {{ $row->id == $department -> parent_id ? 'selected':'' }}>
+                                                    <option value="{{ $row->id }}" {{ $row->id == $jobs -> department_id ? 'selected':'' }}>
                                                         {{ ucfirst($row->department_name) }}
                                                     </option>
                                                 @endforeach
                                             </select>                                        
                                         </div>
-                                        <label for="fname" class="col-sm-2 text-right control-label col-form-label">Manager Name</label>
-                                        <div class="col-sm-4">
-                                            <select id="manager_id" name="manager_id" class="form-control">
-                                                <option value="">manager</option>
-                                                @foreach ($employee as $row)
-                                                    <option value="{{ $row->id }}" {{ $row->id == $department -> manager_id ? 'selected':'' }}>
-                                                        {{ ucfirst($row->employee_name) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="fname" class="col-sm-3 text-right control-label col-form-label">Description</label>
                                         <div class="col-sm-9">
-                                            <input type="text" name="note" class="form-control" id="fname" placeholder="Description" value="{{$department->note}}">
+                                            <input type="text" name="note" class="form-control" id="fname" placeholder="Description" value="{{$jobs->note}}">
                                         </div>
                                     </div>
                                 </div>

@@ -45,27 +45,78 @@
                     <th scope="col">Photo</th>
                     <th scope="col">Employee Name</th>
                     <th scope="col">City</th>
-                    <th scope="col">State</th>
+                    <th scope="col">Country</th>
                     <th scope="col">Department</th>
                     <th scope="col">action</th>
                 </tr>
             </thead>
-            @foreach($employee as $emp)
+            @forelse($employee as $emp)
             <tbody>
-                <tr>
+                <tr> 
                     <th scope="row">{{$loop->iteration}}
-                    <th >{{$emp->photo}}</th>
+                    <th ><img src="{{asset('uploads/Employees/'.$emp->photo)}}" width=50px></th>
                     <th >{{$emp->employee_name}}</th>
                     <th >{{$emp->city}}</th>
-                    <th >{{$emp->state_name}}</th>
-                    <th >{{$emp->department_id}}</th>
+                    <th >{{$emp->country_name}}</th>
+                    <th >{{$emp->department_name}}</th>
                     <th >
-                        <a href="" class="badge badge-success">view detail</a>
+                        <form id="delete-form-{{ $emp->id }}" action="{{route('employee.delete',$emp->id)}}" method="put">
+                            @csrf
+                            @method('DELETE')
+                                <a href="{{route('employee.edit',$emp->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Edit</i></a>
+                            <button type="button" onclick="deletePost({{ $emp->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash">  Delete</i></button>
+                            {{--onclick="return confirm('Are you sure?')"--}}
+                        </form>
                     </th>
                 </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center">Jobs is Empty</td>
+                </tr>
             </tbody>
-            @endforeach
+            @endforelse
+            {{ $employee->links() }}
         </table>
     </div>
 </div>
+@endsection
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
+
+<script type="text/javascript">
+    function deletePost(id)
+
+    {
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelled',
+                    'Your file is safe :)',
+                    'error'
+                )
+            }
+        })
+    }
+
+</script>
 @endsection

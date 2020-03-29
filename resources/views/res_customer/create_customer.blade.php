@@ -152,12 +152,12 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Country</label>
                         <div class="col-sm-5">
-                            <select id="country" name="country" class="form-control">
+                            <select id="country" name="country" class="form-control @error('country') is-invalid @enderror">
                             <option value="">Country</option>
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <select id="state" name="state" class="form-control">
+                            <select id="state" name="state" class="form-control @error('state') is-invalid @enderror">
                             <option value="">State</option>
                             </select>
                         </div>
@@ -180,7 +180,7 @@
                             <input id="zip" name="zip" class="form-control"></input>
                         </div>
                         <div class="col-sm-5">
-                            <select id="currency_id" name="currency_id" class="form-control">
+                            <select id="currency_id" name="currency_id" class="form-control @error('currency_id') is-invalid @enderror">
                                 <option value="">Currency</option>
                             </select>
                         </div>

@@ -92,7 +92,7 @@
                         <div class="input-group">
                             <span class="input-group-btn">
                                 <span class="btn btn-default btn-file bg-primary text-white">
-                                    Browse… <input type="file" id="imgInp">
+                                    Browse… <input type="file" id="imgInp" name="image">
                                 </span>
                             </span>
                         </div>
