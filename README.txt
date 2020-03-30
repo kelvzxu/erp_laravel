@@ -8,3 +8,6 @@ Import / jalankan File Data.sql
 Jalankan php artisan migrate
 Import / jalankan File trigger.sql 
 jalankan php artisan serve untuk memulai aplikasi
+
+github link https://github.com/kelvzxu/erp_laravel
+jika ada masalah saat instalasi hub kelvzxu@kltechgroup.xyz
