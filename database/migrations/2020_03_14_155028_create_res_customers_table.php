@@ -15,7 +15,7 @@ class CreateResCustomersTable extends Migration
     {
         Schema::create('res_customers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('customer_name')->nullable();
+            $table->string('name')->nullable();
             $table->integer('company_id')->nullable()->index();
             $table->string('display_name')->nullable();
             $table->string('title')->nullable();
@@ -29,8 +29,8 @@ class CreateResCustomersTable extends Migration
             $table->string('bank_account')->nullable();
             $table->string('website')->nullable();
             $table->string('comment')->nullable();
-            $table->integer('credit_limit')->nullable();
-            $table->integer('debit_limit')->nullable();
+            $table->bigInteger('credit_limit')->nullable();
+            $table->bigInteger('debit_limit')->nullable();
             $table->boolean('active')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();

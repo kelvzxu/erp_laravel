@@ -23,6 +23,11 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-3">
+            <a href="{{route('invoices.create')}}" class="btn btn-success">Create</a>
+            </div>
+        </div>
         <div class="panel-body mt-3">
             @if($invoices->count())
             <table class="table table-striped">

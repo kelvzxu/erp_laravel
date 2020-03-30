@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoicesTable extends Migration
+class CreatePurchasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('purchases', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('invoice_no');
-            $table->date('invoice_date');
+            $table->string('purchase_no');
+            $table->date('purchase_date');
             $table->date('due_date');
             $table->string('title');
             $table->integer('client');
@@ -34,6 +34,6 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('invoices');
+        Schema::drop('purchases');
     }
 }

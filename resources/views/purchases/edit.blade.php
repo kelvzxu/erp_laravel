@@ -1,19 +1,19 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
-    <div id="invoice">
+    <div id="purchase">
         <div class="panel panel-default" v-cloak>
             <div class="panel-heading">
                 <div class="clearfix">
-                    <span class="panel-title">Create Invoice</span>
-                    <a href="{{route('invoices')}}" class="btn btn-default pull-right">Back</a>
+                    <span class="panel-title">Create Purchase</span>
+                    <a href="{{route('purchases')}}" class="btn btn-default pull-right">Back</a>
                 </div>
             </div>
             <div class="panel-body">
-                @include('invoices.form')
+                @include('purchases.form')
             </div>
             <div class="panel-footer">
-                <a href="{{route('invoices')}}" class="btn btn-default">CANCEL</a>
+                <a href="{{route('purchases')}}" class="btn btn-default">CANCEL</a>
                 <button class="btn btn-success" @click="update" :disabled="isProcessing">UPDATE</button>
             </div>
         </div>
@@ -26,8 +26,8 @@
     <script type="text/javascript">
         Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
-        window._form = {!! $invoice->toJson() !!};
-        var data  = {!! $invoice->toJson() !!};
+        window._form = {!! $purchase->toJson() !!};
+        var data  = {!! $purchase->toJson() !!};
         var product = data.products
         $.each(product, function (i) {
             $.ajax  ({
@@ -44,18 +44,18 @@
             })
         });
         $.ajax  ({
-            url: "{{asset('api/customer/search')}}",
+            url: "{{asset('api/partner/search')}}",
             type: 'post',
             dataType: 'json',
             data :{
-                'id': "{{$invoice->client}}"
+                'id': "{{$purchase->client}}"
             },
             success: function (result) {
-                $("#client").val(result.data.name);
+                $("#client").val(result.data.partner_name);
             }
         })
         
         
     </script>
-    <script src="/js/transaksi/invoice.js"></script>
+    <script src="/js/transaksi/purchase.js"></script>
 @endsection

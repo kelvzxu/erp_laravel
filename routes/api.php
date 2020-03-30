@@ -29,6 +29,7 @@ Route::post('/cart', 'OrderController@addToCart');
 Route::get('/cart', 'OrderController@getCart');
 Route::delete('/cart/{id}', 'OrderController@removeCart');
 Route::post('/customer/search', 'ResCustomersController@searchapi');
+Route::post('/partner/search', 'ResPartnersController@searchapi');
 Route::post('/product/search', 'ProductController@searchapi');
 
 Route::get('/chart', 'HomeController@getChart');

@@ -258,4 +258,22 @@ class ResPartnersController extends Controller
         $message="partner data with name '$res_partner->id' Has been Delete successfully " ;
         return redirect('/partner')->with('status', $message);
     }
+    public function searchapi(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+
+        $partner = res_partner::where('id', $request->id)->first();
+        if ($partner) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $partner
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
+    }
 }

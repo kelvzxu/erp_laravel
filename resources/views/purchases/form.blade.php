@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-sm-4">
         <div class="form-group">
-            <label>Invoice No.</label>
-            <input type="text" class="form-control" v-model="form.invoice_no" readonly>
-            <p v-if="errors.invoice_no" class="error">@{{errors.invoice_no[0]}}</p>
+            <label>Purchase No.</label>
+            <input type="text" class="form-control" v-model="form.purchase_no" readonly>
+            <p v-if="errors.purchase_no" class="error">@{{errors.purchase_no[0]}}</p>
         </div>
         <div class="form-group">
             <label>Client</label>
@@ -27,9 +27,9 @@
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <label>Invoice Date</label>
-                <input type="text" class="form-control" v-model="form.invoice_date" readonly>
-                <p v-if="errors.invoice_date" class="error">@{{errors.invoice_date[0]}}</p>
+                <label>Purchase Date</label>
+                <input type="text" class="form-control" v-model="form.purchase_date" readonly>
+                <p v-if="errors.purchase_date" class="error">@{{errors.purchase_date[0]}}</p>
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>

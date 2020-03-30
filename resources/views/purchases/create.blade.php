@@ -1,28 +1,28 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
-    <div id="invoice">
+    <div id="purchase">
         <div class="panel panel-default" v-cloak>
             <div class="panel-heading">
                 <div class="clearfix">
-                    <span class="panel-title">Create Invoice</span>
-                    <a href="{{route('invoices')}}" class="btn btn-default pull-right">Back</a>
+                    <span class="panel-title">Create Purchase Order</span>
+                    <a href="{{route('purchases')}}" class="btn btn-default pull-right">Back</a>
                 </div>
             </div>
             <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Invoice No.</label>
-                        <input type="text" class="form-control" v-model="form.invoice_no">
-                        <p v-if="errors.invoice_no" class="error">@{{errors.invoice_no[0]}}</p>
+                <div class="form-group">
+                        <label>Purchase No.</label>
+                        <input type="text" class="form-control" v-model="form.purchase_no">
+                        <p v-if="errors.purchase_no" class="error">@{{errors.purchase_no[0]}}</p>
                     </div>
                     <div class="form-group">
-                        <label>Client</label>
+                        <label>Supplier</label>
                         <select id="client" class="form-control" v-model="form.client">
-                            <option value="">Select customer</option>
-                            @foreach ($customer as $row)
-                                <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
+                            <option value="">Select supplier</option>
+                            @foreach ($partner as $row)
+                                <option value="{{ $row->id }}">{{ ucfirst($row->partner_name) }}</option>
                             @endforeach
                         </select>
                         <p v-if="errors.client" class="error">@{{errors.client[0]}}</p>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Client Address</label>
+                        <label>supplier Address</label>
                         <textarea id="address" class="form-control" v-model="form.client_address"></textarea>
                         <p v-if="errors.client_address" class="error">@{{errors.client_address[0]}}</p>
                     </div>
@@ -43,9 +43,9 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <label>Invoice Date</label>
-                            <input type="date" class="form-control" v-model="form.invoice_date">
-                            <p v-if="errors.invoice_date" class="error">@{{errors.invoice_date[0]}}</p>
+                            <label>Purchase Date</label>
+                            <input type="date" class="form-control" v-model="form.purchase_date">
+                            <p v-if="errors.purchase_date" class="error">@{{errors.purchase_date[0]}}</p>
                         </div>
                         <div class="col-sm-6">
                             <label>Due Date</label>
@@ -117,7 +117,7 @@
             </table>
             </div>
             <div class="panel-footer">
-                <a href="{{route('invoices')}}" class="btn btn-default">CANCEL</a>
+                <a href="{{route('purchases')}}" class="btn btn-default">CANCEL</a>
                 <button class="btn btn-success" @click="create" :disabled="isProcessing">CREATE</button>
             </div>
         </div>
@@ -131,11 +131,11 @@
         Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
         window._form = {
-            invoice_no: '',
+            purchase_no: '',
             client: '',
             client_address: '',
             title: '',
-            invoice_date: '',
+            purchase_date: '',
             due_date: '',
             discount: 0,
             products: [{
@@ -147,5 +147,5 @@
 
         
     </script>
-    <script src="/js/transaksi/invoice.js"></script>
+    <script src="/js/transaksi/purchase.js"></script>
 @endsection
