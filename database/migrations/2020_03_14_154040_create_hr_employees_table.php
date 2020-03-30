@@ -18,7 +18,7 @@ class CreateHrEmployeesTable extends Migration
             $table->string('employee_name')->nullable();
             $table->integer('user_id')->nullable()->index();
             $table->boolean('active')->nullable();
-            $table->integer('country_id')->index();
+            $table->integer('country_id')->index()->nullable();
             $table->string('gender')->nullable();
             $table->string('marital')->nullable();
             $table->string('spouse_complete_name')->nullable();
@@ -30,7 +30,7 @@ class CreateHrEmployeesTable extends Migration
             $table->string('ssnid')->nullable();
             $table->string('identification_id')->nullable();
             $table->string('passport_id')->nullable();
-            $table->string('bank_account_id')->index();
+            $table->string('bank_account_id')->index()->nullable();
             $table->string('permit_no')->nullable();
             $table->string('visa_no')->nullable();
             $table->date('visa_expire')->nullable();

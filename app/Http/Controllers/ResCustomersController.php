@@ -25,7 +25,7 @@ class ResCustomersController extends Controller
                     ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
                     ->select('res_customers.*', 'res_country.country_name')
                     ->whereNull('res_customers.deleted_at')
-                    ->orderBy('customer_name', 'ASC')
+                    ->orderBy('name', 'ASC')
                     ->paginate(10);
         // return dd($customer);
         return view('res_customer.index',compact('customer'));

@@ -33,6 +33,18 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/customer/update','ResCustomersController@update')->name('customer.update');
     Route::get('/customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
     
+    // ==== Customer ====
+    Route::get('/CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
+    Route::get('/CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
+    Route::get('/CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
+    Route::post('/CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
+
+    // ==== PartnerCredit=
+    Route::get('/PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
+    Route::get('/PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');
+    Route::get('/PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
+    Route::post('/PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
+
     // ==== Invoices ====
     Route::get('/invoices', 'InvoiceController@index')->name('invoices');
     Route::get('/invoices/create', 'InvoiceController@create')->name('invoices.create');

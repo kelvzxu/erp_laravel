@@ -90,12 +90,12 @@
                             <div class="widget-content-wrapper">
                                 <div class="widget-content-left">
                                     <div class="btn-group">
-                                        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                            class="p-0 btn">
-                                            <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg"
-                                                alt="">
-                                            <i class="fa fa-angle-down ml-2 opacity-8"></i>
-                                        </a>
+                                            <div class="widget-content-right header-user-info ml-3">
+                                                <button type="button"
+                                                    class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
+                                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                                </button>
+                                            </div>
                                         <div tabindex="-1" role="menu" aria-hidden="true"
                                             class="dropdown-menu dropdown-menu-right">
                                             <button type="button" tabindex="0" class="dropdown-item">User
@@ -117,17 +117,18 @@
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->email }}
                                     </div>
                                     <div class="widget-subheading">
                                         VP People Manager
                                     </div>
                                 </div>
-                                <div class="widget-content-right header-user-info ml-3">
-                                    <button type="button"
-                                        class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                        <i class="fa text-white fa-calendar pr-1 pl-1"></i>
-                                    </button>
+                                <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                            class="p-0 btn">
+                                    <i class="fa fa-angle-down ml-2 opacity-8"></i>
+                                </a>
+                                <div class="ml-2" id="profile">
+
                                 </div>
                             </div>
                         </div>
@@ -695,9 +696,13 @@
                                 </li>
                              <li class="app-sidebar__heading">Accounting</li>
                                 <li>
-                                    <a href="charts-chartjs.html">
-                                        <i class="metismenu-icon pe-7s-graph2">
-                                        </i>ChartJS
+                                    <a href="{{ route ('CustomerDebt')}}">
+                                        <i class="metismenu-icon fa fa-usd ">
+                                        </i>CustomerDebt
+                                    </a>
+                                    <a href="{{ route ('PartnerDebt')}}">
+                                        <i class="metismenu-icon fa fa-usd ">
+                                        </i>partnerDebt
                                     </a>
                                 </li>
                             <li class="app-sidebar__heading">Point Of Sales</li>
@@ -837,6 +842,26 @@
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/loadimg.js')}}"></script>
+    <script>
+    $.ajax  ({
+        url: "{{asset('api/employee/search')}}",
+        type: 'post',
+        dataType: 'json',
+        data :{
+            'email': "{{ Auth::user()->email}}"
+        },
+        success: function (result) {
+            $('#profile').append(`
+                <img width="42" id="picture_profile" class="rounded-circle" src="{{asset('uploads/Employees/`+result.data.photo+`')}}"
+                    alt="">
+                                            `);
+            // $("#picture_profile"). attr("src", "{{asset('uploads/Employees/result.data.name')}}");
+            // $("#client").val(result.data.name);
+            // console.log("{{ Auth::user()->email}}");
+                        // $("#client").val(result.data.name);
+        }
+    })
+    </script>
     @yield('js')
 </body>
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product\Category;
 use App\Models\Product\Product;
+use App\Models\Currency\res_currency;
 use File;
 use Image;
 

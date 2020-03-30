@@ -31,5 +31,6 @@ Route::delete('/cart/{id}', 'OrderController@removeCart');
 Route::post('/customer/search', 'ResCustomersController@searchapi');
 Route::post('/partner/search', 'ResPartnersController@searchapi');
 Route::post('/product/search', 'ProductController@searchapi');
+Route::post('/employee/search', 'HrEmployeesController@searchapi');
 
 Route::get('/chart', 'HomeController@getChart');

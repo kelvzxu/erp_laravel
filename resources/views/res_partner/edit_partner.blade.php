@@ -36,7 +36,7 @@
                     </ol>
                 </nav>
             </div>
-            <h3>Update Customer</h3>
+            <h3>Update Supplier</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
             <div class="input-group mb-3">

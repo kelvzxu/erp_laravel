@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Models\Human_Resource\hr_employee;
 use App\Models\Human_Resource\hr_job;
@@ -307,5 +307,24 @@ class HrEmployeesController extends Controller
         $employee -> delete();
         return redirect(route('employee'))
                 ->with(['success' => 'employee successfully deleted!']);
+    }
+
+    public function searchapi(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required'
+        ]);
+
+        $employee = hr_employee::where('work_email', $request->email)->first();
+        if ($employee) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $employee
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
     }
 }

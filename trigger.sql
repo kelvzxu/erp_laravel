@@ -147,3 +147,88 @@ CREATE TRIGGER create_partner_credit
   FOR EACH ROW
   EXECUTE PROCEDURE partner_credit();
 
+  CREATE OR REPLACE FUNCTION Update_customer_dept()
+  RETURNS trigger AS
+$$
+BEGIN
+    update customer_debt
+        set total = NEW.grand_total
+    where customer_debt.invoice_no = NEW.invoice_no;
+    UPDATE res_customers
+        SET debit_limit = debit_limit - OLD.grand_total +  NEW.grand_total
+        WHERE res_customers.id = NEW.client;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER update_customer_dept
+  AFTER UPDATE
+  ON invoices
+  FOR EACH ROW
+  EXECUTE PROCEDURE Update_customer_dept();
+
+CREATE OR REPLACE FUNCTION partner_credit()
+  RETURNS trigger AS
+$$
+BEGIN
+    update partner_credit
+        set total = NEW.grand_total
+    where partner_credit.purchase_no = NEW.purchase_no;
+    UPDATE res_partners
+        SET debit_limit = debit_limit - OLD.grand_total +  NEW.grand_total
+        WHERE res_partners.id = NEW.client;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER create_partner_credit
+  AFTER UPDATE
+  ON purchases
+  FOR EACH ROW
+  EXECUTE PROCEDURE partner_credit();
+
+  CREATE OR REPLACE FUNCTION update_credit()
+  RETURNS trigger AS
+$$
+BEGIN
+    update res_customers
+        set debit_limit = debit_limit + OLD.payment - NEW.payment
+    ,credit_limit = credit_limit - NEW.over
+        WHERE res_customers.id = NEW.customer_id;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER update_credit
+  AFTER UPDATE
+  ON customer_debt
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_credit();
+
+CREATE OR REPLACE FUNCTION update_credit_partner()
+RETURNS trigger AS
+$$
+BEGIN
+    update res_partners
+        set debit_limit = debit_limit + OLD.payment - NEW.payment
+    ,credit_limit = credit_limit - NEW.over
+        WHERE res_partners.id = NEW.partner_id;
+    RETURN NEW;
+END;
+$$
+LANGUAGE 'plpgsql';
+
+CREATE TRIGGER update_credit_partner
+  AFTER UPDATE
+  ON partner_credit
+  FOR EACH ROW
+  EXECUTE PROCEDURE update_credit_partner();
+
+
+
+
+
+

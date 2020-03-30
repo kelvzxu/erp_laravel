@@ -2,9 +2,9 @@
 @section('title','SK - New Customer')
 @section('content')
 <div class="container">
-    @if (session('status'))
-        <div class="alert alert-success">
-        {{ session('status') }}
+    @if (session('error'))
+        <div class="alert alert-danger">
+        {{ session('error') }}
         </div>
     @endif
     <!-- header -->
