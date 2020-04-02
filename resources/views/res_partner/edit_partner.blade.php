@@ -260,10 +260,10 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">limit</label>
                         <div class="col-sm-5">
-                            <input id="debit" name="debit" class="form-control" placeholder="Debit" value="{{$res_partner -> debit_limit}}"></input>
+                            <input id="debit" name="debit" class="form-control" placeholder="Debit" value="{{$res_partner -> debit_limit}}" readonly></input>
                         </div>
                         <div class="col-sm-4">
-                            <input id="credit" name="credit" class="form-control" placeholder="kredit" value="{{$res_partner -> credit_limit}}"></input>
+                            <input id="credit" name="credit" class="form-control" placeholder="kredit" value="{{$res_partner -> credit_limit}}" readonly></input>
                         </div>
                     </div>
                 </div>

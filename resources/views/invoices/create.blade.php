@@ -31,25 +31,25 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Client Address</label>
-                        <textarea id="address" class="form-control" v-model="form.client_address"></textarea>
+                        <textarea id="address" class="form-control" v-model="form.client_address" require></textarea>
                         <p v-if="errors.client_address" class="error">@{{errors.client_address[0]}}</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" v-model="form.title">
+                        <input type="text" class="form-control" v-model="form.title" require>
                         <p v-if="errors.title" class="error">@{{errors.title[0]}}</p>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
                             <label>Invoice Date</label>
-                            <input type="date" class="form-control" v-model="form.invoice_date">
+                            <input type="date" class="form-control" v-model="form.invoice_date" require>
                             <p v-if="errors.invoice_date" class="error">@{{errors.invoice_date[0]}}</p>
                         </div>
                         <div class="col-sm-6">
                             <label>Due Date</label>
-                            <input type="date" class="form-control" v-model="form.due_date">
+                            <input type="date" class="form-control" v-model="form.due_date" require>
                             <p v-if="errors.due_date" class="error">@{{errors.due_date[0]}}</p>
                         </div>
                     </div>
@@ -125,8 +125,8 @@
 @endsection
 
 @section('js')
-    <script src="/js/transaksi/vue.min.js"></script>
-    <script src="/js/transaksi/vue-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
     <script type="text/javascript">
         Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
@@ -147,5 +147,5 @@
 
         
     </script>
-    <script src="/js/transaksi/invoice.js"></script>
+    <script src="{{asset('/js/transaksi/invoice.js')}}"></script>
 @endsection

@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
     <title>@yield('title')</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        {{ Auth::user()->email }}
+                                        {{ Auth::user()->name }}
                                     </div>
                                     <div class="widget-subheading">
                                         VP People Manager

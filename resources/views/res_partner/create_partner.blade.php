@@ -224,10 +224,10 @@
                     <div class="form-group row">
                         <label class="col-sm-3 col-form-label">limit</label>
                         <div class="col-sm-5">
-                            <input id="debit" name="debit" class="form-control" placeholder="Debit"></input>
+                            <input id="debit" name="debit" class="form-control" placeholder="Debit" value="0" readonly></input>
                         </div>
                         <div class="col-sm-4">
-                            <input id="credit" name="credit" class="form-control" placeholder="kredit"></input>
+                            <input id="credit" name="credit" class="form-control" placeholder="kredit" value="0" readonly></input>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,1 @@
+<?php header("Location: https://erp.kltech-intl.technology/public/"); ?>

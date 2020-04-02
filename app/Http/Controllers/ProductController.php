@@ -38,7 +38,10 @@ class ProductController extends Controller
         try {
             $photo = null;
             if ($request->hasFile('photo')) {
-                $photo = $this->saveFile($request->name, $request->file('photo'));
+                $photo = $request->file('photo')->getClientOriginalName();
+                $nama_file = time()."_".$photo;
+                $destination = base_path() . '/public/uploads/product';
+                $request->file('photo')->move($destination, $nama_file);
             }
 
             $product = Product::create([
@@ -50,7 +53,7 @@ class ProductController extends Controller
                 'category_id' => $request->category_id,
                 'photo' => $photo
             ]);
-            return redirect(route('product.index'))
+            return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
         } catch (\Exception $e) {
             return redirect()->back()

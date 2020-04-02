@@ -90,9 +90,9 @@
                     <div class="form-group">
                             <label for="payment">payment</label>
                         <div class="input-group">
-                            <input id="payment" name="payment" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" required >
+                            <input id="pay" name="pay" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" required >
                                 <div class="input-group-append">
-                                    <a class="btn btn-outline-secondary" id="hitung">Match</a>
+                                    <a class="btn btn-outline-secondary btn-primary text-white" id="hitung">Match</a>
                                 </div>
                         </div>
                     </div>
@@ -103,6 +103,7 @@
                             <input type="text" class="form-control" id="over" name="over" value="{{$customer_debt[0]->over}}" placeholer="payment" readonly required>
                         </div>
                     </div>
+                    <input id="payment" name="payment" type="hidden" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2" required >
                     <input type="hidden" class="form-control" id="status" name="status" value="{{$customer_debt[0]->status}}" required>
                 </div>
                 <br>
@@ -115,16 +116,22 @@
 <script>
  $("#submit").attr("disabled", true);
 $('#hitung').click(function(){
-    const payment = $('#payment').val();
-    if (payment != ''){
+    $('#over').val(0);
+    const pay = $('#pay').val();
+    if (pay != ''){
         $('#submit').removeAttr("disabled")
         const total = $('#total').val();
         const credit = $('#credit_limit').val();
-        let payments = parseInt(payment)+ parseInt(credit);
+        let payments = parseInt(pay)+ parseInt(credit);
         let over = parseInt(payments) - parseInt(total);
         if (payments >= total){
+            $('#payment').val(total);
             $('#over').val(over);
             $('#status').val('PAID');
+        }
+        else
+        {
+            $('#payment').val(payments);
         }
     }
 });

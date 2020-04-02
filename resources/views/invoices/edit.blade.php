@@ -21,8 +21,9 @@
 @endsection
 
 @section('js')
-    <script src="/js/transaksi/vue.min.js"></script>
-    <script src="/js/transaksi/vue-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+    <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
+    <script type="text/javascript">
     <script type="text/javascript">
         Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
@@ -57,5 +58,5 @@
         
         
     </script>
-    <script src="/js/transaksi/invoice.js"></script>
+    <script src="{{asset('/js/transaksi/invoice.js')}}"></script>
 @endsection
