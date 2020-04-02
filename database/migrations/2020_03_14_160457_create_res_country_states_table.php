@@ -13,7 +13,7 @@ class CreateResCountryStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('res_country_states', function (Blueprint $table) {
+        Schema::create('res_country_state', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('country_id')->nullable();
             $table->string('state_name')->nullable();
