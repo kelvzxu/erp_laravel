@@ -107,6 +107,12 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/product-categories/edit{id}', 'CategoryController@edit')->name('product-categories.edit');
     Route::put('/product-categories/update', 'CategoryController@update')->name('product-categories.update');
 
+    // ==== Attendance ====
+    Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
+    Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');
+    Route::get('/attendance', 'HrAttendanceController@index')->name('attendance');
+
+
     // ==== Point Of Sale ====
     Route::get('/pos', 'OrderController@addOrder')->name('pos');
     Route::get('/pos/checkout', 'OrderController@checkout')->name('order.checkout');

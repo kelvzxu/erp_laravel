@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Human_Resource\hr_attendance;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller

@@ -755,6 +755,14 @@
                                     </a>
                                     <ul>
                                         <li>
+                                            <a href="{{ route ('attendance')}}">
+                                                <i class="metismenu-icon">
+                                                </i>Attendance Log
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li>
                                             <a href="components-tabs.html">
                                                 <i class="metismenu-icon">
                                                 </i>employee salary

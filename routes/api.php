@@ -32,5 +32,6 @@ Route::post('/customer/search', 'ResCustomersController@searchapi');
 Route::post('/partner/search', 'ResPartnersController@searchapi');
 Route::post('/product/search', 'ProductController@searchapi');
 Route::post('/employee/search', 'HrEmployeesController@searchapi');
+Route::get('/attendance', 'HrAttendanceController@checkatd');
 
 Route::get('/chart', 'HomeController@getChart');

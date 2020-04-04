@@ -190,7 +190,6 @@ class HrEmployeesController extends Controller
             'emergency_contact'=> 'required',
             'emergency_phone' => 'required',
             'country_of_birth' => 'required|integer',
-            'department_id'=>'required',
             'image' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
