@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Human_Resource\hr_attendance;
-use Illuminate\Support\Facades\DB;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class HrAttendanceController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +32,17 @@ class HrAttendanceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function search(Request $request)
     {
-        //
+        $startDate=$request->start;
+        $endDate=$request->end;
+        $attendance = hr_attendance::join('users', 'attendance.user_id', '=', 'users.id')
+                    ->select('attendance.*', 'users.name')
+                    ->orderBy('created_at', 'desc')
+                    ->where([['date', '>', $startDate],['date', '<', $endDate]])
+                    ->paginate(1);
+        $attendance->appends(['start' => $startDate ,'end' => $endDate,'submit' => 'Submit' ])->links();
+        return view('attendance.index', compact('attendance'));
     }
 
     /**
@@ -48,9 +61,11 @@ class HrAttendanceController extends Controller
                 'check_in'=> $request->time,
                 'check_out'=> $request->time,
             ]);
-            return redirect()->back()->with(['success' => 'Welcome Check in Date: ' . $date. 'Time :'.$time ]);
+            Toastr::success('Welcome Check in Date: ' . $date. ' Time :'.$request->time ,'Success');
+            return redirect()->back();
         } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
         }
     }
 
@@ -92,7 +107,8 @@ class HrAttendanceController extends Controller
                                         ->update([
                                                     'check_out'=> $request->time,
                                                 ]);
-            return redirect()->back()->with(['success' => 'Good Byee Check Out Date: ' . $date. 'Time :'.$time ]);
+            Toastr::success('Goodbye Check in Date: ' . $date. 'Time :'.$request->time ,'Success');
+            return redirect()->back();
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }

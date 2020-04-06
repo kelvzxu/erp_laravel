@@ -111,8 +111,15 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
     Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');
     Route::get('/attendance', 'HrAttendanceController@index')->name('attendance');
+    Route::get('/attendance/filter', 'HrAttendanceController@search')->name('attendance.filter');
 
-
+    // ==== Leave ====
+    Route::get('leave','LeaveController@index')->name('leave');
+    Route::post('leave/store','LeaveController@store')->name('leave.store');
+    Route::post('leave/approve/{id}','LeaveController@approve')->name('leave.approve');
+    Route::post('leave/paid/{id}','LeaveController@paid')->name('leave.paid');
+    Route::get('leave/filter','LeaveController@search')->name('leave.filter');
+    
     // ==== Point Of Sale ====
     Route::get('/pos', 'OrderController@addOrder')->name('pos');
     Route::get('/pos/checkout', 'OrderController@checkout')->name('order.checkout');

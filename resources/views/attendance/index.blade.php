@@ -4,7 +4,7 @@
 <div class="container">
     <!-- header -->
     <div class="row">
-        <div class="col-12 col-md-7">
+        <div class="col-12 col-md-4">
             <div class="ml-auto text-right">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -15,12 +15,31 @@
             </div>
             <h3>Attendance Log</h3>
         </div>
-        <div class="col-12 col-md-5 text-right">
+        <div class="col-12 col-md-8 text-right">
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <form action="{{ route('attendance.filter') }}" method="get" >
+                <div class="form-row align-items-center">
+                    <div class="col-5">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text bg-primary text-white">Start Date</div>
+                        </div>
+                        <input type="date" class="form-control" id="inlineFormInputGroup" name="start" required>
+                    </div>
+                    </div>
+                    <div class="col-7">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text bg-primary text-white">End Date</div>
+                        </div>
+                        <input type="date" class="form-control" id="end" name="end" required>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="submit" name="submit"><i class="fa fa-send"> Submit</i></button>
+                        </div>
+                    </div>
+                    </div>
                 </div>
+            </form>
             </div>
         </div>
     </div>
@@ -54,7 +73,6 @@
             @endforelse
         </table>
         <br/>
-        {{$time=date('H:i:s')}}
         {!! $attendance->links() !!}
 
     </div>

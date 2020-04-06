@@ -749,6 +749,21 @@
                                 </li>
                                 <li>
                                     <a href="#">
+                                        <i class="metismenu-icon fa fa-calendar-times-o"></i>
+                                        Leave Management
+                                        <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="{{ route ('leave')}}">
+                                                <i class="metismenu-icon">
+                                                </i>Leave List
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
                                         <i class="metismenu-icon fa fa-credit-card-alt"></i>
                                         Payroll Management
                                         <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
@@ -818,6 +833,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a href="javascript:void(0);" class="nav-link">
+                                        <div class="badge badge-success mr-1 ml-0">
+                                                <small>NEW</small>
+                                            </div>
                                             Footer Link 2
                                         </a>
                                     </li>
@@ -826,17 +844,9 @@
                             <div class="app-footer-right">
                                 <ul class="nav">
                                     <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 3
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            <div class="badge badge-success mr-1 ml-0">
-                                                <small>NEW</small>
-                                            </div>
-                                            Footer Link 4
-                                        </a>
+                                    <p class="nav-link mt-1">
+                                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> | All rights reserved to .<a class="white"
+                                        href="https://kltech-intl.technology"> KLTECH_INTL </a></p>
                                     </li>
                                 </ul>
                             </div>
@@ -850,6 +860,10 @@
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
     <script src="{{asset('js/loadimg.js')}}"></script>
+    {{--toastr message--}}
+    {{--<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
     <script>
     $.ajax  ({
         url: "{{asset('api/employee/search')}}",
