@@ -20,14 +20,14 @@
                         <div class="input-group-prepend">
                             <select class="input-group-text bg-primary text-white" name="filter">
                                     <option value="" selected>Filter By</option>
-                                    <option value="invoice_no">Invoice No</option>
-                                    <option value="name">Customer Name</option>
+                                    <option value="purchase_no">Purchase No</option>
+                                    <option value="partner_name">Vendor Name</option>
                                     <option value="due_date">Due Date</option>
                             </select>
                         </div>
                         <input type="text" class="form-control" placeholder="Search...." name="value">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"> Search</i></button>
                         </div>
                     </div>
                 </form>

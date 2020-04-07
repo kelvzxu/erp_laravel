@@ -64,8 +64,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/purchases/edit{id}', 'PurchaseController@edit')->name('purchases.edit');
     Route::put('/purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
     Route::get('/purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
+    Route::get('/purchases/filter', 'PurchaseController@search')->name('purchases.filter');
     
-
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
     Route::get('employee/new','HrEmployeesController@create')->name('employee.new');

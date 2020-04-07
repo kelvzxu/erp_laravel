@@ -646,7 +646,7 @@
                                 <li>
                                     <a href="forms-layouts.html">
                                         <i class="metismenu-icon fa fa-pencil-square-o">
-                                        </i>Stock Opname
+                                        </i>Inventory Adjustments
                                     </a>
                                 </li>
                                 <li>

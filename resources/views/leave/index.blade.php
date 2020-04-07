@@ -33,7 +33,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Search...." name="value">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                            <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"> Search</i></button>
                         </div>
                     </div>
                 </form>

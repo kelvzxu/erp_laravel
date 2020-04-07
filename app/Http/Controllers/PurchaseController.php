@@ -21,6 +21,27 @@ class PurchaseController extends Controller
         return view('purchases.index', compact('purchases'));
     }
 
+    public function search(Request $request)
+    {
+        $key=$request->filter;
+        $value=$request->value;
+        echo "$key $value";
+        if ($key!=""){
+            $purchases = Purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
+                    ->select('purchases.*', 'res_partners.partner_name')
+                    ->orderBy('created_at', 'desc')
+                    ->where($key,'like',"%".$value."%")
+                    ->paginate(10);
+            $purchases ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
+        }else{
+            $purchases = Purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
+                    ->select('purchases.*', 'res_partners.partner_name')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+        }
+        return view('purchases.index', compact('purchases'));
+    }
+
     public function create()
     {
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
