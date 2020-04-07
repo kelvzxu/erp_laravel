@@ -14,11 +14,6 @@ use Illuminate\Http\Request;
 
 class ResPartnersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $partner = DB::table('res_partners')
@@ -30,22 +25,36 @@ class ResPartnersController extends Controller
         return view('res_partner.index',compact('partner'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function search(Request $request)
+    {
+        $key=$request->filter;
+        $value=$request->value;
+        echo "$key $value";
+        if ($key!=""){
+            $partner = DB::table('res_partners')
+                    ->join('res_country', 'res_partners.country_id', '=', 'res_country.id')
+                    ->select('res_partners.*', 'res_country.country_name')
+                    ->whereNull('res_partners.deleted_at')
+                    ->orderBy('partner_name', 'ASC')
+                    ->where($key,'like',"%".$value."%")
+                    ->paginate(10);
+            $customer ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
+        }else{
+            $partner = DB::table('res_partners')
+                    ->join('res_country', 'res_partners.country_id', '=', 'res_country.id')
+                    ->select('res_partners.*', 'res_country.country_name')
+                    ->whereNull('res_partners.deleted_at')
+                    ->orderBy('partner_name', 'ASC')
+                    ->paginate(10);
+        }
+        return view('res_partner.index',compact('partner'));
+    }
+
     public function create()
     {
         return view('res_partner.create_partner');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -110,12 +119,6 @@ class ResPartnersController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\res_partner  $res_partner
-     * @return \Illuminate\Http\Response
-     */
     public function show(res_partner $res_partner)
     {
         $country=res_country::orderBy('country_name', 'ASC')->get();
@@ -128,24 +131,11 @@ class ResPartnersController extends Controller
             compact('res_partner','country','state','currency','lang','tz','industry'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\res_partner  $res_partner
-     * @return \Illuminate\Http\Response
-     */
     public function edit(res_partner $res_partner)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\res_partner  $res_partner
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, res_partner $res_partner)
     {
         $this->validate($request, [
@@ -238,19 +228,11 @@ class ResPartnersController extends Controller
                     ->with(['success' => 'partner <strong>' .$request->name. '</strong> Diubah']);
             }
         } catch (\Exception $e) {
-            // return redirect()->back()/
-            echo $request->parent_id;
-            // ->with(['error' => 'Terjadi Kesalahan saat Menyimpan data']);
-            // ->with(['error' => $e->getMessage()]);
+            return redirect()->back()
+            ->with(['error' => 'Terjadi Kesalahan saat Menyimpan data']);
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\res_partner  $res_partner
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(res_partner $res_partner)
     {
         $partner = res_partner::where('id',$res_partner->id);
@@ -258,6 +240,7 @@ class ResPartnersController extends Controller
         $message="partner data with name '$res_partner->id' Has been Delete successfully " ;
         return redirect('/partner')->with('status', $message);
     }
+
     public function searchapi(Request $request)
     {
         $this->validate($request, [

@@ -10,15 +10,26 @@
     <!-- header -->
     <div class="row">
         <div class="col-12 col-md-7">
-            <h3>Supplier List</h3>
+            <h3>Vendors List</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <form action="{{ route('partner.filter') }}" method="get" >
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <select class="input-group-text bg-primary text-white" name="filter">
+                                <option value="" selected>Filter By</option>
+                                <option value="display_name">Display Name</option>
+                                <option value="parent_id">Company Name</option>
+                                <option value="city">City</option>
+                                <option value="country_name">Country</option>
+                        </select>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search...." name="value">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"> Search</i></button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- header button -->
@@ -30,7 +41,7 @@
 
     <div class="table-responsive-lg my-4">
         <table class="table">
-        <caption>Customer List</caption>
+        <caption>Vendors List</caption>
             <thead class="table table-sm">
                 <tr>
                     <th scope="col">No.</th>

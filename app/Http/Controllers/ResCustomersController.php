@@ -49,6 +49,7 @@ class ResCustomersController extends Controller
         }
         return view('res_customer.index',compact('customer'));
     }
+    
     public function create()
     {
         return view('res_customer.create_customer');

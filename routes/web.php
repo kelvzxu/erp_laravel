@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/partner/show/{res_partner}','ResPartnersController@show')->name('partner.show');
     Route::post('/partner/update','ResPartnersController@update')->name('partner.update');
     Route::get('/partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
-    
+    Route::get('/partner/filter', 'ResPartnersController@search')->name('partner.filter');
+
     // ==== Customer ====
     Route::get('/customer','ResCustomersController@index')->name('customer');
     Route::get('/customer/new','ResCustomersController@create')->name('customer.new');
