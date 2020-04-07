@@ -15,23 +15,23 @@
                 <h3>Invoices List</h3>
             </div>
             <div class="col-12 col-md-5 text-right">
-            <form action="{{ route('invoices.filter') }}" method="get" >
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <select class="input-group-text bg-primary text-white" name="filter">
-                                <option value="" selected>Filter By</option>
-                                <option value="invoice_no">Invoice No</option>
-                                <option value="name">Customer Name</option>
-                                <option value="due_date">Due Date</option>
-                        </select>
+                <form action="{{ route('invoices.filter') }}" method="get" >
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <select class="input-group-text bg-primary text-white" name="filter">
+                                    <option value="" selected>Filter By</option>
+                                    <option value="invoice_no">Invoice No</option>
+                                    <option value="name">Customer Name</option>
+                                    <option value="due_date">Due Date</option>
+                            </select>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Search...." name="value">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Search...." name="value">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
         </div>
         <div class="row">
             <div class="col-3">

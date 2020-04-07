@@ -14,11 +14,6 @@ use Illuminate\Http\Request;
 
 class ResCustomersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $customer = DB::table('res_customers')
@@ -27,26 +22,38 @@ class ResCustomersController extends Controller
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
                     ->paginate(10);
-        // return dd($customer);
         return view('res_customer.index',compact('customer'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function search(Request $request)
+    {
+        $key=$request->filter;
+        $value=$request->value;
+        echo "$key $value";
+        if ($key!=""){
+            $customer = DB::table('res_customers')
+                    ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
+                    ->select('res_customers.*', 'res_country.country_name')
+                    ->whereNull('res_customers.deleted_at')
+                    ->orderBy('name', 'ASC')
+                    ->where($key,'like',"%".$value."%")
+                    ->paginate(10);
+            $customer ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
+        }else{
+            $customer = DB::table('res_customers')
+                    ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
+                    ->select('res_customers.*', 'res_country.country_name')
+                    ->whereNull('res_customers.deleted_at')
+                    ->orderBy('name', 'ASC')
+                    ->paginate(10);
+        }
+        return view('res_customer.index',compact('customer'));
+    }
     public function create()
     {
         return view('res_customer.create_customer');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request, [

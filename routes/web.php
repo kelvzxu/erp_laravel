@@ -32,7 +32,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/customer/show/{res_customer}','ResCustomersController@show')->name('customer.show');
     Route::post('/customer/update','ResCustomersController@update')->name('customer.update');
     Route::get('/customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
-    
+    Route::get('/customer/filter','ResCustomersController@search')->name('customer.filter');
+
     // ==== Customer ====
     Route::get('/CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
     Route::get('/CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
@@ -64,6 +65,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('/purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
     Route::get('/purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
     
+
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
     Route::get('employee/new','HrEmployeesController@create')->name('employee.new');

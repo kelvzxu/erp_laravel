@@ -559,7 +559,7 @@
                                 <li>
                                     <a href="{{ route ('customer')}}">
                                         <i class="metismenu-icon fa fa-user"></i>
-                                        Customer
+                                        Customers
                                     </a>
                                 </li>
                                 <li>
@@ -584,7 +584,7 @@
                                         <li>
                                             <a href="elements-buttons-standard.html">
                                                 <i class="metismenu-icon"></i>
-                                                Report Customer
+                                                Report Customers
                                             </a>
                                         </li>
                                     </ul>
@@ -600,7 +600,7 @@
                                 <li>
                                     <a href="{{ route ('partner')}}">
                                         <i class="metismenu-icon fa fa-building "></i>
-                                        Supplier
+                                        Vendors
                                     </a>
                                 </li>
                                 <li>
@@ -625,7 +625,7 @@
                                         <li>
                                             <a href="elements-buttons-standard.html">
                                                 <i class="metismenu-icon"></i>
-                                                Supplier Report
+                                                Vendors Report
                                             </a>
                                         </li>
                                     </ul>
