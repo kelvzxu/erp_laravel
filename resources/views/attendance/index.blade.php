@@ -19,7 +19,7 @@
             <div class="input-group mb-3">
             <form action="{{ route('attendance.filter') }}" method="get" >
                 <div class="form-row align-items-center">
-                    <div class="col-5">
+                    <div class="col-12 col-md-5">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                         <div class="input-group-text bg-primary text-white">Start Date</div>
@@ -27,7 +27,7 @@
                         <input type="date" class="form-control" id="inlineFormInputGroup" name="start" required>
                     </div>
                     </div>
-                    <div class="col-7">
+                    <div class="col-12 col-md-7">
                     <div class="input-group mb-2">
                         <div class="input-group-prepend">
                         <div class="input-group-text bg-primary text-white">End Date</div>
