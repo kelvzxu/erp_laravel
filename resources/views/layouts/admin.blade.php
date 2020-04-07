@@ -854,7 +854,7 @@
                     </div>
                 </div>
             </div>
-            <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+            <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
@@ -862,7 +862,7 @@
     <script src="{{asset('js/loadimg.js')}}"></script>
     {{--toastr message--}}
     {{--<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     {!! Toastr::message() !!}
     <script>
     $.ajax  ({
