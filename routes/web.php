@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/invoices/edit{id}', 'InvoiceController@edit')->name('invoices.edit');
     Route::put('/invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
     Route::get('/invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
+    Route::get('/invoices/filter', 'InvoiceController@search')->name('invoices.filter');
 
     // ==== purchases ====
     Route::get('/purchases', 'PurchaseController@index')->name('purchases');

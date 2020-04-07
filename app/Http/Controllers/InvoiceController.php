@@ -21,6 +21,27 @@ class InvoiceController extends Controller
         return view('invoices.index', compact('invoices'));
     }
 
+    public function search(Request $request)
+    {
+        $key=$request->filter;
+        $value=$request->value;
+        echo "$key $value";
+        if ($key!=""){
+            $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
+                    ->select('invoices.*', 'res_customers.name')
+                    ->orderBy('created_at', 'desc')
+                    ->where($key,'like',"%".$value."%")
+                    ->paginate(10);
+            $invoices ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
+        }else{
+            $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
+                    ->select('invoices.*', 'res_customers.name')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(10);
+        }
+        return view('invoices.index', compact('invoices'));
+    }
+
     public function create()
     {
         $customer = res_customer::orderBy('name', 'asc')->get();
