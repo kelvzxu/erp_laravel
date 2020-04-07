@@ -2,9 +2,9 @@
 @section('title','SK - Home')
 @section('content')
 <div class="row">
-<div class="col-8 bg-primary mt-0">
+<div class="col-12 col-md-8 bg-primary mt-0">
 </div>
-<div class="col-4 bg-white">
+<div class="col-12 col-md-4 bg-white">
     <div id="attendance">
     @if (session('success'))
         <div class="alert alert-success mt-2">
