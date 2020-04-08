@@ -544,20 +544,20 @@
                         <ul class="vertical-nav-menu">
                             <li class="app-sidebar__heading">Dashboards</li>
                             <li>
-                                <a href="{{route('home')}}" class="mm-active">
+                                <a href="{{route('home')}}" id="home" class="menu-item">
                                     <i class="metismenu-icon fa fa-home"></i>
                                     Home
                                 </a>
                             </li>
                             <li class="app-sidebar__heading">Sales</li>
                                 <li>
-                                    <a href="{{ route ('invoices')}}">
+                                    <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
                                         <i class="metismenu-icon fa fa-shopping-bag"></i>
-                                        Invoices
+                                        Sales Order
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route ('customer')}}">
+                                    <a href="{{ route ('customer')}}" id="customer" class="menu-item">
                                         <i class="metismenu-icon fa fa-user"></i>
                                         Customers
                                     </a>
@@ -570,19 +570,19 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="" id="report_invoice" class="menu-item" >
                                                 <i class="metismenu-icon"></i>
                                                 Report Invoice
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="" id="report-return" class="menu-item">
                                                 <i class="metismenu-icon"></i>
                                                 Report Selling Return
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="" id="report-customer" class="menu-item">
                                                 <i class="metismenu-icon"></i>
                                                 Report Customers
                                             </a>
@@ -592,13 +592,13 @@
                             </li>
                             <li class="app-sidebar__heading">Purchase</li>
                                 <li>
-                                    <a href="{{ route ('purchases')}}">
+                                    <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
                                         <i class="metismenu-icon fa fa-shopping-basket"></i>
                                         Purchase Order
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route ('partner')}}">
+                                    <a href="{{ route ('partner')}}" id="partner" class="menu-item">
                                         <i class="metismenu-icon fa fa-building "></i>
                                         Vendors
                                     </a>
@@ -611,19 +611,19 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Purchase Order Report
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Purchase Return
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Vendors Report
                                             </a>
@@ -644,19 +644,19 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="forms-layouts.html">
+                                    <a href="">
                                         <i class="metismenu-icon fa fa-pencil-square-o">
                                         </i>Inventory Adjustments
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="forms-validation.html">
+                                    <a href="">
                                         <i class="metismenu-icon fa fa-usd ">
                                         </i>PriceList
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="forms-validation.html">
+                                    <a href="">
                                         <i class="metismenu-icon fa fa-truck">
                                         </i>onloadings 
                                     </a>
@@ -669,25 +669,25 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Product Report
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Stock Report
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 PriceList Report
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Onloading Reports
                                             </a>
@@ -763,7 +763,7 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="#" id="payroll" class="menu-item">
                                         <i class="metismenu-icon fa fa-credit-card-alt"></i>
                                         Payroll Management
                                         <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
@@ -778,9 +778,9 @@
                                     </ul>
                                     <ul>
                                         <li>
-                                            <a href="components-tabs.html">
+                                            <a href="{{ route ('payslip')}}" id="payslip" class="menu-item">
                                                 <i class="metismenu-icon">
-                                                </i>employee salary
+                                                </i>Employee PaySlip
                                             </a>
                                         </li>
                                     </ul>
@@ -793,19 +793,19 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Purchase Order Report
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Purchase Return
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="elements-buttons-standard.html">
+                                            <a href="">
                                                 <i class="metismenu-icon"></i>
                                                 Supplier Report
                                             </a>
@@ -854,7 +854,6 @@
                     </div>
                 </div>
             </div>
-            <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
         </div>
     </div>
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
@@ -865,6 +864,10 @@
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     {!! Toastr::message() !!}
     <script>
+    function unactive(){
+    $('.menu-item').removeClass('mm-active');
+    }
+ 
     $.ajax  ({
         url: "{{asset('api/employee/search')}}",
         type: 'post',

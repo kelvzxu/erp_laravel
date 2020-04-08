@@ -80,3 +80,8 @@
         </div>
     </div>
 @endsection
+@section('js')
+<script>
+$('a#purchases').addClass('mm-active');
+</script>
+@endsection

@@ -101,6 +101,7 @@
 @endsection
 @section('js')
 <script>
+$('a#purchases').addClass('mm-active');
 $.ajax  ({
     url: "{{asset('api/partner/search')}}",
     type: 'post',

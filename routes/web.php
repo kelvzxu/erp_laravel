@@ -74,6 +74,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('employee/edit/{hr_employee}','HrEmployeesController@edit')->name('employee.edit');
     Route::post('employee/update','HrEmployeesController@update')->name('employee.update');
     Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
+    Route::get('employee/filter','HrEmployeesController@search')->name('employee.filter');
 
     // ==== HR Department ====
     Route::get('department','HrDepartmentController@index')->name('department');
@@ -90,6 +91,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('jobs/edit/{id}','HrJobsController@edit')->name('jobs.edit');
     Route::post('jobs/update/{id}','HrJobsController@update')->name('jobs.update');
     Route::get('jobs/delete/{id}','HrJobsController@destroy')->name('jobs.delete');
+
+    // ==== HR PaySlip ====
+    Route::get('payslip','ManageSalaryController@index')->name('payslip');
+    Route::get('payslip/create','ManageSalaryController@create')->name('payslip.create');
+    Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrEmployeesController@index')->name('recruitment');

@@ -88,3 +88,8 @@
         </div>
     </div>
 @endsection
+@section('js')
+<script>
+    $('a#invoices').addClass('mm-active');
+</script>
+@endsection

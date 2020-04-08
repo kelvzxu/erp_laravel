@@ -29,6 +29,8 @@
         window._form = {!! $invoice->toJson() !!};
         var data  = {!! $invoice->toJson() !!};
         var product = data.products
+        $('a#invoices').addClass('mm-active');
+
         $.each(product, function (i) {
             $.ajax  ({
                 url: "{{asset('api/product/search')}}",

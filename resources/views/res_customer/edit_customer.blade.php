@@ -39,12 +39,23 @@
             <h3>Update Customer</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
+            <form action="{{ route('customer.filter') }}" method="get" >
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <select class="input-group-text bg-primary text-white" name="filter">
+                                <option value="" selected>Filter By</option>
+                                <option value="display_name">Display Name</option>
+                                <option value="parent_id">Company Name</option>
+                                <option value="city">City</option>
+                                <option value="country_name">Country</option>
+                        </select>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search...." name="value">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"> Search</i></button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <!-- header button -->
@@ -335,5 +346,8 @@
 </div>
 @endsection
 @section('js')
+<script>
+$('a#customer').addClass('mm-active');
+</script>
 @include('api.api')
 @endsection

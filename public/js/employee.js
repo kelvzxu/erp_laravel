@@ -10,7 +10,7 @@ function show(element){
 function unactive(){
     $('.nav-link').removeClass('active');
 }
-
+ 
 $(function () {
     close();
     show("#privateinformation")

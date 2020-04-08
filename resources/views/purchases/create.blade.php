@@ -145,7 +145,7 @@
             }]
         };
 
-        
+        $('a#purchases').addClass('mm-active');
     </script>
     <script src="{{asset('/js/transaksi/purchase.js')}}"></script>
 @endsection

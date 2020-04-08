@@ -79,3 +79,8 @@
     </div>
 </div>
 @endsection
+@section('js')
+<script>
+$('a#partner').addClass('mm-active');
+</script>
+@endsection

@@ -16,26 +16,44 @@ use App\Http\Controllers\Controller;
 
 class HrEmployeesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
                     ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
+                    ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name')
                     ->paginate(10);
         return view ('hr_employee.index',compact('employee'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function search(Request $request)
+    {
+        $key=$request->filter;
+        $value=$request->value;
+        echo "$key $value";
+        if ($key!=""){
+            $employee = DB::table('hr_employees')
+                    ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
+                    ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
+                    ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
+                    ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
+                    ->orderBy('employee_name', 'ASC')
+                    ->where($key,'like',"%".$value."%")
+                    ->paginate(10);
+            $employee ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
+        }else{
+            $employee = DB::table('hr_employees')
+                    ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
+                    ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
+                    ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
+                    ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
+                    ->orderBy('employee_name', 'ASC')
+                    ->paginate(10);
+        }
+        return view('hr_employee.index',compact('employee'));
+    }
+
     public function create()
     {
         $departments = hr_department::orderBy('department_name', 'ASC')->get();

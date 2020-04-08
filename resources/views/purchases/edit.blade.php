@@ -29,6 +29,7 @@
         window._form = {!! $purchase->toJson() !!};
         var data  = {!! $purchase->toJson() !!};
         var product = data.products
+        $('a#purchases').addClass('mm-active');
         $.each(product, function (i) {
             $.ajax  ({
                 url: "{{asset('api/product/search')}}",

@@ -145,7 +145,8 @@
             }]
         };
 
-        
+        $('a#invoices').addClass('mm-active');
+
     </script>
     <script src="{{asset('/js/transaksi/invoice.js')}}"></script>
 @endsection

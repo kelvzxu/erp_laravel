@@ -101,6 +101,7 @@
 @endsection
 @section('js')
 <script>
+$('a#invoices').addClass('mm-active');
 $.ajax  ({
     url: "{{asset('api/customer/search')}}",
     type: 'post',

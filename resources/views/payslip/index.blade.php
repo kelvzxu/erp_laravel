@@ -14,14 +14,14 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="{{route('employee')}}">Employee</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><a href="{{route('payslip')}}">Payslip</a></li>
                     </ol>
                 </nav>
             </div>
-            <h3>Employee List</h3>
+            <h3>Employee Payslip</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
-            <form action="{{ route('employee.filter') }}" method="get" >
+            <form action="{{ route('payslip.filter') }}" method="get" >
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <select class="input-group-text bg-primary text-white" name="filter">
@@ -41,11 +41,11 @@
         </div>
     </div>
     <!-- header button -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-3">
             <a href="{{route('employee.new')}}" class="btn btn-primary">Create</a>
         </div>
-    </div>
+    </div> -->
 
     <div class="table-responsive-lg my-4">
         <table class="table">
@@ -55,9 +55,8 @@
                     <th scope="col">No.</th>
                     <th scope="col">Photo</th>
                     <th scope="col">Employee Name</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Country</th>
                     <th scope="col">Department</th>
+                    <th scope="col">Jobs Position</th>
                     <th scope="col">action</th>
                 </tr>
             </thead>
@@ -67,17 +66,10 @@
                     <th scope="row">{{$loop->iteration}}
                     <th ><img src="{{asset('uploads/Employees/'.$emp->photo)}}" width=50px></th>
                     <th >{{$emp->employee_name}}</th>
-                    <th >{{$emp->city}}</th>
-                    <th >{{$emp->country_name}}</th>
                     <th >{{$emp->department_name}}</th>
+                    <th >{{$emp->jobs_name}}</th>
                     <th >
-                        <form id="delete-form-{{ $emp->id }}" action="{{route('employee.delete',$emp->id)}}" method="put">
-                            @csrf
-                            @method('DELETE')
-                                <a href="{{route('employee.edit',$emp->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Edit</i></a>
-                            <button type="button" onclick="deletePost({{ $emp->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash">  Delete</i></button>
-                            {{--onclick="return confirm('Are you sure?')"--}}
-                        </form>
+                        <a href="{{route('payslip.create',$emp->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Create Payslip</i></a>
                     </th>
                 </tr>
                 @empty
@@ -95,8 +87,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
 
 <script type="text/javascript">
+    $('a#payslip').addClass('mm-active');
+    $('a#payroll').addClass('mm-active');
     function deletePost(id)
-
     {
         const swalWithBootstrapButtons = swal.mixin({
             confirmButtonClass: 'btn btn-success',
