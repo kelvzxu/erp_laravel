@@ -142,4 +142,19 @@ class HrAttendanceController extends Controller
             'data' => []
         ]);
     }
+    public function getcount(Request $request){
+        $startDate=$request->start;
+        $endDate=$request->end;
+        $attendance = hr_attendance::where([['user_id',$request->id],['date', '>', $startDate],['date', '<', $endDate]])->count();
+        if ($attendance) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $attendance
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
+    }
 }

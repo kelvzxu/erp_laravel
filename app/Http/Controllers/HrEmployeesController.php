@@ -76,8 +76,8 @@ class HrEmployeesController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:50|unique:products',
-            'work_email' => 'required|email',
-            'password' => 'required|string|min:8|confirmed',
+            'work_email' => 'required|min:5|email',
+            'password' => 'required|string|confirmed',
             'identification_id' => 'required',
             'gender' => 'required',
             'address' => 'required',
@@ -85,7 +85,6 @@ class HrEmployeesController extends Controller
             'work_phone'=> 'required',
             'emergency_contact'=> 'required',
             'emergency_phone' => 'required',
-            'department_id'=>'required',
             'country_of_birth' => 'required|integer',
         ]);
         try {
@@ -109,7 +108,7 @@ class HrEmployeesController extends Controller
             $id =$user->id;
             // create employee
             $employee = hr_employee::create([
-                'user_id'=> $id,
+                'user_id'=> $user->id,
                 'employee_name'=> $request->name,
                 'identification_id'=> $request->identification_id,
                 'active'=> True,
@@ -151,7 +150,7 @@ class HrEmployeesController extends Controller
                 'coach_id'=> $request->coach_id,
             ]);
             return redirect(route('employee'))
-                ->with(['success' => 'employee <strong>' .$request->name. '</strong> Ditambahkan']);
+                ->with(['success' => 'employee ' .$request->name. '> Ditambahkan']);
         } catch (\Exception $e) {
             return redirect()->back()
             // ->with(['error' => 'Terjadi Kesalahan saat Menyimpan data']);
@@ -334,7 +333,12 @@ class HrEmployeesController extends Controller
             'email' => 'required'
         ]);
 
-        $employee = hr_employee::where('work_email', $request->email)->first();
+        $employee = hr_employee::join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
+                                ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
+                                ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
+                                ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
+                                ->where('hr_employees.work_email',$request->email)->first();
+        // $employee = hr_employee::where('work_email', $request->email)->first();
         if ($employee) {
             return response()->json([
                 'status' => 'success',

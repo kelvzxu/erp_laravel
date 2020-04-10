@@ -11,6 +11,7 @@ class hr_employee extends Model
     use softDeletes;
     protected $fillable = [
         'employee_name',
+        'user_id',
                 'identification_id',
                 'active',
                 'gender',

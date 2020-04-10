@@ -13,11 +13,7 @@ class LeaveController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $leaves = Leave::join('users', 'leaves.user_id', '=', 'users.id')
@@ -27,11 +23,6 @@ class LeaveController extends Controller
         return view('leave.index',compact('leaves'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function search(Request $request)
     {
         $key=$request->filter;
@@ -53,12 +44,6 @@ class LeaveController extends Controller
         return view('leave.index',compact('leaves'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         try{ 
@@ -78,57 +63,29 @@ class LeaveController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\leave  $leave
-     * @return \Illuminate\Http\Response
-     */
     public function show(leave $leave)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\leave  $leave
-     * @return \Illuminate\Http\Response
-     */
     public function edit(leave $leave)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\leave  $leave
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, leave $leave)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\leave  $leave
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(leave $leave)
-    {
-        //
-    }
+    
     public function approve(Request $request,$id)
     {
-
+        
       //  dd($request->all());
         $leave = Leave::find($id);
 //        dd($leave);
-       if($leave){
+        if($leave){
            $leave->is_approved = $request -> approve;
            $leave->save();
            return redirect()->back();
@@ -143,5 +100,21 @@ class LeaveController extends Controller
             $leave->save();
             return redirect()->back();
         }
+    }
+    
+    public function getcount(Request $request){
+        $startDate=$request->start;
+        $endDate=$request->end;
+        $leaves = Leave::where([['user_id',$request->id],['is_approved',1],['date_from', '>', $startDate],['date_from', '<', $endDate]]);
+        if ($leaves) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $leaves
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
     }
 }

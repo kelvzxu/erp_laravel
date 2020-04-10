@@ -2,9 +2,9 @@
 @section('title','SK - Employee')
 @section('content')
 <div class="container">
-    @if (session('status'))
+    @if (session('success'))
         <div class="alert alert-success">
-        {{ session('status') }}
+        {{ session('success') }}
         </div>
     @endif
     <!-- header -->

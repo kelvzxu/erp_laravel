@@ -88,8 +88,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($request->id);
         $categories = Category::orderBy('name', 'ASC')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        // print_r($product);
-        return view('products.edit', compact('product', 'categories'));
+        print_r($product);
+        // return view('products.edit', compact('product', 'categories'));
     }
 
     public function update(Request $request)

@@ -115,12 +115,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="widget-content-left  ml-3 header-user-info">
+                                <div class="widget-content-left  mt-3 ml-3 header-user-info">
                                     <div class="widget-heading">
                                         {{ Auth::user()->name }}
                                     </div>
                                     <div class="widget-subheading">
-                                        VP People Manager
+                                        
                                     </div>
                                 </div>
                                 <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -877,13 +877,10 @@
         },
         success: function (result) {
             $('#profile').append(`
-                <img width="42" id="picture_profile" class="rounded-circle" src="{{asset('uploads/Employees/`+result.data.photo+`')}}"
+                <img width="42" id="picture_profile" class="rounded" src="{{asset('uploads/Employees/`+result.data.photo+`')}}"
                     alt="">
-                                            `);
-            // $("#picture_profile"). attr("src", "{{asset('uploads/Employees/result.data.name')}}");
-            // $("#client").val(result.data.name);
-            // console.log("{{ Auth::user()->email}}");
-                        // $("#client").val(result.data.name);
+                                    `);
+            $(".widget-subheading").append(`<pre>`+result.data.jobs_name+`</pre>`)
         }
     })
     </script>

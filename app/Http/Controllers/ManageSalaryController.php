@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Human_Resource\managesalary;
+use App\Models\Human_Resource\leave;
 use App\Models\Human_Resource\hr_employee;
-use App\Models\Human_Resource\hr_job;
-use App\Models\Human_Resource\hr_department;
-use App\Models\World_database\res_country;
-use App\Models\World_database\res_country_state;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -51,9 +48,15 @@ class ManageSalaryController extends Controller
         return view('payslip.index',compact('employee'));
     }
 
-    public function create()
+    public function create($id)
     {
-        //
+        $employee = DB::table('hr_employees')
+                    ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
+                    ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
+                    ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
+                    ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
+                    ->where('hr_employees.id',$id)->first();
+        return view ('payslip.create',compact('employee'));
     }
 
     /**
@@ -110,5 +113,22 @@ class ManageSalaryController extends Controller
     public function destroy(manage_salary $manage_salary)
     {
         //
+    }
+
+    public function getcount(Request $request)
+    {
+        $startDate=$request->start;
+        $endDate=$request->end;
+        $total_leaves=Leave::all()->where('user_id',$request->id)->where('is_approved',1)->where('date_from', '>',$startDate)->where('date_to', '<',$endDate);
+        if ($total_leaves) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $total_leaves
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
     }
 }

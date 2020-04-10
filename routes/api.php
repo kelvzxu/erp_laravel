@@ -33,5 +33,7 @@ Route::post('/partner/search', 'ResPartnersController@searchapi');
 Route::post('/product/search', 'ProductController@searchapi');
 Route::post('/employee/search', 'HrEmployeesController@searchapi');
 Route::get('/attendance', 'HrAttendanceController@checkatd');
+Route::post('/atd-count', 'HrAttendanceController@getcount');
+Route::post('/leave', 'ManageSalaryController@getcount');
 
 Route::get('/chart', 'HomeController@getChart');

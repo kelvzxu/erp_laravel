@@ -46,7 +46,8 @@
                     <label for="fname" class="col-sm-3 text-right control-label col-form-label">Reason</label>
                     <div class="col-sm-9">
                         <textarea type="text" name="reason" class="form-control" placeholder="Reason">
-                        </textarea></div>
+                        </textarea>
+                    </div>
                 </div>
                 <div class="border-top">
                     <button type="submit" class="btn btn-dark my-2"><i class="fa fa-send"> Apply</i></button>
