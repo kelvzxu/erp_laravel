@@ -96,6 +96,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('payslip','ManageSalaryController@index')->name('payslip');
     Route::get('payslip/create/{id}','ManageSalaryController@create')->name('payslip.create');
     Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
+    Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrEmployeesController@index')->name('recruitment');

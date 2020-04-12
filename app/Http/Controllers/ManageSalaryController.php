@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Human_Resource\managesalary;
 use App\Models\Human_Resource\leave;
 use App\Models\Human_Resource\hr_employee;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -67,7 +68,34 @@ class ManageSalaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prefixcode = "SLIP";
+        $count = managesalary::all()->count();
+        if ($count==0){
+            $payslip_no= "$prefixcode"."00000001";
+        }else {
+            $latestpayslip = managesalary::orderBy('id','DESC')->first();
+            $payslip_no = $prefixcode.str_pad($latestpayslip->id + 1, 8, "0", STR_PAD_LEFT);
+        }
+        try {
+            $payslip = managesalary::create([
+                'payslip_no'=>$payslip_no,
+                'employee_id'=>$request->id,
+                'designation_type'=>$request->jobs,
+                'salary'=>$request->salary,
+                'date_from'=>$request->from,
+                'date_to'=>$request->to,
+                'working_days'=>$request->attendance,
+                'leave_days'=>$request->leave,
+                'tax'=>$request->tax,
+                'gross_salary'=>$request->total,
+            ]);
+            Toastr::success('Payslip for ' . $request->name. ' with payslip_no ' . $payslip_no. ' has been created successfully  ','Success');
+            return redirect(route('payslip'));
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Error');
+            return redirect()->back();
+        }
+        
     }
 
     /**
