@@ -62,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3 text-center d-sm-none d-md-block ">
+                <div class="col-sm-3 text-center d-none d-md-block ">
                     <img src="{{asset('uploads/Employees/'.$employee->photo)}}" width=120px>
                 </div>
             </div>
@@ -100,37 +100,37 @@
             <hr>
             <div id="salarydetail" style="display: none">
                 <div class="row">
-                    <h3 class="col-sm-10 font-weight-bold text-primary">Salary Detail</h3>
+                    <h3 class="col-10 font-weight-bold text-primary">Salary Detail</h3>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">employee salary</label>
-                    <div class="col-sm-7">
+                    <label class="col-3">employee salary</label>
+                    <div class="col-7">
                         <input type="text" style="border:none" name="salary" id="salary" value="{{$employee->salary}}" readonly>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">employee attendance</label>
-                    <div class="col-sm-1">
+                    <label class="col-3">employee attendance</label>
+                    <div class="col-1">
                         <input type="text" style="border:none" name="attendance" id="attendance" value="0" readonly>
                     </div>
                     <label class="col-7">Days</label>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">employee leave</label>
-                    <div class="col-sm-1">
+                    <label class="col-3">employee leave</label>
+                    <div class="col-1">
                         <input type="text" style="border:none" name="leave" id="leave" value="0" readonly>
                     </div>
                     <label class="col-7">Days</label>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Tax</label>
-                    <div class="col-sm-7">
+                    <label class="col-3">Tax</label>
+                    <div class="col-7">
                         <input type="text" style="border:none" name="tax" id="tax" readonly>
                     </div>
                 </div>
                 <div class="row">
-                    <label class="col-sm-3">Grand Total</label>
-                    <div class="col-sm-7">
+                    <label class="col-3">Grand Total</label>
+                    <div class="col-7">
                         <input type="text" style="border:none" name="total" id="total" readonly>
                     </div>
                 </div>

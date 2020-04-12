@@ -19,31 +19,31 @@
                 @csrf
                 <h4 class="card-title">Apply Leave</h4>
                 <div class="form-group row">
-                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Leave type</label>
+                    <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Leave type</label>
                     <div class="col-sm-9">
                         <input type="text" name="leave_type" class="form-control" id="fname" placeholder="Leave type">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Date from</label>
+                    <label for="lname" class="col-sm-3 text-md-right control-label col-form-label">Date from</label>
                     <div class="col-sm-9">
                         <input type="date" min="{{date('Y-m-d')}}" name="date_from" class="form-control" id="FromDate">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="lname" class="col-sm-3 text-right control-label col-form-label">Date To</label>
+                    <label for="lname" class="col-sm-3 text-md-right control-label col-form-label">Date To</label>
                     <div class="col-sm-9">
                         <input type="date" name="date_to" class="form-control" id="ToDate">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Days</label>
+                    <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Days</label>
                     <div class="col-sm-9">
                         <input type="text" name="days" class="form-control" id="TotalDays" placeholder="Number of leave days">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="fname" class="col-sm-3 text-right control-label col-form-label">Reason</label>
+                    <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Reason</label>
                     <div class="col-sm-9">
                         <textarea type="text" name="reason" class="form-control" placeholder="Reason">
                         </textarea>
