@@ -18,7 +18,7 @@
                     </ol>
                 </nav>
             </div>
-            <h3>Employee Payslip</h3>
+            <h3>Payslip</h3>
         </div>
         <div class="col-12 col-md-5 text-right">
             <form action="{{ route('payslip.filter') }}" method="get" >
@@ -41,53 +41,41 @@
         </div>
     </div>
     <!-- header button -->
-    <!-- <div class="row">
+    <div class="row">
         <div class="col-3">
-            <a href="{{route('employee.new')}}" class="btn btn-primary">Create</a>
+            <a href="{{route('payslip.create')}}" class="btn btn-primary">Create Payslip</a>
         </div>
-    </div> -->
+    </div>
 
     <div class="table-responsive-lg my-4">
         <table class="table">
-        <caption>Employee List</caption>
+        <caption>Payslip</caption>
             <thead class="table table-sm">
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">Photo</th>
+                    <th scope="col">Payslip No</th>
                     <th scope="col">Employee Name</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Jobs Position</th>
+                    <th scope="col">Period</th>
                     <th scope="col">action</th>
                 </tr>
             </thead>
-            @forelse($employee as $emp)
+            @forelse($payslips as $data)
             <tbody>
                 <tr> 
-                    <th scope="row">{{$loop->iteration}}
-                    <th ><img src="{{asset('uploads/Employees/'.$emp->photo)}}" width=50px></th>
-                    <th >{{$emp->employee_name}}</th>
-                    <th >{{$emp->department_name}}</th>
-                    <th >{{$emp->jobs_name}}</th>
-                    <th >
-                        <a href="{{route('payslip.create',$emp->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Create Payslip</i></a>
+                    <th scope="row">{{$loop->iteration}}</th>
+                    <th>{{$data->payslip_no}}</th>
+                    <th>{{$data->employee_name}}</th>
+                    <th>{{$data->date_from}} - {{$data->date_to}}</th>
+                    <th>
+                        <a href="" class="btn btn-sm btn-success"><i class="fa fa-edit">  View Detail</i></a>
                     </th>
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center">Jobs is Empty</td>
+                    <td colspan="7" class="text-center"> Payslip is Empty</td>
                 </tr>
             </tbody>
             @endforelse
-            {{ $employee->links() }}
         </table>
     </div>
-</div>
-@endsection
-@section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
-
-<script type="text/javascript">
-    $('a#payslip').addClass('mm-active');
-    $('a#payroll').addClass('mm-active');
-</script>
 @endsection

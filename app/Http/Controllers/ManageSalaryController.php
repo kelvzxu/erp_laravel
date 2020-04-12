@@ -11,7 +11,15 @@ use Illuminate\Http\Request;
 
 class ManageSalaryController extends Controller
 {
-    public function index()
+    public function index(){
+        $payslips = managesalary::join('hr_employees', 'managesalaries.employee_id', '=', 'hr_employees.id')
+                                ->select('managesalaries.*', 'hr_employees.employee_name')
+                                ->orderBy('created_at', 'DESC')
+                                ->paginate(10);
+        return view ('payslip.index',compact('payslips'));
+    }
+
+    public function create()
     {
         $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
@@ -19,7 +27,7 @@ class ManageSalaryController extends Controller
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->paginate(10);
-        return view ('payslip.index',compact('employee'));
+        return view ('payslip.create',compact('employee'));
     }
 
     public function search(Request $request)
@@ -46,10 +54,10 @@ class ManageSalaryController extends Controller
                     ->orderBy('employee_name', 'ASC')
                     ->paginate(10);
         }
-        return view('payslip.index',compact('employee'));
+        return view('payslip.create',compact('employee'));
     }
 
-    public function create($id)
+    public function payment($id)
     {
         $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
@@ -57,7 +65,7 @@ class ManageSalaryController extends Controller
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->where('hr_employees.id',$id)->first();
-        return view ('payslip.create',compact('employee'));
+        return view ('payslip.store',compact('employee'));
     }
 
     /**

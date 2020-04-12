@@ -94,8 +94,9 @@ Route::group(['middleware' => 'auth'], function (){
 
     // ==== HR PaySlip ====
     Route::get('payslip','ManageSalaryController@index')->name('payslip');
-    Route::get('payslip/create/{id}','ManageSalaryController@create')->name('payslip.create');
+    Route::get('payslip/payment/{id}','ManageSalaryController@payment')->name('payslip.payment');
     Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
+    Route::get('payslip/create','ManageSalaryController@create')->name('payslip.create');
     Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
 
     // ==== Recruitment ====

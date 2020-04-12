@@ -16,7 +16,7 @@ class CreateManagesalariesTable extends Migration
         Schema::create('managesalaries', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('payslip_no');
-            $table->string('employee_id');
+            $table->integer('employee_id');
             $table->string('designation_type');
             $table->string('salary');
             $table->string('date_from');
