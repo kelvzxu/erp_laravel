@@ -111,11 +111,6 @@ class ProductController extends Controller
                 $request->file('photo')->move($destination, $nama_file);
             }
 
-            if ($request->hasFile('photo')) {
-                !empty($photo) ? File::delete(public_path('uploads/product/' . $photo)):null;
-                $photo = $this->saveFile($request->name, $request->file('photo'));
-            }
-
             $product->update([
                 'name' => $request->name,
                 'description' => $request->description,
