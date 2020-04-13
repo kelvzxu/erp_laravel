@@ -51,7 +51,7 @@ class ProductController extends Controller
                 'stock' => $request->stock,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
-                'photo' => $photo
+                'photo' => $nama_file
             ]);
             return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
@@ -104,6 +104,9 @@ class ProductController extends Controller
         ]);
 
         try {
+            $product = Product::findOrFail( $request->code);
+            $nama_file = $product->photo;
+
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
@@ -111,13 +114,14 @@ class ProductController extends Controller
                 $request->file('photo')->move($destination, $nama_file);
             }
 
+
             $product->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'stock' => $request->stock,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
-                'photo' => $photo
+                'photo' => $nama_file
             ]);
 
             return redirect(route('product'))
