@@ -104,8 +104,12 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::findOrFail( $request->code);
-            $photo = $product->photo;
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo')->getClientOriginalName();
+                $nama_file = time()."_".$photo;
+                $destination = base_path() . '/public/uploads/product';
+                $request->file('photo')->move($destination, $nama_file);
+            }
 
             if ($request->hasFile('photo')) {
                 !empty($photo) ? File::delete(public_path('uploads/product/' . $photo)):null;
