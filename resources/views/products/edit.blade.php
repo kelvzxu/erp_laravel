@@ -57,9 +57,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Stok</label>
-                                    <input type="number" name="stock" required 
+                                    <input type="number" name="stock" required  readonly
                                         value="{{ $product->stock }}"
-                                        class="form-control {{ $errors->has('stock') ? 'is-invalid':'' }}">
+                                        class="bg-white form-control {{ $errors->has('stock') ? 'is-invalid':'' }}">
                                     <p class="text-danger">{{ $errors->first('stock') }}</p>
                                 </div>
                                 <div class="form-group">
