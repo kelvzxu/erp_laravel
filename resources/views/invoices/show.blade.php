@@ -113,17 +113,17 @@ $.ajax  ({
         $("#client").html(result.data.name);
     }
 })
-$.ajax  ({
-    url: "{{asset('api/product/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$product->name}}"
-    },
-    success: function (result) {
-        console.log(result.data.price);
-        $("#product").html(result.data.name);
-    }
-})
+// $.ajax  ({
+//     url: "{{asset('api/product/search')}}",
+//     type: 'post',
+//     dataType: 'json',
+//     data :{
+//         'id': "{{$product->name}}"
+//     },
+//     success: function (result) {
+//         console.log(result.data.price);
+//         $("#product").html(result.data.name);
+//     }
+// })
 </script>
 @endsection

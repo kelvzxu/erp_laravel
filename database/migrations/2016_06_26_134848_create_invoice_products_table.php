@@ -17,8 +17,8 @@ class CreateInvoiceProductsTable extends Migration
             $table->integer('invoice_id')->unsigned();
             $table->string('name');
             $table->integer('qty');
-            $table->decimal('price');
-            $table->decimal('total');
+            $table->integer('price');
+            $table->integer('total');
             $table->timestamps();
         });
     }

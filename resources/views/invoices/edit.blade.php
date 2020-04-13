@@ -28,23 +28,24 @@
 
         window._form = {!! $invoice->toJson() !!};
         var data  = {!! $invoice->toJson() !!};
+        console.log(data);
         var product = data.products
         $('a#invoices').addClass('mm-active');
 
-        $.each(product, function (i) {
-            $.ajax  ({
-                url: "{{asset('api/product/search')}}",
-                type: 'post',
-                dataType: 'json',
-                data :{
-                    'id': product[i].name
-                },
-                success: function (result) {
-                    console.log(result.data.price);
-                    $("#product").val(result.data.name);
-                }
-            })
-        });
+        // $.each(product, function (i) {
+        //     $.ajax  ({
+        //         url: "{{asset('api/product/search')}}",
+        //         type: 'post',
+        //         dataType: 'json',
+        //         data :{
+        //             'id': product[i].name
+        //         },
+        //         success: function (result) {
+        //             console.log(result.data.price);
+        //             $("#product").val(result.data.name);
+        //         }
+        //     })
+        // });
         $.ajax  ({
             url: "{{asset('api/customer/search')}}",
             type: 'post',

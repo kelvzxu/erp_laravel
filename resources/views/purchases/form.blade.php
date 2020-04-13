@@ -56,8 +56,7 @@
     <tbody>
         <tr v-for="product in form.products">
             <td class="table-name" :class="{'table-error': errors['products.' + $index + '.name']}">
-                <input type="text" id="product" class="form-control" readonly>
-                <input type="hidden" class="table-control" v-model="product.name">
+                <input type="text" class="Form-control" v-model="product.name" readonly>
             </td>
             <td class="table-price" :class="{'table-error': errors['products.' + $index + '.price']}">
                 <input type="text" class="form-control"  v-model="product.price">

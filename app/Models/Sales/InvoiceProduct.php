@@ -14,4 +14,8 @@ class InvoiceProduct extends Model
     {
         return $this->belongsTo(Invoice::class);
     }
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product\Product','foreign_key');
+    }
 }

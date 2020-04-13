@@ -99,8 +99,9 @@ class InvoiceController extends Controller
 
     public function edit($id)
     {
-        $invoice = Invoice::with('products')->findOrFail($id);
+        $invoice = Invoice::where('id', $id)->with('products', 'products.product')->first();
         $invoices = InvoiceProduct::where('invoice_id', $id)->get();
+        // dump($invoice);
         return view('invoices.edit', compact('invoice','invoices'));
     }
 

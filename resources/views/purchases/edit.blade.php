@@ -30,20 +30,20 @@
         var data  = {!! $purchase->toJson() !!};
         var product = data.products
         $('a#purchases').addClass('mm-active');
-        $.each(product, function (i) {
-            $.ajax  ({
-                url: "{{asset('api/product/search')}}",
-                type: 'post',
-                dataType: 'json',
-                data :{
-                    'id': product[i].name
-                },
-                success: function (result) {
-                    console.log(result.data.price);
-                    $("#product").val(result.data.name);
-                }
-            })
-        });
+        // $.each(product, function (i) {
+        //     $.ajax  ({
+        //         url: "{{asset('api/product/search')}}",
+        //         type: 'post',
+        //         dataType: 'json',
+        //         data :{
+        //             'id': product[i].name
+        //         },
+        //         success: function (result) {
+        //             console.log(result.data.price);
+        //             $("#product").val(result.data.name);
+        //         }
+        //     })
+        // });
         $.ajax  ({
             url: "{{asset('api/partner/search')}}",
             type: 'post',
