@@ -1,5 +1,5 @@
 @extends('layouts.header_portal')
-@section('title','Email verification')
+@section('title','Register New Account')
 @section('content')
 <div class="container my-5">
     <div class="row justify-content-center">
