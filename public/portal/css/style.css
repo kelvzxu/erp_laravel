@@ -5288,12 +5288,12 @@ button.bg-light:focus {
   background-color: #dae0e5 !important; }
 
 .bg-dark {
-  background-color: #343a40 !important; }
+  background-color: #3ce226 !important; }
 
 a.bg-dark:hover, a.bg-dark:focus,
 button.bg-dark:hover,
 button.bg-dark:focus {
-  background-color: #1d2124 !important; }
+  background-color: #3ce226 !important; }
 
 .bg-white {
   background-color: #fff !important; }
@@ -8021,7 +8021,7 @@ h1, h2, h3, h4, h5,
   padding-top: 30px; }
   @media (max-width: 991.98px) {
     .ftco-navbar-light {
-      background: #000000 !important;
+      background: #479E5B !important;
       position: relative;
       top: 0;
       padding-top: 0;
@@ -8033,7 +8033,7 @@ h1, h2, h3, h4, h5,
     margin: 0 auto;
     padding: 0; }
   .ftco-navbar-light .navbar-brand {
-    color: #000000;
+    color: #faf9f9;
     padding-top: .7rem;
     padding-bottom: .7rem; }
     .ftco-navbar-light .navbar-brand span {
@@ -8082,15 +8082,15 @@ h1, h2, h3, h4, h5,
       display: inline-block;
       color: #fff; }
     .ftco-navbar-light .navbar-nav > .nav-item.cta > a:hover {
-      background: #2e9e5b;
-      border: 1px solid #2e9e5b; }
+      background: #15ff00;
+      border: 1px solid #15ff00; }
   .ftco-navbar-light .navbar-nav > .nav-item.cta.cta-colored a {
     border: 1px solid #fdb82c;
     background: #fdb82c !important; }
   .ftco-navbar-light .navbar-nav > .nav-item.active .nav-link {
-    background: transparent;
+    background: #abebc5;
     background: none;
-    color: #2e9e5b; }
+    color: #abebc5; }
   @media (max-width: 991.98px) {
     .ftco-navbar-light .navbar-nav > .nav-item.active > a {
       color: #2e9e5b; } }
@@ -8745,7 +8745,7 @@ textarea.form-control {
   padding-bottom: 0 !important; }
 
 .ftco-bg-dark {
-  background: #3c312e; }
+  background: #3ce226; }
 
 .ftco-footer {
   font-size: 16px;
