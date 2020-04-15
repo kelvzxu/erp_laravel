@@ -140,6 +140,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 });  
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 

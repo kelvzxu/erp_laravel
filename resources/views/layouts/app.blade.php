@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	<title>@yield('title')</title>
+	<link rel="icon" href="{{ asset('images/icons/icon.png') }}" type="image/png">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">	
 	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>

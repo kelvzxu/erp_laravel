@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Language" content="en">
+    <link rel="icon" href="{{ asset('images/icons/icon.png') }}" type="image/png">
     
     <title>@yield('title')</title>
     <meta name="viewport"
