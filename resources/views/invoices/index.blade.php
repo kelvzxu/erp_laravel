@@ -40,15 +40,15 @@
         </div>
         <div class="panel-body mt-3">
             @if($invoices->count())
-            <table class="table table-striped">
-                <thead>
+            <table class="table">
+                <thead class="table table-sm">
                     <tr>
-                        <th>Invoice No.</th>
-                        <th>Grand Total</th>
-                        <th>Client</th>
-                        <th>Invoice Date</th>
-                        <th>Due Date</th>
-                        <th colspan="2">Created At</th>
+                        <th scope="col">Invoice No.</th>
+                        <th scope="col">Grand Total</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Invoice Date</th> 
+                        <th scope="col">Due Date</th>
+                        <th scope="col" colspan="2">Created At</th>
                     </tr>
                 </thead>
                 <tbody>

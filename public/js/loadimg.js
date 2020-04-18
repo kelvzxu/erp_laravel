@@ -26,7 +26,7 @@ function readFile(input) {
             // wrapperZone.removeClass("dragover");
             //previewZone.removeClass("hidden");
             //boxZone.empty();
-            console.log(boxZone);
+            console.log(e.target.result);
             boxZone.append(htmlPreview);
         };
 

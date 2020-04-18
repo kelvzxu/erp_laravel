@@ -1,20 +1,20 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
+    <div class="panel-heading">
+        <div class="clearfix">
+            <span class="panel-title">Create Invoice</span>
+            <a href="{{route('invoices')}}" class="btn btn-default pull-right">Back</a>
+        </div>
+    </div>
     <div id="invoice">
-        <div class="panel panel-default" v-cloak>
-            <div class="panel-heading">
-                <div class="clearfix">
-                    <span class="panel-title">Create Invoice</span>
-                    <a href="{{route('invoices')}}" class="btn btn-default pull-right">Back</a>
-                </div>
-            </div>
+        <div class="panel panel-default container bg-white" v-cloak>
             <div class="panel-body">
-            <div class="row">
-                <div class="col-sm-4">
+            <div class="row ">
+                <div class="col-sm-4 mt-4">
                     <div class="form-group">
                         <label>Invoice No.</label>
-                        <input type="text" class="form-control" v-model="form.invoice_no">
+                        <input type="text" class="form-control bg-white" readonly style="border:none" value="INV/<?php echo date("Y"); ?>/*Draft_Invoice">
                         <p v-if="errors.invoice_no" class="error">@{{errors.invoice_no[0]}}</p>
                     </div>
                     <div class="form-group">
@@ -28,14 +28,14 @@
                         <p v-if="errors.client" class="error">@{{errors.client[0]}}</p>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 mt-4 ">
                     <div class="form-group">
                         <label>Client Address</label>
                         <textarea id="address" class="form-control" v-model="form.client_address" require></textarea>
                         <p v-if="errors.client_address" class="error">@{{errors.client_address[0]}}</p>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 mt-4">
                     <div class="form-group">
                         <label>Title</label>
                         <input type="text" class="form-control" v-model="form.title" require>
@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label>Invoice Date</label>
-                            <input type="date" class="form-control" v-model="form.invoice_date" require>
+                            <input type="text" class="form-control" v-model="form.invoice_date" value="<?php echo date("Y-m-d");?>"require>
                             <p v-if="errors.invoice_date" class="error">@{{errors.invoice_date[0]}}</p>
                         </div>
                         <div class="col-sm-6">
@@ -89,9 +89,9 @@
                             <span class="table-text">@{{product.qty * product.price}}</span>
                         </td>
                         <td class="table-remove">
-                            <span @click="remove(product)" class="table-remove-btn">&times;</span>
+                            <span @click="remove(product)" class="table-remove-btn"><i class="fa fa-trash"></i></span>
                         </td>
-                    </tr>
+                    </tr> 
                 </tbody>
                 <tfoot>
                     <tr>
@@ -116,9 +116,9 @@
                 </tfoot>
             </table>
             </div>
-            <div class="panel-footer">
-                <a href="{{route('invoices')}}" class="btn btn-default">CANCEL</a>
-                <button class="btn btn-success" @click="create" :disabled="isProcessing">CREATE</button>
+            <div class="panel-footer mb-4">
+                <a href="{{route('invoices')}}" class="btn btn-default mb-3">CANCEL</a>
+                <button class="btn btn-success mb-3" @click="create" :disabled="isProcessing">CREATE</button>
             </div>
         </div>
     </div>

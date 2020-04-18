@@ -19,6 +19,7 @@ $(function () {
     $("a.privateinformation").click(function( event ){
         close();
         unactive();
+        $(this).removeClass('text-white');
         $(this).addClass('active');
         show("section#privateinformation");
         event.preventDefault();

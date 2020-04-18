@@ -2,7 +2,7 @@
     <div class="col-sm-4">
         <div class="form-group">
             <label>Invoice No.</label>
-            <input type="text" class="form-control" v-model="form.invoice_no" readonly>
+            <input type="text" class="form-control" v-model="form.invoice_no">
             <p v-if="errors.invoice_no" class="error">@{{errors.invoice_no[0]}}</p>
         </div>
         <div class="form-group">

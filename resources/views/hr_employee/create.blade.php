@@ -226,21 +226,24 @@
                 </div>
             </div>
             <div class="my-3 bg-light">
-                <nav class="navbar navbar-expand-lg navbar-light bg-info">
-                    <div class="collapse navbar-collapse" id="navbarNav">
+                <nav class="navbar navbar-expand-sm navbar-light bg-success">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavHr" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavHr">
                         <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="privateinformation nav-link active" href="">
+                            <a class="privateinformation nav-link active " href="">
                                 Private Information 
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="jobsposition nav-link" href="">
+                            <a class="jobsposition nav-link " href="">
                                 Jobs Position
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="useraccount nav-link" href="">
+                            <a class="useraccount nav-link " href="">
                                 user Account
                             </a>
                         </li>

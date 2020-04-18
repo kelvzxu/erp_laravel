@@ -75,7 +75,7 @@ class ProductController extends Controller
  
     public function destroy($id)
     {
-        $products = Product::findOrFail($id);
+        $products = Product::find($id);
         if (!empty($products->photo)) {
             File::delete(public_path('uploads/product/' . $products->photo));
         }

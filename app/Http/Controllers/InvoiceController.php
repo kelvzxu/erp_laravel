@@ -52,7 +52,6 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'invoice_no' => 'required|alpha_dash|unique:invoices',
             'client' => 'required|max:255',
             'invoice_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
@@ -62,7 +61,17 @@ class InvoiceController extends Controller
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1'
         ]);
+        $year=date("Y");
+        $prefixcode = "INV-$year-";
+        $count = Invoice::all()->count();
+        if ($count==0){
+            $invoice_no= "$prefixcode"."000001";
+        }else {
+            $latestInv = Invoice::orderBy('id','DESC')->first();
+            $invoice_no = $prefixcode.str_pad($latestInv->id + 1, 6, "0", STR_PAD_LEFT);
+        }
 
+        echo $request->invoice_no;
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
             return new InvoiceProduct($product);
@@ -76,6 +85,7 @@ class InvoiceController extends Controller
         }
 
         $data = $request->except('products');
+        $data['invoice_no'] = $invoice_no;
         $data['sub_total'] = $products->sum('total');
         $data['grand_total'] = $data['sub_total'] - $data['discount'];
 

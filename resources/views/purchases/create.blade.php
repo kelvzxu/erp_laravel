@@ -1,20 +1,20 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
+    <div class="panel-heading">
+        <div class="clearfix">
+            <span class="panel-title">Create Purchase Order</span>
+            <a href="{{route('purchases')}}" class="btn btn-default pull-right">Back</a>
+        </div>
+    </div>
     <div id="purchase">
-        <div class="panel panel-default" v-cloak>
-            <div class="panel-heading">
-                <div class="clearfix">
-                    <span class="panel-title">Create Purchase Order</span>
-                    <a href="{{route('purchases')}}" class="btn btn-default pull-right">Back</a>
-                </div>
-            </div>
+        <div class="panel panel-default container bg-white" v-cloak>
             <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4">
-                <div class="form-group">
+                <div class="form-group mt-4">
                         <label>Purchase No.</label>
-                        <input type="text" class="form-control" v-model="form.purchase_no">
+                        <input type="text" class="form-control" style="border:none" value="BILL/<?php echo date("Y"); ?>/*Draft_Invoice">
                         <p v-if="errors.purchase_no" class="error">@{{errors.purchase_no[0]}}</p>
                     </div>
                     <div class="form-group">
@@ -29,14 +29,14 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label>supplier Address</label>
                         <textarea id="address" class="form-control" v-model="form.client_address"></textarea>
                         <p v-if="errors.client_address" class="error">@{{errors.client_address[0]}}</p>
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="form-group">
+                    <div class="form-group mt-4">
                         <label>Title</label>
                         <input type="text" class="form-control" v-model="form.title">
                         <p v-if="errors.title" class="error">@{{errors.title[0]}}</p>
@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label>Purchase Date</label>
-                            <input type="date" class="form-control" v-model="form.purchase_date">
+                            <input type="text" class="form-control" v-model="form.purchase_date"  value="<?php echo date("Y-m-d");?>"require>
                             <p v-if="errors.purchase_date" class="error">@{{errors.purchase_date[0]}}</p>
                         </div>
                         <div class="col-sm-6">
@@ -116,9 +116,9 @@
                 </tfoot>
             </table>
             </div>
-            <div class="panel-footer">
-                <a href="{{route('purchases')}}" class="btn btn-default">CANCEL</a>
-                <button class="btn btn-success" @click="create" :disabled="isProcessing">CREATE</button>
+            <div class="panel-footer mb-4">
+                <a href="{{route('purchases')}}" class="btn btn-default mb-3">CANCEL</a>
+                <button class="btn btn-success mb-3" @click="create" :disabled="isProcessing">CREATE</button>
             </div>
         </div>
     </div>

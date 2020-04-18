@@ -108,7 +108,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('/product/store', 'ProductController@store')->name('product.store');
     Route::get('/product/edit', 'ProductController@edit')->name('product.edit');
     Route::get('/product/edit{id}', 'ProductController@edit')->name('product.edit');
-    Route::get('/product/destroy', 'ProductController@destroy')->name('product.destroy');
+    Route::get('/product/destroy{id}', 'ProductController@destroy')->name('product.destroy');
     Route::put('/product/update', 'ProductController@update')->name('product.update');
 
     // ==== Product Categories ==== 

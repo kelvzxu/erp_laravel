@@ -72,14 +72,12 @@
                     <td>{{ $row->category->name }}</td>
                     <td>{{ $row->updated_at }}</td>
                     <td>
-                        <form action="{{ route('product.destroy', $row->id) }}" method="POST">
+                        <form id="delete-form-{{ $row->id }}" action="{{route('product.destroy', $row->id)}}" method="put">
                             @csrf
-                            <input type="hidden" name="_method" value="DELETE">
-                            <input type="hidden" name="id" value="{{$row->id}}">
-                            <a href="{{ route('product.edit', $row->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i></a>
-                            <button class="btn btn-danger btn-sm">
-                                <i class="fa fa-trash"></i>
-                            </button>
+                            @method('DELETE')
+                                <a href="{{route('product.edit', $row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Edit</i></a>
+                            <button type="button" onclick="deletePost({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash">  Delete</i></button>
+                            {{--onclick="return confirm('Are you sure?')"--}}
                         </form>
                     </td>
                 </tr>
@@ -92,4 +90,43 @@
         </table>
     </div>
 </div>
+@endsection
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript">
+    function deletePost(id)
+
+    {
+        const swalWithBootstrapButtons = swal.mixin({
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+        })
+
+        swalWithBootstrapButtons({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons(
+                    'Cancelled',
+                    'Your file is safe :)',
+                    'error'
+                )
+            }
+        })
+    }
+
+</script>
 @endsection

@@ -52,7 +52,6 @@ class PurchaseController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'purchase_no' => 'required|alpha_dash|unique:purchases',
             'client' => 'required|max:255',
             'purchase_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
@@ -62,6 +61,16 @@ class PurchaseController extends Controller
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1'
         ]);
+
+        $year=date("Y");
+        $prefixcode = "BILL-$year-";
+        $count = Purchase::all()->count();
+        if ($count==0){
+            $Purchase_no= "$prefixcode"."000001";
+        }else {
+            $latestPo = Purchase::orderBy('id','DESC')->first();
+            $Purchase_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
+        }
 
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
@@ -76,8 +85,7 @@ class PurchaseController extends Controller
         }
 
         $data = $request->except('products');
-        $data['purchase_no'] = $request->purchase_no;
-        $data['purchase_date'] = $request->purchase_date;
+        $data['purchase_no'] = $Purchase_no;
         $data['sub_total'] = $products->sum('total');
         $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
