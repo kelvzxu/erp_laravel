@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
-@section('content')
+@section('content') 
 <div class="panel-heading">
-    <div class="clearfix">
+    <div class="clearfix mb-2">
         <div class="row">
             <div class="col-12 col-md-7">
                     <div class="ml-auto text-right">

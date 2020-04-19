@@ -41,14 +41,14 @@
         <div class="panel-body mt-3">
             @if($purchases->count())
             <table class="table table-striped">
-                <thead>
+                <thead class="table table-sm">
                     <tr>
-                        <th>Purchase No.</th>
-                        <th>Grand Total</th>
-                        <th>Client</th>
-                        <th>Purchase Date</th>
-                        <th>Due Date</th>
-                        <th colspan="2">Created At</th>
+                        <th scope="col">Purchase No.</th>
+                        <th scope="col">Grand Total</th>
+                        <th scope="col">Client</th>
+                        <th scope="col">Purchase Date</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col" colspan="2">Created At</th>
                     </tr>
                 </thead>
                 <tbody>

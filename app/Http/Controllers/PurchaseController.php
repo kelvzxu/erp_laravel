@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Purchase;
-use App\PurchaseProduct;
+use App\Models\Merchandises\Purchase;
+use App\Models\Merchandises\PurchaseProduct;
 use App\Models\Product\Product;
 use App\Models\Partner\res_partner;
+use PDF;
 
 class PurchaseController extends Controller
 {
@@ -61,7 +62,7 @@ class PurchaseController extends Controller
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1'
         ]);
-
+ 
         $year=date("Y");
         $prefixcode = "BILL-$year-";
         $count = Purchase::all()->count();
@@ -162,7 +163,7 @@ class PurchaseController extends Controller
 
     public function destroy($id)
     {
-        $puchase = puchase::findOrFail($id);
+        $purchase = purchase::findOrFail($id);
 
         PurchaseProduct::where('purchase_id', $purchase->id)
             ->delete();
@@ -171,5 +172,13 @@ class PurchaseController extends Controller
 
         return redirect()
             ->route('purchases.index');
+    }
+
+    public function print_pdf($id)
+    {
+        $purchase = purchase::with('products','vendor')->findOrFail($id);
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.purchases.purchase_pdf', compact('purchase'));
+    	return $pdf->stream();
     }
 }

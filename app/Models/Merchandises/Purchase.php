@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Merchandises;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,5 +16,9 @@ class Purchase extends Model
     public function products()
     {
         return $this->hasMany(PurchaseProduct::class);
+    }
+    public function vendor()
+    {
+        return $this->hasOne('App\Models\Partner\res_partner','id','client');
     }
 }

@@ -1,10 +1,10 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
-<div class="panel-heading">
-    <div class="clearfix">
-        <div class="row">
-            <div class="col-12 col-md-7">
+    <div class="panel-heading">
+        <div class="clearfix">
+            <div class="row">
+                <div class="col-12 col-md-7">
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">

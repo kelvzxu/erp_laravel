@@ -4,10 +4,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="clearfix">
-                <span class="panel-title">Purchase</span>
+                <span class="panel-title"><h3>Purchase</h3></span>
                 <div class="pull-right">
-                    <a href="{{route('purchases')}}" class="btn btn-default">Back</a>
-                    <a href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary">Edit</a>
+                    <a href="{{route('purchases')}}" class="btn btn-danger">Back</a>
+                    <a href="{{route('purchases')}}" class="btn btn-primary">Post</a>
+                    <a href="{{route('purchases.print', $purchases)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
+                    <a href="{{route('purchases.edit', $purchases)}}" class="btn btn-warning">Return</a>
                     <!-- <form class="form-inline" method="post"
                         action="{{route('purchases.destroy', $purchases)}}"
                         onsubmit="return confirm('Are you sure?')"
@@ -16,9 +18,10 @@
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         <input type="submit" value="Delete" class="btn btn-danger">
                     </form> -->
-                </div>
+                </div> 
             </div>
         </div>
+        <hr style="border: 1px solid;">
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4">

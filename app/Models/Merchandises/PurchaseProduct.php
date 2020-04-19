@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models\Merchandises;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,8 +10,8 @@ class PurchaseProduct extends Model
         'name', 'price', 'qty', 'total'
     ];
 
-    public function invoice()
+    public function purchase()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(Purchase::class);
     }
 }

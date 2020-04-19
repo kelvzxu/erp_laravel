@@ -177,10 +177,10 @@ class InvoiceController extends Controller
 
     public function print_pdf($id)
     {
-        $invoice = Invoice::with('products')->findOrFail($id);
- 
+        $invoice = Invoice::with('products','customer')->findOrFail($id);
+        // dd($invoice);
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('invoices.invoice_pdf', compact('invoice'));
+            ->loadview('reports.sales.invoice_pdf', compact('invoice'));
     	return $pdf->stream();
     }
 }
