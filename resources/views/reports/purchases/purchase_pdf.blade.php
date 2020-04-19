@@ -13,11 +13,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <table style="border:0;">
+    <table style="border:0;" width="100%">
         <tr>
             <td>
                 <img src="{{ public_path('/images/logo/segargroup.png')}}" width="120px" height="120px">
-            <td collspan="2">
+            <td>
                 <ul style="list-style-type:none;">
                     <li><span class="text"><b>Segar Kumala Indonesia</b></span></li>
                     <li><span class="text">Jln. Sutomo Simpang.Seikera No. 25D Kota medan </span></li>
