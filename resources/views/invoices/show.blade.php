@@ -4,10 +4,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <div class="clearfix">
-                <span class="panel-title">Invoice</span>
+                <span class="panel-title"><h3>Invoice</h3></span>
                 <div class="pull-right">
-                    <a href="{{route('invoices')}}" class="btn btn-default">Back</a>
-                    <a href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary">Edit</a>
+                    <a href="{{route('invoices')}}" class="btn btn-danger">Back</a>
+                    <a href="{{route('invoices')}}" class="btn btn-primary">Post</a>
+                    <a href="{{route('invoices.print', $invoice)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
+                    <a href="{{route('invoices.edit', $invoice)}}" class="btn btn-warning">Return</a>
                     <!-- <form class="form-inline" method="post"
                         action="{{route('invoices.destroy', $invoice)}}"
                         onsubmit="return confirm('Are you sure?')"
@@ -19,6 +21,7 @@
                 </div>
             </div>
         </div>
+        <hr style="border: 1px solid;">
         <div class="panel-body">
             <div class="row">
                 <div class="col-sm-4">
@@ -101,6 +104,9 @@
 @endsection
 @section('js')
 <script>
+function pdf() {
+    window.print();
+}
 $('a#invoices').addClass('mm-active');
 $.ajax  ({
     url: "{{asset('api/customer/search')}}",

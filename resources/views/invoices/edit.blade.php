@@ -1,20 +1,36 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
-    <div id="invoice">
-        <div class="panel panel-default" v-cloak>
-            <div class="panel-heading">
-                <div class="clearfix">
-                    <span class="panel-title">Create Invoice</span>
-                    <a href="{{route('invoices')}}" class="btn btn-default pull-right">Back</a>
+<div class="panel-heading">
+    <div class="clearfix">
+        <div class="row">
+            <div class="col-12 col-md-7">
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('invoices') }}">Invoice</a></li>
+                                <li class="breadcrumb-item" aria-current="page" active>Return</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h3>Invoice</h3>
                 </div>
             </div>
+            <span class="panel-title">
+                <a href="{{route('invoices')}}" class="btn btn-danger mby-2">CANCEL</a>
+                <button class="btn btn-success my-2" @click="update" :disabled="isProcessing">UPDATE</button>
+            </span>
+            <a href="{{route('invoices')}}" class="btn btn-warning my-2 pull-right">Back</a>
+        </div>
+    </div>
+    <div id="invoice">
+        <div class="panel container bg-white panel-default" v-cloak>
             <div class="panel-body">
                 @include('invoices.form')
             </div>
-            <div class="panel-footer">
-                <a href="{{route('invoices')}}" class="btn btn-default">CANCEL</a>
-                <button class="btn btn-success" @click="update" :disabled="isProcessing">UPDATE</button>
+            <div class="panel-footer mb-4">
+                <br>
             </div>
         </div>
     </div>

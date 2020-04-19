@@ -290,7 +290,7 @@
                             <div class="col-sm-3">
                                 <input type="text" name="visa_no" id="visa_no" class="form-control @error('visa_no') is-invalid @enderror" value="{{ $hr_employee->visa_no}}"  autocomplete="visa_no" autofocus>
                             </div>
-                            <label class="col-sm-2 col-form-label">visa number</label>
+                            <label class="col-sm-2 col-form-label">visa expire</label>
                             <div class="col-sm-3">
                                 <input type="date" name="visa_expire" class="form-control" id="visa_expire" placeholder="visa Expire" value="{{$hr_employee->visa_expire}}">
                             </div>

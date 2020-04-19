@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('/invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
     Route::get('/invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
     Route::get('/invoices/filter', 'InvoiceController@search')->name('invoices.filter');
+    Route::get('/invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
 
     // ==== purchases ====
     Route::get('/purchases', 'PurchaseController@index')->name('purchases');
@@ -101,6 +102,10 @@ Route::group(['middleware' => 'auth'], function (){
 
     // ==== Recruitment ====
     Route::get('recruitment','HrEmployeesController@index')->name('recruitment');
+
+    // ==== Profile ====
+    Route::get('profile','ProfileController@index')->name('profile');
+    Route::post('profile.update','ProfileController@update')->name('profile.update');
 
     // ==== Product =====
     Route::get('/product', 'ProductController@index')->name('product');

@@ -13,32 +13,32 @@ function unactive(){
  
 $(function () {
     close();
-    show("#privateinformation")
+    show("#work_information")
 
-    // if privateinformation click
-    $("a.privateinformation").click(function( event ){
+    // if work_information click
+    $("a.work_information").click(function( event ){
         close();
         unactive();
         $(this).addClass('active');
-        show("section#privateinformation");
+        show("section#work_information");
         event.preventDefault();
     });
 
-    // if jobs position clicked
-    $("a.jobsposition").click(function( event ){
+    // if private_information clicked
+    $("a.private_information").click(function( event ){
         close();
         unactive();
         $(this).addClass('active');
-        show("section#jobsposition");
+        show("section#private_information");
         event.preventDefault();
     });
 
-    // if User Account clicked
-    $("a.useraccount").click(function( event ){
+    // if preference clicked
+    $("a.preference").click(function( event ){
         close();
         unactive();
         $(this).addClass('active');
-        show("section#useraccount");
+        show("section#preference");
         event.preventDefault();
     });
     

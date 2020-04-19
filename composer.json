@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "barryvdh/laravel-dompdf": "^0.8.6",
         "brian2694/laravel-toastr": "^5.5",
         "doctrine/dbal": "v2.4.2",
         "fideloper/proxy": "^4.0",

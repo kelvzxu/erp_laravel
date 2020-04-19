@@ -20,7 +20,7 @@
         @csrf
         <div class="container row">
             <div class="col-3">
-            <button class="btn btn-primary btn-sm">
+            <button class="btn btn-primary btn-sm mt-2">
                     <i class="fa fa-send"></i> Save
                 </button>
             </div>

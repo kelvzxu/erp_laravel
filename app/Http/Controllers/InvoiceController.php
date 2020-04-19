@@ -9,6 +9,7 @@ use App\Models\Sales\Invoice;
 use App\Models\Sales\InvoiceProduct;
 use App\Models\Product\Product;
 use App\Models\Customer\res_customer;
+use PDF;
 
 class InvoiceController extends Controller
 {
@@ -172,5 +173,14 @@ class InvoiceController extends Controller
 
         return redirect()
             ->route('invoices.index');
+    }
+
+    public function print_pdf($id)
+    {
+        $invoice = Invoice::with('products')->findOrFail($id);
+ 
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('invoices.invoice_pdf', compact('invoice'));
+    	return $pdf->stream();
     }
 }
