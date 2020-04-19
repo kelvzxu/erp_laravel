@@ -40,34 +40,36 @@
         </div>
         <div class="panel-body mt-3">
             @if($purchases->count())
-            <table class="table table-striped">
-                <thead class="table table-sm">
-                    <tr>
-                        <th scope="col">Purchase No.</th>
-                        <th scope="col">Grand Total</th>
-                        <th scope="col">Client</th>
-                        <th scope="col">Purchase Date</th>
-                        <th scope="col">Due Date</th>
-                        <th scope="col" colspan="2">Created At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($purchases as $purchase)
+            <div class="table-responsive-lg my-4">
+                <table class="table table-striped">
+                    <thead class="table table-sm">
                         <tr>
-                            <td>{{$purchase->purchase_no}}</td>
-                            <td>Rp. {{ number_format($purchase->grand_total)}}</td>
-                            <td>{{$purchase->partner_name}}</td>
-                            <td>{{$purchase->purchase_date}}</td>
-                            <td>{{$purchase->due_date}}</td>
-                            <td>{{$purchase->created_at->diffForHumans()}}</td>
-                            <td class="text-right">
-                                <a href="{{route('purchases.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
-                                <a href="{{route('purchases.edit', $purchase)}}" class="btn btn-warning btn-sm">Retur</a>
-                            </td>
+                            <th scope="col">Purchase No.</th>
+                            <th scope="col">Grand Total</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Purchase Date</th>
+                            <th scope="col">Due Date</th>
+                            <th scope="col" colspan="2">Created At</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($purchases as $purchase)
+                            <tr>
+                                <td>{{$purchase->purchase_no}}</td>
+                                <td>Rp. {{ number_format($purchase->grand_total)}}</td>
+                                <td>{{$purchase->partner_name}}</td>
+                                <td>{{$purchase->purchase_date}}</td>
+                                <td>{{$purchase->due_date}}</td>
+                                <td>{{$purchase->created_at->diffForHumans()}}</td>
+                                <td class="text-right">
+                                    <a href="{{route('purchases.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{route('purchases.edit', $purchase)}}" class="btn btn-warning btn-sm">Retur</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             {!! $purchases->render() !!}
             @else
                 <div class="puchase-empty">

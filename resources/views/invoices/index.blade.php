@@ -40,42 +40,44 @@
         </div>
         <div class="panel-body mt-3">
             @if($invoices->count())
-            <table class="table">
-                <thead class="table table-sm">
-                    <tr>
-                        <th scope="col">Invoice No.</th>
-                        <th scope="col">Grand Total</th>
-                        <th scope="col">Client</th>
-                        <th scope="col">Invoice Date</th> 
-                        <th scope="col">Due Date</th>
-                        <th scope="col" colspan="2">Created At</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($invoices as $invoice)
+            <div class="table-responsive-lg my-4">
+                <table class="table table-striped">
+                    <thead class="table table-sm">
                         <tr>
-                            <td>{{$invoice->invoice_no}}</td>
-                            <td>Rp. {{ number_format($invoice->grand_total)}}</td>
-                            <td>{{$invoice->name}}</td>
-                            <td>{{$invoice->invoice_date}}</td>
-                            <td>{{$invoice->due_date}}</td>
-                            <td>{{$invoice->created_at->diffForHumans()}}</td>
-                            <td class="text-right">
-                                <a href="{{route('invoices.show', $invoice)}}" class="btn btn-primary btn-sm">View</a>
-                                <a href="{{route('invoices.edit', $invoice)}}" class="btn btn-warning btn-sm">Retur</a>
-                                <!-- <form class="form-inline" method="post"
-                                    action="{{route('invoices.destroy', $invoice)}}"
-                                    onsubmit="return confirm('Are you sure?')"
-                                >
-                                    <input type="hidden" name="_method" value="delete">
-                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                    <input type="submit" value="Delete" class="btn btn-danger btn-sm">
-                                </form> -->
-                            </td>
+                            <th scope="col">Invoice No.</th>
+                            <th scope="col">Grand Total</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Invoice Date</th> 
+                            <th scope="col">Due Date</th>
+                            <th scope="col" colspan="2">Created At</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($invoices as $invoice)
+                            <tr>
+                                <td>{{$invoice->invoice_no}}</td>
+                                <td>Rp. {{ number_format($invoice->grand_total)}}</td>
+                                <td>{{$invoice->name}}</td>
+                                <td>{{$invoice->invoice_date}}</td>
+                                <td>{{$invoice->due_date}}</td>
+                                <td>{{$invoice->created_at->diffForHumans()}}</td>
+                                <td class="text-right">
+                                    <a href="{{route('invoices.show', $invoice)}}" class="btn btn-primary btn-sm">View</a>
+                                    <a href="{{route('invoices.edit', $invoice)}}" class="btn btn-warning btn-sm">Retur</a>
+                                    <!-- <form class="form-inline" method="post"
+                                        action="{{route('invoices.destroy', $invoice)}}"
+                                        onsubmit="return confirm('Are you sure?')"
+                                    >
+                                        <input type="hidden" name="_method" value="delete">
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                        <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                                    </form> -->
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             {!! $invoices->render() !!}
             @else
                 <div class="invoice-empty">
