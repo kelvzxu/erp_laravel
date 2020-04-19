@@ -19,10 +19,10 @@
                 <img src="{{ public_path('/images/logo/segargroup.png')}}" width="120px" height="120px">
             <td collspan="2">
                 <ul style="list-style-type:none;">
+                    <li><span class="text"><b>Segar Kumala Indonesia</b></span></li>
                     <li><span class="text">Jln. Sutomo Simpang.Seikera No. 25D Kota medan </span></li>
                     <li><span class="text">kecamatan medan Timur, Sumatera Utara, Indonesia</span></li>
-                    <li><span class="text">(+62-21) 4608000</span></li>
-                    <li><span class="text">skfresh@gmail.com</span></li>
+                    <li><span class="text">(+62-21) 4608000 | skfresh@gmail.com</span></li>
                 </ul>
             </td>
         </tr>
