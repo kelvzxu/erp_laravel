@@ -18,7 +18,7 @@ class CreateAccountAccountsTable extends Migration
             $table->string('name');
             $table->string('currency_id')->index()->nullable();
             $table->string('code')->nullable();
-            $table->boolean('deprecated ')->nullable();
+            $table->boolean('deprecated')->nullable();
             $table->integer('type')->index()->nullable();
             $table->string('internal_type')->nullable();
             $table->string('internal_group')->nullable();
