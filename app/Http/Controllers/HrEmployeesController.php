@@ -23,6 +23,7 @@ class HrEmployeesController extends Controller
                     ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name')
+                    ->whereNull('hr_employees.deleted_at')
                     ->orderBy('employee_name', 'ASC')
                     ->paginate(10);
         return view ('hr_employee.index',compact('employee'));

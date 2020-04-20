@@ -13,7 +13,7 @@
                     </ol>
                 </nav>
             </div>
-            <h3>Create New employee</h3>
+            <h3>Create Product</h3>
         </div>
     </div>
     <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">

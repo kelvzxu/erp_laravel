@@ -227,6 +227,27 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#">
+                            <i class="metismenu-icon fa fa-cogs"></i>
+                            Configuration
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route ('journal.index')}}">
+                                    <i class="metismenu-icon"></i>
+                                    Journal
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('account.index')}}">
+                                    <i class="metismenu-icon"></i>
+                                    Chart Of Accounts
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 <li class="app-sidebar__heading">Point Of Sales</li>
                     <li>
                         <a href="{{ route ('pos')}}">
@@ -234,7 +255,6 @@
                             POS
                         </a>
                     </li>
-                </li>
                 <li class="app-sidebar__heading">Human Resource</li>
                     <li>
                         <a href="{{ route ('employee')}}">
