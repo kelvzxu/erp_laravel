@@ -1,30 +1,30 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
-<div class="panel-heading">
-    <div class="clearfix mb-2">
-        <div class="row">
-            <div class="col-12 col-md-7">
-                <div class="ml-auto text-right">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('purchases') }}">Purchases</a></li>
-                            <li class="breadcrumb-item" aria-current="page" active>Return</li>
-                        </ol>
-                    </nav>
-                </div>
-                <h3>Return Purchase</h3>
-            </div>
-        </div>
-        <span class="panel-title">
-            <a href="{{route('purchases')}}" class="btn btn-danger mby-2">CANCEL</a>
-            <button class="btn btn-success my-2" @click="update" :disabled="isProcessing">UPDATE</button>
-        </span>
-        <a href="{{route('purchases')}}" class="btn btn-warning my-2 pull-right">Back</a>
-    </div>
-</div>
 <div id="purchase">
+    <div class="panel-heading">
+        <div class="clearfix mb-2">
+            <div class="row">
+                <div class="col-12 col-md-7">
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('purchases') }}">Purchases</a></li>
+                                <li class="breadcrumb-item" aria-current="page" active>Return</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <h3>Return Purchase</h3>
+                </div>
+            </div>
+            <span class="panel-title">
+                <a href="{{route('purchases')}}" class="btn btn-danger mby-2">CANCEL</a>
+                <button class="btn btn-success my-2" @click="update" :disabled="isProcessing">UPDATE</button>
+            </span>
+            <a href="{{route('purchases')}}" class="btn btn-warning my-2 pull-right">Back</a>
+        </div>
+    </div>
     <div class="panel panel-default container bg-white" v-cloak>
         <div class="panel-body">
             @include('purchases.form')

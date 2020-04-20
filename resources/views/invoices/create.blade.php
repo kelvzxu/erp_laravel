@@ -1,10 +1,11 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content') 
-<div class="panel-heading">
-    <div class="clearfix mb-2">
-        <div class="row">
-            <div class="col-12 col-md-7">
+<div id="invoice">
+    <div class="panel-heading">
+        <div class="clearfix mb-2">
+            <div class="row">
+                <div class="col-12 col-md-7">
                     <div class="ml-auto text-right">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -24,7 +25,6 @@
             <a href="{{route('invoices')}}" class="btn btn-warning my-2 pull-right">Back</a>
         </div>
     </div>
-    <div id="invoice">
         <div class="panel panel-default container bg-white" v-cloak>
             <div class="panel-body">
                 <div class="row ">
@@ -130,7 +130,7 @@
                             <td class="table-label">Grand Total</td>
                             <td class="table-amount">@{{grandTotal}}</td>
                         </tr>
-                    </tfoot>
+                    </tfoot> 
                 </table>
             </div>
             <div class="panel-footer mb-4">

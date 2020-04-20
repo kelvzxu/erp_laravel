@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
 @section('content')
+<div id="invoice">
     <div class="panel-heading">
         <div class="clearfix">
             <div class="row">
@@ -24,16 +25,15 @@
             <a href="{{route('invoices')}}" class="btn btn-warning my-2 pull-right">Back</a>
         </div>
     </div>
-    <div id="invoice">
-        <div class="panel container bg-white panel-default" v-cloak>
-            <div class="panel-body">
-                @include('invoices.form')
-            </div>
-            <div class="panel-footer mb-4">
-                <br>
-            </div>
+    <div class="panel container bg-white panel-default" v-cloak>
+        <div class="panel-body">
+            @include('invoices.form')
+        </div>
+        <div class="panel-footer mb-4">
+            <br>
         </div>
     </div>
+</div>
 @endsection
 
 @section('js')
