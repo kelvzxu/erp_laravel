@@ -108,7 +108,7 @@
                                                     class="input200 {{ $errors->has('currency_id') ? 'is-invalid':'' }}">
                                                     <option value="">Select currency</option>
                                                     @foreach ($currency as $row)
-                                                        <option value="{{ $row->id }}"  {{ $row->id == $account->currency_id ? 'selected':'' }}>{{ ucfirst($row->currency_name) }}</option>
+                                                        <option value="{{ $row->id }}"  {{ $row->id == $account->currency_id ? 'selected':'' }}>{{ ucfirst($row->currency_name) }} ({{ ucfirst($row->symbol) }})</option>
                                                     @endforeach
                                                 </select>
                                             </div>
