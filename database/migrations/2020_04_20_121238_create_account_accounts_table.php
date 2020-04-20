@@ -16,7 +16,7 @@ class CreateAccountAccountsTable extends Migration
         Schema::create('account_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('currency_id')->index()->nullable();
+            $table->integer('currency_id')->index()->nullable();
             $table->string('code')->nullable();
             $table->boolean('deprecated')->nullable();
             $table->integer('type')->index()->nullable();
