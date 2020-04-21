@@ -81,8 +81,8 @@
                 </tr>
             </tbody>
             @endforelse
-            {{ $account->links() }}
         </table>
+            {{ $account->links() }}
     </div>
 </div>
 @endsection

@@ -23,7 +23,7 @@ class account_account extends Model
     ];
     public function company()
     {
-        return $this->hasOne('App\res_company','id','company_id');
+        return $this->hasOne('App\Models\Company\res_company','id','company_id');
     }
     public function account_type()
     {

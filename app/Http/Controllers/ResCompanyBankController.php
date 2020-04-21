@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\res_Company_bank;
+use App\Models\Company\res_Company_bank;
 use Illuminate\Http\Request;
 
 class ResCompanyBankController extends Controller

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\res_company;
+use App\Models\Company\res_company;
 use App\Models\Currency\res_currency;
 use App\Models\Accounting\account_account;
 use App\Models\Accounting\account_account_type;

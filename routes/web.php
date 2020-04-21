@@ -21,12 +21,18 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Account/create','AccountAccountController@create')->name('account.create');
     Route::post('Account/store','AccountAccountController@store')->name('account.store');
     Route::get('Account/edit/{id}','AccountAccountController@edit')->name('account.edit');
-    Route::put('Account/update/','AccountAccountController@update')->name('account.update');
+    Route::put('Account/update','AccountAccountController@update')->name('account.update');
     Route::get('Account/destroy/{id}','AccountAccountController@destroy')->name('account.delete');
     Route::get('Account/filter','AccountAccountController@search')->name('account.filter');
 
     // ==== Account Journal ====
     Route::get('Account/Journal','AccountJournalController@index')->name('journal.index');
+    Route::get('Account/Journal/create','AccountJournalController@create')->name('journal.create');
+    Route::post('Account/Journal/store','AccountJournalController@store')->name('journal.store');
+    Route::get('Account/Journal/edit/{id}','AccountJournalController@edit')->name('journal.edit');
+    Route::put('Account/Journal/update/{id}','AccountJournalController@update')->name('journal.update');
+    Route::get('Account/Journal/destroy/{id}','AccountJournalController@destroy')->name('journal.delete');
+    Route::get('Account/Journal/filter','AccountJournalController@search')->name('journal.filter');
     
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');

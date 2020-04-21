@@ -349,65 +349,6 @@
                             </div>
                         </div>
                         </section>
-                        <!-- <div class="row">
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <label class="col-sm-5 col-form-label">Product Category</label>
-                                    <div class="wrap-input200 col-sm-6">
-                                        <select name="category_id" id="category_id" style="border:none"
-                                            required class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
-                                            <option value="">Select Category</option>
-                                        
-                                        </select>
-                                        <p class="text-danger">{{ $errors->first('category_id') }}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-5 col-form-label">Internal Reference</label>
-                                    <div class="wrap-input200 col-sm-6">
-                                        <input type="text" name="code" id="code" maxlength="10" class="input200 {{ $errors->has('code') ? 'is-invalid':'' }}" value="{{ old('code') }}" autofocus>
-                                        <p class="text-danger">{{ $errors->first('code') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <label class="col-sm-5 col-form-label">Sales Price</label>
-                                    <div class="wrap-input200 col-sm-5">
-                                        <input type="number" name="price" required 
-                                        class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
-                                        <p class="text-danger">{{ $errors->first('price') }}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-5 col-form-label">Cost</label>
-                                    <div class="wrap-input200 col-sm-5">
-                                        <input type="number" name="cost" required 
-                                        class="input200 {{ $errors->has('cost') ? 'is-invalid':'' }}">
-                                        <p class="text-danger">{{ $errors->first('cost') }}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-sm-5 col-form-label">Stock</label>
-                                    <div class="wrap-input200 col-sm-5">
-                                        <input type="number" name="stock" required 
-                                        class="input200 {{ $errors->has('stock') ? 'is-invalid':'' }}">
-                                        <p class="text-danger">{{ $errors->first('stock') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-11">
-                                <div class="wrap-input200 mt-4">
-                                    <label for="">Internal Note</label>
-                                    <textarea name="description" id="description" 
-                                        cols="5" rows="5" placeholder="This note is only for internal purpose"
-                                        class="input200 {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
-                                    <p class="text-danger">{{ $errors->first('description') }}</p>
-                                </div>
-                            </div>
-                        </div> -->
                         @slot('footer')
                         
                         @endslot
