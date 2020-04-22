@@ -148,9 +148,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="{{ route('receipt.index')}}" id="receipt">
                             <i class="metismenu-icon fa fa-truck">
-                            </i>onloadings 
+                            </i>Receipt Product
                         </a>
                     </li>
                     <li>
@@ -207,20 +207,20 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" id="partner_ledger">
                             <i class="metismenu-icon fa fa-file-text"></i>
                             Partner Ledger
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('department')}}">
+                                <a href="{{ route ('ReceivableAccount.index')}}" id="receivable">
                                     <i class="metismenu-icon"></i>
                                     Receivable Account
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('jobs')}}">
+                                <a href="{{ route ('PayableAccount.index')}}" id="payable">
                                     <i class="metismenu-icon"></i>
                                     Payable Account
                                 </a>

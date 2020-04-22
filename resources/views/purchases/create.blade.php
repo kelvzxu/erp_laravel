@@ -92,7 +92,7 @@
                         <select id="product" class="form-control" v-model="product.name">
                             <option value="">Select product</option>
                             @foreach ($product as $row)
-                                <option value="{{ $row->name }}">{{ ucfirst($row->name) }}</option>
+                                <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
                             @endforeach
                         </select>
                     </td>

@@ -14,7 +14,7 @@ class AddFieldPartnerCreditTable extends Migration
     public function up()
     {
         Schema::table('partner_credit', function (Blueprint $table) {
-            $table->integer('journal')->index()->nullable();
+            $table->integer('journal')->index()->nullable()->after('purchase_no');
         });
     }
 

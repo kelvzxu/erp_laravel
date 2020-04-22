@@ -9,8 +9,8 @@ class Purchase extends Model
     protected $fillable = [
         'purchase_no', 'purchase_date', 'due_date',
         'title', 'sub_total', 'discount',
-        'grand_total', 'client',
-        'client_address'
+        'grand_total', 'client','receipt',
+        'client_address','approved','status'
     ];
 
     public function products()

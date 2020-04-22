@@ -14,15 +14,16 @@ class CreatePartnerCreditTable extends Migration
     public function up()
     {
         Schema::create('partner_credit', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('purchase_no');
             $table->integer('partner_id');
             $table->date('purchase_date');
             $table->date('due_date');
             $table->bigInteger('total');
             $table->date('payment_date')->nullable();
-            $table->bigInteger('payment');
-            $table->bigInteger('over');         
-            $table->string('status');
+            $table->bigInteger('payment')->default(0);
+            $table->bigInteger('over')->default(0);      
+            $table->string('status')->default("UNPAID");
         });
     }
 

@@ -45,10 +45,11 @@
                     <thead class="table table-sm">
                         <tr>
                             <th scope="col">Purchase No.</th>
-                            <th scope="col">Grand Total</th>
                             <th scope="col">Client</th>
                             <th scope="col">Purchase Date</th>
                             <th scope="col">Due Date</th>
+                            <th scope="col">Grand Total</th>
+                            <th scope="col">status</th>
                             <th scope="col" colspan="2">Created At</th>
                         </tr>
                     </thead>
@@ -56,14 +57,24 @@
                         @foreach($purchases as $purchase)
                             <tr>
                                 <td>{{$purchase->purchase_no}}</td>
-                                <td>Rp. {{ number_format($purchase->grand_total)}}</td>
                                 <td>{{$purchase->partner_name}}</td>
                                 <td>{{$purchase->purchase_date}}</td>
                                 <td>{{$purchase->due_date}}</td>
+                                <td>Rp. {{ number_format($purchase->grand_total)}}</td>
+                                <td>
+                                    @if($purchase->status == "Pending" ) 
+                                        <a class="btn btn-warning btn-sm text-white">Pending...</a>
+                                    @endif
+                                    @if($purchase->status == "Complete" ) 
+                                        <a class="btn btn-success btn-sm text-white">Complete</a>
+                                    @endif
+                                </td>
                                 <td>{{$purchase->created_at->diffForHumans()}}</td>
                                 <td class="text-right">
                                     <a href="{{route('purchases.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
-                                    <a href="{{route('purchases.edit', $purchase)}}" class="btn btn-warning btn-sm">Retur</a>
+                                    @if($purchase->status == "Pending" ) 
+                                        <a href="{{route('purchases.approved', $purchase)}}" class="btn btn-success btn-sm">Approved</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

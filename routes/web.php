@@ -124,11 +124,25 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('/purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
     Route::get('/purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
     Route::get('/purchases/filter', 'PurchaseController@search')->name('purchases.filter');
+    Route::get('/purchases/approved/{id}', 'PurchaseController@approved')->name('purchases.approved');
     Route::get('/purchases/print{id}', 'PurchaseController@print_pdf')->name('purchases.print');
     
+    // ==== Receipt ====
+    Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');
+    Route::get('receipt/store/{id}', 'ReceiptProductController@store')->name('receipt.store');
+    Route::get('receipt/show/{id}', 'ReceiptProductController@show')->name('receipt.show');
+    Route::get('receipt/validate/{id}', 'ReceiptProductController@validation')->name('receipt.validate');
+
+    // ==== Receivable Account ====
+    Route::get('ReceivableAccount','ReceivableAccountController@index')->name('ReceivableAccount.index');
+    Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrEmployeesController@index')->name('recruitment');
+
+    // ==== Payable Account ====
+    Route::get('PayableAccount','PayableController@index')->name('PayableAccount.index');
+    Route::get('PayableAccount/print','PayableController@print')->name('PayableAccount.Print');
 
     // ==== Profile ====
     Route::get('profile','ProfileController@index')->name('profile');

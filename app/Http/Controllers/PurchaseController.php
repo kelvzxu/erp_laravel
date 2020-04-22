@@ -6,9 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Models\Merchandises\Purchase;
+use App\Models\Merchandises\receipt_product;
 use App\Models\Merchandises\PurchaseProduct;
 use App\Models\Product\Product;
+use App\Models\Partner\partner_credit;
 use App\Models\Partner\res_partner;
+use Brian2694\Toastr\Facades\Toastr;
 use PDF;
 
 class PurchaseController extends Controller
@@ -56,7 +59,6 @@ class PurchaseController extends Controller
             'client' => 'required|max:255',
             'purchase_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
-            'title' => 'required|max:255',
             'discount' => 'required|numeric|min:0',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
@@ -104,8 +106,9 @@ class PurchaseController extends Controller
     public function show($id)
     {
         $purchases = Purchase::with('products')->findOrFail($id);
+        $receipt = receipt_product::where('purchase_no',$purchases->purchase_no)->first();
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
-        return view('purchases.show', compact('purchases','partner'));
+        return view('purchases.show', compact('purchases','partner','receipt'));
     }
 
     public function edit($id)
@@ -120,10 +123,8 @@ class PurchaseController extends Controller
         $this->validate($request, [
             'purchase_no' => 'required|alpha_dash|unique:purchases,purchase_no,'.$id.',id',
             'client' => 'required|max:255',
-            'client_address' => 'required|max:255',
             'purchase_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
-            'title' => 'required|max:255',
             'discount' => 'required|numeric|min:0',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
@@ -131,6 +132,7 @@ class PurchaseController extends Controller
         ]);
 
         $purchase = Purchase::findOrFail($id);
+        $old_total = $purchase->grand_total;
 
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
@@ -153,6 +155,18 @@ class PurchaseController extends Controller
         PurchaseProduct::where('purchase_id', $purchase->id)->delete();
 
         $purchase->products()->saveMany($products);
+
+        partner_credit::where('purchase_no',$request->purchase_no)->update([
+            'total'=>$data['grand_total'],
+        ]);
+
+        $partner = res_partner::findOrFail($request->client);
+        $oldbalance = $partner->debit_limit;
+        $total = $oldbalance - $old_total;
+        $new_balance = $data['grand_total'] + $total; 
+        $partner->update([
+            'debit_limit' => $new_balance,
+        ]);
 
         return response()
             ->json([
@@ -180,5 +194,38 @@ class PurchaseController extends Controller
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.purchases.purchase_pdf', compact('purchase'));
     	return $pdf->stream();
+    }
+
+    public function approved($id)
+    {
+        try{
+            $purchase = purchase::findOrFail($id);
+            partner_credit::insert([
+                'purchase_no'=>$purchase->purchase_no,
+                'journal'=>'2',
+                'partner_id'=>$purchase->client,
+                'purchase_date'=>$purchase->purchase_date,
+                'due_date'=>$purchase->due_date,
+                'total'=>$purchase->grand_total,
+            ]);
+            $partner = res_partner::findOrFail($purchase->client);
+            $balance = $partner->debit_limit;
+            $new_balance = $balance + $purchase->grand_total;
+            
+            $partner->update([
+                'debit_limit' => $new_balance,
+            ]);
+            $purchase->update([
+                'approved'=> True,
+                'status'=>"Complete",
+            ]);
+            Toastr::success('Purchase Order Approved Success','Success');
+            return redirect(route('purchases'));
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
+
     }
 }
