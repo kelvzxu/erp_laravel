@@ -16,7 +16,7 @@ class CreateReceiptProductTable extends Migration
         Schema::create('receipt_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('receipt_no');
-            $table->string('purchase_no')->index();
+            $table->string('purchase_no');
             $table->date('receipt_date');
             $table->boolean('validate')->default(False);
             $table->timestamps();
