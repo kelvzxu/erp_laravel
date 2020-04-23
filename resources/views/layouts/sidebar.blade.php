@@ -130,7 +130,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{'product-categories'}}">
+                        <a href="{{route('product-categories')}}">
                             <i class="metismenu-icon fa fa-cube">
                             </i>Product Categories
                         </a>

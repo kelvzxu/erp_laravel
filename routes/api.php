@@ -36,4 +36,7 @@ Route::get('/attendance', 'HrAttendanceController@checkatd');
 Route::post('/atd-count', 'HrAttendanceController@getcount');
 Route::post('/leave', 'ManageSalaryController@getcount');
 
+Route::get('Products','ProductController@Products');
+Route::get('getProduct','ProductController@getProduct');
+
 Route::get('/chart', 'HomeController@getChart');

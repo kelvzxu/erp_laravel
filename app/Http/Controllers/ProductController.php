@@ -36,7 +36,7 @@ class ProductController extends Controller
         ]);
 
         try {
-            $photo = null;
+            $nama_file = null;
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
@@ -51,6 +51,7 @@ class ProductController extends Controller
                 'stock' => $request->stock,
                 'price' => $request->price,
                 'category_id' => $request->category_id,
+                'barcode' => $request->barcode,
                 'photo' => $nama_file
             ]);
             return redirect(route('product'))
@@ -104,7 +105,7 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::findOrFail( $request->code);
+            $product = Product::where('code',$request->code)->first();
             $nama_file = $product->photo;
 
             if ($request->hasFile('photo')) {
@@ -119,8 +120,9 @@ class ProductController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'stock' => $request->stock,
-                'price' => $request->price,
+                'price' => $request->price, 
                 'category_id' => $request->category_id,
+                'barcode'=> $request->barcode,
                 'photo' => $nama_file
             ]);
 
@@ -148,5 +150,39 @@ class ProductController extends Controller
             'status' => 'failed',
             'data' => []
         ]);
+    }
+    public function getProduct(Request $request)
+    {
+        $this->validate($request, [
+            's' => 'required'
+        ]);
+
+        $product = Product::where('barcode', $request->s)->first();
+        if ($product) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $product
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
+    }
+
+    public function Products()
+    {
+        try {
+            $product = Product::with('category')->orderBy('name', 'ASC')->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $product
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
     }
 }

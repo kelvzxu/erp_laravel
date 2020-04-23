@@ -110,6 +110,13 @@
                                             <p class="text-danger">{{ $errors->first('code') }}</p>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <label class="col-sm-5 col-form-label">Barcode</label>
+                                        <div class="wrap-input200 col-sm-6">
+                                            <input type="text" name="barcode" id="barcode" maxlength="10" class="input200 {{ $errors->has('barcode') ? 'is-invalid':'' }}" value="{{ $product->barcode }}" required autofocus>
+                                            <p class="text-danger">{{ $errors->first('barcode') }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="row">
