@@ -45,7 +45,6 @@
         window._form = {!! $invoice->toJson() !!};
         var data  = {!! $invoice->toJson() !!};
         console.log(data);
-        var product = data.products
         $('a#invoices').addClass('mm-active');
 
         // $.each(product, function (i) {

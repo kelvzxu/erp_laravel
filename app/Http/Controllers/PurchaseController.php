@@ -113,7 +113,7 @@ class PurchaseController extends Controller
 
     public function edit($id)
     {
-        $purchase = Purchase::with('products')->findOrFail($id);
+        $purchase = Purchase::with('products','products.product')->findOrFail($id);
         $purchases = PurchaseProduct::where('purchase_id', $id)->get();
         return view('purchases.edit', compact('purchase','purchases'));
     }

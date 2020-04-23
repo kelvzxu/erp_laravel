@@ -44,7 +44,7 @@
 
         window._form = {!! $purchase->toJson() !!};
         var data  = {!! $purchase->toJson() !!};
-        var product = data.products
+        console.log(data);
         $('a#purchases').addClass('mm-active');
         // $.each(product, function (i) {
         //     $.ajax  ({

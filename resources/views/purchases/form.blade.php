@@ -54,21 +54,22 @@
         </tr>
     </thead> 
     <tbody>
-        <tr v-for="product in form.products">
-            <td class="table-name" :class="{'table-error': errors['products.' + $index + '.name']}">
-                <input type="text" class="Form-control" v-model="product.name" readonly>
+        <tr v-for="data in form.products">
+        <td class="table-name" :class="{'table-error': errors['products.' + $index + '.name']}">
+                <input type="hidden" class="form-control" v-model="data.name" readonly>
+                <input type="text" style="border:none" class="form-control bg-white" v-model="data.product.name" readonly>
             </td>
             <td class="table-price" :class="{'table-error': errors['products.' + $index + '.price']}">
-                <input type="text" class="form-control"  v-model="product.price">
+                <input type="text" style="border:none" class="form-control"  v-model="data.price">
             </td>
             <td class="table-qty" :class="{'table-error': errors['products.' + $index + '.qty']}">
-                <input type="text" class="form-control" v-model="product.qty">
+                <input type="text" style="border:none"  class="form-control" v-model="data.qty">
             </td>
             <td class="table-total">
-                <span class="table-text">@{{product.qty * product.price}}</span>
+                <span class="table-text">@{{data.qty * data.price}}</span>
             </td>
             <td class="table-remove">
-                <span @click="remove(product)" class="table-remove-btn">&times;</span>
+                <span @click="remove(data)" class="table-remove-btn">&times;</span>
             </td>
         </tr>
     </tbody>
@@ -82,7 +83,7 @@
             <td class="table-empty" colspan="2"></td>
             <td class="table-label">Discount</td>
             <td class="table-discount" :class="{'table-error': errors.discount}">
-                <input type="text" class="form-control table-discount_input" v-model="form.discount">
+                <input type="text"style="border:none"  class="form-control table-discount_input" v-model="form.discount">
             </td>
         </tr>
         <tr>
