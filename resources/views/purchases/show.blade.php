@@ -74,12 +74,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($purchases->products as $product)
+                    @foreach($purchases->products as $data)
                         <tr>
-                            <td id="product" class="table-name">{{$product->name}}</td>
-                            <td class="table-price">Rp. {{ number_format($product->price)}}</td>
-                            <td class="table-qty">{{$product->qty}}</td>
-                            <td class="table-total text-right">Rp. {{ number_format($product->qty * $product->price)}}</td>
+                        <td id="product" class="table-name">{{$data->product->name}}</td>
+                            <td class="table-price">Rp. {{ number_format($data->price)}}</td>
+                            <td class="table-qty">{{$data->qty}}</td>
+                            <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -116,18 +116,6 @@ $.ajax  ({
     },
     success: function (result) {
         $("#client").html(result.data.partner_name);
-    }
-})
-$.ajax  ({
-    url: "{{asset('api/product/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$product->name}}"
-    },
-    success: function (result) {
-        console.log(result.data.price);
-        $("#product").html(result.data.name);
     }
 })
 </script>

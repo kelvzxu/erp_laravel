@@ -16,6 +16,6 @@ class InvoiceProduct extends Model
     }
     public function product()
     {
-        return $this->belongsTo('App\Models\Product\Product','foreign_key');
+        return $this->hasOne('App\Models\Product\Product','id','name');
     }
 }

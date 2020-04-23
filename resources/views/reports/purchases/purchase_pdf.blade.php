@@ -46,13 +46,13 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($purchase->products as $product)
+            @foreach($purchase->products as $data)
                 <tr>
                     <td scope="row">{{$loop->iteration}}
-                    <td id="product" class="table-name">{{$product->name}}</td>
-                    <td class="table-price">Rp. {{number_format($product->price)}}</td>
-                    <td class="table-qty">{{$product->qty}}</td>
-                    <td class="table-total">Rp. {{number_format($product->qty * $product->price)}}</td>
+                    <td id="product" class="table-name">{{$data->product->name}}</td>
+                    <td class="table-price">Rp. {{ number_format($data->price)}}</td>
+                    <td class="table-qty">{{$data->qty}}</td>
+                    <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
                 </tr>
             @endforeach
         </tbody>
