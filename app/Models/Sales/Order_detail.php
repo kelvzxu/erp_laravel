@@ -14,6 +14,6 @@ class Order_detail extends Model
 
     public function product()
     {
-        return $this->belongsTo('App\Models\Product\primary','foreign_key');
+        return $this->belongsTo('App\Models\Product\Product','product','id');
     }
 }

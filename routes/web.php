@@ -174,11 +174,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('leave/filter','LeaveController@search')->name('leave.filter');
     
     // ==== Point Of Sale ====
-    Route::get('/pos', 'OrderController@addOrder')->name('pos');
-    Route::get('/pos/checkout', 'OrderController@checkout')->name('order.checkout');
-    Route::post('/poscheckout', 'OrderController@storeOrder')->name('order.storeOrder');
-    Route::get('/transaksi', 'OrderController@addOrder')->name('order.transaksi');
-    Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
+    Route::get('PointOfSale', 'OrderController@index')->name('pos');
+    Route::post('PointOfSale/store', 'OrderController@store')->name('pos.store');
+    Route::get('PointOfSale/Transaction', 'OrderController@create')->name('pos.create');
+    Route::get('PointOfSale/Transaction/View/{id}', 'OrderController@view')->name('pos.view');
+    Route::get('/checkout', 'OrdrController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 });  
 Auth::routes(['verify' => true]);
