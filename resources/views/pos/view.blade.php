@@ -44,12 +44,11 @@
                                 </tr>
                                 @foreach($order->order_detail as $data)
                                     <tr>
-                                    <td>{{$data->name}}</td>
-                                    <td>Rp. {{ number_format($data->price)}}</td>
-                                    <td>{{$data->qty}}</td>
+                                    <td colspan="3">{{$data->name}}</td>
                                     </tr>
                                     <tr>
-                                    <td class="table-empty" colspan="2"></td>
+                                    <td>Rp. {{ number_format($data->price)}}</td>
+                                    <td>{{$data->qty}}</td>
                                     <td>Rp. {{ number_format($data->qty * $data->price)}}</td>
                                     </tr>
                                 @endforeach
