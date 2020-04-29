@@ -64,7 +64,7 @@
                         <span class="o_pager_counter">
                             <span class="o_pager_value">{{$purchases->total()}}</span> / <span class="o_pager_limit">{{$purchases->perPage()}}</span>
                         </span>
-                        <span class="btn-group" aria-atomic="true">
+                        <span class="btn-group d-none" aria-atomic="true">
                             <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
                                 accesskey="p" aria-label="Previous" title="Previous" tabindex="-1"></button>
                             <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next"

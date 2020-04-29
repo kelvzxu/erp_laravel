@@ -62,9 +62,9 @@
                 <nav class="o_cp_pager" role="search" aria-label="Pager">
                     <div class="o_pager o_hidden">
                         <span class="o_pager_counter">
-                            <span class="o_pager_value">$invoices->total()</span> / <span class="o_pager_limit">$invoices->perPage()</span>
+                            <span class="o_pager_value">{{$invoices->total()}}</span> / <span class="o_pager_limit">{{$invoices->perPage()}}</span>
                         </span>
-                        <span class="btn-group" aria-atomic="true">
+                        <span class="btn-group d-none" aria-atomic="true">
                             <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
                                 accesskey="p" aria-label="Previous" title="Previous" tabindex="-1"></button>
                             <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next"
