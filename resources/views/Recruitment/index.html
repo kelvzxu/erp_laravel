@@ -1,0 +1,44 @@
+<div class="o_form_statusbar">
+    <div class="o_statusbar_buttons">
+        <button type="button" name="payment_action_capture"
+            class="btn btn-primary o_invisible_modifier" data-original-title="" title=""><span>Capture
+                Transaction</span></button>
+        <button type="button" name="payment_action_void"
+            confirm="Are you sure you want to void the authorized transaction? This action can't be undone."
+            class="btn btn-secondary o_invisible_modifier" data-original-title="" title=""><span>Void
+                Transaction</span></button><button type="button" name="442" class="btn btn-primary o_invisible_modifier"
+            data-original-title="" title=""><span>Create Invoice</span></button><button type="button" name="442"
+            context="{'default_advance_payment_method': 'percentage'}" class="btn btn-secondary o_invisible_modifier"
+            data-original-title="" title=""><span>Create Invoice</span></button><button type="button"
+            name="action_quotation_send" states="draft" class="btn btn-primary" data-original-title=""
+            title=""><span>Send by Email</span></button><button type="button" name="action_quotation_send"
+            class="btn btn-primary o_invisible_modifier" context="{'proforma': True}" invisible="1"
+            data-original-title="" title=""><span>Send PRO-FORMA Invoice</span></button><button type="button"
+            name="action_confirm" id="action_confirm" class="btn btn-primary o_invisible_modifier"
+            data-original-title="" title=""><span>Confirm</span></button><button type="button" name="action_confirm"
+            class="btn btn-secondary" data-original-title="" title=""><span>Confirm</span></button><button type="button"
+            name="action_quotation_send" context="{'proforma': True}" invisible="1"
+            class="btn btn-secondary o_invisible_modifier" data-original-title="" title=""><span>Send PRO-FORMA
+                Invoice</span></button><button type="button" name="action_quotation_send" states="sent,sale"
+            class="btn btn-secondary o_invisible_modifier" data-original-title="" title=""><span>Send by
+                Email</span></button><button type="button" name="action_cancel" states="draft,sent,sale"
+            class="btn btn-secondary" data-original-title="" title=""><span>Cancel</span></button><button type="button"
+            name="action_draft" states="cancel" class="btn btn-secondary o_invisible_modifier" data-original-title=""
+            title=""><span>Set to Quotation</span></button></div>
+    <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
+        name="authorized_transaction_ids" id="o_field_input_290" data-original-title="" title=""></div>
+    <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
+        <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+            class="btn o_arrow_button btn-secondary disabled ">
+            Sales Order
+        </button>
+        <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+            class="btn o_arrow_button btn-secondary disabled ">
+            Quotation Sent
+        </button>
+        <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+            class="btn o_arrow_button btn-primary disabled " aria-current="step">
+            Quotation
+        </button>
+    </div>
+</div>

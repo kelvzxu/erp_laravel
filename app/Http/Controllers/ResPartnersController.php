@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Partner\res_partner;
 use App\Models\World_database\res_country;
 use App\Models\World_database\res_country_state;
+use App\Models\Accounting\account_journal;
+use App\Models\Human_Resource\hr_employee;
 use App\Models\Data\res_partner_industry;
 use App\Models\Currency\res_currency;
 use App\Models\Data\res_lang;
 use App\Models\Data\timezone;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -52,38 +55,29 @@ class ResPartnersController extends Controller
 
     public function create()
     {
-        return view('res_partner.create_partner');
+        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
+        $account = account_journal::orderBy('code','asc')->get();
+        return view('res_partner.create_partner',compact('account','employee'));
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string|max:50|unique:products',
-            'display_name' => 'required|string|max:50',
-            'Parent_id' => 'nullable|string|max:100',
-            'industry_id' => 'required|integer',
-            'address' => 'required|string',
-            'email' => 'nullable|string|max:100',
-            'street1' => 'nullable|string|max:100',
-            'street2' => 'nullable|string|max:100',
-            'mobile' => 'nullable|string|max:100',
-            'country' => 'required|integer',
-            'currency_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg'
+            'name' => 'required|string|max:50',
+            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
             $nama_file="";
             $photo = null;
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image')->getClientOriginalName();
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
                 $destination = base_path() . '/public/uploads/Partners';
-                $request->file('image')->move($destination, $nama_file);
+                $request->file('photo')->move($destination, $nama_file);
             }
             $res_partner = res_partner::create([
                 'partner_name'=> $request->name,
-                'display_name'=> $request->display_name,
-                'title'=> $request->code,
+                'display_name'=> $request->name,
                 'parent_id'=> $request->Parent_id,
                 'ref'=> $request->reference,
                 'lag'=> $request->lag,
@@ -94,10 +88,11 @@ class ResPartnersController extends Controller
                 'credit_limit'=> $request->credit,
                 'debit_limit'=> $request->debit,
                 'active'=> $active=True,
-                'address'=> $request->address,
+                'address'=> $request->type,
                 'street'=> $request->street1,
+                'street2'=> $request->street2,
                 'zip'=> $request->zip,
-                'city'=> $request->street2,
+                'city'=> $request->city,
                 'state_id'=> $request->state,
                 'country_id'=> $request->country,
                 'partner_latitude'=> $request->partner_latitude,
@@ -106,21 +101,27 @@ class ResPartnersController extends Controller
                 'phone'=> $request->phone,
                 'mobile'=> $request->mobile,
                 'industry_id'=> $request->industry_id,
-                'company_name'=>$request->company_name,
-                'commercial_company_name'=>$request->commercial_company_name,
+                'company_name'=>$request->name,
+                'commercial_company_name'=>$request->name,
+                'mcd'=> $request->mcd,
+                'payment_terms'=>$request->payment_terms,
+                'note'=>$request->note,
+                'receivable_account'=>$request->receivable_account,
                 'logo'=> $nama_file,
             ]);
-            return redirect(route('partner'))
-                ->with(['success' => 'partners <strong>' .$request->name. '</strong> Ditambahkan']);
+            Toastr::success('Vendors ' .$request->name. ' created successfully','Success');
+            return redirect(route('partner'));
         } catch (\Exception $e) {
-            return redirect()->back()
-            // ->with(['error' => 'Terjadi Kesalahan saat Menyimpan data']);
-            ->with(['error' => $e->getMessage()]);
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
         }
     }
 
     public function show(res_partner $res_partner)
     {
+        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
+        $account = account_journal::orderBy('code','asc')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
         $state=res_country_state::orderBy('state_name', 'ASC')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
@@ -128,7 +129,7 @@ class ResPartnersController extends Controller
         $tz = timezone::orderBy('timezone', 'ASC')->get();
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
         return view('res_partner.edit_partner',
-            compact('res_partner','country','state','currency','lang','tz','industry'));
+            compact('res_partner','country','state','currency','lang','tz','industry','account','employee'));
     }
 
     public function edit(res_partner $res_partner)
@@ -140,96 +141,58 @@ class ResPartnersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:50|unique:products',
-            'display_name' => 'required|string|max:50',
-            'Parent_id' => 'nullable|string|max:100',
-            'industry_id' => 'required|integer',
-            'address' => 'required|string',
-            'email' => 'nullable|string|max:100',
-            'street1' => 'nullable|string|max:100',
-            'street2' => 'nullable|string|max:100',
-            'mobile' => 'nullable|string|max:100',
-            'country' => 'required|integer',
-            'currency_id' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg'
+            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
-            $nama_file="";
-            $photo = null;
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image')->getClientOriginalName();
+            $res_partner = res_partner::where('id',$request->id)->first();
+            $nama_file = $res_partner->photo;
+            $debit_limit=$res_partner->debit_limit;
+            $credit_limit=$res_partner->credit_limit;
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
                 $destination = base_path() . '/public/uploads/partners';
-                $request->file('image')->move($destination, $nama_file);
+                $request->file('photo')->move($destination, $nama_file);
+            }
 
-                $res_partner = res_partner::where('id',$request->id)->update([
-                    'partner_name'=> $request->name,
-                    'display_name'=> $request->display_name,
-                    'title'=> $request->code,
-                    'parent_id'=> $request->Parent_id,
-                    'ref'=> $request->reference,
-                    'lag'=> $request->lag,
-                    'tz'=> $request->tz,
-                    'currency_id'=> $request->currency_id,
-                    'bank_account'=> $request->bank_account,
-                    'website'=> $request->website,
-                    'credit_limit'=> $request->credit,
-                    'debit_limit'=> $request->debit,
-                    'active'=> $active=True,
-                    'address'=> $request->address,
-                    'street'=> $request->street1,
-                    'zip'=> $request->zip,
-                    'city'=> $request->street2,
-                    'state_id'=> $request->state,
-                    'country_id'=> $request->country,
-                    'partner_latitude'=> $request->partner_latitude,
-                    'partner_longitude'=> $request->partner_longitude,
-                    'email'=> $request->email,
-                    'phone'=> $request->phone,
-                    'mobile'=> $request->mobile,
-                    'industry_id'=> $request->industry_id,
-                    'company_name'=>$request->company_name,
-                    'commercial_company_name'=>$request->commercial_company_name,
-                    'logo'=> $nama_file,
-                ]);
-                return redirect(route('partner'))
-                    ->with(['success' => 'partner <strong>' .$request->name. '</strong> Diubah']);
-            }
-            else{
-                $res_partner = res_partner::where('id',$request->id)->update([
-                    'partner_name'=> $request->name,
-                    'display_name'=> $request->display_name,
-                    'title'=> $request->code,
-                    'parent_id'=> $request->Parent_id,
-                    'ref'=> $request->reference,
-                    'lag'=> $request->lag,
-                    'tz'=> $request->tz,
-                    'currency_id'=> $request->currency_id,
-                    'bank_account'=> $request->bank_account,
-                    'website'=> $request->website,
-                    'credit_limit'=> $request->credit,
-                    'debit_limit'=> $request->debit,
-                    'active'=> $active=True,
-                    'address'=> $request->address,
-                    'street'=> $request->street1,
-                    'zip'=> $request->zip,
-                    'city'=> $request->street2,
-                    'state_id'=> $request->state,
-                    'country_id'=> $request->country,
-                    'partner_latitude'=> $request->partner_latitude,
-                    'partner_longitude'=> $request->partner_longitude,
-                    'email'=> $request->email,
-                    'phone'=> $request->phone,
-                    'mobile'=> $request->mobile,
-                    'industry_id'=> $request->industry_id,
-                    'company_name'=>$request->company_name,
-                    'commercial_company_name'=>$request->commercial_company_name,
-                ]);
-                return redirect(route('partner'))
-                    ->with(['success' => 'partner <strong>' .$request->name. '</strong> Diubah']);
-            }
+            $res_partner = res_partner::where('id',$request->id)->update([
+                'partner_name'=> $request->name,
+                'display_name'=> $request->name,
+                'parent_id'=> $request->Parent_id,
+                'ref'=> $request->reference,
+                'lag'=> $request->lag,
+                'tz'=> $request->tz,
+                'currency_id'=> $request->currency_id,
+                'bank_account'=> $request->bank_account,
+                'website'=> $request->website,
+                'active'=> $active=True,
+                'address'=> $request->type,
+                'street'=> $request->street1,
+                'street2'=> $request->street2,
+                'zip'=> $request->zip,
+                'city'=> $request->city,
+                'state_id'=> $request->state,
+                'country_id'=> $request->country,
+                'partner_latitude'=> $request->partner_latitude,
+                'partner_longitude'=> $request->partner_longitude,
+                'email'=> $request->email,
+                'phone'=> $request->phone,
+                'mobile'=> $request->mobile,
+                'industry_id'=> $request->industry_id,
+                'company_name'=>$request->name,
+                'commercial_company_name'=>$request->name,
+                'mcd'=> $request->mcd,
+                'payment_terms'=>$request->payment_terms,
+                'note'=>$request->note,
+                'receivable_account'=>$request->receivable_account,
+                'logo'=> $nama_file,
+            ]);
+            Toastr::success('Vendors ' .$request->name. ' created successfully','Success');
+            return redirect(route('partner'));
         } catch (\Exception $e) {
-            return redirect()->back()
-            ->with(['error' => 'Terjadi Kesalahan saat Menyimpan data']);
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
         }
     }
 

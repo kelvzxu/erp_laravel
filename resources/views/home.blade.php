@@ -1,61 +1,69 @@
 @extends('layouts.admin')
-@section('title','SK - Home')
+@section('title','SK - Employee')
+@section('css')
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+@endsection
 @section('content')
-<div class="row">
-<div class="col-12 col-md-8 bg-primary mt-0">
-</div>
-<div class="col-12 col-md-4 bg-white">
-    <div id="attendance">
-    @if (session('success'))
-        <div class="alert alert-success mt-2">
-        {{ session('success') }}
+<div class="app-page-title bg-white">
+    <div class="o_control_panel">
+        <div>
+            <ol class="breadcrumb" role="navigation">
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('home')}}">Dashboard</a></li>
+            </ol>
         </div>
-    @endif
     </div>
-    <hr>
     <div class="row">
-        <div class="col-md-10 container">
-            <form action="{{route('leave.store')}}" method="post" class="form-horizontal">
-                @csrf
-                <h4 class="card-title">Apply Leave</h4>
-                <div class="form-group row">
-                    <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Leave type</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="leave_type" class="form-control" id="fname" placeholder="Leave type">
-                    </div>
+        <div class="col-12 col-md-8 bg-primary mt-0">
+        </div>
+        <div class="col-12 col-md-4 bg-white">
+            <div id="attendance">
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-10 container">
+                    <form action="{{route('leave.store')}}" method="post" class="form-horizontal">
+                        @csrf
+                        <h4 class="card-title">Apply Leave</h4>
+                        <div class="form-group row">
+                            <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Leave type</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="leave_type" class="form-control" id="fname" placeholder="Leave type">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lname" class="col-sm-3 text-md-right control-label col-form-label">Date from</label>
+                            <div class="col-sm-9">
+                                <input type="date" min="{{date('Y-m-d')}}" name="date_from" class="form-control" id="FromDate">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lname" class="col-sm-3 text-md-right control-label col-form-label">Date To</label>
+                            <div class="col-sm-9">
+                                <input type="date" name="date_to" class="form-control" id="ToDate">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Days</label>
+                            <div class="col-sm-9">
+                                <input type="text" name="days" class="form-control" id="TotalDays" placeholder="Number of leave days">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Reason</label>
+                            <div class="col-sm-9">
+                                <textarea type="text" name="reason" class="form-control" placeholder="Reason">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <button type="submit" class="btn btn-dark my-2"><i class="fa fa-send"> Apply</i></button>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group row">
-                    <label for="lname" class="col-sm-3 text-md-right control-label col-form-label">Date from</label>
-                    <div class="col-sm-9">
-                        <input type="date" min="{{date('Y-m-d')}}" name="date_from" class="form-control" id="FromDate">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="lname" class="col-sm-3 text-md-right control-label col-form-label">Date To</label>
-                    <div class="col-sm-9">
-                        <input type="date" name="date_to" class="form-control" id="ToDate">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Days</label>
-                    <div class="col-sm-9">
-                        <input type="text" name="days" class="form-control" id="TotalDays" placeholder="Number of leave days">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="fname" class="col-sm-3 text-md-right control-label col-form-label">Reason</label>
-                    <div class="col-sm-9">
-                        <textarea type="text" name="reason" class="form-control" placeholder="Reason">
-                        </textarea>
-                    </div>
-                </div>
-                <div class="border-top">
-                    <button type="submit" class="btn btn-dark my-2"><i class="fa fa-send"> Apply</i></button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 @endsection
 @section('js')
@@ -68,7 +76,7 @@
         hours = time.getHours(),
         minutes = time.getMinutes(),
         seconds = time.getSeconds();
-    // document.querySelectorAll('.jam')[0].innerHTML = harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
+        // document.querySelectorAll('.jam')[0].innerHTML = harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
     var time = harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
     // // document.getElementById('#jam')[0].value = time
     $('#jam').val(time);
@@ -128,14 +136,23 @@
                         @csrf
                             <div class="row text-center">
                                 <div class="container bg-white rounded">
-                                    <h5 class="mt-3"><p><small>Attendance</small></p></h5>
+                                    <h4 class="mt-3"><p><small>Attendance</small></p></h4>
                                     <div class="row">
                                         <div class="col-6">
-                                        Date : 
-                                        <input style="border:none" type="text" class="bg-white" name="clock" size=7 value="{{$ldate = date('Y-m-d')}}" readonly>
+                                            <div class="form-group row">
+                                                <label for="Date" class="col-sm-4 text-right">Date</label>
+                                                <div class="col-sm-8 text-left">
+                                                    <input type="text" name="clock" class="bg-white" size=7 style="border:none" value="{{$ldate = date('Y-m-d')}}" readonly>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-6">
-                                        Time :  <input id="jam" style="border:none" type="text" class="bg-white" name="time" size=7 readonly ></input>
+                                            <div class="form-group row">
+                                                <label for="Time" class="col-sm-4 text-right">Time</label>
+                                                <div class="col-sm-8 text-left">
+                                                <input id="jam" style="border:none" type="text" class="bg-white" name="time" size=7 readonly >
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">

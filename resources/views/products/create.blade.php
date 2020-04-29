@@ -1,166 +1,178 @@
 @extends('layouts.admin')
-@section('title','SK - new Product')
+@section('title','SK - Employee')
+@section('css')
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+@endsection
 @section('content')
-    <!-- header -->
-    <div class="container row">
-        <div class="col-12 col-md-7">
-            <div class="ml-auto text-right">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('product') }}">Produk</a></li>
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('product.create')}}">New</a></li>
-                    </ol>
-                </nav>
+<form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="app-page-title bg-white">
+        <div class="o_control_panel">
+            <div>
+                <ol class="breadcrumb" role="navigation">
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('product')}}">Products</a></li>
+                    <li class="breadcrumb-item active">New</li>
+                </ol>
             </div>
-            <h3>Create Product</h3>
-        </div>
-    </div>
-    <form action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="container row">
-            <div class="col-3">
-            <button class="btn btn-primary btn-sm mt-2">
-                    <i class="fa fa-send"></i> Save
-                </button>
-            </div>
-        </div>
-
-
-        <section class="content mt-3">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="container bg-white my-3">
-                            @slot('title')
-                            
-                            @endslot
-                            
-                            @if (session('error'))
-                                @alert(['type' => 'danger'])
-                                    {!! session('error') !!}
-                                @endalert
-                            @endif
-                            <br>
-                            <div class="row">
-                                <div class="col-sm-10">
-                                    <div class="row">
-                                        <div class="col-sm-10">
-                                            <div class="wrap-input200">
-                                                <label for="">Produk Name</label>
-                                                    <input type="text" name="name" required placeholder="Product Name"
-                                                        class="input200 {{ $errors->has('name') ? 'is-invalid':'' }}">
-                                                    <p class="text-danger">{{ $errors->first('name') }}</p>
-                                            </div>
-                                            <div class="form-check mt-0">
-                                                <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
-                                                <label class="form-check-label" for="canbesold">
-                                                    Can Be Sold
-                                                </label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
-                                                <label class="form-check-label" for="canbesold">
-                                                    Can Be Purchase
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <img id='img-upload' src="{{asset('images/icons/picture.png')}}" width=1000px/>
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <span class="btn btn-default btn-file bg-primary text-white">
-                                                    Browse… <input type="file" id="imgInp" name="photo">
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">General Information</a>
-                                </li>
-                            </ul>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <label class="col-sm-5 col-form-label">Product Category</label>
-                                        <div class="wrap-input200 col-sm-6">
-                                            <select name="category_id" id="category_id" style="border:none"
-                                                required class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
-                                                <option value="">Select Category</option>
-                                                @foreach ($categories as $row)
-                                                    <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
-                                                @endforeach
-                                            </select>
-                                            <p class="text-danger">{{ $errors->first('category_id') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-5 col-form-label">Internal Reference</label>
-                                        <div class="wrap-input200 col-sm-6">
-                                            <input type="text" name="code" id="code" maxlength="10" class="input200 {{ $errors->has('code') ? 'is-invalid':'' }}" value="{{ old('code') }}" autofocus>
-                                            <p class="text-danger">{{ $errors->first('code') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-5 col-form-label">Barcode</label>
-                                        <div class="wrap-input200 col-sm-6">
-                                            <input type="text" name="barcode" id="barcode" maxlength="10" class="input200 {{ $errors->has('barcode') ? 'is-invalid':'' }}" value="{{ old('barcode') }}" required autofocus>
-                                            <p class="text-danger">{{ $errors->first('barcode') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <label class="col-sm-5 col-form-label">Sales Price</label>
-                                        <div class="wrap-input200 col-sm-5">
-                                            <input type="number" name="price" required 
-                                            class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
-                                            <p class="text-danger">{{ $errors->first('price') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-5 col-form-label">Cost</label>
-                                        <div class="wrap-input200 col-sm-5">
-                                            <input type="number" name="cost" required 
-                                            class="input200 {{ $errors->has('cost') ? 'is-invalid':'' }}">
-                                            <p class="text-danger">{{ $errors->first('cost') }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-sm-5 col-form-label">Stock</label>
-                                        <div class="wrap-input200 col-sm-5">
-                                            <input type="number" name="stock" required 
-                                            class="input200 {{ $errors->has('stock') ? 'is-invalid':'' }}">
-                                            <p class="text-danger">{{ $errors->first('stock') }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-11">
-                                    <div class="wrap-input200 mt-4">
-                                        <label for="">Internal Note</label>
-                                        <textarea name="description" id="description" 
-                                            cols="5" rows="5" placeholder="This note is only for internal purpose"
-                                            class="input200 {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
-                                        <p class="text-danger">{{ $errors->first('description') }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            @slot('footer')
-                            
-                            @endslot
-                            <br>
+            <div>
+                <div class="o_cp_left">
+                    <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
+                        <div>
+                            <button class="btn btn-primary my-2" @click="create" :disabled="isProcessing">Save</button>
+                            <a href="{{route('product')}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="o_form_view o_form_editable">
+            <div class="container-fluid mt-5">
+                <div class="clearfix o_form_sheet">
+                    <div class="o_not_full oe_button_box mx-0">
+                        <button type="button" class="btn oe_stat_button" name="457">
+                            <i class="fa fa-cubes o_button_icon fa-usd"></i>
+                            <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
+                                data-original-title="" title="">
+                                <span class="o_stat_value">0 Units</span>
+                                <span class="o_stat_text">On Hands</span>
+                            </div>
+                        </button>
+                        <button type="button" class="btn oe_stat_button" name="action_view_partner_invoices"
+                            context="{'default_partner_id': active_id}">
+                            <i class="fa fa-fw o_button_icon fa-pencil-square-o"></i>
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <span class="o_field_monetary o_field_number o_field_widget o_readonly_modifier"
+                                    name="total_invoiced" data-original-title="" title="">0.00</span>
+                                </span>
+                                <span class="o_stat_text">Invoiced</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <div class="wrap-input200">
+                                        <label for="">Produk Name</label>
+                                            <input type="text" name="name" required placeholder="Product Name"
+                                                class="input200 {{ $errors->has('name') ? 'is-invalid':'' }}">
+                                            <p class="text-danger">{{ $errors->first('name') }}</p>
+                                    </div>
+                                    <div class="form-check mt-0">
+                                        <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
+                                        <label class="form-check-label" for="canbesold">
+                                            Can Be Sold
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
+                                        <label class="form-check-label" for="canbesold">
+                                            Can Be Purchase
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <img id='img-upload' src="{{asset('images/icons/picture.png')}}" width=1000px/>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default btn-file bg-primary text-white">
+                                            Browse… <input type="file" id="imgInp" name="photo">
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="o_notebook">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
+                                    class="nav-link active" role="tab" aria-selected="true">General Information</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="notebook_page_581">
+                                <div class="o_group">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Product Category</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="category_id" id="category_id" style="border:none"
+                                                        required class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
+                                                        <option value="">Select Category</option>
+                                                        @foreach ($categories as $row)
+                                                            <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('category_id') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Internal Reference</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <input type="text" name="code" id="code" maxlength="10" class="input200 {{ $errors->has('code') ? 'is-invalid':'' }}" value="{{ old('code') }}" autofocus>
+                                                    <p class="text-danger">{{ $errors->first('code') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Barcode</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <input type="text" name="barcode" id="barcode" maxlength="10" class="input200 {{ $errors->has('barcode') ? 'is-invalid':'' }}" value="{{ old('barcode') }}" required autofocus>
+                                                    <p class="text-danger">{{ $errors->first('barcode') }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Sales Price</label>
+                                                <div class="wrap-input200 col-sm-5">
+                                                    <input type="number" name="price" required 
+                                                    class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
+                                                    <p class="text-danger">{{ $errors->first('price') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Cost</label>
+                                                <div class="wrap-input200 col-sm-5">
+                                                    <input type="number" name="cost" required 
+                                                    class="input200 {{ $errors->has('cost') ? 'is-invalid':'' }}">
+                                                    <p class="text-danger">{{ $errors->first('cost') }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-11">
+                                            <div class="wrap-input200 mt-4">
+                                                <label for="">Internal Note</label>
+                                                <textarea name="description" id="description" 
+                                                    cols="5" rows="5" placeholder="This note is only for internal purpose"
+                                                    class="input200 {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
+                                                <p class="text-danger">{{ $errors->first('description') }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</form>
+@endsection
+@section('js')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
+<script type="text/javascript">
+$('a#product').addClass('mm-active');
+</script>
 @endsection

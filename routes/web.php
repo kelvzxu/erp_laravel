@@ -91,8 +91,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/invoices', 'InvoiceController@index')->name('invoices');
     Route::get('/invoices/create', 'InvoiceController@create')->name('invoices.create');
     Route::post('/invoices', 'InvoiceController@store')->name('invoices.store');
-    Route::get('/invoices/show{id}', 'InvoiceController@show')->name('invoices.show');
-    Route::get('/invoices/edit{id}', 'InvoiceController@edit')->name('invoices.edit');
+    Route::get('/invoices/show/{id}', 'InvoiceController@show')->name('invoices.show');
+    Route::get('/invoices/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
     Route::put('/invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
     Route::get('/invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
     Route::get('/invoices/filter', 'InvoiceController@search')->name('invoices.filter');
@@ -138,7 +138,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
 
     // ==== Recruitment ====
-    Route::get('recruitment','HrEmployeesController@index')->name('recruitment');
+    Route::get('recruitment','HrRecruitmentController@index')->name('recruitment');
 
     // ==== Payable Account ====
     Route::get('PayableAccount','PayableController@index')->name('PayableAccount.index');
@@ -149,13 +149,14 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('profile.update','ProfileController@update')->name('profile.update');
 
     // ==== Product =====
-    Route::get('/product', 'ProductController@index')->name('product');
-    Route::get('/product/create', 'ProductController@create')->name('product.create');
-    Route::post('/product/store', 'ProductController@store')->name('product.store');
-    Route::get('/product/edit', 'ProductController@edit')->name('product.edit');
-    Route::get('/product/edit{id}', 'ProductController@edit')->name('product.edit');
-    Route::get('/product/destroy{id}', 'ProductController@destroy')->name('product.destroy');
-    Route::put('/product/update', 'ProductController@update')->name('product.update');
+    Route::get('product', 'ProductController@index')->name('product');
+    Route::get('product/create', 'ProductController@create')->name('product.create');
+    Route::post('product/store', 'ProductController@store')->name('product.store');
+    Route::get('product/edit', 'ProductController@edit')->name('product.edit');
+    Route::get('product/edit/{id}', 'ProductController@edit')->name('product.edit');
+    Route::get('product/filter', 'ProductController@search')->name('product.filter');
+    Route::get('product/destroy{id}', 'ProductController@destroy')->name('product.destroy');
+    Route::put('product/update', 'ProductController@update')->name('product.update');
 
     // ==== Product Categories ==== 
     Route::get('/product-categories', 'CategoryController@index')->name('product-categories');

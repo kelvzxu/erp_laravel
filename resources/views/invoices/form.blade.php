@@ -69,25 +69,25 @@
                 <span class="table-text">@{{data.qty * data.price}}</span>
             </td>
             <td class="table-remove">
-                <span @click="remove(product)" class="table-remove-btn">&times;</span>
+                <span @click="remove(product)" class="table-remove-btn"><i class="fa fa-trash"></i></span>
             </td>
         </tr>
     </tbody>
     <tfoot>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="2" style="border:none;"></td>
             <td class="table-label">Sub Total</td>
             <td class="table-amount">@{{subTotal}}</td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="2" style="border:none;"></td>
             <td class="table-label">Discount</td>
             <td class="table-discount" :class="{'table-error': errors.discount}">
                 <input type="text" style="border:none" class="form-control table-discount_input" v-model="form.discount">
             </td>
         </tr>
         <tr>
-            <td class="table-empty" colspan="2"></td>
+            <td class="table-empty" colspan="2" style="border:none;"></td>
             <td class="table-label">Grand Total</td>
             <td class="table-amount">@{{grandTotal}}</td>
         </tr>

@@ -11934,8 +11934,8 @@ button,
 }
 
 .app-page-title {
-    padding: 30px;
-    margin: -30px -30px 30px;
+    padding-top:10px;
+    margin: -30px -30px 0px;
     position: relative
 }
 

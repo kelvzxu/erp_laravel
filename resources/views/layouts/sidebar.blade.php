@@ -124,7 +124,7 @@
                     </li>
                 <li class="app-sidebar__heading">Inventory</li>
                     <li>
-                        <a href="{{route('product')}}">
+                        <a href="{{route('product')}}" id="product">
                             <i class="metismenu-icon fa fa-cubes">
                             </i>Product
                         </a>

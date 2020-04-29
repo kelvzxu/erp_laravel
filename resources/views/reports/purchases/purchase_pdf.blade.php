@@ -6,8 +6,8 @@
     <div class="customer">
         <ul style="list-style-type:none;" class="pull-right">
             <li><span class="text">{{$purchase->vendor->parent_id}} , {{$purchase->vendor->partner_name}}</span></li>
-            <li><span class="text">{{$purchase->vendor->address}}</span></li>
-            <li><span class="text">{{$purchase->vendor->city}}, {{$purchase->vendor->street}} </span></li>
+            <li><span class="text">{{$purchase->vendor->street}}</span></li>
+            <li><span class="text">{{$purchase->vendor->street2}} , {{$purchase->vendor->city}} </span></li>
             <li><span class="text">{{$purchase->vendor->phone}}</span></li>
             <li><span class="text">{{$purchase->vendor->email}}</span></li>
         </ul>

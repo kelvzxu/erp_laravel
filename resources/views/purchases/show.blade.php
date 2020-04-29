@@ -1,31 +1,156 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
+@section('css')
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+<style>
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+@endsection
 @section('content')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <div class="clearfix">
-                <span class="panel-title"><h3>Purchase</h3></span>
-                <div class="pull-right">
-                    <a href="{{route('purchases')}}" class="btn btn-danger">Back</a>
-                    @if($purchases->receipt == False )                
-                        <a href="{{route('receipt.store', $purchases)}}" class="btn btn-primary"><i class="fa fa-truck"> Receipt</i></a>
-                    @endif
-                    <a href="{{route('purchases.print', $purchases)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
-                    <a href="{{route('purchases.edit', $purchases)}}" class="btn btn-warning">Return</a>
-                    <!-- <form class="form-inline" method="post"
-                        action="{{route('purchases.destroy', $purchases)}}"
-                        onsubmit="return confirm('Are you sure?')"
-                    >
-                        <input type="hidden" name="_method" value="delete">
-                        <input type="hidden" name="_token" value="{{csrf_token()}}">
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                    </form> -->
-                </div> 
+<div class="app-page-title bg-white">
+    <div class="o_control_panel">
+        <div>
+            <ol class="breadcrumb" role="navigation">
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchases')}}">Purchases Orders</a></li>
+                <li class="breadcrumb-item active">{{$purchases->purchase_no}}</li>
+            </ol>
+        </div>
+        <div>
+            <div class="o_cp_left">
+                <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
+                    <div>
+                        @if($purchases->receipt_validate == True )
+                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new disabled">Return</a>
+                        @endif
+                        @if($purchases->receipt_validate == False )
+                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new">Return</a>
+                        @endif
+                        <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('purchases.create')}}">
+                            Create
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="o_cp_right">
+                <div class="btn-group o_search_options position-static" role="search"></div>
+                <nav class="o_cp_pager" role="search" aria-label="Pager">
+                    <div class="o_pager">
+                        <span class="o_pager_counter">
+                            <span class="o_pager_value">1</span> / <span class="o_pager_limit">1</span>
+                        </span>
+                        <span class="btn-group" aria-atomic="true">
+                            <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
+                                accesskey="p" aria-label="Previous" title="Previous" tabindex="-1" disabled=""></button>
+                            <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next"
+                                accesskey="n" aria-label="Next" title="Next" tabindex="-1" disabled=""></button>
+                        </span>
+                    </div>
+                </nav>
+                <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher"></nav>
             </div>
         </div>
-        <hr style="border: 1px solid;">
-        <div class="panel-body">
-            <div class="row">
+    </div>
+    <div class="o_form_view o_sale_order o_form_editable">
+
+        <div class="o_form_statusbar">
+            <div class="o_statusbar_buttons">
+                @if($purchases->receipt == False )                
+                    <a href="{{route('receipt.store', $purchases)}}" class="btn btn-primary"><i class="fa fa-truck"> Receipt</i></a>
+                @endif
+                <a href="{{route('purchases.print', $purchases)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
+                <a href="{{route('purchases')}}" class="btn btn-secondary">Back</a>
+            </div>
+            <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
+                name="authorized_transaction_ids" id="o_field_input_290" data-original-title="" title=""></div>
+            <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
+                @if($purchases->status == "Pending" ) 
+                    <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Paid
+                    </button>
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Receive
+                    </button>
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Posted
+                    </button>
+                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Draft
+                    </button>
+                @endif
+                @if($purchases->status == "Complete" ) 
+                    @if($purchases->receipt_validate == True ) 
+                        @if($purchases->paid == True ) 
+                            <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                                Paid
+                            </button>
+                            <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Receive
+                            </button>
+                            <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Posted
+                            </button>
+                            <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Draft
+                            </button>
+                        @endif
+                        @if($purchases->paid == False ) 
+                            <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Paid
+                            </button>
+                            <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                                Receive
+                            </button>
+                            <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Posted
+                            </button>
+                            <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Draft
+                            </button>
+                        @endif
+                    @endif
+                    @if($purchases->receipt_validate == False ) 
+                        <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                            Paid
+                        </button>
+                        <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                            Receive
+                        </button>
+                        <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
+                            class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                            Posted
+                        </button>
+                        <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                            Draft
+                        </button>
+                    @endif
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12 mt-4">
+        <div class="card container">
+            <div class="row mt-4 mx-2">
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Purchase No.</label>
@@ -64,45 +189,49 @@
                 </div>
             </div>
             <hr>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($purchases->products as $data)
+            <div class="mb-4 mx-2">
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                        <td id="product" class="table-name">{{$data->product->name}}</td>
-                            <td class="table-price">Rp. {{ number_format($data->price)}}</td>
-                            <td class="table-qty">{{$data->qty}}</td>
-                            <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Total</th>
                         </tr>
-                    @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td class="table-empty" colspan="2"></td>
-                        <td class="table-label">Sub Total</td>
-                        <td class="table-amount">Rp. {{ number_format($purchases->sub_total)}}</td>
-                    </tr>
-                    <tr>
-                        <td class="table-empty" colspan="2"></td>
-                        <td class="table-label">Discount</td>
-                        <td class="table-amount">Rp. {{ number_format($purchases->discount)}}</td>
-                    </tr>
-                    <tr>
-                        <td class="table-empty" colspan="2"></td>
-                        <td class="table-label">Grand Total</td>
-                        <td class="table-amount">Rp. {{ number_format($purchases->grand_total)}}</td>
-                    </tr>
-                </tfoot>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach($purchases->products as $data)
+                            <tr>
+                            <td id="product" class="table-name">{{$data->product->name}}</td>
+                                <td class="table-price">Rp. {{ number_format($data->price)}}</td>
+                                <td class="table-qty">{{$data->qty}}</td>
+                                <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="table-empty" colspan="2" style="border:none;"></td>
+                            <td class="table-label">Sub Total</td>
+                            <td class="table-amount">Rp. {{ number_format($purchases->sub_total)}}</td>
+                        </tr>
+                        <tr>
+                            <td class="table-empty" colspan="2" style="border:none;"></td>
+                            <td class="table-label">Discount</td>
+                            <td class="table-amount">Rp. {{ number_format($purchases->discount)}}</td>
+                        </tr>
+                        <tr>
+                            <td class="table-empty" colspan="2" style="border:none;"></td>
+                            <td class="table-label">Grand Total</td>
+                            <td class="table-amount">Rp. {{ number_format($purchases->grand_total)}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
     </div>
+</div>
+<br>
 @endsection
 @section('js')
 <script>

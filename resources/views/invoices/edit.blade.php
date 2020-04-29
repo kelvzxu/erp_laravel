@@ -1,36 +1,58 @@
 @extends('layouts.admin')
 @section('title','SK - Employee')
-@section('content')
+@section('css')
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+@endsection
+@section('content') 
 <div id="invoice">
-    <div class="panel-heading">
-        <div class="clearfix">
-            <div class="row">
-                <div class="col-12 col-md-7">
-                    <div class="ml-auto text-right">
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{ route('invoices') }}">Invoice</a></li>
-                                <li class="breadcrumb-item" aria-current="page" active>Return</li>
-                            </ol>
-                        </nav>
+    <div class="app-page-title bg-white">
+        <div class="o_control_panel">
+            <div>
+                <ol class="breadcrumb" role="navigation">
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('invoices')}}">Invoices</a></li>
+                    <li class="breadcrumb-item active">{{$invoice->invoice_no}}</li>
+                </ol>
+            </div>
+            <div>
+                <div class="o_cp_left">
+                    <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
+                        <div>
+                            <button class="btn btn-primary my-2" @click="update" :disabled="isProcessing">Save</button>
+                            <a href="{{route('invoices.show', $invoice)}}" class="btn btn-secondary mby-2">Discard</a>
+                        </div>
                     </div>
-                    <h3>Invoice</h3>
+                </div>
+                <div class="o_cp_right">
+                    <div class="btn-group o_search_options position-static" role="search"></div>
+                    <nav class="o_cp_pager" role="search" aria-label="Pager">
+                        <div class="o_pager">
+                            <span class="o_pager_counter">
+                                <span class="o_pager_value">1</span> / <span class="o_pager_limit">1</span>
+                            </span>
+                            <span class="btn-group" aria-atomic="true">
+                                <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
+                                    accesskey="p" aria-label="Previous" title="Previous" tabindex="-1" disabled=""></button>
+                                <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next"
+                                    accesskey="n" aria-label="Next" title="Next" tabindex="-1" disabled=""></button>
+                            </span>
+                        </div>
+                    </nav>
+                    <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher"></nav>
                 </div>
             </div>
-            <span class="panel-title">
-                <a href="{{route('invoices')}}" class="btn btn-danger mby-2">CANCEL</a>
-                <button class="btn btn-success my-2" @click="update" :disabled="isProcessing">UPDATE</button>
-            </span>
-            <a href="{{route('invoices')}}" class="btn btn-warning my-2 pull-right">Back</a>
         </div>
     </div>
-    <div class="panel container bg-white panel-default" v-cloak>
-        <div class="panel-body">
-            @include('invoices.form')
-        </div>
-        <div class="panel-footer mb-4">
-            <br>
+    <div class="row">
+        <div class="col-12 mt-5">
+            <div class="panel container bg-white panel-default" v-cloak>
+                <div class="panel-body">
+                    @include('invoices.form')
+                </div>
+                <div class="panel-footer mb-4">
+                    <br>
+                </div>
+            </div>
         </div>
     </div>
 </div>

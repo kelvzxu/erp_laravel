@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Product\Category;
 use App\Models\Product\Product;
 use App\Models\Currency\res_currency;
+use Brian2694\Toastr\Facades\Toastr;
 use File;
 use Image;
 
@@ -13,8 +14,24 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->orderBy('created_at', 'DESC')->paginate(10);
+        $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
         return view('products.index', compact('products'));
+    }
+
+    public function search(Request $request)
+    {
+        $key=$request->filter;
+        $value=$request->value;
+        if ($key!=""){
+            $products = Product::with('category')
+                    ->where($key,'like',"%".$value."%")
+                    ->orderBy('name', 'ASC')
+                    ->paginate(10);
+            $products ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
+        }else{
+            $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
+        }
+        return view('products.index',compact('products'));
     }
 
     public function create()
@@ -29,7 +46,6 @@ class ProductController extends Controller
             'code' => 'required|string|max:10|unique:products',
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:100',
-            'stock' => 'required|integer',
             'price' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
             'photo' => 'nullable|image|mimes:jpg,png,jpeg'
@@ -48,7 +64,7 @@ class ProductController extends Controller
                 'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
-                'stock' => $request->stock,
+                'stock' => "0",
                 'price' => $request->price,
                 'category_id' => $request->category_id,
                 'barcode' => $request->barcode,
@@ -81,7 +97,8 @@ class ProductController extends Controller
             File::delete(public_path('uploads/product/' . $products->photo));
         }
         $products->delete();
-        return redirect()->back()->with(['success' => '<strong>' . $products->name . '</strong> Telah Dihapus!']);
+        Toastr::success('Product ' . $products->name . ' Delete Successfully','Success');
+                return redirect(route('product'));
     }
 
     public function edit(Request $request)
@@ -98,7 +115,6 @@ class ProductController extends Controller
             'code' => 'required|string|max:10|exists:products,code',
             'name' => 'required|string|max:100',
             'description' => 'nullable|string|max:100',
-            'stock' => 'required|integer',
             'price' => 'required|integer',
             'category_id' => 'required|exists:categories,id',
             'photo' => 'nullable|image|mimes:jpg,png,jpeg'
@@ -119,7 +135,6 @@ class ProductController extends Controller
             $product->update([
                 'name' => $request->name,
                 'description' => $request->description,
-                'stock' => $request->stock,
                 'price' => $request->price, 
                 'category_id' => $request->category_id,
                 'barcode'=> $request->barcode,

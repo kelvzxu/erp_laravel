@@ -93,6 +93,9 @@ class ReceiptProductController extends Controller
             $receipt_product->update([
                 'validate'=> True,
             ]);
+            $purchase = purchase::where('purchase_no',$receipt_product->purchase_no)->update([
+                'receipt_validate'=> True,
+            ]);
             foreach ($receipt_product->po->products as $data){
                 $qty = $data->qty;
                 $product_id = $data->name;

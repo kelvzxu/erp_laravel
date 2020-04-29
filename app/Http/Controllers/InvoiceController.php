@@ -26,7 +26,6 @@ class InvoiceController extends Controller
     {
         $key=$request->filter;
         $value=$request->value;
-        echo "$key $value";
         if ($key!=""){
             $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')

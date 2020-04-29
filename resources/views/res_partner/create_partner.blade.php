@@ -1,339 +1,378 @@
 @extends('layouts.admin')
-@section('title','SK - New Partner')
+@section('title','SK - Employee')
 @section('css')
-<!--  Maps CSS & JS -->
-<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
-<script src="https://api.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.js"></script>
-<link href="https://api.mapbox.com/mapbox-gl-js/v1.6.0/mapbox-gl.css" rel="stylesheet" />
-<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js'></script>
-<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css' type='text/css' />
-<style>
-    #map { top: 0; bottom: 0; width: 100%; }
-    .mapBox {
-        height: 420px;
-        margin-bottom: 80px;
-    }
-</style>
-<!--  End Maps CSS & JS -->
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="container">
-    @if (session('error'))
-        <div class="alert alert-danger">
-        {{ session('error') }}
-        </div>
-    @endif
-    <!-- header -->
-    <div class="row">
-        <div class="col-12 col-md-7">
-            <h3>Create New Vendor</h3>
-        </div>
-        <div class="col-12 col-md-5 text-right">
-            <form action="{{ route('partner.filter') }}" method="get" >
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <select class="input-group-text bg-primary text-white" name="filter">
-                                <option value="" selected>Filter By</option>
-                                <option value="display_name">Display Name</option>
-                                <option value="parent_id">Company Name</option>
-                                <option value="city">City</option>
-                                <option value="country_name">Country</option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Search...." name="value">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"> Search</i></button>
+<form action="{{ route('partner.store') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="app-page-title bg-white">
+        <div class="o_control_panel">
+            <div>
+                <ol class="breadcrumb" role="navigation">
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('partner')}}">Vendors</a></li>
+                    <li class="breadcrumb-item active">New</li>
+                </ol>
+            </div>
+            <div>
+                <div class="o_cp_left">
+                    <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
+                        <div>
+                            <button class="btn btn-primary my-2" :disabled="isProcessing">Save</button>
+                            <a href="{{route('partner')}}" class="btn btn-secondary mby-2">Discard</a>
+                        </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
-    <!-- header button -->
-    <form action="{{ route('partner.store') }}" method="post" enctype="multipart/form-data">
-    @CSRF
-    <div class="row">
-        <div class="col-3">
-            <button class="btn btn-primary btn-sm">
-                <i class="fa fa-send"></i> Save
-            </button>
+    <div class="container">
+        <div class="o_form_view o_form_editable">
+            <div class="container-fluid mt-5">
+                <div class="clearfix o_form_sheet">
+                    <div class="o_not_full oe_button_box mx-0">
+                        <button type="button" class="btn oe_stat_button" name="457">
+                            <i class="fa fa-fw o_button_icon fa-usd"></i>
+                            <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
+                                data-original-title="" title="">
+                                <span class="o_stat_value">0</span>
+                                <span class="o_stat_text">Purchases</span>
+                            </div>
+                        </button>
+                        <button type="button" class="btn oe_stat_button" name="action_view_partner_invoices"
+                            context="{'default_partner_id': active_id}">
+                            <i class="fa fa-fw o_button_icon fa-pencil-square-o"></i>
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <span class="o_field_monetary o_field_number o_field_widget o_readonly_modifier"
+                                    name="total_invoiced" data-original-title="" title="">0.00</span>
+                                </span>
+                                <span class="o_stat_text">Bill</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-10">
+                            <div class="row">
+                                <div class="col-9">
+                                    <h1>
+                                        <div class="o_field_partner_autocomplete dropdown open wrap-input200 o_required_modifier" name="name"
+                                            placeholder="Name" data-original-title="" title="">
+                                            <input class="input200  @error('name') is-invalid @enderror" placeholder="Name" type="text" id="name" name="name" value="{{ old('name') }}" required>
+                                        </div>
+                                    </h1>
+                                    <div class="o_row">
+                                        <div class="wrap-input200 " aria-atomic="true" name="Parent_id" placeholder="Company" data-original-title="" title="">
+                                            <input type="text" class="input200" placeholder="Company" autocomplete="off" value="{{ old('Parent_id') }}" name="Parent_id" id="Parent_id" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <img id='img-upload' src="{{asset('images/icons/picture.png')}}" width="50px"/>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default btn-file bg-primary text-white">
+                                            Browse… <input type="file" id="imgInp" name="photo">
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="o_group">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <table class="o_group o_inner_group">
+                                    <tbody>
+                                        <tr>
+                                            <td class="o_td_label"><label class="col-form-label" for="o_field_input_566"
+                                                    data-original-title="" title=""><b>Address type</b></label></td>
+                                            <td style="width: 100%;">
+                                            <div class="wrap-input200">
+                                                <select class="input200" name="type" id="type" style="border:none;" required>
+                                                    <option value="" style=""></option>
+                                                    <option value="contact" style="">Contact</option>
+                                                    <option value="invoice" style="">Invoice Address</option>
+                                                    <option value="delivery" style="">Delivery Address</option>
+                                                    <option value="other" style="">Other Address</option>
+                                                    <option value="private" style="">Private Address</option>
+                                                </select>
+                                            </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="address_name" class="col-form-label"><b>Address</b></label>
+                                            </td>
+                                            <td>
+                                                <div class="o_address_format">
+                                                    <div class="wrap-input200">
+                                                        <input class="input200 " name="street1" required value="{{ old('street') }}" 
+                                                            placeholder="Street..." type="text" id="street1" >
+                                                    </div>
+                                                    <div class="wrap-input200">
+                                                        <input class="input200" value="{{ old('street2') }}"
+                                                            name="street2" placeholder="Street 2..." type="text" id="street2">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="wrap-input200">
+                                                                <input class="input200" required value="{{ old('city') }}"
+                                                                    name="city" placeholder="City..." type="text" id="city">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="wrap-input200">
+                                                                <input class="input200" required value="{{ old('zip') }}"
+                                                                    name="zip" placeholder="ZIP" type="text" id="zip">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wrap-input200">
+                                                        <select id="country" name="country" class="input200" required style="border:none;">
+                                                            <option value="">country</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="wrap-input200">
+                                                        <select id="state" name="state" class="input200" style="border:none;">
+                                                            <option value="">State</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="industry" class="col-form-label"><b>industry</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <select id="industry_id" required name="industry_id" class="input200" style="border:none;">
+                                                        <option value="">Industry</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <table class="o_group o_inner_group">
+                                    <tbody>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="email" class="col-form-label"><b>Email</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="email" required value="{{ old('email') }}" 
+                                                        placeholder="email@example.com" type="text" id="email" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="phone" class="col-form-label"><b>Phone</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="phone" required value="{{ old('phone') }}" type="text" id="phone" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="mobile" class="col-form-label"><b>mobile</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="mobile" value="{{ old('mobile') }}" type="text" id="mobile" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="website" class="col-form-label"><b>Website Link</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="website" placeholder="https://www.kltech-intl.technology" value="{{ old('website') }}" type="text" id="website" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="reference" class="col-form-label"><b>Reference</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="reference" value="{{ old('reference') }}" type="text" id="reference" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="lag" class="col-form-label"><b>Language</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <select id="lag" name="lag" class="input200" required style="border:none;">
+                                                        <option value="">Language</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="tz/cr" class="col-form-label"><b>Timezone / Currency</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="wrap-input200">
+                                                            <select id="tz" name="tz" class="input200" required style="border:none;">
+                                                                <option value="">Timezone</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="wrap-input200">
+                                                            <select id="currency_id" name="currency_id" required class="input200" style="border:none;">
+                                                                <option value="">Currency</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="o_notebook">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
+                                    class="nav-link active" role="tab" aria-selected="true">Sales &amp; Purchase</a></li>
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_591"
+                                    class="nav-link" role="tab">Accounting</a></li>
+                            <li class="nav-item o_invisible_modifier"><a data-toggle="tab" disable_anchor="true"
+                                    href="#notebook_page_595" class="nav-link" role="tab">Invoicing</a></li>
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_596"
+                                    class="nav-link" role="tab">Internal Notes</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="notebook_page_581">
+                                <div class="o_group">
+                                    <table class="o_group o_inner_group o_group_col_6">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2" style="width: 100%;">
+                                                    <div class="o_horizontal_separator">Merchandises</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="o_td_label">
+                                                    <label for="" name="sales" class="col-form-label"><b>Merchandise Person</b></label>
+                                                </td>
+                                                <td style="width: 100%;">
+                                                    <div class="wrap-input200">
+                                                        <select id="mcd" name="mcd" class="input200" required style="border:none;">
+                                                            <option value=""></option>
+                                                            @foreach ($employee as $row)
+                                                                <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="o_td_label">
+                                                    <label for="" name="payment" class="col-form-label"><b>Payment Terms</b></label>
+                                                </td>
+                                                <td style="width: 100%;">
+                                                    <div class="wrap-input200">
+                                                        <select id="payment_terms" name="payment_terms" class="input200" style="border:none;">
+                                                            <option value=""></option>
+                                                            <option value="1" style="">Immediate Payment</option>
+                                                            <option value="2" style="">15 Days</option>
+                                                            <option value="3" style="">21 Days</option>
+                                                            <option value="4" style="">30 Days</option>
+                                                            <option value="5" style="">45 Days</option>
+                                                            <option value="6" style="">2 Months</option>
+                                                            <option value="7" style="">End of Following Month</option>
+                                                            <option value="8" style="">30% Now, Balance 60 Days</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="notebook_page_591">
+                                <div class="o_group">
+                                    <table class="o_group o_inner_group o_group_col_6">
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="2" style="width: 100%;">
+                                                    <div class="o_horizontal_separator">Accounting Entries</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="o_td_label">
+                                                    <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
+                                                </td>
+                                                <td style="width: 100%;">
+                                                    <div class="wrap-input200">
+                                                        <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
+                                                            <option value=""></option>
+                                                            @foreach ($account as $row)
+                                                                <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="width: 100%;">
+                                                    <div class="o_horizontal_separator">Bank Accounts</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="o_td_label">
+                                                    <label for="" name="bank_account" class="col-form-label"><b>Bank Account</b></label>
+                                                </td>
+                                                <td style="width: 100%;">
+                                                    <div class="wrap-input200">
+                                                        <input class="input200" name="bank_account" value="{{ old('bank_account') }}" type="text" id="bank_account" >
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="notebook_page_596">
+                                <div class="wrap-input200">
+                                    <textarea class="input200"
+                                        name="note" placeholder="Internal note..." type="text" 
+                                        style="overflow-y: hidden; height: 50px; resize: none;" data-original-title=""
+                                        title="" value="{{old('note')}}"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="container bg-white my-4">
-        <br>
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            active
-                        </label>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="name" id="name" placeholder="Vendor Name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"  autocomplete="name" autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Display Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="display_name" id="display_name" class="form-control @error('display_name') is-invalid @enderror" value="{{ old('display_name') }}"  autocomplete="display_name" autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Parent Company</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="Parent_id" id="Parent_id" class="form-control @error('Parent_id') is-invalid @enderror" value="{{ old('Parent_id') }}"  autocomplete="Parent_id" autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Industry</label>
-                        <div class="col-sm-10">
-                            <select name="industry_id" id="industry_id" class="form-control @error('industry_id') is-invalid @enderror" autofocus>
-                            <option value="">select</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <img id='img-upload'/>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-default btn-file bg-primary text-white">
-                                    Browse… <input type="file" id="imgInp" name="image">
-                                </span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Address</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="address" id="address" placeholder="Address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}"  autocomplete="address" autofocus>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Email</label>
-                        <div class="col-sm-9">
-                            <input type="email" name="email" id="email" placeholder="mail@example.com" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}"  autocomplete="email" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Street</label>
-                        <div class="col-sm-5">
-                            <input type="text" name="street1" id="street1" placeholder="street" class="form-control @error('street') is-invalid @enderror" value="{{ old('street') }}"  autocomplete="street" autofocus>
-                        </div>
-                        <div class="col-sm-4">
-                            <input type="text" name="street2" id="street2" placeholder="street 2" class="form-control @error('street2') is-invalid @enderror" value="{{ old('street2') }}"  autocomplete="street2" autofocus>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Mobile</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="mobile" id="mobile" placeholder="08xxxxxxxxx" class="form-control @error('mobile') is-invalid @enderror" value="{{ old('mobile') }}"  autocomplete="mobile" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-            <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Country</label>
-                        <div class="col-sm-5">
-                            <select id="country" name="country" class="form-control">
-                            <option value="NULL">Country</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <select id="state" name="state" class="form-control">
-                            <option value="NULL">State</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Phone</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="phone" id="phone" placeholder="06xxxxxxxxx" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}"  autocomplete="phone" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Zip Code</label>
-                        <div class="col-sm-4">
-                            <input id="zip" name="zip" class="form-control"></input>
-                        </div>
-                        <div class="col-sm-5">
-                            <select id="currency_id" name="currency_id" class="form-control">
-                                <option value="NULL">Currency</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Website</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="website" id="website" placeholder="https://www.laravel.com" class="form-control @error('website') is-invalid @enderror" value="{{ old('website') }}"  autocomplete="website" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">language</label>
-                        <div class="col-sm-5">
-                            <select id="lag" name="lag" class="form-control">
-                                <option value="NULL">Language</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <select id="tz" name="tz" class="form-control">
-                                <option value="NULL">TimeZone</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">reference</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="reference" id="reference" placeholder="reference" class="form-control @error('reference') is-invalid @enderror" value="{{ old('reference') }}"  autocomplete="reference" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Bank Account</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" name="bank_account" id="bank_account" placeholder="800XXXXX">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">limit</label>
-                        <div class="col-sm-5">
-                            <input id="debit" name="debit" class="form-control" placeholder="Debit" value="0" readonly></input>
-                        </div>
-                        <div class="col-sm-4">
-                            <input id="credit" name="credit" class="form-control" placeholder="kredit" value="0" readonly></input>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="is_company">
-                        <label class="form-check-label" for="defaultCheck1">
-                            is company
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row" id="company" style="display: none">
-                <div class="col-sm-9">
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Company Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="PT. Example">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">commercial company name</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" name="commercial_company_name" id="commercial_company_name">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">latitude</label>
-                        <div class="col-sm-9">
-                            <input id="partner_latitude" type="text" class="form-control @error('partner_latitude') is-invalid @enderror" name="partner_latitude" value="{{ old('partner_latitude') }}"  autocomplete="partner_latitude" autofocus>   
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 ">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">longitude</label>
-                        <div class="col-sm-9">
-                            <input id="partner_longitude" type="text" class="form-control @error('partner_longitude') is-invalid @enderror" name="partner_longitude" value="{{ old('partner_longitude') }}"  autocomplete="partner_longitude" autofocus>   
-                        </div>
-                    </div>
-                </div>              
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="container">
-                        <div id='map'class="mapBox border border-primary rounded mx-0">
-                            <script>
-                                mapboxgl.accessToken = 'pk.eyJ1Ijoia2Vsdmluenh1IiwiYSI6ImNrM2xxcXdnODBuYWozZ25tcGs0eGkzNmwifQ.34XILF-xBBsu2b3YCKn4qw';
-                                var map
-                                function loadmaps(lng,lat){
-                                    // load maps
-                                    map = new mapboxgl.Map({
-                                    container: 'map',
-                                    style: 'mapbox://styles/kelvinzxu/ck3mphl0h346k1cmwnqpmnf2i',
-                                    center: [lng,lat],
-                                    zoom: 15
-                                    });
-                                    console.log("ok")
-                                    // zoom Control
-                                    map.addControl(new MapboxGeocoder({
-                                        accessToken: mapboxgl.accessToken,
-                                        mapboxgl: mapboxgl
-                                    }));
-                                    // Search Box Control
-                                    map.addControl(new mapboxgl.NavigationControl('mapbox.places'));
-                                    
-                                    // add marker
-                                    map.on('click', function(e) {
-                                    let coordinate=e.lngLat.wrap();
-                                    let lat=coordinate.lat;
-                                    let lng=coordinate.lng;
-                                    $("#partner_latitude").val(lat);
-                                    $("#partner_longitude").val(lng);
-                                    map.remove();
-                                    loadmaps(lng,lat); 
-                                    var marker = new mapboxgl.Marker();
-                                    marker.setLngLat([lng,lat]);
-                                    marker.addTo(map);
-                                    });
-                                }
-                                loadmaps(98.679096,3.595421);
-                            </script>
-                        </div>
-                    </div>
-                </div>
-            </div>         
-        </div>
-    </form>
-</div>
+</form>
 @endsection
 @section('js')
 <script>

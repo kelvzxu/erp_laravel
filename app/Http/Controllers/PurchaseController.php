@@ -29,7 +29,6 @@ class PurchaseController extends Controller
     {
         $key=$request->filter;
         $value=$request->value;
-        echo "$key $value";
         if ($key!=""){
             $purchases = Purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
                     ->select('purchases.*', 'res_partners.partner_name')
