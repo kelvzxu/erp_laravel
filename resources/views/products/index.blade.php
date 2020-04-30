@@ -136,6 +136,10 @@
                     <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
                     Create a new Products and Start your trading
                 </p>
+                <p>
+                    You must define a product for everything you sell or purchase,
+                    whether it's a storable product, a consumable or a service.
+                </p>
             </div>
             @endif
             </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Partner\partner_credit;
 use App\Models\Partner\res_partner;
+use App\Models\Merchandises\Purchase;
 use Illuminate\Http\Request;
 
 class PartnerCreditController extends Controller
@@ -81,14 +82,19 @@ class PartnerCreditController extends Controller
         try {
             $partner_debt = partner_credit::where('purchase_no',$request->purchase_no);
             $partner_debt->update([
-                'payment' => $request->payment,
-                'over' => $request->over,
-                'status' => $request->status,
+                    'payment' => $request->payment,
+                    'over' => $request->over,
+                    'status' => $request->status,
             ]);
-            $credit="0";
-            $partner = res_partner::where('id',$request->partner_id);
+            $purchase = purchase::where('purchase_no',$request->purchase_no)->update([
+                'paid'=> True,
+            ]);
+            $partner = res_partner::findOrFail($request->partner_id);
+            $debit = $partner->debit_limit; 
+            $debit_limit = $debit - $request->payment;
             $partner->update([
-                'credit_limit' => $credit,
+                'credit_limit' => $request->over,
+                'debit_limit'=> $debit_limit,
             ]);
 
             return redirect(route('PartnerDebt'))

@@ -78,9 +78,9 @@ class CustomerDeptController extends Controller
      */
     public function update(Request $request)
     {
+        echo"ok";
         try {
-            $customer_debt = customer_dept::where('invoice_no',$request->invoice_no);
-            $customer_debt->update([
+            $customer_debt = customer_dept::where('invoice_no',$request->invoice_no)->update([
                 'payment' => $request->payment,
                 'over' => $request->over,
                 'status' => $request->status,

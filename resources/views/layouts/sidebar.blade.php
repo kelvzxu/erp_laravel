@@ -188,20 +188,20 @@
                     </li>
                 <li class="app-sidebar__heading">Accounting</li>
                     <li>
-                        <a href="#">
+                        <a href="#" id="payment">
                             <i class="metismenu-icon fa fa-file-text"></i>
                             Register Payments
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('CustomerDebt')}}">
+                                <a href="{{ route ('CustomerDebt')}}" id="CustomerDebt">
                                     <i class="metismenu-icon ">
                                     </i>Customer Payment
                                 </a>
-                                <a href="{{ route ('PartnerDebt')}}">
+                                <a href="{{ route ('PartnerDebt')}}" id="paybill">
                                     <i class="metismenu-icon ">
-                                    </i>partner Payment
+                                    </i>Vendor Payment
                                 </a>
                             </li>
                         </ul>
