@@ -9,7 +9,7 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('Delivere.index')}}">Receive Products</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('Delivere.index')}}">Delivery Products</a></li>
                 <li class="breadcrumb-item active">{{$delivery->delivery_no}}</li>
             </ol>
         </div>

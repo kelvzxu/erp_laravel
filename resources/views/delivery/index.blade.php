@@ -9,7 +9,7 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('Delivere.index')}}">Receive Products</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('Delivere.index')}}">Delivery Products</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">

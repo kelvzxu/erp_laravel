@@ -3,6 +3,12 @@
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+<style>
+    .disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
 @endsection
 @section('content')
 <div class="app-page-title bg-white">
@@ -17,7 +23,12 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a type="button" href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary o-kanban-button-new">Return</a>
+                        @if($invoice->deliver_validate == True )
+                            <a type="button" href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary o-kanban-button-new disabled">Edit</a>
+                        @endif
+                        @if($invoice->deliver_validate == False )
+                            <a type="button" href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
+                        @endif
                         <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('invoices.create')}}">
                             Create
                         </a>
@@ -72,7 +83,7 @@
                     </button>
                     <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
                         class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                        Receive
+                        Delivery
                     </button>
                     <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
                         class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
@@ -92,7 +103,7 @@
                             </button>
                             <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
                                 class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Receive
+                                Delivery
                             </button>
                             <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
                                 class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
@@ -110,7 +121,7 @@
                             </button>
                             <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
                                 class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                                Receive
+                                Delivery
                             </button>
                             <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
                                 class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
@@ -129,7 +140,7 @@
                         </button>
                         <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
                             class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                            Receive
+                            Delivery
                         </button>
                         <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
                             class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">

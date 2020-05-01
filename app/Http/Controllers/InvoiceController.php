@@ -120,10 +120,8 @@ class InvoiceController extends Controller
         $this->validate($request, [
             'invoice_no' => 'required|alpha_dash|unique:invoices,invoice_no,'.$id.',id',
             'client' => 'required|max:255',
-            'client_address' => 'required|max:255',
             'invoice_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
-            'title' => 'required|max:255',
             'discount' => 'required|numeric|min:0',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
@@ -131,6 +129,7 @@ class InvoiceController extends Controller
         ]);
 
         $invoice = Invoice::findOrFail($id);
+        $old_total = $invoice->grand_total;
 
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
@@ -153,6 +152,18 @@ class InvoiceController extends Controller
         InvoiceProduct::where('invoice_id', $invoice->id)->delete();
 
         $invoice->products()->saveMany($products);
+
+        customer_dept::where('invoice_no',$request->invoice_no)->update([
+            'total'=>$data['grand_total'],
+        ]);
+
+        $partner = res_customer::findOrFail($request->client);
+        $oldbalance = $partner->debit_limit;
+        $total = $oldbalance - $old_total;
+        $new_balance = $data['grand_total'] + $total; 
+        $partner->update([
+            'debit_limit' => $new_balance,
+        ]);
 
         return response()
             ->json([

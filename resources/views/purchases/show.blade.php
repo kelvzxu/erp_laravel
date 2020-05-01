@@ -24,10 +24,10 @@
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
                         @if($purchases->receipt_validate == True )
-                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new disabled">Return</a>
+                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new disabled">Edit</a>
                         @endif
                         @if($purchases->receipt_validate == False )
-                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new">Return</a>
+                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
                         @endif
                         <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('purchases.create')}}">
                             Create
