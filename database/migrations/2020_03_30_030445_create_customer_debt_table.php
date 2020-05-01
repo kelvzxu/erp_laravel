@@ -19,10 +19,10 @@ class CreateCustomerDebtTable extends Migration
             $table->date('invoice_date');
             $table->date('due_date');
             $table->bigInteger('total');
-            $table->date('payment_date')->nullable();
-            $table->bigInteger('payment');
-            $table->bigInteger('over');           
-            $table->string('status');
+            $table->date('updated_at')->nullable();
+            $table->bigInteger('payment')->default(0);
+            $table->bigInteger('over')->default(0);      
+            $table->string('status')->default("UNPAID");
         });
     }
 

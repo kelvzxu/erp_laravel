@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\Models\Customer\customer_dept;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\InvoiceProduct;
 use App\Models\Product\Product;
 use App\Models\Customer\res_customer;
+use Brian2694\Toastr\Facades\Toastr;
 use PDF;
 
 class InvoiceController extends Controller
@@ -55,7 +56,6 @@ class InvoiceController extends Controller
             'client' => 'required|max:255',
             'invoice_date' => 'required|date_format:Y-m-d',
             'due_date' => 'required|date_format:Y-m-d',
-            'title' => 'required|max:255',
             'discount' => 'required|numeric|min:0',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
@@ -181,5 +181,37 @@ class InvoiceController extends Controller
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.sales.invoice_pdf', compact('invoice'));
     	return $pdf->stream();
+    }
+    public function approved($id)
+    {
+        try{
+            $invoice = invoice::findOrFail($id);
+            $customer = res_customer::findOrFail($invoice->client);
+            $journal = $customer->receivable_account;
+            $balance = $customer->debit_limit;
+            $new_balance = intval($balance) + intval($invoice->grand_total);
+            customer_dept::insert([
+                'invoice_no'=>$invoice->invoice_no,
+                'journal'=>$journal,
+                'customer_id'=>$invoice->client,
+                'invoice_date'=>$invoice->invoice_date,
+                'due_date'=>$invoice->due_date,
+                'total'=>$invoice->grand_total,
+            ]);
+            $customer->update([
+                'debit_limit' => $new_balance,
+            ]);
+            $invoice->update([
+                'approved'=> True,
+                'status'=>"Complete",
+            ]);
+            Toastr::success('Invoice '.$invoice->invoice_no .' Posted Success','Success');
+            return redirect(route('invoices'));
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
+
     }
 }

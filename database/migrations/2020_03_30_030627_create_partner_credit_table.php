@@ -20,7 +20,7 @@ class CreatePartnerCreditTable extends Migration
             $table->date('purchase_date');
             $table->date('due_date');
             $table->bigInteger('total');
-            $table->date('payment_date')->nullable();
+            $table->date('updated_at')->nullable();
             $table->bigInteger('payment')->default(0);
             $table->bigInteger('over')->default(0);      
             $table->string('status')->default("UNPAID");

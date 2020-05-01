@@ -15,7 +15,7 @@ class CreateInvoiceProductsTable extends Migration
         Schema::create('invoice_products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_id')->unsigned();
-            $table->string('name');
+            $table->integer('name');
             $table->integer('qty');
             $table->integer('price');
             $table->integer('total');

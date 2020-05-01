@@ -47,7 +47,12 @@
 
         <div class="o_form_statusbar">
             <div class="o_statusbar_buttons">
-                <a href="{{route('invoices')}}" class="btn btn-primary">Post</a>
+                @if($invoice->status == "Pending" ) 
+                    <a href="{{route('invoices.approved', $invoice)}}" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"> Posted</i></a>
+                @endif
+                @if($invoice->deliver == False )                
+                    <a href="{{route('Delivere.store', $invoice)}}" class="btn btn-primary"><i class="fa fa-truck"> Delivere</i></a>
+                @endif
                 <a href="{{route('invoices.print', $invoice)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
                 <button type="button" name="action_cancel" states="draft,sent,sale"
                     class="btn btn-secondary" data-original-title="" title=""><span>Cancel</span>
@@ -60,18 +65,82 @@
             <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
                 name="authorized_transaction_ids" id="o_field_input_290" data-original-title="" title=""></div>
             <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
-                <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
-                    class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                    Paid
-                </button>
-                <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                    class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                    Posted
-                </button>
-                <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
-                    class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                    Draft
-                </button>
+                @if($invoice->status == "Pending" ) 
+                    <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Paid
+                    </button>
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Receive
+                    </button>
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Posted
+                    </button>
+                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Draft
+                    </button>
+                @endif
+                @if($invoice->status == "Complete" ) 
+                    @if($invoice->deliver_validate == True ) 
+                        @if($invoice->paid == True ) 
+                            <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                                Paid
+                            </button>
+                            <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Receive
+                            </button>
+                            <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Posted
+                            </button>
+                            <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Draft
+                            </button>
+                        @endif
+                        @if($invoice->paid == False ) 
+                            <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Paid
+                            </button>
+                            <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                                Receive
+                            </button>
+                            <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Posted
+                            </button>
+                            <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                                Draft
+                            </button>
+                        @endif
+                    @endif
+                    @if($invoice->deliver_validate == False ) 
+                        <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                            Paid
+                        </button>
+                        <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                            Receive
+                        </button>
+                        <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
+                            class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                            Posted
+                        </button>
+                        <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                            Draft
+                        </button>
+                    @endif
+                @endif
             </div>
         </div>
     </div>

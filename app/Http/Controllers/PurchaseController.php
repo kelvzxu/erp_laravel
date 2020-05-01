@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Models\Merchandises\Purchase;
 use App\Models\Merchandises\receipt_product;

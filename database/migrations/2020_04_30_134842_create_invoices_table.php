@@ -16,10 +16,10 @@ class CreateInvoicesTable extends Migration
             $table->increments('id');
             $table->string('invoice_no');
             $table->date('invoice_date');
-            $table->date('due_date');
-            $table->string('title');
+            $table->date('due_date')->nullable();
+            $table->string('title')->nullable();
             $table->integer('client');
-            $table->string('client_address');
+            $table->string('client_address')->nullable();
             $table->bigInteger('sub_total');
             $table->bigInteger('discount');
             $table->bigInteger('grand_total');

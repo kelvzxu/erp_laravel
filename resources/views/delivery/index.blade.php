@@ -9,11 +9,11 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('invoices')}}">Invoices</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('Delivere.index')}}">Receive Products</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
-                    <form action="{{ route('invoices.filter') }}" method="get" >
+                    <form action="" method="get" >
                         <button class="o_searchview_more fa fa-search-minus" title="Advanced Search..." role="img"
                             aria-label="Advanced Search..." type="submit"></button>
 
@@ -32,10 +32,6 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('invoices.create')}}">
-                            Create
-                        </a>
-
                         <button type="button" class="btn btn-secondary o_button_import">
                             Import
                         </button>
@@ -51,9 +47,7 @@
                                 data-toggle="dropdown" aria-expanded="false" tabindex="-1" data-flip="false"
                                 data-boundary="viewport" name="key" id="key">
                                 <option value="" data-icon="fa fa-filter">Filters</option>
-                                <option value="invoice_no">Invoice No</option>
-                                <option value="name">Name</option>
-                                <option value="due_date">Due Date</option>
+                                <option value="invoice_no">Bill No</option>
                                 <!-- <span class="fa fa-filter"></span> Filters -->
                             </select>
                         </div>
@@ -62,7 +56,7 @@
                 <nav class="o_cp_pager" role="search" aria-label="Pager">
                     <div class="o_pager o_hidden">
                         <span class="o_pager_counter">
-                            <span class="o_pager_value">{{$invoices->total()}}</span> / <span class="o_pager_limit">{{$invoices->perPage()}}</span>
+                            <span class="o_pager_value">{{$delivery->total()}}</span> / <span class="o_pager_limit">{{$delivery->perPage()}}</span>
                         </span>
                         <span class="btn-group d-none" aria-atomic="true">
                             <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
@@ -85,75 +79,51 @@
     </div>
     <div class="o-content">
         <div class="panel-body ml-2">
-            @if($invoices->count())
+            @if($delivery->count())
             <div class="table-responsive-lg mb-4">
                 <table class="table table-striped">
                     <thead class="table table-sm">
                         <tr>
-                            <th scope="col">Invoice No.</th>
-                            <th scope="col">Grand Total</th>
-                            <th scope="col">Client</th>
-                            <th scope="col">Invoice Date</th> 
-                            <th scope="col">Due Date</th>
-                            <th scope="col">status</th>
+                            <th scope="col">No.</th>
+                            <th scope="col">Delivery No</th>
+                            <th scope="col">Invoice No</th>
+                            <th scope="col">Delivery Date</th>
                             <th scope="col" colspan="2">Created At</th>
                         </tr>
-                    </thead> 
-                    <tbody> 
-                        @foreach($invoices as $invoice)
-                            <tr>
-                                <td>{{$invoice->invoice_no}}</td>
-                                <td>Rp. {{ number_format($invoice->grand_total)}}</td>
-                                <td>{{$invoice->name}}</td>
-                                <td>{{$invoice->invoice_date}}</td>
-                                <td>{{$invoice->due_date}}</td>
-                                <td>
-                                    @if($invoice->status == "Pending" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Pending...</div>
-                                        <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
-                                    @endif
-                                    @if($invoice->status == "Complete" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-success">Complete</div>
-                                        <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
-                                    @endif
-                                </td>
-                                <td>{{$invoice->created_at->diffForHumans()}}</td>
-                                <td class="text-right">
-                                    <a href="{{route('invoices.show', $invoice)}}" class="btn btn-primary btn-sm">View</a>
-                                    @if($invoice->status == "Pending" ) 
-                                        <a href="{{route('invoices.approved', $invoice)}}" class="btn btn-success btn-sm">Posted</a>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
+                    </thead>
+                    @foreach($delivery as $data)
+                    <tbody>
+                        <tr>
+                            <td scope="row">{{$loop->iteration}}</td>
+                            <td>{{$data->delivery_no}}</td>
+                            <td>{{$data->invoice_no}}</td>
+                            <td>{{$data->delivery_date}}</td>
+                            <td>{{$data->created_at->diffForHumans()}}</td>
+                            <td class="text-right">
+                                <a href="{{route('Delivere.show',$data->delivery_no)}}" class="btn btn-primary btn-sm">View</a>
+                            </td>
+                        </tr>
                     </tbody>
+                    @endforeach
                 </table>
             </div>
             @else
             <div class="o_nocontent_help">
                 <p class="o_view_nocontent_smiling_face">
                     <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a customer invoice
-                </p>
-                <p>
-                    Create invoices, register payments and keep track of the discussions with your customers.
+                    You Don't have Delivere Record
                 </p>
             </div>
             @endif
         </div>
-        <!-- </div> -->
     </div>
     <div class="row mx-4">
-        {!! $invoices->render() !!}
+        {!! $delivery->render() !!}
     </div>
 </div>
 @endsection
 @section('js')
 <script>
-    $('a#invoices').addClass('mm-active');
-    $("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
+$('a#delivere').addClass('mm-active');
 </script>
 @endsection

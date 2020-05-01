@@ -55,6 +55,12 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
     Route::post('/CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
     
+    // ==== Delivery ====
+    Route::get('Delivere', 'DelivereProductController@index')->name('Delivere.index');
+    Route::get('Delivere/store/{id}', 'DelivereProductController@store')->name('Delivere.store');
+    Route::get('Delivere/show/{id}', 'DelivereProductController@show')->name('Delivere.show');
+    Route::get('Delivere/validate/{id}', 'DelivereProductController@validation')->name('Delivere.validate');
+    
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
     Route::get('employee/new','HrEmployeesController@create')->name('employee.new');
@@ -88,15 +94,16 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
     
     // ==== Invoices ====
-    Route::get('/invoices', 'InvoiceController@index')->name('invoices');
-    Route::get('/invoices/create', 'InvoiceController@create')->name('invoices.create');
-    Route::post('/invoices', 'InvoiceController@store')->name('invoices.store');
-    Route::get('/invoices/show/{id}', 'InvoiceController@show')->name('invoices.show');
-    Route::get('/invoices/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
-    Route::put('/invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
-    Route::get('/invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
-    Route::get('/invoices/filter', 'InvoiceController@search')->name('invoices.filter');
-    Route::get('/invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
+    Route::get('invoices', 'InvoiceController@index')->name('invoices');
+    Route::get('invoices/create', 'InvoiceController@create')->name('invoices.create');
+    Route::post('invoices', 'InvoiceController@store')->name('invoices.store');
+    Route::get('invoices/show/{id}', 'InvoiceController@show')->name('invoices.show');
+    Route::get('invoices/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
+    Route::put('invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
+    Route::get('invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
+    Route::get('invoices/filter', 'InvoiceController@search')->name('invoices.filter');
+    Route::get('invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
+    Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
     
     // ==== Purchase =====
     Route::get('/partner', 'ResPartnersController@index')->name('partner');
