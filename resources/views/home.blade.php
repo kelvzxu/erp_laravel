@@ -14,7 +14,26 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-12 col-md-8 bg-primary mt-0">
+        <div class="col-12 col-md-8 mt-0 container">
+        
+        <div class="card-header"><i class="fa fa-comments text-primary"><span class="text-primary"><b> Company Forum</b></span></i></div>
+            <div class="scroll-area-lg erp_chatbox">
+                <div class="scrollbar-container ps ps--active-y">
+                    <div class="chat-wrapper p-1">
+                    </div>
+                <div class="ps__rail-x" style="left: 0px; bottom: -395px;">
+                    <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
+                    </div>
+                </div>
+                <div class="ps__rail-y" style="top: 395px; height: 200px; right: 0px;">
+                    <div class="ps__thumb-y" tabindex="0" style="top: 133px; height: 67px;">
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <input placeholder="Write here and hit enter to send..." type="text" class="form-control-lg form-control">
+            </div>
         </div>
         <div class="col-12 col-md-4 bg-white">
             <div id="attendance">
@@ -129,7 +148,6 @@
             'id': "{{ Auth::user()->id}}"
             },
             success: function (result) {
-                console.log(result)
                 if (result.status == 'success') {
                     $('#attendance').append(`
                         <form action="{{route('checkout',Auth::user()->id)}}" method="post">

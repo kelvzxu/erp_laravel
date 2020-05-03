@@ -93,11 +93,107 @@
                                     <div class="btn-group">
                                             <div class="widget-content-right header-user-info ml-3">
                                                 <button type="button"
-                                                    class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                                    <i class="fa text-white fa-calendar pr-1 pl-1"></i>
+                                                    class="p-1 btn btn-sm show-toastr-example">
+                                                    <!-- <i class="fa text-white fa-bell-o pr-1 pl-1"></i> -->
+                                                    <span class="fa-stack pr-1 pl-1">
+                                                        <i class="fa text-primary fa-circle-thin fa-stack-2x"></i>
+                                                        <i class="fa text-primary fa-bell-o fa-stack-1x "></i>
+                                                    </span>
                                                 </button>
                                             </div>
-                                        <div tabindex="-1" role="menu" aria-hidden="true"
+                                            <div class="widget-content-right header-user-info ml-3">
+                                                <button type="button"
+                                                    class="btn-shadow p-1 btn btn-sm show-toastr-example">
+                                                    <span class="fa-stack pr-1 pl-1">
+                                                        <i class="fa text-primary fa-circle-thin fa-stack-2x"></i>
+                                                        <i class="fa text-primary fa-calendar fa-stack-1x"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div tabindex="-1" role="menu" aria-hidden="true"
+                                            class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
+                                                <div class="dropdown-menu-header">
+                                                    <div class="dropdown-menu-header-inner">
+                                                        <div class="menu-header-image">
+                                                            <div class="menu-header-content text-left">
+                                                                <div class="widget-content p-0">
+                                                                    <div class="widget-content-wrapper">
+                                                                        <div class="widget-content-left mr-3">
+                                                                            <div class="profile ml-2"></div>
+                                                                        </div>
+                                                                        <div class="widget-content-left">
+                                                                            <div class="widget-heading mt-2 text-white opacity-10">{{ Auth::user()->name }}
+                                                                            </div>
+                                                                            <div class="widget-subheading opacity-10 text-white">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="widget-content-right mr-2">
+                                                                            <button id="dialog-close"><i class="fa fa-times-circle-o text-danger"></i></button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="scroll-area-xs" style="height: 150px;">
+                                                    <div class="scrollbar-container ps">
+                                                        <ul class="nav flex-column">
+                                                            <li class="nav-item-header nav-item">Activity
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a href="javascript:void(0);" class="nav-link">Notices
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a href="javascript:void(0);" class="nav-link">Recover Password
+                                                                </a>
+                                                            </li>
+                                                            <li class="nav-item-header nav-item">My Account
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a tabindex="0" class="nav-link" href="{{ route('profile')}}">
+                                                                    {{ __('My Profile') }}
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                                                            <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                                                        </div>
+                                                        <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                                                            <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="nav flex-column">
+                                                    <li class="nav-item-divider mb-0 nav-item"></li>
+                                                </ul>
+                                                <div class="grid-menu grid-menu-2col">
+                                                    <div class="no-gutters row">
+                                                        <div class="col-sm-12 text-center">
+                                                            <button class="btn-icon-vertical btn-transition btn-transition-alt pt-2 pb-2 btn btn-outline-warning mt-2">
+                                                                <i class="fa fa-ticket icon-gradient bg-love-kiss btn-icon-wrapper mb-2"></i>
+                                                                <b>Support Tickets</b>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <ul class="nav flex-column">
+                                                    <li class="nav-item-divider nav-item">
+                                                    </li>
+                                                    <li class="nav-item-btn text-center nav-item">
+                                                        <a tabindex="0" class="btn btn-primary" href="{{ route('logout') }}"
+                                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                            {{ __('Logout') }}
+                                                        </a>
+                                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                            @csrf
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        <!-- <div tabindex="-1" role="menu" aria-hidden="true"
                                             class="dropdown-menu dropdown-menu-right">
                                             <a tabindex="0" class="btn dropdown-item" href="{{ route('profile')}}">
                                                 {{ __('My Profile') }}
@@ -114,7 +210,7 @@
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                                 @csrf
                                             </form>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="widget-content-left  mt-3 ml-3 header-user-info">
@@ -129,7 +225,7 @@
                                             class="p-0 btn">
                                     <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                 </a>
-                                <div class="ml-2" id="profile">
+                                <div class="ml-2 profile">
 
                                 </div>
                             </div>
@@ -192,7 +288,9 @@
     function unactive(){
     $('.menu-item').removeClass('mm-active');
     }
- 
+    $('#dialog-close').click(function(){
+        $('.dropdown-menu').removeClass('show');
+    });
     $.ajax  ({
         url: "{{asset('api/employee/search')}}",
         type: 'post',
@@ -201,8 +299,8 @@
             'email': "{{ Auth::user()->email}}"
         },
         success: function (result) {
-            $('#profile').append(`
-                <img width="42" id="picture_profile" class="rounded" src="{{asset('uploads/Employees/`+result.data.photo+`')}}"
+            $('div.profile').append(`
+                <img width="42" id="picture_profile" class="rounded-circle" width="50px" height="50px" src="{{asset('uploads/Employees/`+result.data.photo+`')}}"
                     alt="">
                                     `);
             $(".widget-subheading").append(`<pre>`+result.data.jobs_name+`</pre>`)

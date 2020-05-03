@@ -20,6 +20,9 @@
                         @if($delivery->validate == False ) 
                             <a href="{{route('Delivere.validate', $delivery)}}" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"> validate</i></a>
                         @endif
+                        @if($delivery->validate == True ) 
+                            <a href="{{route('Delivere.return', $delivery->inv->invoice_no)}}" class="btn btn-primary"><i class="fa fa-reply" aria-hidden="true"> Return</i></a>
+                        @endif
                         <a href="{{route('Delivere.index')}}" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
@@ -51,14 +54,26 @@
             <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
                 name="authorized_transaction_ids" id="o_field_input_290" data-original-title="" title=""></div>
             <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
-                <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                    class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                    validate
-                </button>
-                <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
-                    class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                    Draft
-                </button>
+                @if($delivery->validate == False ) 
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        validate
+                    </button>
+                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Draft
+                    </button>
+                @endif
+                @if($delivery->validate == True ) 
+                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Validate
+                    </button>
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Draft
+                    </button>
+                @endif
             </div>
         </div>
     </div>
@@ -79,11 +94,11 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Supplier</label>
+                        <label>Customer</label>
                         <p id="client">{{$delivery->inv->client}}</p>
                     </div>
                     <div class="form-group">
-                        <label>Supplier Address</label>
+                        <label>Customer Address</label>
                         <pre class="pre">{{$delivery->inv->client_address}}</pre>
                     </div>
                 </div>
@@ -151,14 +166,14 @@
 <script>
 $('a#receipt').addClass('mm-active');
 $.ajax  ({
-    url: "{{asset('api/partner/search')}}",
-    type: 'invst',
+    url: "{{asset('api/customer/search')}}",
+    type: 'post',
     dataType: 'json',
     data :{
         'id': "{{$delivery->inv->client}}"
     },
     success: function (result) {
-        $("#client").html(result.data.partner_name);
+        $("#client").html(result.data.name);
     }
 })
 </script>

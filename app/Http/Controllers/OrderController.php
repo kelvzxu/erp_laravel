@@ -53,11 +53,6 @@ class OrderController extends Controller
             $name= $request->name;
             $qty = $request->qty;
             $price = $request->price;
-            echo $invoice_no;
-            echo "<br>";
-            echo $request->client;
-            echo "<br>";
-            echo Auth::id();
             $order = order::insertGetId([   
                 'invoice_no'=>$invoice_no,
                 'customer_id'=>$request->client,

@@ -27,7 +27,6 @@ class AccountAccountController extends Controller
     {
         $key=$request->filter;
         $value=$request->value;
-        echo "$key $value";
         if ($key!=""){
             $account = account_account::orderBy('code', 'ASC')
                     ->where($key,'like',"%".$value."%")
@@ -78,8 +77,8 @@ class AccountAccountController extends Controller
             Toastr::success('Chart Of Account Creation Successfully','Success');
             return redirect(route('account.index'));
         } catch (\Exception $e) {
-            // Toastr::error($e->getMessage(),'Something Wrong');
-            Toastr::error('Check In Error!','Something Wrong');
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
             return redirect()->back();
         }
     }

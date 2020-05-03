@@ -234,20 +234,20 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" id="account-config">
                             <i class="metismenu-icon fa fa-cogs"></i>
                             Configuration
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('journal.index')}}">
-                                    <i class="metismenu-icon"></i>
+                                <a href="{{ route ('journal.index')}}" id="journal">
+                                    <i class="metismenu-icon"></i> 
                                     Journal
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('account.index')}}">
+                                <a href="{{ route ('account.index')}}" id="account-account">
                                     <i class="metismenu-icon"></i>
                                     Chart Of Accounts
                                 </a>
@@ -256,7 +256,7 @@
                     </li>
                 <li class="app-sidebar__heading">Point Of Sales</li>
                     <li>
-                        <a href="{{ route ('pos')}}">
+                        <a href="{{ route ('pos')}}" id="pos">
                             <i class="metismenu-icon fa fa-shopping-cart"></i>
                             POS
                         </a>

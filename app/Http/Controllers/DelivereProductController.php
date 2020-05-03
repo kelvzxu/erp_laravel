@@ -12,7 +12,7 @@ class DelivereProductController extends Controller
 {
     public function index()
     {
-        $delivery = delivere_product::orderBy('created_at','asc')->paginate(25);
+        $delivery = delivere_product::orderBy('created_at','DESC')->paginate(25);
         return view('delivery.index', compact('delivery'));
     }
 
@@ -67,7 +67,7 @@ class DelivereProductController extends Controller
      */
     public function validation($id)
     {
-        // try {
+        try {
             $delivery = delivere_product::findOrFail($id);
             $delivery->update([
                 'validate'=> True,
@@ -89,33 +89,18 @@ class DelivereProductController extends Controller
             }
             Toastr::success('Delivery Product with inv_no: '.$delivery->invoice_no.' Validation Successfully','Success');
             return redirect(route('product'));
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage(),'Something Wrong');
-        //     // Toastr::error('Check In Error!','Something Wrong');
-        //     return redirect()->back();
-        // }
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\delivere_product  $delivere_product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, delivere_product $delivere_product)
+    public function return($id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\delivere_product  $delivere_product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(delivere_product $delivere_product)
-    {
-        //
+        $invoice = Invoice::where('invoice_no', $id)->with('products','customer', 'products.product')->first();
+        $delivery = delivere_product::where('invoice_no', $id)->first();
+        // dump($invoice);
+        return view('return-inv.return', compact('invoice','delivery'));
     }
 }

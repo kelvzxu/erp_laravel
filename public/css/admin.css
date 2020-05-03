@@ -3759,9 +3759,14 @@ input[type="button"].btn-block {
     border-radius: .25rem
 }
 
-.dropdown-menu-right {
+.dropdown-menu-rfight {
     right: 0;
     left: auto
+}
+
+.dropdown-menu-lg {
+    display: block;
+    width: 300px;
 }
 
 @media (min-width: 576px) {
@@ -11933,6 +11938,24 @@ button,
     padding-bottom: 60px
 }
 
+.menu-header-image{
+    padding:0px;
+    margin: -20px 0px 0px;
+    position: inherit;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('../images/background/city1.jpeg');
+}
+
+.erp_chatbox{
+    position: inherit;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url('../images/background/chat.jpg');
+}
+
 .app-page-title {
     padding:0px;
     margin: -30px -30px 0px;
@@ -16878,7 +16901,7 @@ legend {
 }
 
 .scroll-area-lg {
-    height: 400px;
+    height: 500px;
     overflow-x: hidden
 }
 
@@ -25519,7 +25542,7 @@ a.fc-more:hover {
 @media only screen and (min-width: 1200px) and (max-width: 1500px) {
     .profile-responsive .dropdown-menu-header .menu-header-content.btn-pane-right {
         display: block;
-        text-align: center
+        text-align: center;
     }
 
     .profile-responsive .dropdown-menu-header .menu-header-content.btn-pane-right .avatar-icon-wrapper {

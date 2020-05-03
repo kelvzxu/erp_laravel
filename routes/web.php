@@ -22,7 +22,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('Account/store','AccountAccountController@store')->name('account.store');
     Route::get('Account/edit/{id}','AccountAccountController@edit')->name('account.edit');
     Route::put('Account/update','AccountAccountController@update')->name('account.update');
-    Route::get('Account/destroy/{id}','AccountAccountController@destroy')->name('account.delete');
+    Route::get('Account/destroy/{id}','AccountAccountController@destroy')->name('account.destroy');
     Route::get('Account/filter','AccountAccountController@search')->name('account.filter');
 
     // ==== Account Journal ====
@@ -31,7 +31,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('Account/Journal/store','AccountJournalController@store')->name('journal.store');
     Route::get('Account/Journal/edit/{id}','AccountJournalController@edit')->name('journal.edit');
     Route::put('Account/Journal/update/{id}','AccountJournalController@update')->name('journal.update');
-    Route::get('Account/Journal/destroy/{id}','AccountJournalController@destroy')->name('journal.delete');
+    Route::get('Account/Journal/destroy/{id}','AccountJournalController@destroy')->name('journal.destroy');
     Route::get('Account/Journal/filter','AccountJournalController@search')->name('journal.filter');
     
     // ==== Attendance ====
@@ -60,6 +60,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Delivere/store/{id}', 'DelivereProductController@store')->name('Delivere.store');
     Route::get('Delivere/show/{id}', 'DelivereProductController@show')->name('Delivere.show');
     Route::get('Delivere/validate/{id}', 'DelivereProductController@validation')->name('Delivere.validate');
+    Route::get('Delivere/return/{id}', 'DelivereProductController@return')->name('Delivere.return');
     
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
@@ -123,16 +124,16 @@ Route::group(['middleware' => 'auth'], function (){
 
 
     // ==== purchases ====
-    Route::get('/purchases', 'PurchaseController@index')->name('purchases');
-    Route::get('/purchases/create', 'PurchaseController@create')->name('purchases.create');
-    Route::post('/purchases', 'PurchaseController@store')->name('purchases.store');
-    Route::get('/purchases/show{id}', 'PurchaseController@show')->name('purchases.show');
-    Route::get('/purchases/edit{id}', 'PurchaseController@edit')->name('purchases.edit');
-    Route::put('/purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
-    Route::get('/purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
-    Route::get('/purchases/filter', 'PurchaseController@search')->name('purchases.filter');
-    Route::get('/purchases/approved/{id}', 'PurchaseController@approved')->name('purchases.approved');
-    Route::get('/purchases/print{id}', 'PurchaseController@print_pdf')->name('purchases.print');
+    Route::get('purchases', 'PurchaseController@index')->name('purchases');
+    Route::get('purchases/create', 'PurchaseController@create')->name('purchases.create');
+    Route::post('purchases', 'PurchaseController@store')->name('purchases.store');
+    Route::get('purchases/show{id}', 'PurchaseController@show')->name('purchases.show');
+    Route::get('purchases/edit{id}', 'PurchaseController@edit')->name('purchases.edit');
+    Route::put('purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
+    Route::get('purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
+    Route::get('purchases/filter', 'PurchaseController@search')->name('purchases.filter');
+    Route::get('purchases/approved/{id}', 'PurchaseController@approved')->name('purchases.approved');
+    Route::get('purchases/print{id}', 'PurchaseController@print_pdf')->name('purchases.print');
     
     // ==== Receipt ====
     Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');
@@ -143,6 +144,9 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Receivable Account ====
     Route::get('ReceivableAccount','ReceivableAccountController@index')->name('ReceivableAccount.index');
     Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
+
+    // ==== Retur Invoice ====
+    Route::post('return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrRecruitmentController@index')->name('recruitment');
@@ -186,6 +190,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('PointOfSale/store', 'OrderController@store')->name('pos.store');
     Route::get('PointOfSale/Transaction', 'OrderController@create')->name('pos.create');
     Route::get('PointOfSale/Transaction/View/{id}', 'OrderController@view')->name('pos.view');
+    Route::get('PointOfSale/Search', 'OrderController@search')->name('pos.filter');
     Route::get('/checkout', 'OrdrController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 });  

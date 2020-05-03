@@ -100,7 +100,7 @@
                             <td>{{$data->delivery_date}}</td>
                             <td>{{$data->created_at->diffForHumans()}}</td>
                             <td class="text-right">
-                                <a href="{{route('Delivere.show',$data->delivery_no)}}" class="btn btn-primary btn-sm">View</a>
+                                <a href="{{route('Delivere.show',$data->invoice_no)}}" class="btn btn-primary btn-sm">View</a>
                             </td>
                         </tr>
                     </tbody>
