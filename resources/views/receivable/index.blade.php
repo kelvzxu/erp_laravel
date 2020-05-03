@@ -65,7 +65,6 @@
                     </div>
                 </nav>
                 <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher">
-                @if($Receivable->validate == False )
                     <button type="button" accesskey="l" class="btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
                         aria-label="View list" data-view-type="list" title="" tabindex="-1"
                         data-original-title="View list"></button>
@@ -75,8 +74,6 @@
                     <button type="button" class="btn btn-secondary fa fa-lg fa-bar-chart o_cp_switch_graph "
                         aria-label="View graph" data-view-type="graph" title="" tabindex="-1"
                         data-original-title="View graph"></button>
-                @endif
-                @if ($Receivable->validate == True )
                 </nav>
             </div>
         </div>

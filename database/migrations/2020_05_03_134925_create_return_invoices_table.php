@@ -14,7 +14,7 @@ class CreateReturnInvoicesTable extends Migration
     public function up()
     {
         Schema::create('return_invoices', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('return_no')->index();
             $table->string('invoice_no')->index();
             $table->string('delivery_no')->index();
