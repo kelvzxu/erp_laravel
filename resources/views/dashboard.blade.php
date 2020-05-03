@@ -193,11 +193,20 @@
                                     <h5 class="mt-3"><p><small>Attendance</small></p></h5>
                                     <div class="row">
                                         <div class="col-6">
-                                        Date : 
-                                        <input style="border:none" type="text" class="bg-white" name="clock" size=7 value="{{$ldate = date('Y-m-d')}}" readonly>
+                                            <div class="form-group row">
+                                                <label for="Date" class="col-sm-4 text-right">Date</label>
+                                                <div class="col-sm-8 text-left">
+                                                    <input type="text" name="clock" class="bg-white" size=7 style="border:none" value="{{$ldate = date('Y-m-d')}}" readonly>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-6">
-                                        Time : <input id="jam" style="border:none" type="text" class="bg-white" name="time" size=7 readonly ></input>
+                                            <div class="form-group row">
+                                                <label for="Time" class="col-sm-4 text-right">Time</label>
+                                                <div class="col-sm-8 text-left">
+                                                <input id="jam" style="border:none" type="text" class="bg-white" name="time" size=7 readonly >
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
