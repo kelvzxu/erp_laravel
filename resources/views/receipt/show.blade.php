@@ -20,6 +20,11 @@
                         @if($receipt->validate == False ) 
                             <a href="{{route('receipt.validate', $receipt)}}" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"> validate</i></a>
                         @endif
+                        @if($receipt->validate == True ) 
+                            @if($return_po == 0 )
+                                <a href="{{route('receipt.return', $receipt->po->purchase_no)}}" class="btn btn-primary"><i class="fa fa-reply" aria-hidden="true"> Return</i></a>
+                            @endif
+                        @endif
                         <a href="{{route('receipt.index')}}" class="btn btn-secondary">Back</a>
                     </div>
                 </div>
@@ -51,97 +56,123 @@
             <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
                 name="authorized_transaction_ids" id="o_field_input_290" data-original-title="" title=""></div>
             <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
-                <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                    class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                    validate
-                </button>
-                <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
-                    class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                    Draft
-                </button>
+                @if($receipt->validate == False ) 
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        validate
+                    </button>
+                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Draft
+                    </button>
+                @endif
+                @if($receipt->validate == True ) 
+                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Validate
+                    </button>
+                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Draft
+                    </button>
+                @endif
             </div>
         </div>
     </div>
-</div>
+</div> 
 <div class="row">
     <div class="col-12 mt-4">
-        <div class="card container">
-            <div class="row mt-4 mx-2">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Receipt No.</label>
-                        <p>{{$receipt->receipt_no}}</p>
+        <div class="o_form_view o_form_editable">
+            <div class="card container">
+                <div class="clearfix o_form_sheet">
+                    <div class="o_not_full oe_button_box mx-0 mt-1">
+                        <button type="button" class="btn oe_stat_button" name="457">
+                            <i class="fa fa-pencil-square-o o_button_icon"></i>
+                            <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
+                                data-original-title="" title="">
+                                <span class="o_stat_value">{{$return_po}}</span>
+                                <span class="o_stat_text">return</span>
+                            </div>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label>Purchase No.</label>
-                        <p>{{$receipt->po->purchase_no}}</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Supplier</label>
-                        <p id="client">{{$receipt->po->client}}</p>
-                    </div>
-                    <div class="form-group">
-                        <label>Supplier Address</label>
-                        <pre class="pre">{{$receipt->po->client_address}}</pre>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <p>{{$receipt->po->title}}</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>purchase Date</label>
-                            <p>{{$receipt->po->purchase_date}}</p>
+                    <div class="row mt-4 mx-2">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Receipt No.</label>
+                                <p>{{$receipt->receipt_no}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Purchase No.</label>
+                                <p>{{$receipt->po->purchase_no}}</p>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label>Due Date</label>
-                            <p>{{$receipt->po->due_date}}</p>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Supplier</label>
+                                <p id="client">{{$receipt->po->client}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Supplier Address</label>
+                                <pre class="pre">{{$receipt->po->client_address}}</pre>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <p>{{$receipt->po->title}}</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>purchase Date</label>
+                                    <p>{{$receipt->po->purchase_date}}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Due Date</label>
+                                    <p>{{$receipt->po->due_date}}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <hr>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($receipt->po->products as $data)
+                                <tr>
+                                    <td id="product" class="table-name">{{$data->product->name}}</td>
+                                    <td class="table-price">Rp. {{ number_format($data->price)}}</td>
+                                    <td class="table-qty">{{$data->qty}}</td>
+                                    <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="table-empty" colspan="2" style="border:none;"></td>
+                                <td class="table-label">Sub Total</td>
+                                <td class="table-amount">Rp. {{ number_format($receipt->po->sub_total)}}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-empty" colspan="2" style="border:none;"></td>
+                                <td class="table-label">Discount</td>
+                                <td class="table-amount">Rp. {{ number_format($receipt->po->discount)}}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-empty" colspan="2" style="border:none;"></td>
+                                <td class="table-label">Grand Total</td>
+                                <td class="table-amount">Rp. {{ number_format($receipt->po->grand_total)}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-            <hr>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($receipt->po->products as $data)
-                        <tr>
-                            <td id="product" class="table-name">{{$data->product->name}}</td>
-                            <td class="table-price">Rp. {{ number_format($data->price)}}</td>
-                            <td class="table-qty">{{$data->qty}}</td>
-                            <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td class="table-empty" colspan="2" style="border:none;"></td>
-                        <td class="table-label">Sub Total</td>
-                        <td class="table-amount">Rp. {{ number_format($receipt->po->sub_total)}}</td>
-                    </tr>
-                    <tr>
-                        <td class="table-empty" colspan="2" style="border:none;"></td>
-                        <td class="table-label">Discount</td>
-                        <td class="table-amount">Rp. {{ number_format($receipt->po->discount)}}</td>
-                    </tr>
-                    <tr>
-                        <td class="table-empty" colspan="2" style="border:none;"></td>
-                        <td class="table-label">Grand Total</td>
-                        <td class="table-amount">Rp. {{ number_format($receipt->po->grand_total)}}</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
     </div>
 </div>

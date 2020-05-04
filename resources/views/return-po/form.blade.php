@@ -1,35 +1,35 @@
 <div class="row">
     <div class="col-sm-4 mt-4">
         <div class="wrap-input200">
-            <label>Invoice No.</label>
-            <input type="hidden" class="input200" name="delivery_no" value="{{$delivery->delivery_no}}" readonly>
-            <input type="text" class="input200" name="invoice_no" value="{{ $invoice->invoice_no }}" readonly>
+            <label>Purchase No.</label>
+            <input type="hidden" class="input200" name="receipt_no" value="{{$receipt->receipt_no}}" readonly>
+            <input type="text" class="input200" name="purchase_no" value="{{ $purchase->purchase_no }}" readonly>
         </div>
         <div class="wrap-input200">
             <label>Client</label>
-            <input type="text" id="client" class="input200" value="{{ $invoice->customer->name }}"readonly>
-            <input type="hidden" id="client_id" class="form-control"  value="{{ $invoice->client }}"  name="client" readonly>
+            <input type="text" id="client" class="input200" value="{{ $purchase->vendor->partner_name }}"readonly>
+            <input type="hidden" id="client_id" class="form-control"  value="{{ $purchase->client }}"  name="client" readonly>
         </div>
     </div>
     <div class="col-sm-4 mt-4">
         <div class="wrap-input200">
             <label>Client Address</label>
-            <input type="text" class="input200" name="client_address" value="{{ $invoice->customer->street }} {{ $invoice->customer->city }}" readonly></input>
+            <input type="text" class="input200" name="client_address" value="{{ $purchase->vendor->street }} {{ $purchase->vendor->city }}" readonly></input>
         </div>
     </div>
     <div class="col-sm-4 mt-4">
         <div class="wrap-input200">
             <label>Title</label>
-            <input type="text" class="input200" name="title" value="{{ $invoice->title }}"  name="title" readonly>
+            <input type="text" class="input200" name="title" value="{{ $purchase->title }}"  name="title" readonly>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <label>Invoice Date</label>
-                <input type="text" class="input200" name="invoice_date" value="{{ $invoice->invoice_date }}"readonly>
+                <label>Purchase Date</label>
+                <input type="text" class="input200" name="purchase_date" value="{{ $purchase->purchase_date }}"readonly>
             </div>
             <div class="col-sm-6">
                 <label>Due Date</label>
-                <input type="text" class="input200" name="due_date" value="{{ $invoice->due_date }}"readonly>
+                <input type="text" class="input200" name="due_date" value="{{ $purchase->due_date }}"readonly>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
         </tr>
     </thead>
     <tbody>
-    @foreach($invoice->products as $data)
+    @foreach($purchase->products as $data)
         <tr>
             <td class="table-name">
                 <input type="hidden" class="form-control" name="product[]" value="{{$data->name}}" readonly>

@@ -37,6 +37,14 @@
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 <span class="o_stat_value">0</span>
+                                <span class="o_stat_text">Saldo</span>
+                            </div>
+                        </button>
+                        <button type="button" class="btn oe_stat_button" name="457">
+                            <i class="fa fa-fw o_button_icon fa-usd"></i>
+                            <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
+                                data-original-title="" title="">
+                                <span class="o_stat_value">0</span>
                                 <span class="o_stat_text">Purchases</span>
                             </div>
                         </button>

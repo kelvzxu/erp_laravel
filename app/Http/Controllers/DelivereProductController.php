@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sales\delivere_product;
+use App\Models\Sales\return_invoice;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Product\Product;
 use App\Models\Sales\Invoice;
@@ -56,7 +57,8 @@ class DelivereProductController extends Controller
     public function show($id)
     {
         $delivery = delivere_product::with('inv')->where('invoice_no',$id)->first();
-        return view('delivery.show', compact('delivery'));
+        $return_inv= return_invoice::where('invoice_no',$id)->count();
+        return view('delivery.show', compact('delivery','return_inv'));
     }
 
     /**

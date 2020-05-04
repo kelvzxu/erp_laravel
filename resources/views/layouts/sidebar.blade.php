@@ -64,19 +64,13 @@
                             <li>
                                 <a href="" id="report_invoice" class="menu-item" >
                                     <i class="metismenu-icon"></i>
-                                    Report Invoice
+                                    Report Sales Order
                                 </a>
                             </li>
                             <li>
-                                <a href="" id="report-return" class="menu-item">
+                                <a href="{{ route ('return-invoice.index')}}" id="report-return" class="menu-item">
                                     <i class="metismenu-icon"></i>
-                                    Report Selling Return
-                                </a>
-                            </li>
-                            <li>
-                                <a href="" id="report-customer" class="menu-item">
-                                    <i class="metismenu-icon"></i>
-                                    Report Customers
+                                    Report Return Invoice
                                 </a>
                             </li>
                         </ul>
@@ -109,15 +103,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{ route ('return-po.index')}}">
                                     <i class="metismenu-icon"></i>
-                                    Purchase Return
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="metismenu-icon"></i>
-                                    Vendors Report
+                                    Report Return Bill
                                 </a>
                             </li>
                         </ul>

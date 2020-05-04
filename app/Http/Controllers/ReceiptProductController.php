@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Merchandises\receipt_product;
 use App\Models\Merchandises\Purchase;
+use App\Models\Merchandises\receipt_product;
+use App\Models\Merchandises\return_purchase;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Product\Product;
 use Illuminate\Http\Request;
@@ -26,9 +27,12 @@ class ReceiptProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function return($id)
     {
-        //
+        $purchase = purchase::where('purchase_no', $id)->with('products','vendor', 'products.product')->first();
+        $receipt = receipt_product::where('purchase_no', $id)->first();
+        // dump($purchase);
+        return view('return-po.return', compact('purchase','receipt'));
     }
 
     /**
@@ -77,7 +81,8 @@ class ReceiptProductController extends Controller
     public function show($id)
     {
         $receipt = receipt_product::with('po')->where('purchase_no',$id)->first();
-        return view('receipt.show', compact('receipt'));
+        $return_po= return_purchase::where('purchase_no',$id)->count();
+        return view('receipt.show', compact('receipt','return_po'));
     }
 
     /**
@@ -115,28 +120,5 @@ class ReceiptProductController extends Controller
             // Toastr::error('Check In Error!','Something Wrong');
             return redirect()->back();
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\receipt_product  $receipt_product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, receipt_product $receipt_product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\receipt_product  $receipt_product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(receipt_product $receipt_product)
-    {
-        //
     }
 }

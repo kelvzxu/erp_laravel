@@ -107,22 +107,22 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
     
     // ==== Purchase =====
-    Route::get('/partner', 'ResPartnersController@index')->name('partner');
-    Route::get('/partner/new', 'ResPartnersController@create')->name('partner.new');
-    Route::post('/partner/store','ResPartnersController@store')->name('partner.store');
-    Route::get('/partner/show/{res_partner}','ResPartnersController@show')->name('partner.show');
-    Route::post('/partner/update','ResPartnersController@update')->name('partner.update');
-    Route::get('/partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
-    Route::get('/partner/filter', 'ResPartnersController@search')->name('partner.filter');
-
-
+    Route::get('partner', 'ResPartnersController@index')->name('partner');
+    Route::get('partner/new', 'ResPartnersController@create')->name('partner.new');
+    Route::post('partner/store','ResPartnersController@store')->name('partner.store');
+    Route::get('partner/show/{res_partner}','ResPartnersController@show')->name('partner.show');
+    Route::post('partner/update','ResPartnersController@update')->name('partner.update');
+    Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
+    Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
+    
+    
     // ==== PartnerCredit=
     Route::get('/PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
     Route::get('/PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');
     Route::get('/PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
     Route::post('/PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
-
-
+    
+    
     // ==== purchases ====
     Route::get('purchases', 'PurchaseController@index')->name('purchases');
     Route::get('purchases/create', 'PurchaseController@create')->name('purchases.create');
@@ -140,13 +140,21 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('receipt/store/{id}', 'ReceiptProductController@store')->name('receipt.store');
     Route::get('receipt/show/{id}', 'ReceiptProductController@show')->name('receipt.show');
     Route::get('receipt/validate/{id}', 'ReceiptProductController@validation')->name('receipt.validate');
+    Route::get('receipt/return/{id}', 'ReceiptProductController@return')->name('receipt.return');
 
     // ==== Receivable Account ====
     Route::get('ReceivableAccount','ReceivableAccountController@index')->name('ReceivableAccount.index');
     Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
 
     // ==== Retur Invoice ====
-    Route::post('return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
+    Route::get('Report/Return/SalesOrder/','ReturnInvoiceController@index')->name('return-invoice.index');
+    Route::post('Return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
+    Route::get('Report/Return/SalesOrder/{id}','ReturnInvoiceController@show')->name('return-invoice.show');
+
+    // ==== Retur Purchase ====
+    Route::get('Report/Return/Purchase/','ReturnPurchaseController@index')->name('return-po.index');
+    Route::post('Return/Purchase/', 'ReturnPurchaseController@store')->name('return-po.store');
+    Route::get('Report/Return/Purchase/{id}','ReturnPurchaseController@show')->name('return-po.show');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrRecruitmentController@index')->name('recruitment');

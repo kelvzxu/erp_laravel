@@ -21,7 +21,9 @@
                             <a href="{{route('Delivere.validate', $delivery)}}" class="btn btn-primary"><i class="fa fa-check" aria-hidden="true"> validate</i></a>
                         @endif
                         @if($delivery->validate == True ) 
-                            <a href="{{route('Delivere.return', $delivery->inv->invoice_no)}}" class="btn btn-primary"><i class="fa fa-reply" aria-hidden="true"> Return</i></a>
+                            @if($return_inv == 0 )
+                                <a href="{{route('Delivere.return', $delivery->inv->invoice_no)}}" class="btn btn-primary"><i class="fa fa-reply" aria-hidden="true"> Return</i></a>
+                            @endif
                         @endif
                         <a href="{{route('Delivere.index')}}" class="btn btn-secondary">Back</a>
                     </div>
@@ -80,83 +82,97 @@
 </div>
 <div class="row">
     <div class="col-12 mt-4">
-        <div class="card container">
-            <div class="row mt-4 mx-2">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Receipt No.</label>
-                        <p>{{$delivery->delivery_no}}</p>
+        <div class="o_form_view o_form_editable">
+            <div class="card container">
+                <div class="clearfix o_form_sheet">
+                    <div class="o_not_full oe_button_box mx-0 mt-1">
+                        <button type="button" class="btn oe_stat_button" name="457">
+                            <i class="fa fa-pencil-square-o o_button_icon"></i>
+                            <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
+                                data-original-title="" title="">
+                                <span class="o_stat_value">{{$return_inv}}</span>
+                                <span class="o_stat_text">return</span>
+                            </div>
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <label>Invoice No.</label>
-                        <p>{{$delivery->inv->invoice_no}}</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Customer</label>
-                        <p id="client">{{$delivery->inv->client}}</p>
-                    </div>
-                    <div class="form-group">
-                        <label>Customer Address</label>
-                        <pre class="pre">{{$delivery->inv->client_address}}</pre>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <p>{{$delivery->inv->title}}</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>Invoice Date</label>
-                            <p>{{$delivery->inv->invoice_date}}</p>
+                    <div class="row mt-4 mx-2">
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Receipt No.</label>
+                                <p>{{$delivery->delivery_no}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Invoice No.</label>
+                                <p>{{$delivery->inv->invoice_no}}</p>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label>Due Date</label>
-                            <p>{{$delivery->inv->due_date}}</p>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Customer</label>
+                                <p id="client">{{$delivery->inv->client}}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Customer Address</label>
+                                <pre class="pre">{{$delivery->inv->client_address}}</pre>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <p>{{$delivery->inv->title}}</p>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label>Invoice Date</label>
+                                    <p>{{$delivery->inv->invoice_date}}</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label>Due Date</label>
+                                    <p>{{$delivery->inv->due_date}}</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <hr>
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($delivery->inv->products as $data)
+                                <tr>
+                                    <td id="product" class="table-name">{{$data->product->name}}</td>
+                                    <td class="table-price">Rp. {{ number_format($data->price)}}</td>
+                                    <td class="table-qty">{{$data->qty}}</td>
+                                    <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="table-empty" colspan="2" style="border:none;"></td>
+                                <td class="table-label">Sub Total</td>
+                                <td class="table-amount">Rp. {{ number_format($delivery->inv->sub_total)}}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-empty" colspan="2" style="border:none;"></td>
+                                <td class="table-label">Discount</td>
+                                <td class="table-amount">Rp. {{ number_format($delivery->inv->discount)}}</td>
+                            </tr>
+                            <tr>
+                                <td class="table-empty" colspan="2" style="border:none;"></td>
+                                <td class="table-label">Grand Total</td>
+                                <td class="table-amount">Rp. {{ number_format($delivery->inv->grand_total)}}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
-            <hr>
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($delivery->inv->products as $data)
-                        <tr>
-                            <td id="product" class="table-name">{{$data->product->name}}</td>
-                            <td class="table-price">Rp. {{ number_format($data->price)}}</td>
-                            <td class="table-qty">{{$data->qty}}</td>
-                            <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td class="table-empty" colspan="2" style="border:none;"></td>
-                        <td class="table-label">Sub Total</td>
-                        <td class="table-amount">Rp. {{ number_format($delivery->inv->sub_total)}}</td>
-                    </tr>
-                    <tr>
-                        <td class="table-empty" colspan="2" style="border:none;"></td>
-                        <td class="table-label">Discount</td>
-                        <td class="table-amount">Rp. {{ number_format($delivery->inv->discount)}}</td>
-                    </tr>
-                    <tr>
-                        <td class="table-empty" colspan="2" style="border:none;"></td>
-                        <td class="table-label">Grand Total</td>
-                        <td class="table-amount">Rp. {{ number_format($delivery->inv->grand_total)}}</td>
-                    </tr>
-                </tfoot>
-            </table>
         </div>
     </div>
 </div>

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Sales;
+namespace App\Models\Merchandises;
 
 use Illuminate\Database\Eloquent\Model;
 
-class return_invoice extends Model
+class return_purchase extends Model
 {
     public function products()
     {
@@ -12,7 +12,7 @@ class return_invoice extends Model
     }
     public function invoice()
     {
-        return $this->hasOne(Invoice::class);
+        return $this->hasOne(Purchase::class);
     }
     public function user()
     {

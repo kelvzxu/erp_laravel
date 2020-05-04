@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeliveredProductTable extends Migration
+class CreateReturnPurchasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateDeliveredProductTable extends Migration
      */
     public function up()
     {
-        Schema::create('delivered_products', function (Blueprint $table) {
+        Schema::create('return_purchases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('delivery_no');
-            $tabbigIncrementsle->string('invoice_no');
-            $table->date('delivery_date');
-            $table->boolean('validate')->default(False);
+            $table->string('return_no')->index();
+            $table->string('purchase_no')->index();
+            $table->string('receipt_no')->index();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateDeliveredProductTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivered_products');
+        Schema::dropIfExists('return_purchases');
     }
 }
