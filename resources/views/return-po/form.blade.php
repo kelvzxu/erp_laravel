@@ -54,17 +54,14 @@
                 <input type="text" style="border:none" class="form-control bg-white" value="{{$data->product->name}}" name="product_name[]" readonly>
             </td>
             <td class="table-price">
-                <input type="text" style="border:none" class="form-control" value="Rp. {{ number_format($data->price)}}">
-                <input type="hidden" style="border:none" class="form-control" value="{{$data->price}}" name="price[]">
+                <input type="text" style="border:none" class="form-control" value="Rp. {{ number_format($data->price)}}" readonly>
+                <input type="hidden" style="border:none" class="form-control" value="{{$data->price}}" name="price[]" >
             </td>
             <td class="table-qty">
-                <input type="text" style="border:none"  class="form-control" value="{{$data->qty}}" name="buy_qty[]">
+                <input type="text" style="border:none"  class="form-control" value="{{$data->qty}}" name="buy_qty[]" readonly>
             </td>
             <td class="table-qty">
                 <input type="number" style="border:none"  class="form-control" value="0" name="return_qty[]">
-            </td>
-            <td class="table-remove">
-                <span @click="remove(product)" class="table-remove-btn"><i class="fa fa-trash"></i></span>
             </td>
         </tr>
     @endforeach

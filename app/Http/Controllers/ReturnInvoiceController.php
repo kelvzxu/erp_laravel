@@ -69,7 +69,7 @@ class ReturnInvoiceController extends Controller
                 'credit_limit' => $new_balance,
             ]);
             Toastr::success('Return inv:'.$request->invoice_no.' with delivery_no '.$request->delivery_no.' Success','Success');
-            return redirect(route('return-inv.index'));
+            return redirect(route('return-invoice.index'));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
