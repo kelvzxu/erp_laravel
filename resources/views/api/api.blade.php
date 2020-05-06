@@ -61,6 +61,9 @@ $.ajax  ({
             $('#country').append(`
             <option value="`+data.id+`">`+data.country_name+`</option>
             `);
+            $('#nationality').append(`
+            <option value="`+data.id+`">`+data.country_name+`</option>
+            `);
             $('#country_of_birth').append(`
             <option value="`+data.id+`">`+data.country_name+`</option>
             `);

@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function (){
     
     // ==== Employee ====
     Route::get('employee','HrEmployeesController@index')->name('employee');
-    Route::get('employee/new','HrEmployeesController@create')->name('employee.new');
+    Route::get('employee/create','HrEmployeesController@create')->name('employee.create');
     Route::post('employee/store','HrEmployeesController@store')->name('employee.store');
     Route::get('employee/edit/{hr_employee}','HrEmployeesController@edit')->name('employee.edit');
     Route::post('employee/update','HrEmployeesController@update')->name('employee.update');

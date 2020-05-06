@@ -1,133 +1,142 @@
 @extends('layouts.admin')
-@section('title','SK - Employee')
+@section('title','Employees')
+@section('css')
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+@endsection
 @section('content')
-<div class="container">
-    @if (session('success'))
-        <div class="alert alert-success">
-        {{ session('success') }}
-        </div>
-    @endif
-    <!-- header -->
-    <div class="row">
-        <div class="col-12 col-md-7">
-            <div class="ml-auto text-right">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><a href="{{route('employee')}}">Employee</a></li>
-                    </ol>
-                </nav>
+<div class="app-page-title bg-white">
+    <div class="o_control_panel">
+        <div>
+            <ol class="breadcrumb" role="navigation">
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('employee')}}">Employee</a></li>
+            </ol>
+            <div class="o_cp_searchview" role="search">
+                <div class="o_searchview" role="search" aria-autocomplete="list">
+                    <form action="{{ route('employee.filter') }}" method="get" >
+                        <button class="o_searchview_more fa fa-search-minus" title="Advanced Search..." role="img"
+                            aria-label="Advanced Search..." type="submit"></button>
+
+                        <div class="o_searchview_input_container">
+                            <input type="text" class="o_searchview_input" accesskey="Q" placeholder="Search..."
+                                role="searchbox" aria-haspopup="true" name="value">
+                            <input type="hidden" class="o_searchview_input" accesskey="Q" placeholder="key"
+                            role="searchbox" aria-haspopup="true" name="filter">
+                            <div class="dropdown-menu o_searchview_autocomplete" role="menu"></div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <h3>Employee List</h3>
         </div>
-        <div class="col-12 col-md-5 text-right">
-            <form action="{{ route('employee.filter') }}" method="get" >
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <select class="input-group-text bg-primary text-white" name="filter">
-                                <option value="" selected>Filter By</option>
+        <div>
+            <div class="o_cp_left">
+                <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
+                    <div>
+                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('employee.create')}}">
+                            Create
+                        </a>
+                        <button type="button" class="btn btn-secondary o_button_import">
+                            Import
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="o_cp_right">
+                <div class="btn-group o_search_options position-static" role="search">
+                    <div>
+                        <div class="btn-group o_dropdown">
+                            <select
+                                class=" o_filters_menu_button o_dropdown_toggler_btn btn btn-secondary dropdown-toggle "
+                                data-toggle="dropdown" aria-expanded="false" tabindex="-1" data-flip="false"
+                                data-boundary="viewport" name="key" id="key">
+                                <option value="" data-icon="fa fa-filter">Filters</option>
                                 <option value="employee_name">Name</option>
                                 <option value="department_name">Department</option>
                                 <option value="jobs_name">Jobs</option>
                                 <option value="city">City</option>
-                        </select>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Search...." name="value">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-success" type="submit"><i class="fa fa-search" aria-hidden="true"> Search</i></button>
+                                <!-- <span class="fa fa-filter"></span> Filters -->
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </form>
+                <nav class="o_cp_pager" role="search" aria-label="Pager">
+                    <div class="o_pager o_hidden">
+                        <span class="o_pager_counter">
+                            <span class="o_pager_value">{{$employee->total()}}</span> / <span class="o_pager_limit">{{$employee->perPage()}}</span>
+                        </span>
+                        <span class="btn-group d-none" aria-atomic="true">
+                            <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
+                                accesskey="p" aria-label="Previous" title="Previous" tabindex="-1"></button>
+                            <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next"
+                                accesskey="n" aria-label="Next" title="Next" tabindex="-1"></button>
+                        </span>
+                    </div>
+                </nav>
+                <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher">
+                    <button type="button" accesskey="l" class="btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
+                        aria-label="View list" data-view-type="list" title="" tabindex="-1"
+                        data-original-title="View list"></button>
+                    <button type="button" accesskey="k" class="btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban" 
+                        aria-label="View kanban" data-view-type="kanban" title="" tabindex="-1" 
+                        data-original-title="View kanban"></button>
+                </nav>
+            </div>
         </div>
     </div>
-    <!-- header button -->
-    <div class="row">
-        <div class="col-3">
-            <a href="{{route('employee.new')}}" class="btn btn-primary">Create</a>
+    <div class="o-content">
+        <div class="panel-body ml-2">
+            @if($employee->count())
+            <div class="table-responsive-lg mb-4">
+                <table class="table table-striped">
+                    <thead class="table table-sm">
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Photo</th>
+                            <th scope="col">Employee Name</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">action</th>
+                        </tr>
+                    </thead>
+                    @foreach($employee as $data)
+                    <tbody>
+                        <tr>
+                            <td scope="row">{{$loop->iteration}}
+                            <td ><img src="{{asset('uploads/Employees/'.$data->photo)}}" width=50px></td>
+                            <td >{{$data->employee_name}}</td>
+                            <td >{{$data->city}}</td>
+                            <td >{{$data->country_name}}</td>
+                            <td >{{$data->department_name}}</td>
+                            <td >
+                                <a href="{{route('employee.edit',$data->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Edit</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    @endforeach
+                </table>
+            </div>
+            @else
+            <div class="o_nocontent_help">
+                <p class="o_view_nocontent_smiling_face">
+                    <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                    Create Your Employee and Start Your Business
+                </p>
+            </div>
+            @endif
         </div>
     </div>
-
-    <div class="table-responsive-lg my-4">
-        <table class="table">
-        <caption>Employee List</caption>
-            <thead class="table table-sm">
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Photo</th>
-                    <th scope="col">Employee Name</th>
-                    <th scope="col">City</th>
-                    <th scope="col">Country</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">action</th>
-                </tr>
-            </thead>
-            @forelse($employee as $emp)
-            <tbody>
-                <tr> 
-                    <th scope="row">{{$loop->iteration}}
-                    <th ><img src="{{asset('uploads/Employees/'.$emp->photo)}}" width=50px></th>
-                    <th >{{$emp->employee_name}}</th>
-                    <th >{{$emp->city}}</th>
-                    <th >{{$emp->country_name}}</th>
-                    <th >{{$emp->department_name}}</th>
-                    <th >
-                        <form id="delete-form-{{ $emp->id }}" action="{{route('employee.delete',$emp->id)}}" method="put">
-                            @csrf
-                            @method('DELETE')
-                                <a href="{{route('employee.edit',$emp->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Edit</i></a>
-                            <button type="button" onclick="deletePost({{ $emp->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash">  Delete</i></button>
-                            {{--onclick="return confirm('Are you sure?')"--}}
-                        </form>
-                    </th>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="7" class="text-center">Jobs is Empty</td>
-                </tr>
-            </tbody>
-            @endforelse
-            {{ $employee->links() }}
-        </table>
+    <div class="row mx-4">
+        {!! $employee->render() !!}
     </div>
 </div>
 @endsection
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
-
-<script type="text/javascript">
-    function deletePost(id)
-
-    {
-        const swalWithBootstrapButtons = swal.mixin({
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-danger',
-            buttonsStyling: false,
-        })
-
-        swalWithBootstrapButtons({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.value) {
-                event.preventDefault();
-                document.getElementById('delete-form-'+id).submit();
-            } else if (
-                // Read more about handling dismissals
-                result.dismiss === swal.DismissReason.cancel
-            ) {
-                swalWithBootstrapButtons(
-                    'Cancelled',
-                    'Your file is safe :)',
-                    'error'
-                )
-            }
-        })
-    }
-
+<script>
+$('a#employee').addClass('mm-active');
+$("#key").change(function() {
+    var value = $("#key").val();
+    $("input[name='filter']").val(value);
+});
 </script>
 @endsection

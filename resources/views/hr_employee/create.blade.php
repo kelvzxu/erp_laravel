@@ -1,434 +1,665 @@
 @extends('layouts.admin')
-@section('title','SK - New Customer')
+@section('title','SK - Employee')
+@section('css')
+<link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
+<link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
+@endsection
 @section('content')
-<div class="container">
-    @if (session('error'))
-        <div class="alert alert-danger">
-        {{ session('error') }}
-        </div>
-    @endif
-    <!-- header -->
-    <div class="row">
-        <div class="col-12 col-md-7">
-            <div class="ml-auto text-right">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{route('employee')}}">employee</a></li>
-                        <li class="breadcrumb-item" aria-current="page"><a href="{{route('employee.new')}}">New</a></li>
-                    </ol>
-                </nav>
+<form action="{{ route('employee.store') }}" method="post" enctype="multipart/form-data">
+    @csrf
+    <div class="app-page-title bg-white">
+        <div class="o_control_panel">
+            <div>
+                <ol class="breadcrumb" role="navigation">
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('employee')}}">Employee</a></li>
+                    <li class="breadcrumb-item active">New</li>
+                </ol>
             </div>
-            <h3>Create New employee</h3>
-        </div>
-        <div class="col-12 col-md-5 text-right">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search...." aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">Search</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- header button -->
-    <form action="{{ route('employee.store') }}" method="post" enctype="multipart/form-data">
-    <div class="row">
-        <div class="col-3">
-        <button class="btn btn-primary btn-sm">
-                <i class="fa fa-send"></i> Save
-            </button>
-        </div>
-    </div>
-
-    <div class="container bg-white my-4">
-        <br>
-        @csrf
-            <div class="row">
-                <div class="col-sm-9">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                        <label class="form-check-label" for="defaultCheck1">
-                            active
-                        </label>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Name</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="name" id="name" placeholder="Employee Name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"  autocomplete="name" autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Identification id</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="identification_id" id="identification_id" class="form-control @error('identification_id') is-invalid @enderror" value="{{ old('identification_id') }}"  autocomplete="identification_id" autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Gender</label>
-                        <div class="col-sm-4">
-                            <select type="text" name="gender" class="form-control @error('gender') is-invalid @enderror" id="gender" placeholder="Gender">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        <label class="col-sm-2 col-form-label">Marital</label>
-                        <div class="col-sm-4">
-                            <select type="text" name="marital" class="form-control" id="marital" placeholder="marital">
-                                <option value="single">Single</option>
-                                <option value="marriage">Marriage</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div id="marriage" style="display: none">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">couple's name</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="spouse_complete_name" id="spouse_complete_name" class="form-control @error('spouse_complete_name') is-invalid @enderror" value="{{ old('spouse_complete_name') }}"  autocomplete="Identification id" autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Couple's Birth</label>
-                            <div class="col-sm-4">
-                                <input type="date" name="spouse_birthday" class="form-control  @error('spouse_birthday') is-invalid @enderror" id="spouse_birthday" placeholder="Date of birth">
-                            </div>
-                            <label class="col-sm-2 col-form-label">children</label>
-                            <div class="col-sm-4">
-                            <select type="text" name="children" class="form-control  @error('children') is-invalid @enderror" id="children" placeholder="children">
-                                    <option value="0">0</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="<5"><= 5</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Place Of Birth</label>
-                        <div class="col-sm-10">
-                            <input type="text" name="place_of_birth" id="place_of_birth" class="form-control @error('place_of_birth') is-invalid @enderror" value="{{ old('place_of_birth') }}"  autocomplete="place_of_birth" autofocus>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Date Of Birth</label>
-                        <div class="col-sm-4">
-                        <input type="date" name="birthday" class="form-control  @error('birthday') is-invalid @enderror" id="birthday" placeholder="Date of birth">
-                        </div>
-                        <label class="col-sm-2 col-form-label">Country Of Birth</label>
-                        <div class="col-sm-4">
-                            <select name="country_of_birth" id="country_of_birth" class="form-control @error('country_of_birth') is-invalid @enderror" autofocus>
-                            <option value="NULL">Country</option>
-                            </select>
+            <div>
+                <div class="o_cp_left">
+                    <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
+                        <div>
+                            <button class="btn btn-primary my-2" @click="create" :disabled="isProcessing">Save</button>
+                            <a href="{{route('employee')}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <img id='img-upload'/>
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-default btn-file bg-primary text-white">
-                                    Browse… <input type="file" id="imgInp" name="image">
-                                </span>
+                <div class="o_cp_right">
+                    <div class="btn-group o_search_options position-static" role="search"></div>
+                    <nav class="o_cp_pager" role="search" aria-label="Pager">
+                        <div class="o_pager">
+                            <span class="o_pager_counter">
+                                <span class="o_pager_value">1</span> / <span class="o_pager_limit">1</span>
+                            </span>
+                            <span class="btn-group" aria-atomic="true">
+                                <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
+                                    accesskey="p" aria-label="Previous" title="Previous" tabindex="-1" disabled=""></button>
+                                <button type="button" class="fa fa-chevron-right btn btn-secondary o_pager_next"
+                                    accesskey="n" aria-label="Next" title="Next" tabindex="-1" disabled=""></button>
                             </span>
                         </div>
-                    </div>
+                    </nav>
+                    <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher"></nav>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Address</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="address" id="address" placeholder="Address" class="form-control @error('address') is-invalid @enderror" value="{{ old('address') }}"  autocomplete="address" autofocus>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Work Email</label>
-                        <div class="col-sm-9">
-                            <input type="work_email" name="work_email" id="work_email" placeholder="mail@example.com" class="form-control @error('work_email') is-invalid @enderror" value="{{ old('work_email') }}"  autocomplete="work_email" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Street</label>
-                        <div class="col-sm-5">
-                            <input type="text" name="street1" id="street1" placeholder="street" class="form-control @error('street') is-invalid @enderror" value="{{ old('street') }}"  autocomplete="street" autofocus>
-                        </div>
-                        <div class="col-sm-4">
-                            <input type="text" name="city" id="city" placeholder="City" class="form-control @error('city') is-invalid @enderror" value="{{ old('city') }}"  autocomplete="city" autofocus>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">work Mobile</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="work_mobile" id="work_mobile" placeholder="08xxxxxxxxx" class="form-control @error('work_mobile') is-invalid @enderror" value="{{ old('work_mobile') }}"  autocomplete="work_mobile" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Country</label>
-                        <div class="col-sm-5">
-                            <select id="country" name="country" class="form-control @error('country') is-invalid @enderror">
-                            <option value="NULL">Country</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <select id="state" name="state" class="form-control @error('state') is-invalid @enderror">
-                            <option value="NULL">State</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">work Phone</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="work_phone" id="work_phone" placeholder="06xxxxxxxxx" class="form-control @error('work_phone') is-invalid @enderror" value="{{ old('work_phone') }}"  autocomplete="work_phone" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Zip Code</label>
-                        <div class="col-sm-4">
-                            <input id="zip" name="zip" class="form-control"></input>
-                        </div>
-                        <div class="col-sm-5">
-                            <select id="currency_id" name="currency_id" class="form-control @error('currency') is-invalid @enderror">
-                                <option value="NULL">Currency</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Sosial Media</label>
-                        <div class="col-sm-9">
-                            <input type="text" name="ssnid" id="ssnid" placeholder="facebook or instagram" class="form-control @error('ssnid') is-invalid @enderror" value="{{ old('ssnid') }}"  autocomplete="ssnid" autofocus>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="my-3 bg-light">
-                <nav class="navbar navbar-expand-sm navbar-light bg-success">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavHr" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNavHr">
-                        <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="privateinformation nav-link active " href="">
-                                Private Information 
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="jobsposition nav-link " href="">
-                                Jobs Position
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="useraccount nav-link " href="">
-                                user Account
-                            </a>
-                        </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="container my-3">
-                    <section id="privateinformation">
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Private Information</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Passport id</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="passport_id" id="passport_id" class="form-control @error('passport_id') is-invalid @enderror" value="{{ old('passport_id') }}"  autocomplete="passport_id" autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Permit no</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="permit_no" id="permit_no" class="form-control @error('permit_no') is-invalid @enderror" value="{{ old('permit_no') }}"  autocomplete="permit_no" autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">visa number</label>
-                            <div class="col-sm-3">
-                                <input type="text" name="visa_no" id="visa_no" class="form-control @error('visa_no') is-invalid @enderror" value="{{ old('visa_no') }}"  autocomplete="visa_no" autofocus>
-                            </div>
-                            <label class="col-sm-2 col-form-label">visa Expire</label>
-                            <div class="col-sm-3">
-                                <input type="date" name="visa_expire" class="form-control  @error('visa_expire') is-invalid @enderror" id="visa_expire" placeholder="visa Expire">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">salary</label>
-                            <div class="col-sm-3">
-                                <input type="text" name="salary" id="salary" class="form-control @error('salary') is-invalid @enderror" value="{{ old('salary') }}"  autocomplete="salary" autofocus>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Study</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">certificate</label>
-                            <div class="col-sm-3">
-                                <select type="text" name="certificate" class="form-control" id="certificate" placeholder="certificate">
-                                    <option value="High_School">High School</option>
-                                    <option value="Diploma">Diploma</option>
-                                    <option value="Barchelor">Barchelor</option>
-                                    <option value="Magister">Magister</option>
-                                    <option value="Doctor">Doctor</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">study field</label>
-                            <div class="col-sm-3">
-                                <input type="text" name="study_field" id="study_field" class="form-control @error('study_field') is-invalid @enderror" value="{{ old('study_field') }}"  autocomplete="study_field" autofocus>
-                            </div>
-                            <label class="col-sm-2 col-form-label">school / university</label>
-                            <div class="col-sm-3">
-                                <input type="text" name="study_school" id="study_school" class="form-control @error('study_school') is-invalid @enderror" value="{{ old('study_school') }}"  autocomplete="study_school" autofocus>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Emergency</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Emergency Contact</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="emergency_contact" id="emergency_contact" class="form-control @error('emergency_contact') is-invalid @enderror" value="{{ old('emergency_contact') }}"  autocomplete="emergency_contact" autofocus>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Emergency Phone</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="emergency_phone" id="emergency_phone" class="form-control @error('emergency_phone') is-invalid @enderror" value="{{ old('emergency_phone') }}"  autocomplete="emergency_phone" autofocus>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Bank</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Bank_account_id</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="Bank_account_id" id="Bank_account_id" class="form-control @error('Bank_account_id') is-invalid @enderror" value="{{ old('Bank_account_id') }}"  autocomplete="Bank_account_id" autofocus>
-                            </div>
-                        </div>
-                        <br>
-                    </section>
-                    <section id="jobsposition">
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Position</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">department</label>
-                            <div class="col-sm-8">
-                                <select name="department" id="department" class="form-control">
-                                <option value="">Select Department</option>
-                                @foreach ($departments as $row)
-                                    <option value="{{ $row->id }}">{{ ucfirst($row->department_name) }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Jobs Position</label>
-                            <div class="col-sm-8">
-                                <select name="jobs" id="jobs" class="form-control">
-                                <option value="">Select Jobs</option>
-                                @foreach ($jobs as $row)
-                                    <option value="{{ $row->id }}">{{ ucfirst($row->jobs_name) }}</option>
-                                @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Manager</label>
-                            <div class="col-sm-8">
-                            <select name="parent_id" id="parent_id" class="form-control">
-                            <option value="">Manager</option>
-                                @foreach ($employee as $row)
-                                    <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }}</option>
-                                @endforeach
-                            </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Responsible</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Coach</label>
-                            <div class="col-sm-8">
-                                <select name="coach_id" id="coach_id" class="form-control">
-                                    <option value="">Coach</option>
-                                    @foreach ($employee as $row)
-                                        <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                    </section>
-                    <section id="useraccount">
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">User Password</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <h3 class="col-sm-10 font-weight-bold text-primary">Access</h3>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 col-form-label">Access</label>
-                            <div class="col-md-6">
-                            <select type="text" name="access" class="form-control" id="access" placeholder="access"></select>
-                            </div>
-                        </div>
-                        <br>
-                    </section>
-                </div>
-            </div>
-            <br>
+        </div>
     </div>
-    </form>
-</div>
+
+    <div class="container">
+        <div class="o_form_view o_form_editable">
+            <div class="container-fluid mt-5">
+                <div class="clearfix o_form_sheet">
+                    <div class="o_not_full oe_button_box mx-0">
+                        <button type="button" class="btn oe_stat_button" name="action_view_partner_invoices"
+                            context="{'default_partner_id': active_id}">
+                            <i class="fa fa-fw o_button_icon fa-pencil-square-o"></i>
+                            <div class="o_form_field o_stat_info">
+                                <span class="o_stat_value">
+                                    <span class="o_field_monetary o_field_number o_field_widget o_readonly_modifier"
+                                    name="total_invoiced" data-original-title="" title="">0.00</span>
+                                </span>
+                                <span class="o_stat_text">Status</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-10">
+                            <div class="row">
+                                <div class="col-9">
+                                    <h1>
+                                        <div class="o_field_partner_autocomplete dropdown open wrap-input200 o_required_modifier" name="name"
+                                            placeholder="Name" data-original-title="" title="">
+                                            <input class="input200  @error('name') is-invalid @enderror" placeholder="Name" type="text" id="name" name="name" value="{{ old('name') }}" required autofocus>
+                                        </div>
+                                    </h1>
+                                    <div class="o_row">
+                                        <div class="wrap-input200 " aria-atomic="true" name="Parent_id" placeholder="Company" data-original-title="" title="">
+                                            <input type="text" class="input200" placeholder="identification id" autocomplete="off" value="{{ old('identification_id') }}" required name="identification_id" id="identification_id" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <img id='img-upload' src="{{asset('images/icons/picture.png')}}" width="50px"/>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <span class="btn btn-default btn-file bg-primary text-white">
+                                            Browse… <input type="file" id="imgInp" name="photo">
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="o_group">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <table class="o_group o_inner_group">
+                                    <tbody>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="address_name" class="col-form-label"><b>Address</b></label>
+                                            </td>
+                                            <td>
+                                                <div class="o_address_format">
+                                                    <div class="wrap-input200">
+                                                        <input class="input200 " name="street1" required value="{{ old('street') }}" 
+                                                            placeholder="Street..." type="text" id="street1" >
+                                                    </div>
+                                                    <div class="wrap-input200">
+                                                        <input class="input200" value="{{ old('street2') }}"
+                                                            name="street2" placeholder="Street 2..." type="text" id="street2">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-6">
+                                                            <div class="wrap-input200">
+                                                                <input class="input200" required value="{{ old('city') }}"
+                                                                    name="city" placeholder="City..." type="text" id="city">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="wrap-input200">
+                                                                <input class="input200" required value="{{ old('zip') }}"
+                                                                    name="zip" placeholder="ZIP" type="text" id="zip">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wrap-input200">
+                                                        <select id="country" name="country" class="input200" required style="border:none;">
+                                                            <option value="">country</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="wrap-input200">
+                                                        <select id="state" name="state" class="input200" style="border:none;">
+                                                            <option value="">State</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="date_of_birth" class="col-form-label"><b>Date Of Birth</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input type="date" name="birthday" id="birthday" value="{{ old('birthday')}}"
+                                                    class="input200  @error('birthday') is-invalid @enderror" placeholder="Date of birth">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="place/country" class="col-form-label"><b>Place / Country Of Birth</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="wrap-input200">
+                                                            <input type="text" name="place_of_birth" id="place_of_birth" value="{{ old('place_of_birth') }}"
+                                                            class="input200 @error('place_of_birth') is-invalid @enderror" placeholder="Place of birth" autocomplete="place_of_birth" autofocus>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="wrap-input200">
+                                                            <select name="country_of_birth" id="country_of_birth" style="border:none;" required
+                                                            class="input200 @error('country_of_birth') is-invalid @enderror" autofocus>
+                                                                <option value="NULL">Country</option>
+                                                            </select>   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <table class="o_group o_inner_group">
+                                    <tbody>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="work_email" class="col-form-label"><b>Work Email</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="work_email" required value="{{ old('work_email') }}" 
+                                                        placeholder="work_email@example.com" type="text" id="work_email" required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="work_phone" class="col-form-label"><b>Work Phone</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="work_phone" required value="{{ old('work_phone') }}" type="text" id="work_phone" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="work_mobile" class="col-form-label"><b>Work Mobile</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                             <div class="wrap-input200">
+                                                    <input class="input200 " name="work_mobile" value="{{ old('work_mobile') }}" type="text" id="work_mobile" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="work_location" class="col-form-label"><b>Work Location</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <input class="input200 " name="work_location" value="{{ old('work_location') }}" type="text" id="website" >
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="department" class="col-form-label"><b>Department</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <select name="department" id="department" class="input200" style="border:none;">
+                                                        <option value=""></option>
+                                                        @foreach ($departments as $row)
+                                                            <option value="{{ $row->id }}">{{ ucfirst($row->department_name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="lag" class="col-form-label"><b>Job Position</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <select name="jobs" id="jobs" class="input200" style="border:none;">
+                                                        <option value=""></option>
+                                                        @foreach ($jobs as $row)
+                                                            <option value="{{ $row->id }}">{{ ucfirst($row->jobs_name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label for="" name="tz/cr" class="col-form-label"><b>Manager</b></label>
+                                            </td>
+                                            <td style="width: 100%;">
+                                                <div class="wrap-input200">
+                                                    <select name="parent_id" id="parent_id" class="input200" style="border:none;">
+                                                        <option value=""></option>
+                                                            @foreach ($employee as $row)
+                                                                <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }}</option>
+                                                            @endforeach
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="o_notebook">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
+                                    class="nav-link active" role="tab" aria-selected="true">Private Information</a></li>
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
+                                    class="nav-link" role="tab">Work Information</a></li>
+                            <li class="nav-item o_invisible_modifier"><a data-toggle="tab" disable_anchor="true"
+                                    href="#notebook_page_595" class="nav-link" role="tab">Invoicing</a></li>
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_531"
+                                    class="nav-link" role="tab">User Account</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="notebook_page_511">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <table class="o_group o_inner_group mt-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Citizenship</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="nationality" class="col-form-label"><b>Nationality (country)</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select name="nationality" id="nationality" style="border:none;"
+                                                            class="input200 @error('nationality') is-invalid @enderror" autofocus>
+                                                                <option value=""></option>
+                                                            </select> 
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="Passport_no" class="col-form-label"><b>Passport No</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input type="text" name="passport_id" id="passport_id" class="input200 @error('passport_id') is-invalid @enderror" 
+                                                            value="{{ old('passport_id') }}"  autocomplete="passport_id" autofocus>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="gender" class="col-form-label"><b>Gender</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select type="text" name="gender" class="input200 @error('gender') is-invalid @enderror"  
+                                                            id="gender" placeholder="Gender" style="border:none;" required>
+                                                                <option value="male">Male</option>
+                                                                <option value="female">Female</option>
+                                                                <option value="other">Other</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Emergency</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="emergency_contact" class="col-form-label"><b>Emergency Contact</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input type="text" name="emergency_contact" id="emergency_contact" class="input200 @error('emergency_contact') is-invalid @enderror"
+                                                             value="{{ old('emergency_contact') }}"  autocomplete="emergency_contact" autofocus required> 
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="emergency_phone" class="col-form-label"><b>Emergency Phone</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input type="text" name="emergency_phone" id="emergency_phone" class="input200 @error('emergency_phone') is-invalid @enderror"
+                                                             value="{{ old('emergency_phone') }}"  autocomplete="emergency_phone" autofocus required>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Education</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="certificate" class="col-form-label"><b>Certificate</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                        <select type="text" name="certificate" class="input200" style="border:none;" id="certificate" placeholder="certificate">
+                                                            <option value="High_School">High School</option>
+                                                            <option value="Diploma">Diploma</option>
+                                                            <option value="Barchelor">Barchelor</option>
+                                                            <option value="Magister">Magister</option>
+                                                            <option value="Doctor">Doctor</option>
+                                                        </select>                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="Field Of Study" class="col-form-label"><b>Field Of Study</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="study_field" value="{{ old('study_field') }}" type="text" id="study_field" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="School/University" class="col-form-label"><b>School/University</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="study_school" value="{{ old('study_school') }}" type="text" id="study_school" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <table class="o_group o_inner_group mt-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Work Permit</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="visa-no" class="col-form-label"><b>Visa No</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input type="text" name="visa_no" id="visa_no" value="{{ old('visa_no') }}"
+                                                            class="input200 @error('visa_no') is-invalid @enderror"  autocomplete="visa_no" autofocus>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="permit_no" class="col-form-label"><b>Work Permit No</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input type="text" name="permit_no" id="permit_no" class="input200 @error('permit_no') is-invalid @enderror" 
+                                                            value="{{ old('permit_no') }}"  autocomplete="permit_no" autofocus>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="visa_exp" class="col-form-label"><b>Work Permit No</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input type="date" name="visa_expire" class="input200  @error('visa_expire') is-invalid @enderror" 
+                                                            id="visa_expire" placeholder="visa Expire">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Marital Status</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="marital Status" class="col-form-label"><b>Marital Status</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select type="text" name="marital" class="input200" id="marital" 
+                                                            placeholder="marital" style="border:none;">
+                                                                <option value="single">Single</option>
+                                                                <option value="marriage">Marriage</option>
+                                                                <option value="Legal Cohabitant">Legal Cohabitant</option>
+                                                                <option value="Widower">Widower</option>
+                                                                <option value="Divorced">Divorced</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="marriage" style="display: none;">
+                                                    <td class="o_td_label marital">
+                                                        <label for="" name="spouse" class="col-form-label"><b>Spouse Complete Name</b></label>
+                                                    </td>
+                                                    <td>
+                                                        <div class="wrap-input200 marital">
+                                                            <input type="text" name="spouse_complete_name" class="input200 @error('spouse_complete_name') is-invalid @enderror" 
+                                                            value="{{ old('spouse_complete_name') }}" id="spouse_complete_name" autofocus>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="marriage" style="display: none;">
+                                                    <td class="o_td_label">
+                                                        <label for="" name="SpouseBirthdate" class="col-form-label"><b>Spouse Birthdate</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                        <input type="date" name="spouse_birthday" class="input200  @error('spouse_birthday') is-invalid @enderror" 
+                                                        id="spouse_birthday" placeholder="Date of birth">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Dependant</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="Children" class="col-form-label"><b>Number of Children</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="children" value="{{ old('children') }}" type="number" id="children" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Sosial Media</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="ssnid" class="col-form-label"><b>Sosial Media Account</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="ssnid" value="{{ old('ssnid') }}" type="text" id="ssnid" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="notebook_page_521">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <table class="o_group o_inner_group mt-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">responsible</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="coach" class="col-form-label"><b>Coach</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select name="coach_id" id="coach_id" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach ($employee as $row)
+                                                                    <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Bank Accounts</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="currency" class="col-form-label"><b>Currency</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select id="currency_id" name="currency_id" class="input200" style="border:none;">
+                                                                <option value="NULL">Currency</option>
+                                                                @foreach ($currency as $row)
+                                                                <option value="{{ $row->id }}">
+                                                                    {{ ucfirst($row->currency_name) }} ( {{ ucfirst($row->symbol) }} )
+                                                                </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="bank_account" class="col-form-label"><b>Bank Account</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="Bank_account_id" value="{{ old('Bank_account_id') }}" type="text" id="Bank_account_id" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Salary</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="salary" class="col-form-label"><b>Salary</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="salary" value="{{ old('salary') }}" type="text" id="salary" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="notebook_page_531">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <table class="o_group o_inner_group mt-0">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">User Password</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="password" class="col-form-label"><b>{{ __('Password') }}</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input id="password" type="password" class="input200 @error('password') is-invalid @enderror" 
+                                                            name="password" required autocomplete="new-password" required>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="coach" class="col-form-label"><b>{{ __('Confirm Password') }}</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input id="password-confirm" type="password" class="input200" required
+                                                             name="password_confirmation" required autocomplete="new-password">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Access</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="bank_account" class="col-form-label"><b>User Access</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select name="access" id="access" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                            </select>                                                        
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 @endsection
 @section('js')
 @include('api.api')

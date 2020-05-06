@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','SK - Employee')
+@section('title','Home | Dashboard')
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="col-12 col-md-4 bg-white">
-            <div id="attendance">
+            <div id="attendances">
             </div>
             <hr>
             <div class="row">
@@ -149,7 +149,7 @@
             },
             success: function (result) {
                 if (result.status == 'success') {
-                    $('#attendance').append(`
+                    $('#attendances').append(`
                         <form action="{{route('checkout',Auth::user()->id)}}" method="post">
                         @csrf
                             <div class="row text-center">
@@ -185,7 +185,7 @@
                         </form>
                     `);
                 }else{
-                    $('#attendance').append(`
+                    $('#attendances').append(`
                         <form action="{{route('checkin',Auth::user()->id)}}" method="post">
                         @csrf
                             <div class="row text-center">

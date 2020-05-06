@@ -251,7 +251,7 @@
                     </li>
                 <li class="app-sidebar__heading">Human Resource</li>
                     <li>
-                        <a href="{{ route ('employee')}}">
+                        <a href="{{ route ('employee')}}" id="employee">
                             <i class="metismenu-icon fa fa-users">
                             </i>Employee
                         </a>
@@ -263,20 +263,20 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" id="hr-management">
                             <i class="metismenu-icon fa fa-file-text"></i>
                             System Management
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('department')}}">
+                                <a href="{{ route ('department')}}" id="department">
                                     <i class="metismenu-icon"></i>
                                     Department
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('jobs')}}">
+                                <a href="{{ route ('jobs')}}" id="jobs">
                                     <i class="metismenu-icon">
                                     </i>Jobs
                                 </a>
@@ -284,14 +284,14 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" id="leave-mgmt">
                             <i class="metismenu-icon fa fa-calendar-times-o"></i>
                             Leave Management
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('leave')}}">
+                                <a href="{{ route ('leave')}}" id="leave">
                                     <i class="metismenu-icon">
                                     </i>Leave List
                                 </a>
@@ -306,7 +306,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('attendance')}}">
+                                <a href="{{ route ('attendance')}} " id="attendance">
                                     <i class="metismenu-icon">
                                     </i>Attendance Log
                                 </a>
@@ -317,33 +317,6 @@
                                 <a href="{{ route ('payslip')}}" id="payslip" class="menu-item">
                                     <i class="metismenu-icon">
                                     </i>Employee PaySlip
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="metismenu-icon fa fa-file-pdf-o"></i>
-                            Report
-                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="">
-                                    <i class="metismenu-icon"></i>
-                                    Purchase Order Report
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="metismenu-icon"></i>
-                                    Purchase Return
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="metismenu-icon"></i>
-                                    Supplier Report
                                 </a>
                             </li>
                         </ul>

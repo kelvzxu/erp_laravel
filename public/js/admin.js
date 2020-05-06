@@ -33341,13 +33341,18 @@ $('#is_company').click(function () {
         });
     }
 });
-$("#marital").change(function() {
+function checkmariage(){
     var status = $("#marital").val();
-    if (status == "marriage"){
-        $('#marriage').css("display", "");
+    if (status == "marriage" || status == "Legal Cohabitant"){
+        $('.marriage').css("display", "");
     }
     else{
-        $('#marriage').css("display", "none");
+        $('.marriage').css("display", "none");
     }
+}
+checkmariage();
+$("#marital").change(function() {
+    // alert(status);
+    checkmariage();
 });
 

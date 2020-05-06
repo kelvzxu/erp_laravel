@@ -16,8 +16,9 @@ class HrDepartmentController extends Controller
      */
     public function index()
     { 
-        $departments = hr_department::paginate(15);
-        return view('department.index',compact('departments'));
+        $department = hr_department::with('manager')->orderBy('department_name', 'asc')->paginate(25);
+        // dd($departments);
+        return view('department.index',compact('department'));
     }
 
     /**
