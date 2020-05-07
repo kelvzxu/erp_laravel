@@ -92,11 +92,11 @@ class HrEmployeesController extends Controller
         try {
             $nama_file="";
             $photo = null;
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image')->getClientOriginalName();
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
                 $destination = base_path() . '/public/uploads/Employees';
-                $request->file('image')->move($destination, $nama_file);
+                $request->file('photo')->move($destination, $nama_file);
             }
             // crete user 
             User::create([
