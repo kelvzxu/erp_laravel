@@ -12,10 +12,10 @@ class UserTypeSeeder extends Seeder
     public function run()
     {
         DB::table('user_types')->insert(
-            ['name' => 'Internal User']
+            ['type_name' => 'Internal User']
         );
         DB::table('user_types')->insert(
-            ['name' => 'Portal'],
+            ['type_name' => 'Portal'],
         );
         DB::table('user_groups')->insert(
             ['name' => 'user']
