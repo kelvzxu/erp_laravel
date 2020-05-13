@@ -97,7 +97,7 @@ class HrEmployeesController extends Controller
             'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
-            $nama_file="";
+            $nama_file="http://via.placeholder.com/50x60";
             $photo = null;
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
@@ -105,7 +105,7 @@ class HrEmployeesController extends Controller
                 $destination = base_path() . '/public/uploads/Employees';
                 $request->file('photo')->move($destination, $nama_file);
             }
-            // crete user 
+            // crete user  
             User::create([
                 'name' => $request->name,
                 'email'=>$request->work_email,
