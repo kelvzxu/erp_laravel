@@ -487,7 +487,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="o_td_label">
-                                                        <label for="" name="visa_exp" class="col-form-label"><b>Work Permit No</b></label>
+                                                        <label for="" name="visa_exp" class="col-form-label"><b>Visa Expire</b></label>
                                                     </td>
                                                     <td style="width: 100%;">
                                                         <div class="wrap-input200">
