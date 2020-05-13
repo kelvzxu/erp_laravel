@@ -97,7 +97,7 @@ class HrEmployeesController extends Controller
             'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
-            $nama_file="http://via.placeholder.com/50x60";
+            $nama_file="50x60.png";
             $photo = null;
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
