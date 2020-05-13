@@ -10,6 +10,8 @@ use App\Models\Data\timezone;
 use App\Models\World_database\res_country;
 use App\Models\World_database\res_country_state;
 use App\Models\Currency\res_currency;
+use App\access_right;
+use App\User;
 
 class ProfileController extends Controller
 {
@@ -20,6 +22,8 @@ class ProfileController extends Controller
     
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $profile= hr_employee::join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
                                 ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                                 ->select('hr_employees.*','hr_departments.department_name','hr_jobs.jobs_name')
@@ -32,59 +36,9 @@ class ProfileController extends Controller
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         return view('profile.index',
-                compact('profile','lang','tz','country','state','currency','employee'));
+                compact('access','group','profile','lang','tz','country','state','currency','employee'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         try {
@@ -121,14 +75,4 @@ class ProfileController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

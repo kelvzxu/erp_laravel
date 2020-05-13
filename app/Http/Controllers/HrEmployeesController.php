@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
-use App\User;
 use App\Models\Human_Resource\hr_employee;
 use App\Models\Human_Resource\hr_job;
 use App\Models\Human_Resource\hr_department;
@@ -14,11 +13,16 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class HrEmployeesController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
                     ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
@@ -27,13 +31,15 @@ class HrEmployeesController extends Controller
                     ->whereNull('hr_employees.deleted_at')
                     ->orderBy('employee_name', 'ASC')
                     ->paginate(25);
-        return view ('hr_employee.index',compact('employee'));
+        return view ('hr_employee.index',compact('access','group','employee'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         if ($key!=""){
             $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
@@ -53,11 +59,13 @@ class HrEmployeesController extends Controller
                     ->orderBy('employee_name', 'ASC')
                     ->paginate(25);
         }
-        return view('hr_employee.index',compact('employee'));
+        return view('hr_employee.index',compact('access','group','employee'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $departments = hr_department::orderBy('department_name', 'ASC')->get();
         $jobs = hr_job::orderBy('jobs_name', 'ASC')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
@@ -65,7 +73,7 @@ class HrEmployeesController extends Controller
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         return view('hr_employee.create',
-                compact('departments','jobs','country','state','currency','employee'));
+                compact('access','group','departments','jobs','country','state','currency','employee'));
     }
 
     /**
@@ -86,17 +94,16 @@ class HrEmployeesController extends Controller
             'work_phone'=> 'required',
             'emergency_contact'=> 'required',
             'emergency_phone' => 'required',
-            'country_of_birth' => 'required|integer',
             'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
             $nama_file="";
             $photo = null;
-            if ($request->hasFile('image')) {
-                $photo = $request->file('image')->getClientOriginalName();
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
                 $destination = base_path() . '/public/uploads/Employees';
-                $request->file('image')->move($destination, $nama_file);
+                $request->file('photo')->move($destination, $nama_file);
             }
             // crete user 
             User::create([
@@ -104,10 +111,14 @@ class HrEmployeesController extends Controller
                 'email'=>$request->work_email,
                 'password'=>Hash::make($request->password),
                 'status' => True,
+                'user_type'=> 1,
+                'user_groups'=>1,
             ]);
             // select id user
             $user = User::where('email', $request->work_email)->first();
-            $id =$user->id;
+            access_right::create([
+                'user_id'=>$user->id,
+            ]);
             // create employee
             $employee = hr_employee::create([
                 'user_id'=> $user->id,
@@ -162,25 +173,10 @@ class HrEmployeesController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\hr_employee  $hr_employee
-     * @return \Illuminate\Http\Response
-     */
-    public function show(hr_employee $hr_employee)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\hr_employee  $hr_employee
-     * @return \Illuminate\Http\Response
-     */
     public function edit(hr_employee $hr_employee)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $departments = hr_department::orderBy('department_name', 'ASC')->get();
         $jobs = hr_job::orderBy('jobs_name', 'ASC')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
@@ -188,16 +184,9 @@ class HrEmployeesController extends Controller
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         return view('hr_employee.edit',
-                compact('hr_employee','departments','jobs','country','state','currency','employee'));
+                compact('access','group','hr_employee','departments','jobs','country','state','currency','employee'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\hr_employee  $hr_employee
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, hr_employee $hr_employee)
     {
         $this->validate($request, [

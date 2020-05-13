@@ -9,6 +9,8 @@ use App\Models\Sales\return_invoice_product;
 use App\Models\Customer\res_customer;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class ReturnInvoiceController extends Controller
 {
@@ -18,8 +20,10 @@ class ReturnInvoiceController extends Controller
     }
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $return_inv = return_invoice::with('user')->orderBy('created_at','DESC')->paginate(25);
-        return view('return-inv.index', compact('return_inv'));
+        return view('return-inv.index', compact('access','group','return_inv'));
     }
     public function store(Request $request)
     {

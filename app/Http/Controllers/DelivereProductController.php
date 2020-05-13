@@ -8,13 +8,18 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Product\Product;
 use App\Models\Sales\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class DelivereProductController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $delivery = delivere_product::orderBy('created_at','DESC')->paginate(25);
-        return view('delivery.index', compact('delivery'));
+        return view('delivery.index', compact('access','group','delivery'));
     }
 
     public function store($id)
@@ -56,9 +61,11 @@ class DelivereProductController extends Controller
      */
     public function show($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $delivery = delivere_product::with('inv')->where('invoice_no',$id)->first();
         $return_inv= return_invoice::where('invoice_no',$id)->count();
-        return view('delivery.show', compact('delivery','return_inv'));
+        return view('delivery.show', compact('access','group','delivery','return_inv'));
     }
 
     /**
@@ -100,9 +107,11 @@ class DelivereProductController extends Controller
 
     public function return($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $invoice = Invoice::where('invoice_no', $id)->with('products','customer', 'products.product')->first();
         $delivery = delivere_product::where('invoice_no', $id)->first();
         // dump($invoice);
-        return view('return-inv.return', compact('invoice','delivery'));
+        return view('return-inv.return', compact('access','group','invoice','delivery'));
     }
 }

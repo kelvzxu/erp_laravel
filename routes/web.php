@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 Route::group(['middleware' => 'auth'], function (){
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('ECommerce', 'ECommerceController@index')->name('ECommerce.index');
     // ==== Account Account ====
     Route::get('Account','AccountAccountController@index')->name('account.index');
     Route::get('Account/create','AccountAccountController@create')->name('account.create');
@@ -70,7 +71,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('employee/update','HrEmployeesController@update')->name('employee.update');
     Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
     Route::get('employee/filter','HrEmployeesController@search')->name('employee.filter');
-
+    
     // ==== HR Department ====
     Route::get('department','HrDepartmentController@index')->name('department');
     Route::get('department/create','HrDepartmentController@create')->name('department.create');
@@ -93,6 +94,18 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
     Route::get('payslip/create','ManageSalaryController@create')->name('payslip.create');
     Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
+    
+    // ==== Leave ====
+    Route::get('leave','LeaveController@index')->name('leave');
+    Route::post('leave/store','LeaveController@store')->name('leave.store');
+    Route::post('leave/approve/{id}','LeaveController@approve')->name('leave.approve');
+    Route::post('leave/paid/{id}','LeaveController@paid')->name('leave.paid');
+    Route::get('leave/filter','LeaveController@search')->name('leave.filter');
+
+    // ==== Internal User ====
+    Route::get('User/InternalUser','AccessRightsController@internalUser')->name('internaluser.index');
+    Route::get('User/InternalUser/Detail/{id}','AccessRightsController@show')->name('internaluser.show');
+    Route::post('User/update/{id}','AccessRightsController@update')->name('user_setting.update');
     
     // ==== Invoices ====
     Route::get('invoices', 'InvoiceController@index')->name('invoices');
@@ -122,7 +135,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
     Route::post('/PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
     
-    
+    // ==== Portal User ====
+    Route::get('User/Portal','AccessRightsController@portal')->name('portal.index');
+
     // ==== purchases ====
     Route::get('purchases', 'PurchaseController@index')->name('purchases');
     Route::get('purchases/create', 'PurchaseController@create')->name('purchases.create');
@@ -184,14 +199,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/product-categories/edit', 'CategoryController@edit')->name('product-categories.edit');
     Route::get('/product-categories/edit{id}', 'CategoryController@edit')->name('product-categories.edit');
     Route::put('/product-categories/update', 'CategoryController@update')->name('product-categories.update');
-
-
-    // ==== Leave ====
-    Route::get('leave','LeaveController@index')->name('leave');
-    Route::post('leave/store','LeaveController@store')->name('leave.store');
-    Route::post('leave/approve/{id}','LeaveController@approve')->name('leave.approve');
-    Route::post('leave/paid/{id}','LeaveController@paid')->name('leave.paid');
-    Route::get('leave/filter','LeaveController@search')->name('leave.filter');
     
     // ==== Point Of Sale ====
     Route::get('PointOfSale', 'OrderController@index')->name('pos');
@@ -201,6 +208,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('PointOfSale/Search', 'OrderController@search')->name('pos.filter');
     Route::get('/checkout', 'OrdrController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
+
 });  
 Auth::routes(['verify' => true]);
 

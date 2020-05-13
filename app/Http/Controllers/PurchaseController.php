@@ -11,21 +11,28 @@ use App\Models\Product\Product;
 use App\Models\Partner\partner_credit;
 use App\Models\Partner\res_partner;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 use PDF;
 
 class PurchaseController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $purchases = Purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
                     ->select('purchases.*', 'res_partners.partner_name')
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
-        return view('purchases.index', compact('purchases'));
+        return view('purchases.index', compact('access','group','purchases'));
     }
 
     public function search(Request $request)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
         if ($key!=""){
@@ -41,14 +48,16 @@ class PurchaseController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
         }
-        return view('purchases.index', compact('purchases'));
+        return view('purchases.index', compact('access','group','purchases'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
         $product = Product::orderBy('name', 'asc')->get();
-        return view('purchases.create', compact('product','partner'));
+        return view('purchases.create', compact('access','group','product','partner'));
     }
 
     public function store(Request $request)
@@ -106,14 +115,16 @@ class PurchaseController extends Controller
         $purchases = Purchase::with('products')->findOrFail($id);
         $receipt = receipt_product::where('purchase_no',$purchases->purchase_no)->first();
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
-        return view('purchases.show', compact('purchases','partner','receipt'));
+        return view('purchases.show', compact('access','group','purchases','partner','receipt'));
     }
 
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $purchase = Purchase::with('products','products.product')->findOrFail($id);
         $purchases = PurchaseProduct::where('purchase_id', $id)->get();
-        return view('purchases.edit', compact('purchase','purchases'));
+        return view('purchases.edit', compact('access','group','purchase','purchases'));
     }
 
     public function update(Request $request, $id)
@@ -188,9 +199,11 @@ class PurchaseController extends Controller
 
     public function print_pdf($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $purchase = purchase::with('products','vendor')->findOrFail($id);
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('reports.purchases.purchase_pdf', compact('purchase'));
+            ->loadview('reports.purchases.purchase_pdf', compact('access','group','purchase'));
     	return $pdf->stream();
     }
 

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Company\res_Company_bank;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class ResCompanyBankController extends Controller
 {

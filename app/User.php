@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','status'
+        'name', 'email', 'password','status','user_type','user_groups'
     ];
 
     /**
@@ -36,4 +36,12 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function type()
+    {
+        return $this->hasOne('App\user_type','id','user_type');
+    }
+    public function group()
+    {
+        return $this->hasOne('App\user_group','id','user_groups');
+    }
 }

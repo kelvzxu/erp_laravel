@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Customer\customer_dept;
 use App\Models\Customer\res_customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class CustomerDeptController extends Controller
 {
@@ -15,70 +18,35 @@ class CustomerDeptController extends Controller
      */
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $customer = res_customer::orderBy('name', 'asc')->where('debit_limit','>',0)->paginate(10);
-        return view('customer_dept.index', compact('customer'));
+        return view('customer_dept.index', compact('access','group','customer','access','group'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\customer_dept  $customer_dept
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $customerdebt = customer_dept::join('res_customers', 'customer_debt.customer_id', '=', 'res_customers.id')
                                         ->select('customer_debt.*', 'res_customers.name')
                                         ->orderBy('invoice_date', 'asc')
                                         ->where([ ['status', 'UNPAID'],['customer_id',$id] ])->paginate(10);
-        return view('customer_dept.show', compact('customerdebt'));
+        return view('customer_dept.show', compact('access','group','customerdebt'));
     } 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\customer_dept  $customer_dept
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $customer_debt = customer_dept::join('res_customers', 'customer_debt.customer_id', '=', 'res_customers.id')
                                         ->select('customer_debt.*', 'res_customers.name','res_customers.credit_limit')
                                         ->where('invoice_no', $id)->get();
-        return view('customer_dept.edit', compact('customer_debt'));
+        return view('customer_dept.edit', compact('access','group','customer_debt','access','group'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\customer_dept  $customer_dept
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
-        echo"ok";
         try {
             $customer_debt = customer_dept::where('invoice_no',$request->invoice_no)->update([
                 'payment' => $request->payment,
@@ -97,16 +65,5 @@ class CustomerDeptController extends Controller
             return redirect()->back()
                 ->with(['error' => $e->getMessage()]);
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\customer_dept  $customer_dept
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(customer_dept $customer_dept)
-    {
-        //
     }
 }

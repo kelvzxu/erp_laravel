@@ -10,23 +10,30 @@ use App\Models\Sales\InvoiceProduct;
 use App\Models\Product\Product;
 use App\Models\Customer\res_customer;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 use PDF;
 
 class InvoiceController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', compact('access','group','invoices'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         if ($key!=""){
             $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')
@@ -40,14 +47,16 @@ class InvoiceController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->paginate(10);
         }
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', compact('access','group','invoices'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $customer = res_customer::orderBy('name', 'asc')->get();
         $product = Product::orderBy('name', 'asc')->get();
-        return view('invoices.create', compact('product','customer'));
+        return view('invoices.create', compact('access','group','product','customer'));
     }
 
     public function store(Request $request)
@@ -102,17 +111,21 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $invoice = Invoice::with('products')->findOrFail($id);
         $customer = res_customer::orderBy('name', 'asc')->get();
-        return view('invoices.show', compact('invoice','customer'));
+        return view('invoices.show', compact('access','group','invoice','customer'));
     }
 
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $invoice = Invoice::where('id', $id)->with('products', 'products.product')->first();
         $invoices = InvoiceProduct::where('invoice_id', $id)->get();
         // dump($invoice);
-        return view('invoices.edit', compact('invoice','invoices'));
+        return view('invoices.edit', compact('access','group','invoice','invoices'));
     }
 
     public function update(Request $request, $id)
@@ -187,10 +200,12 @@ class InvoiceController extends Controller
 
     public function print_pdf($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $invoice = Invoice::with('products','customer')->findOrFail($id);
         // dd($invoice);
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('reports.sales.invoice_pdf', compact('invoice'));
+            ->loadview('reports.sales.invoice_pdf', compact('access','group','invoice'));
     	return $pdf->stream();
     }
     public function approved($id)

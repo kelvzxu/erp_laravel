@@ -8,6 +8,9 @@ use App\Models\Merchandises\return_purchase;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Product\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class ReceiptProductController extends Controller
 {
@@ -18,8 +21,10 @@ class ReceiptProductController extends Controller
      */
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $receipt = receipt_product::orderBy('created_at','asc')->paginate(25);
-        return view('receipt.index', compact('receipt'));
+        return view('receipt.index', compact('access','group','receipt'));
     }
 
     /**
@@ -29,10 +34,12 @@ class ReceiptProductController extends Controller
      */
     public function return($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $purchase = purchase::where('purchase_no', $id)->with('products','vendor', 'products.product')->first();
         $receipt = receipt_product::where('purchase_no', $id)->first();
         // dump($purchase);
-        return view('return-po.return', compact('purchase','receipt'));
+        return view('return-po.return', compact('access','group','purchase','receipt'));
     }
 
     /**
@@ -80,9 +87,11 @@ class ReceiptProductController extends Controller
      */
     public function show($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $receipt = receipt_product::with('po')->where('purchase_no',$id)->first();
         $return_po= return_purchase::where('purchase_no',$id)->count();
-        return view('receipt.show', compact('receipt','return_po'));
+        return view('receipt.show', compact('access','group','receipt','return_po'));
     }
 
     /**

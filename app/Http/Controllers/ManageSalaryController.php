@@ -8,33 +8,41 @@ use App\Models\Human_Resource\hr_employee;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class ManageSalaryController extends Controller
 {
     public function index(){
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $payslips = managesalary::join('hr_employees', 'managesalaries.employee_id', '=', 'hr_employees.id')
                                 ->select('managesalaries.*', 'hr_employees.employee_name')
                                 ->orderBy('created_at', 'DESC')
                                 ->paginate(10);
-        return view ('payslip.index',compact('payslips'));
+        return view ('payslip.index',compact('access','group','payslips'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
                     ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->paginate(10);
-        return view ('payslip.create',compact('employee'));
+        return view ('payslip.create',compact('access','group','employee'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
-        echo "$key $value";
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         if ($key!=""){
             $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
@@ -54,18 +62,20 @@ class ManageSalaryController extends Controller
                     ->orderBy('employee_name', 'ASC')
                     ->paginate(10);
         }
-        return view('payslip.create',compact('employee'));
+        return view('payslip.create',compact('access','group','employee'));
     }
 
     public function payment($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = DB::table('hr_employees')
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
                     ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->where('hr_employees.id',$id)->first();
-        return view ('payslip.store',compact('employee'));
+        return view ('payslip.store',compact('access','group','employee'));
     }
 
     /**

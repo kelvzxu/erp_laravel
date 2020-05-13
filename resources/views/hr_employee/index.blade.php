@@ -103,7 +103,7 @@
                     <tbody>
                         <tr>
                             <td scope="row">{{$loop->iteration}}
-                            <td ><img src="{{asset('uploads/Employees/'.$data->photo)}}" width=50px></td>
+                            <td ><img src="{{asset('uploads/Employees/'.$data->photo)}}" width="50px" height="60px"></td>
                             <td >{{$data->employee_name}}</td>
                             <td >{{$data->city}}</td>
                             <td >{{$data->country_name}}</td>

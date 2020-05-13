@@ -7,6 +7,9 @@ use App\Models\Product\Category;
 use App\Models\Product\Product;
 use App\Models\Currency\res_currency;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 use File;
 use Image;
 
@@ -14,12 +17,16 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
-        return view('products.index', compact('products'));
+        return view('products.index', compact('access','group','products'));
     }
 
     public function search(Request $request)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
         if ($key!=""){
@@ -31,13 +38,15 @@ class ProductController extends Controller
         }else{
             $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
         }
-        return view('products.index',compact('products'));
+        return view('products.index',compact('access','group','products'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $categories = Category::orderBy('name', 'ASC')->get();
-        return view('products.create', compact('categories'));
+        return view('products.create', compact('access','group','categories'));
     }
 
     public function store(Request $request)
@@ -103,10 +112,12 @@ class ProductController extends Controller
 
     public function edit(Request $request)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $product = Product::findOrFail($request->id);
         $categories = Category::orderBy('name', 'ASC')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        return view('products.edit', compact('product', 'categories'));
+        return view('products.edit', compact('access','group','product', 'categories'));
     }
 
     public function update(Request $request)

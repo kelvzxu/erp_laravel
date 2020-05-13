@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Human_Resource\hr_job;
 use App\Models\Human_Resource\hr_department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class HrJobsController extends Controller
 {
@@ -15,8 +18,10 @@ class HrJobsController extends Controller
      */
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $jobs = hr_job::paginate(15);
-        return view('jobs.index',compact('jobs'));
+        return view('jobs.index',compact('access','group','jobs'));
     }
 
     /**
@@ -26,8 +31,10 @@ class HrJobsController extends Controller
      */
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $departments = hr_department::orderBy('department_name', 'ASC')->get();
-        return view('jobs.create',compact('departments'));
+        return view('jobs.create',compact('access','group','departments'));
     }
 
     /**
@@ -50,37 +57,15 @@ class HrJobsController extends Controller
                 ->with(['success' => 'jobs <strong>' .$request->name. '</strong> successfully added!']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\hr_job  $hr_job
-     * @return \Illuminate\Http\Response
-     */
-    public function show(hr_job $hr_job)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\hr_job  $hr_job
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $departments = hr_department::orderBy('department_name', 'ASC')->get();
         $jobs = hr_job::find($id);
-        return view('jobs.edit',compact('jobs','departments'));
+        return view('jobs.edit',compact('access','group','jobs','departments'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\hr_job  $hr_job
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request,$id)
     {
         $request -> validate([

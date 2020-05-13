@@ -14,24 +14,31 @@ use App\Models\Data\timezone;
 use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class ResCustomersController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $customer = DB::table('res_customers')
                     ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
                     ->select('res_customers.*', 'res_country.country_name')
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
                     ->paginate(10);
-        return view('res_customer.index',compact('customer'));
+        return view('res_customer.index',compact('access','group','customer'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         if ($key!=""){
             $customer = DB::table('res_customers')
                     ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
@@ -49,15 +56,17 @@ class ResCustomersController extends Controller
                     ->orderBy('name', 'ASC')
                     ->paginate(10);
         }
-        return view('res_customer.index',compact('customer'));
+        return view('res_customer.index',compact('access','group','customer'));
     }
     
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         $account = account_journal::orderBy('code','asc')->get();
         return view('res_customer.create_customer',
-            compact('account','employee'));
+            compact('access','group','account','employee'));
     }
 
     public function store(Request $request)
@@ -123,6 +132,8 @@ class ResCustomersController extends Controller
      */
     public function show(res_customer $res_customer)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         $account = account_journal::orderBy('code','asc')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
@@ -132,7 +143,7 @@ class ResCustomersController extends Controller
         $tz = timezone::orderBy('timezone', 'ASC')->get();
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
         return view('res_customer.edit_customer',
-            compact('res_customer','country','state','currency','lang','tz','industry','employee','account'));
+            compact('access','group','res_customer','country','state','currency','lang','tz','industry','employee','account'));
     }
 
     /**
@@ -143,9 +154,10 @@ class ResCustomersController extends Controller
      */
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $customer = res_customer::findOrFail($id);
-        // print_r($customer);
-        return view('res_customer.edit_customer', compact('customer'));
+        return view('res_customer.edit_customer', compact('access','group','customer'));
     }
 
     /**

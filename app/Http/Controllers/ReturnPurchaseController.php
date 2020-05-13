@@ -9,6 +9,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Merchandises\return_purchase;
 use App\Models\Merchandises\return_purchase_product;
+use App\access_right;
+use App\User;
 
 class ReturnPurchaseController extends Controller
 {
@@ -19,8 +21,10 @@ class ReturnPurchaseController extends Controller
 
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $return_po = return_purchase::with('user')->orderBy('created_at','DESC')->paginate(25);
-        return view('return-po.index', compact('return_po'));
+        return view('return-po.index', compact('access','group','return_po'));
     }
 
     public function store(Request $request)

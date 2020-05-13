@@ -6,6 +6,9 @@ use App\Models\World_database\res_country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class ResCountryController extends Controller
 {

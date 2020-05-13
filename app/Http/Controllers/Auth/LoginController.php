@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -27,8 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
+    // protected $redirectTo = RouteServiceProvider::HOME;
     /**
      * Create a new controller instance.
      *
@@ -46,8 +47,17 @@ class LoginController extends Controller
             'password' => 'required|string'
         ]);
         
-        if (auth()->attempt(['email' => $request->email, 'password' => $request->password, 'status' => True])) {
+        if (auth()->attempt(['email' => $request->email, 'password' => $request->password, 'status' => True,'user_type' =>1])) {
+            user::where('id',Auth::id())->update([
+                'latest_Authentication'=>date('Y-m-d H:i:s'),
+            ]);
             return redirect()->intended('/home');
+        }
+        if (auth()->attempt(['email' => $request->email, 'password' => $request->password, 'status' => True,'user_type' =>2])) {
+            user::where('id',Auth::id())->update([
+                'latest_Authentication'=>date('Y-m-d H:i:s'),
+            ]);
+            return redirect()->route('ECommerce.index');
         }
         return redirect()->back()->with(['error' => 'email or Password Invalid']);
     }
