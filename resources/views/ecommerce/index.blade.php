@@ -66,7 +66,7 @@
 	<!-- Header -->
 	<header class="header shop">
 		<!-- Topbar -->
-		<div class="topbar">
+		<div class="topbar d-none d-md-block">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-5 col-md-12 col-12">
@@ -86,16 +86,6 @@
 								<li><i class="ti-location-pin"></i> Store location</li>
 								<li><i class="ti-alarm-clock"></i> <a href="#">Daily deal</a></li>
 								<li><i class="ti-user"></i> <a href="#">My account</a></li>
-								<li><i class="ti-power-off"></i>
-									<a href="{{ route('logout') }}"
-										onclick="event.preventDefault();
-														document.getElementById('logout-form').submit();">
-										{{ __('Logout') }}
-									</a>
-									<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-										@csrf
-									</form>
-								</li>
 							</ul>
 						</div>
 						<!-- End Top Right -->
@@ -110,7 +100,7 @@
 					<div class="col-lg-2 col-md-2 col-12">
 						<!-- Logo -->
 						<div class="logo">
-							<a href="index.html"><img src="images/logo.png" alt="logo"></a>
+							<a href="{{route('ECommerce.index')}}"><img src="{{asset('images/icons/kltech-intl.png')}}" alt="" height="40px" width="160px" class="my-0"></a>
 						</div>
 						<!--/ End Logo -->
 						<!-- Search Form -->
@@ -297,6 +287,16 @@
 													</ul>
 												</li>
 												<li><a href="contact.html">Contact Us</a></li>
+												<li>
+													<a href="{{ route('logout') }}"
+														onclick="event.preventDefault();
+																		document.getElementById('logout-form').submit();">
+														{{ __('Logout') }}
+													</a>
+													<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+														@csrf
+													</form>
+												</li>
 											</ul>
 										</div>
 									</div>
@@ -2779,7 +2779,7 @@
 						<!-- Single Widget -->
 						<div class="single-footer about">
 							<div class="logo">
-								<a href="index.html"><img src="images/logo2.png" alt="#"></a>
+								<a href="{{route('ECommerce.index')}}"><img src="{{asset('images/icons/kltech-intl.png')}}" alt="" height="40px" width="160px" class="my-0"></a>
 							</div>
 							<p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, magna
 								eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
@@ -2824,9 +2824,9 @@
 							<!-- Single Widget -->
 							<div class="contact">
 								<ul>
-									<li>NO. 342 - London Oxford Street.</li>
-									<li>012 United Kingdom.</li>
-									<li>info@eshop.com</li>
+									<li>NO. 342 - Akihabara, Tokyo</li>
+									<li>082 Japan.</li>
+									<li>care@kltech-intl.technology</li>
 									<li>+032 3456 7890</li>
 								</ul>
 							</div>
@@ -2850,8 +2850,8 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com"
-										target="_blank">Wpthemesgrid</a> - All Rights Reserved.</p>
+								<p>Copyright © 2020 <a href="http://kltech-intl.technology"
+										target="_blank">kltech-intl.technology</a> - All Rights Reserved.</p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">
@@ -2874,8 +2874,6 @@
 	<script src="{{asset('ecommerce/js/popper.min.js')}}"></script>
 	<!-- Bootstrap JS -->
 	<script src="{{asset('ecommerce/js/bootstrap.min.js')}}"></script>
-	<!-- Color JS -->
-	<script src="{{asset('ecommerce/js/colors.js')}}"></script>
 	<!-- Slicknav JS -->
 	<script src="{{asset('ecommerce/js/slicknav.min.js')}}"></script>
 	<!-- Owl Carousel JS -->
