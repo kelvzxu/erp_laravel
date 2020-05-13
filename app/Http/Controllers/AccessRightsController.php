@@ -44,7 +44,7 @@ class AccessRightsController extends Controller
 
     public function update(Request $request, $id)
     {
-        try{
+        // try{
 
             user::find($id)->update([
                 'name' =>$request->name,
@@ -63,11 +63,11 @@ class AccessRightsController extends Controller
             ]);
             Toastr::success('user access with the name '.$request->name.' has been successfully updated','Success');
                 return redirect(route('home'));
-        } catch (\Exception $e) {
-            // Toastr::error($e->getMessage(),'Something Wrong');
-            Toastr::error('Check In Error!','Something Wrong');
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     // Toastr::error($e->getMessage(),'Something Wrong');
+        //     Toastr::error('Check In Error!','Something Wrong');
+        //     return redirect()->back();
+        // }
     }
 
     /**

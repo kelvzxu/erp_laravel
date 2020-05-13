@@ -16,13 +16,13 @@ class CreateAccessRightsTable extends Migration
         Schema::create('access_rights', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->boolean('sales')->default(False);
-            $table->boolean('purchase')->default(False);
-            $table->boolean('inventory')->default(False);
-            $table->boolean('accounting')->default(False);
-            $table->boolean('point_of_sale')->default(False);
-            $table->boolean('human_resources')->default(False);
-            $table->boolean('administration')->default(False);
+            $table->boolean('sales')->nullable()->default(False);
+            $table->boolean('purchase')->nullable()->default(False);
+            $table->boolean('inventory')->nullable()->default(False);
+            $table->boolean('accounting')->nullable()->default(False);
+            $table->boolean('point_of_sale')->nullable()->default(False);
+            $table->boolean('human_resources')->nullable()->default(False);
+            $table->boolean('administration')->nullable()->default(False);
             $table->timestamps();
         });
     }

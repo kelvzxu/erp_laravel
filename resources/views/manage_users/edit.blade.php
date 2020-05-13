@@ -55,9 +55,9 @@
         <div class="o_group">
             <div class="o_notebook mt-3">
                 <ul class="nav nav-tabs">
-                    <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
-                            class="nav-link active" role="tab" aria-selected="true">Access Right</a></li>
-                    <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
+                    <li class="nav-item"><a data-toggle="tab" disable_anchor="1" href="#notebook_page_511"
+                            class="nav-link active" role="tab" aria-selected="1">Access Right</a></li>
+                    <li class="nav-item"><a data-toggle="tab" disable_anchor="1" href="#notebook_page_521"
                             class="nav-link" role="tab">Preference</a></li>
                 </ul>
                 <div class="tab-content">
@@ -118,7 +118,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="sales" 
-                                                name="sales" value="True" @if($user_access->sales == "True" ) checked @endif>
+                                                name="sales" value="1" @if($user_access->sales == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                         <tr>
@@ -132,7 +132,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="purchase" 
-                                                name="purchase" value="True" @if($user_access->purchase == "True" ) checked @endif>
+                                                name="purchase" value="1" @if($user_access->purchase == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                         <tr>
@@ -146,7 +146,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="accounting" 
-                                                name="accounting" value="True" @if($user_access->accounting == "True" ) checked @endif>
+                                                name="accounting" value="1" @if($user_access->accounting == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                         <tr>
@@ -160,7 +160,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="administration" 
-                                                name="administration" value="True" @if($user_access->administration == "True" ) checked @endif>
+                                                name="administration" value="1" @if($user_access->administration == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -180,7 +180,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="inventory" 
-                                                name="inventory" value="True" @if($user_access->inventory == "True" ) checked @endif>
+                                                name="inventory" value="1" @if($user_access->inventory == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                         <tr>
@@ -194,7 +194,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="human_resources" 
-                                                name="human_resources" value="True" @if($user_access->human_resources == "True" ) checked @endif>
+                                                name="human_resources" value="1" @if($user_access->human_resources == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                         <tr>
@@ -208,7 +208,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="point_of_sale" 
-                                                name="point_of_sale" value="True" @if($user_access->point_of_sale == "True" ) checked @endif>
+                                                name="point_of_sale" value="1" @if($user_access->point_of_sale == "1" ) checked @endif>
                                             </td>
                                         </tr>
                                     </tbody>
