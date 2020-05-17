@@ -118,6 +118,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('invoices/filter', 'InvoiceController@search')->name('invoices.filter');
     Route::get('invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
     Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
+    Route::get('Reports/invoices', 'InvoiceController@report')->name('invoices.report');
     
     // ==== Purchase =====
     Route::get('partner', 'ResPartnersController@index')->name('partner');

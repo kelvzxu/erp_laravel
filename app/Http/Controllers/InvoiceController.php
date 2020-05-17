@@ -95,6 +95,7 @@ class InvoiceController extends Controller
 
         $data = $request->except('products');
         $data['invoice_no'] = $invoice_no;
+        $data['sales'] = Auth::id();
         $data['sub_total'] = $products->sum('total');
         $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
@@ -239,6 +240,22 @@ class InvoiceController extends Controller
             return redirect()->back();
         }
 
+    }
+    public function Report()
+    {
+        $month = date('m');
+        $year = date('Y');
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $income=invoice::whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->sum('grand_total');
+        $unpaid=invoice::where('paid','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
+        $notvalidate=invoice::where('approved','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
+        $invoices = Invoice::with('payment')->join('res_customers', 'invoices.client', '=', 'res_customers.id')
+                    ->select('invoices.*', 'res_customers.name')
+                    ->orderBy('created_at', 'desc')
+                    ->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)
+                    ->paginate(10);
+        return view('invoices.report', compact('access','group','income','unpaid','notvalidate','invoices'));
     }
 }
  

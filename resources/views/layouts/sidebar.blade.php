@@ -57,14 +57,14 @@
                     </li>
                     @if($group->user_groups == 2 ) 
                     <li>
-                        <a href="#">
+                        <a href="" id="sales_report">
                             <i class="metismenu-icon fa fa-file-pdf-o"></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="" id="report_invoice" class="menu-item" >
+                                <a href="{{ route ('invoices.report')}}" id="report_invoice" class="menu-item" >
                                     <i class="metismenu-icon"></i>
                                     Report Sales Order
                                 </a>
