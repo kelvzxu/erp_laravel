@@ -29,7 +29,7 @@ class ResCustomersController extends Controller
                     ->select('res_customers.*', 'res_country.country_name')
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
-                    ->paginate(10);
+                    ->paginate(12);
         return view('res_customer.index',compact('access','group','customer'));
     }
 

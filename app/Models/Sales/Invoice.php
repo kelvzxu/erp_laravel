@@ -25,4 +25,8 @@ class Invoice extends Model
     {
         return $this->hasOne('App\Models\Customer\customer_dept','invoice_no','invoice_no');
     }
+    public function sales()
+    {
+        return $this->belongsTo('App\Models\Human_Resource\hr_employee','id','user_id');
+    }
 }

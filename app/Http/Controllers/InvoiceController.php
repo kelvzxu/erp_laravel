@@ -250,11 +250,13 @@ class InvoiceController extends Controller
         $income=invoice::whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->sum('grand_total');
         $unpaid=invoice::where('paid','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
         $notvalidate=invoice::where('approved','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
-        $invoices = Invoice::with('payment')->join('res_customers', 'invoices.client', '=', 'res_customers.id')
-                    ->select('invoices.*', 'res_customers.name')
-                    ->orderBy('created_at', 'desc')
-                    ->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)
-                    ->paginate(10);
+        $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
+                            ->join('hr_employees', 'invoices.sales', '=', 'hr_employees.user_id')
+                            ->join('customer_debt', 'invoices.invoice_no', '=', 'customer_debt.invoice_no')
+                            ->select('invoices.*', 'customer_debt.payment','customer_debt.status','res_customers.name','hr_employees.employee_name')
+                            ->orderBy('created_at', 'desc')
+                            ->whereMonth('invoices.invoice_date', '=', $month)->whereYear('invoices.invoice_date', '=', $year)
+                            ->paginate(10);
         return view('invoices.report', compact('access','group','income','unpaid','notvalidate','invoices'));
     }
 }

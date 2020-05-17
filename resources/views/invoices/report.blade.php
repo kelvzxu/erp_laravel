@@ -79,7 +79,7 @@
             </div>
         </div>
     </div>
-    <div class="row mx-2 my-2">
+    <div class="row mx-2 mt-2">
         <div class="col-md-6 col-xl-4">
             <div class="card mb-3 bg-midnight-bloom">
                 <div class="widget-content text-white">
@@ -126,8 +126,8 @@
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Invoice No</th>
-                            <th scope="col">Sales Person</th>
                             <th scope="col">Customer</th>
+                            <th scope="col">Sales Person</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Total</th> 
                             <th scope="col">Due Amount</th>
@@ -137,28 +137,24 @@
                     <tbody> 
                         @foreach($invoices as $invoice)
                             <tr>
-                                <td>{{$invoice->invoice_no}}</td>
-                                <td>Rp. {{ number_format($invoice->grand_total)}}</td>
-                                <td>{{$invoice->name}}</td>
                                 <td>{{$invoice->invoice_date}}</td>
-                                <td>{{$invoice->due_date}}</td>
+                                <td>{{$invoice->invoice_no}}</td>
+                                <td>{{$invoice->name}}</td>
+                                <td>{{$invoice->employee_name}}</td>
+                                <td>Rp. {{ number_format($invoice->discount)}}</td>
+                                <td>Rp. {{ number_format($invoice->grand_total)}}</td>
+                                <td>Rp. {{ number_format($invoice->grand_total-$invoice->payment)}}</td>
                                 <td>
-                                    @if($invoice->status == "Pending" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Pending...</div>
+                                    @if(($invoice->grand_total-$invoice->payment)==0) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-success">PAID</div>
                                         <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
                                     @endif
-                                    @if($invoice->status == "Complete" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-success">Complete</div>
+                                    @if(($invoice->grand_total-$invoice->payment)!=0) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-danger">UNPAID</div>
                                         <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
                                     @endif
                                 </td>
-                                <td>{{$invoice->created_at->diffForHumans()}}</td>
                                 <td class="text-right">
-                                    <a href="{{route('invoices.show', $invoice)}}" class="btn btn-primary btn-sm">View</a>
-                                    @if($invoice->status == "Pending" ) 
-                                        <a href="{{route('invoices.approved', $invoice)}}" class="btn btn-success btn-sm">Posted</a>
-                                    @endif
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

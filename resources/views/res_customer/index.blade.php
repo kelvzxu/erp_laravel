@@ -73,71 +73,125 @@
                         </span>
                     </div>
                 </nav>
-                <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher">
-                    <button type="button" accesskey="l" class="btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
-                        aria-label="View list" data-view-type="list" title="" tabindex="-1"
-                        data-original-title="View list"></button>
-                    <button type="button" class="btn btn-secondary fa fa-lg fa-bar-chart o_cp_switch_graph "
-                        aria-label="View graph" data-view-type="graph" title="" tabindex="-1"
-                        data-original-title="View graph"></button>
+                <nav class="btn-group o_cp_switch_buttons nav" role="toolbar" aria-label="View switcher">
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
+                                class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban active" role="tab"></a>
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
+                                class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list" role="tab" aria-selected="true"></a></li>
                 </nav>
             </div>
         </div>
     </div>
-    <div class="o-content">
-        <div class="panel-body ml-2">
+    <div class="tab-content">
+        <div class="tab-pane active" id="notebook_page_511">
             @if($customer->count())
-            <div class="table-responsive-lg mb-4">
-                <table class="table table-striped">
-                    <thead class="table table-sm">
-                        <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">logo</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Company Name</th>
-                            <th scope="col">city</th>
-                            <th scope="col">country</th>
-                            <th scope="col">website</th>
-                            <th scope="col">action</th>
-                        </tr>
-                    </thead> 
-                    <tbody>
-                        @foreach($customer as $cust)
-                            <tr>
-                                <td scope="row">{{$loop->iteration}}</td>
-                                <td >
-                                    @if (!empty($cust->logo))
-                                    <img src="{{asset('uploads/customers/'.$cust->logo)}}" 
-                                    width="80px" height="50px" alt="{{$cust->name}}">
+                <div class="o_kanban_view o_res_partner_kanban o_kanban_ungrouped">
+                    @foreach($customer as $cust)
+                    <a class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban o_kanban_record" modifiers="{}"
+                        tabindex="0" role="article" style="color: black;text-decoration: none;" href="{{ route('customer.show', $cust->id) }}">
+                        @if (!empty($cust->logo))
+                        <div class="o_kanban_image_fill_left o_kanban_image_full"
+                            style="background-image: url('{{asset('uploads/customers/'.$cust->logo)}}')"
+                            role="img" modifiers="{}"></div>
+                        @else
+                        <div class="o_kanban_image_fill_left o_kanban_image_full"  
+                            style="background-image: url('images/icons/avatar.png')"
+                            role="img" modifiers="{}"></div>
+                        @endif
+                        <div class="oe_kanban_details" modifiers="{}">
+                            <strong class="o_kanban_record_title oe_partner_heading" modifiers="{}"><span>{{$cust->display_name}}</span></strong>
+                            <div class="o_kanban_tags_section oe_kanban_partner_categories" modifiers="{}">
+                                <span class="oe_kanban_list_many2many" modifiers="{}">
+                                    @if (!empty($cust->parent_id))
+                                        <div class="o_field_many2manytags o_field_widget o_kanban_tags" name="category_id"><span
+                                            class="o_tag o_tag_color_7"><span></span>{{$cust->parent_id}}</span></div>
                                     @else
-                                        <img src="http://via.placeholder.com/80x50" alt="{{ $cust->name }}">
+                                        <div class="o_field_many2manytags o_field_widget o_kanban_tags" name="category_id"><span
+                                            class="o_tag o_tag_color_7"><span></span>individual</span></div>
                                     @endif
-                                </td>
-                                <td >{{$cust->display_name}}</td>
-                                <td >{{$cust->parent_id}}</td>
-                                <td >{{$cust->city}}</td>
-                                <td >{{$cust->country_name}}</td>
-                                <td ><a href="https://{{$cust->website}}">{{$cust->website}}</a></td>
-                                <td >
-                                    <a href="{{ route('customer.show', $cust->id) }}" class="btn btn-success btn-sm">
-                                    <i class="fa fa-edit"> View Detail</i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                                </span>
+                            </div>
+                            <ul modifiers="{}">
+                                <li modifiers="{}"><span>{{$cust->city}}</span>, <span>{{$cust->country_name}}</span></li>
+                                <li class="o_text_overflow" modifiers="{}"><span>{{$cust->email}}</span></li>
+                            </ul>
+                            <div class="oe_kanban_partner_links" modifiers="{}">
+                                <span class="badge badge-pill" modifiers="{}"><i class="fa fa-fw fa-star" aria-label="Favorites" role="img"
+                                        title="Favorites" modifiers="{}"></i>3</span>
+                                <span class="badge badge-pill" modifiers="{}"><i class="fa fa-fw fa-usd" role="img" aria-label="Sale orders"
+                                        title="Sales orders" modifiers="{}"></i>{{ number_format($cust->credit_limit)}}</span>
+                            </div>
+                        </div>
+                    </a>
+                    @endforeach
+                </div>
             @else
-            <div class="o_nocontent_help">
-                <p class="o_view_nocontent_smiling_face">
-                    <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a new customer in your address book
-                </p>
-                <p>
-                    We helps you easily track all activities related to a customer.
-                </p>
-            </div>
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a new customer in your address book
+                    </p>
+                    <p>
+                        We helps you easily track all activities related to a customer.
+                    </p>
+                </div>
             @endif
+        </div>
+        <div class="tab-pane" id="notebook_page_521">
+            <div class="panel-body ml-2">
+                @if($customer->count())
+                <div class="table-responsive-lg mb-4">
+                    <table class="table table-striped">
+                        <thead class="table table-sm">
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">logo</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">city</th>
+                                <th scope="col">country</th>
+                                <th scope="col">website</th>
+                                <th scope="col">action</th>
+                            </tr>
+                        </thead> 
+                        <tbody>
+                            @foreach($customer as $cust)
+                                <tr>
+                                    <td scope="row">{{$loop->iteration}}</td>
+                                    <td >
+                                        @if (!empty($cust->logo))
+                                        <img src="{{asset('uploads/customers/'.$cust->logo)}}" 
+                                        width="80px" height="50px" alt="{{$cust->name}}">
+                                        @else
+                                            <img src="http://via.placeholder.com/80x50" alt="{{ $cust->name }}">
+                                        @endif
+                                    </td>
+                                    <td >{{$cust->display_name}}</td>
+                                    <td >{{$cust->parent_id}}</td>
+                                    <td >{{$cust->city}}</td>
+                                    <td >{{$cust->country_name}}</td>
+                                    <td ><a href="https://{{$cust->website}}">{{$cust->website}}</a></td>
+                                    <td >
+                                        <a href="{{ route('customer.show', $cust->id) }}" class="btn btn-success btn-sm">
+                                        <i class="fa fa-edit"> View Detail</i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a new customer in your address book
+                    </p>
+                    <p>
+                        We helps you easily track all activities related to a customer.
+                    </p>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
     <div class="row mx-4">
