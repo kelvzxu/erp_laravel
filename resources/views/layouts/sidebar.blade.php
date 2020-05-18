@@ -95,14 +95,14 @@
                     </li>
                     @if($group->user_groups == 2 )
                     <li>
-                        <a href="#">
+                        <a href="#" id="purchase_report">
                             <i class="metismenu-icon fa fa-file-pdf-o"></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="{{ route ('purchases.report')}}" id="report_purchases" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Purchase Order Report
                                 </a>

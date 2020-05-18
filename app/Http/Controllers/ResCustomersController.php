@@ -29,7 +29,7 @@ class ResCustomersController extends Controller
                     ->select('res_customers.*', 'res_country.country_name')
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
-                    ->paginate(12);
+                    ->paginate(30);
         return view('res_customer.index',compact('access','group','customer'));
     }
 
@@ -46,7 +46,7 @@ class ResCustomersController extends Controller
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
                     ->where($key,'like',"%".$value."%")
-                    ->paginate(10);
+                    ->paginate(30);
             $customer ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
             $customer = DB::table('res_customers')
@@ -54,7 +54,7 @@ class ResCustomersController extends Controller
                     ->select('res_customers.*', 'res_country.country_name')
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
-                    ->paginate(10);
+                    ->paginate(30);
         }
         return view('res_customer.index',compact('access','group','customer'));
     }

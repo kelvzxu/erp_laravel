@@ -124,6 +124,12 @@
                         </div>
                     </a>
                     @endforeach
+                    <?php 
+                        $ghost=30-count($customer);
+                        for ($x = 0; $x < $ghost; $x++){
+                            echo"<div class='o_kanban_record o_kanban_ghost'></div>";
+                        }
+                    ?>
                 </div>
             @else
                 <div class="o_nocontent_help">

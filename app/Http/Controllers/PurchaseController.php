@@ -25,7 +25,7 @@ class PurchaseController extends Controller
         $purchases = Purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
                     ->select('purchases.*', 'res_partners.partner_name')
                     ->orderBy('created_at', 'desc')
-                    ->paginate(10);
+                    ->paginate(30);
         return view('purchases.index', compact('access','group','purchases'));
     }
 
@@ -40,13 +40,13 @@ class PurchaseController extends Controller
                     ->select('purchases.*', 'res_partners.partner_name')
                     ->orderBy('created_at', 'desc')
                     ->where($key,'like',"%".$value."%")
-                    ->paginate(10);
+                    ->paginate(30);
             $purchases ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
             $purchases = Purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
                     ->select('purchases.*', 'res_partners.partner_name')
                     ->orderBy('created_at', 'desc')
-                    ->paginate(10);
+                    ->paginate(30);
         }
         return view('purchases.index', compact('access','group','purchases'));
     }
@@ -94,8 +94,9 @@ class PurchaseController extends Controller
             ], 422);
         }
 
-        $data = $request->except('products');
+        $data = $request->except('products'); 
         $data['purchase_no'] = $Purchase_no;
+        $data['merchandise'] = Auth::id();
         $data['sub_total'] = $products->sum('total');
         $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
@@ -112,6 +113,8 @@ class PurchaseController extends Controller
 
     public function show($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $purchases = Purchase::with('products')->findOrFail($id);
         $receipt = receipt_product::where('purchase_no',$purchases->purchase_no)->first();
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
@@ -238,5 +241,23 @@ class PurchaseController extends Controller
             return redirect()->back();
         }
 
+    }
+    public function Report()
+    {
+        $month = date('m');
+        $year = date('Y');
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $income=purchase::whereMonth('purchase_date', '=', $month)->whereYear('purchase_date', '=', $year)->sum('grand_total');
+        $unpaid=purchase::where('paid','0')->whereMonth('purchase_date', '=', $month)->whereYear('purchase_date', '=', $year)->count();
+        $notvalidate=purchase::where('approved','0')->whereMonth('purchase_date', '=', $month)->whereYear('purchase_date', '=', $year)->count();
+        $purchases = purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
+                            ->join('hr_employees', 'purchases.merchandise', '=', 'hr_employees.user_id')
+                            ->join('partner_credit', 'purchases.purchase_no', '=', 'partner_credit.purchase_no')
+                            ->select('purchases.*', 'partner_credit.payment','partner_credit.status','res_partners.partner_name','hr_employees.employee_name')
+                            ->orderBy('created_at', 'desc')
+                            ->whereMonth('purchases.purchase_date', '=', $month)->whereYear('purchases.purchase_date', '=', $year)
+                            ->paginate(10);
+        return view('purchases.report', compact('access','group','income','unpaid','notvalidate','purchases'));
     }
 }

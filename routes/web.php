@@ -150,6 +150,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('purchases/filter', 'PurchaseController@search')->name('purchases.filter');
     Route::get('purchases/approved/{id}', 'PurchaseController@approved')->name('purchases.approved');
     Route::get('purchases/print{id}', 'PurchaseController@print_pdf')->name('purchases.print');
+    Route::get('Reports/purchases', 'PurchaseController@report')->name('purchases.report');
     
     // ==== Receipt ====
     Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');

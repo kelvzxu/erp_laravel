@@ -29,7 +29,7 @@ class ResPartnersController extends Controller
                     ->select('res_partners.*', 'res_country.country_name')
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
-                    ->paginate(10);
+                    ->paginate(30);
         return view('res_partner.index',compact('access','group','partner'));
     }
 
@@ -46,7 +46,7 @@ class ResPartnersController extends Controller
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
                     ->where($key,'like',"%".$value."%")
-                    ->paginate(10);
+                    ->paginate(30);
             $customer ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
             $partner = DB::table('res_partners')
@@ -54,7 +54,7 @@ class ResPartnersController extends Controller
                     ->select('res_partners.*', 'res_country.country_name')
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
-                    ->paginate(10);
+                    ->paginate(30);
         }
         return view('res_partner.index',compact('access','group','partner'));
     }
@@ -155,16 +155,15 @@ class ResPartnersController extends Controller
         ]);
         try {
             $res_partner = res_partner::where('id',$request->id)->first();
-            $nama_file = $res_partner->photo;
+            $nama_file=$res_partner->logo;
             $debit_limit=$res_partner->debit_limit;
             $credit_limit=$res_partner->credit_limit;
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/partners';
+                $destination = base_path() . '/public/uploads/Partners';
                 $request->file('photo')->move($destination, $nama_file);
             }
-
             $res_partner = res_partner::where('id',$request->id)->update([
                 'partner_name'=> $request->name,
                 'display_name'=> $request->name,

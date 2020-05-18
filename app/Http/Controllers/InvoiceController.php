@@ -24,7 +24,7 @@ class InvoiceController extends Controller
         $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')
                     ->orderBy('created_at', 'desc')
-                    ->paginate(10);
+                    ->paginate(30);
         return view('invoices.index', compact('access','group','invoices'));
     }
 
@@ -39,13 +39,13 @@ class InvoiceController extends Controller
                     ->select('invoices.*', 'res_customers.name')
                     ->orderBy('created_at', 'desc')
                     ->where($key,'like',"%".$value."%")
-                    ->paginate(10);
+                    ->paginate(30);
             $invoices ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
             $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')
                     ->orderBy('created_at', 'desc')
-                    ->paginate(10);
+                    ->paginate(30);
         }
         return view('invoices.index', compact('access','group','invoices'));
     }

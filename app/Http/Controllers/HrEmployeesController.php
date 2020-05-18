@@ -27,10 +27,10 @@ class HrEmployeesController extends Controller
                     ->join('res_country', 'hr_employees.country_id', '=', 'res_country.id')
                     ->join('hr_departments', 'hr_employees.department_id', '=', 'hr_departments.id')
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
-                    ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name')
+                    ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->whereNull('hr_employees.deleted_at')
                     ->orderBy('employee_name', 'ASC')
-                    ->paginate(25);
+                    ->paginate(30);
         return view ('hr_employee.index',compact('access','group','employee'));
     }
 
@@ -48,7 +48,7 @@ class HrEmployeesController extends Controller
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->orderBy('employee_name', 'ASC')
                     ->where($key,'like',"%".$value."%")
-                    ->paginate(25);
+                    ->paginate(30);
             $employee ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
             $employee = DB::table('hr_employees')
@@ -57,7 +57,7 @@ class HrEmployeesController extends Controller
                     ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                     ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                     ->orderBy('employee_name', 'ASC')
-                    ->paginate(25);
+                    ->paginate(30);
         }
         return view('hr_employee.index',compact('access','group','employee'));
     }
