@@ -4,6 +4,7 @@ node_modules/
 npm-debug.log
 yarn-error.log
 **/uploads/
+**/js/chat.js
 
 # Laravel 4 specific
 bootstrap/compiled.php
