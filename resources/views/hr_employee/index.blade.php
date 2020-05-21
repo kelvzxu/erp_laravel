@@ -98,8 +98,13 @@
                             <div class="o_kanban_record_headings" modifiers="{}">
                                 <strong class="o_kanban_record_title" modifiers="{}">
                                     <div class="float-right" modifiers="{}">
+                                        @if($data->active == True)
                                         <span class="fa fa-circle text-success" role="img" aria-label="Absent" title="Absent"
                                             name="presence_absent" modifiers="{}"></span>
+                                        @else 
+                                        <span class="fa fa-circle text-danger" role="img" aria-label="Absent" title="Absent"
+                                            name="presence_absent" modifiers="{}"></span>
+                                        @endif
                                     </div>
                                     <span>{{$data->employee_name}}</span>
                                 </strong>

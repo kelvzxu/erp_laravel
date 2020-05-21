@@ -124,7 +124,7 @@ class HrEmployeesController extends Controller
                 'user_id'=> $user->id,
                 'employee_name'=> $request->name,
                 'identification_id'=> $request->identification_id,
-                'active'=> True,
+                'active'=> False,
                 'gender'=> $request->gender,
                 'marital'=> $request->marital,
                 'spouse_complete_name'=> $request->spouse_complete_name,

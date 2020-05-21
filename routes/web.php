@@ -56,6 +56,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
     Route::post('/CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
     
+    Route::post('chat', 'ChatController@store')->name('chat.store');
+    Route::post('chat/join', 'ChatController@join')->name('chat.join');
+
     // ==== Delivery ====
     Route::get('Delivere', 'DelivereProductController@index')->name('Delivere.index');
     Route::get('Delivere/store/{id}', 'DelivereProductController@store')->name('Delivere.store');

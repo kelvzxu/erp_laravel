@@ -304,6 +304,7 @@
                     alt="">
                                     `);
             $(".widget-subheading").append(`<pre>`+result.data.jobs_name+`</pre>`)
+            $("#image").val(result.data.photo);
         }
     })
     </script>

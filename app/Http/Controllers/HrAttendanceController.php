@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Human_Resource\hr_attendance;
+use App\Models\Human_Resource\hr_employee;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -69,7 +70,9 @@ class HrAttendanceController extends Controller
                 'user_id'=> $id,
                 'date'=> $date,
                 'check_in'=> $request->time,
-                'check_out'=> $request->time,
+            ]);
+            $employee = hr_employee::where('user_id',$id)->update([
+                'active'=> True,
             ]);
             Toastr::success('Welcome '.$name.' <br> Check in Date: ' . $date. ' Time :'.$request->time ,'Success');
             return redirect()->back();
@@ -90,6 +93,9 @@ class HrAttendanceController extends Controller
                                         ->update([
                                                     'check_out'=> $request->time,
                                                 ]);
+            $employee = hr_employee::where('user_id',$id)->update([
+                'active'=> False,
+            ]);
             Toastr::success('Goodbye '.$name.' <br> Check out Date: ' . $date. ' Time :'.$request->time ,'Success');
             return redirect()->back();
         } catch (\Exception $e) {
