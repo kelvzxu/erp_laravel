@@ -80,7 +80,11 @@ class CustomerDeptController extends Controller
         $group=user::find(Auth::id());
         $debit=res_customer::sum('debit_limit');
         $credit=res_customer::sum('credit_limit');
-        $customer = res_customer::orderBy('name', 'asc')->where('debit_limit','>',0)->paginate(30);
+        $customer = res_customer::orderBy('name', 'asc')->where(function ($query) {
+                                                                                    $query->where('debit_limit','>',0)
+                                                                                        ->orWhere('credit_limit','>',0);
+                                                                                    })
+                                                        ->paginate(30);
         return view('customer_dept.report', compact('access','group','credit','debit','customer','access','group'));
     }
     public function report_print()
@@ -89,7 +93,11 @@ class CustomerDeptController extends Controller
         $group=user::find(Auth::id());
         $debit=res_customer::sum('debit_limit');
         $credit=res_customer::sum('credit_limit');
-        $customer = res_customer::orderBy('name', 'asc')->where('debit_limit','>',0)->paginate(30);
+        $customer = res_customer::orderBy('name', 'asc')->where(function ($query) {
+                                                                                    $query->where('debit_limit','>',0)
+                                                                                        ->orWhere('credit_limit','>',0);
+                                                                                    })
+                                                        ->paginate(100);
         $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.customer.customer_credit_report_pdf', compact('access','group','credit','debit','customer'));
         return $pdf->stream();
