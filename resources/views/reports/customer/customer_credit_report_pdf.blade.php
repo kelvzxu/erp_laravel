@@ -44,7 +44,7 @@ h3 {text-align: center;}
     @else
     <div class="o_nocontent_help">
         <p class="o_view_nocontent_smiling_face">
-            <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+            <img src="{{ public_path('images/icons/smiling_face.svg')}}" alt=""><br>
             Congratulation You dont Have customer debt
         </p>
     </div>
