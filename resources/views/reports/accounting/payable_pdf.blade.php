@@ -10,7 +10,7 @@ h3 {text-align: center;}
 @section('content')
     <h3><b><u>Partner Ledger Payable Account</u></b></h3>
 
-    <table class="table table-striped mt-3">
+    <table class="table mt-3">
         <thead class="table table-sm">
             <tr>
                 <th scope="col">No.</th>

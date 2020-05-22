@@ -75,6 +75,12 @@
                                     Report Return Invoice
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route ('CustomerDebt.report')}}" id="report-return" class="menu-item">
+                                    <i class="metismenu-icon"></i>
+                                    Report customer debt
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     @endif

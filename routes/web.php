@@ -51,11 +51,13 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/customer/filter','ResCustomersController@search')->name('customer.filter');
     
     // ==== Customer Payment ====
-    Route::get('/CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
-    Route::get('/CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
-    Route::get('/CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
-    Route::post('/CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
-    
+    Route::get('CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
+    Route::get('CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
+    Route::get('CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
+    Route::post('CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
+    Route::get('CustomerDebt/report','CustomerDeptController@report')->name('CustomerDebt.report');
+    Route::get('CustomerDebt/report/print','CustomerDeptController@report_print')->name('CustomerDebt_report.print');
+
     Route::post('chat', 'ChatController@store')->name('chat.store');
     Route::post('chat/join', 'ChatController@join')->name('chat.join');
 
@@ -122,6 +124,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
     Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
     Route::get('Reports/invoices', 'InvoiceController@report')->name('invoices.report');
+    Route::get('Reports/invoices/print', 'InvoiceController@print_report')->name('invoices_report.print');
     
     // ==== Purchase =====
     Route::get('partner', 'ResPartnersController@index')->name('partner');
@@ -154,6 +157,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('purchases/approved/{id}', 'PurchaseController@approved')->name('purchases.approved');
     Route::get('purchases/print{id}', 'PurchaseController@print_pdf')->name('purchases.print');
     Route::get('Reports/purchases', 'PurchaseController@report')->name('purchases.report');
+    Route::get('Reports/purchases/print', 'PurchaseController@report_print')->name('purchases_report.print');
     
     // ==== Receipt ====
     Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');

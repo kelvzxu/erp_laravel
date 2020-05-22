@@ -27,7 +27,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </div> 
         <div>
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
@@ -37,6 +37,31 @@
                         </button>
                     </div>
                 </div>
+                <aside class="o_cp_sidebar">
+                    <div class="btn-group">
+                        <div class="btn-group o_dropdown">
+                            <a class="o_dropdown_toggler_btn btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Print
+                            </a>
+                            
+                            <div class="dropdown-menu o_dropdown_menu" role="menu">
+                                <a href="{{route('invoices_report.print')}}" class="dropdown-item undefined"><i class="fa fa-print"></i>&nbsp;Print Report</a>     
+                            </div>
+                        </div>
+
+                        <div class="btn-group o_dropdown" style="display: none;">
+                            <button class="o_dropdown_toggler_btn btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"> 
+                                Action
+                            </button>
+                            
+                            <div class="dropdown-menu o_dropdown_menu" role="menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">
+                                <button type="button" class="dropdown-item undefined" data-toggle="modal" data-target="#exampleModal">
+                                    <i class="fa fa-trash"> Delete Record</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
             </div>
             <div class="o_cp_right">
                 <div class="btn-group o_search_options position-static" role="search">

@@ -200,16 +200,6 @@ class PurchaseController extends Controller
             ->route('purchases.index');
     }
 
-    public function print_pdf($id)
-    {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $purchase = purchase::with('products','vendor')->findOrFail($id);
-    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('reports.purchases.purchase_pdf', compact('access','group','purchase'));
-    	return $pdf->stream();
-    }
-
     public function approved($id)
     {
         try{
@@ -240,8 +230,8 @@ class PurchaseController extends Controller
             // Toastr::error('Check In Error!','Something Wrong');
             return redirect()->back();
         }
-
     }
+
     public function Report()
     {
         $month = date('m');
@@ -259,5 +249,36 @@ class PurchaseController extends Controller
                             ->whereMonth('purchases.purchase_date', '=', $month)->whereYear('purchases.purchase_date', '=', $year)
                             ->paginate(10);
         return view('purchases.report', compact('access','group','income','unpaid','notvalidate','purchases'));
+    }
+
+    public function print_pdf($id)
+    {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $purchase = purchase::with('products','vendor')->findOrFail($id);
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.purchases.purchase_pdf', compact('access','group','purchase'));
+    	return $pdf->stream();
+    }
+
+    public function report_print(){
+        $month = date('m');
+        $year = date('Y');
+        $monthName = date("F", mktime(0, 0, 0, $month, 10));
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $income=purchase::whereMonth('purchase_date', '=', $month)->whereYear('purchase_date', '=', $year)->sum('grand_total');
+        $unpaid=purchase::where('paid','0')->whereMonth('purchase_date', '=', $month)->whereYear('purchase_date', '=', $year)->count();
+        $notvalidate=purchase::where('approved','0')->whereMonth('purchase_date', '=', $month)->whereYear('purchase_date', '=', $year)->count();
+        $purchases = purchase::join('res_partners', 'purchases.client', '=', 'res_partners.id')
+                            ->join('hr_employees', 'purchases.merchandise', '=', 'hr_employees.user_id')
+                            ->join('partner_credit', 'purchases.purchase_no', '=', 'partner_credit.purchase_no')
+                            ->select('purchases.*', 'partner_credit.payment','partner_credit.status','res_partners.partner_name','hr_employees.employee_name')
+                            ->orderBy('created_at', 'desc')
+                            ->whereMonth('purchases.purchase_date', '=', $month)->whereYear('purchases.purchase_date', '=', $year)
+                            ->paginate(10);
+        $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+                ->loadview('reports.purchases.purchase_report_pdf', compact('monthName','year','income','unpaid','notvalidate','purchases'));
+                return $pdf->stream();
     }
 }

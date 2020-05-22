@@ -199,16 +199,6 @@ class InvoiceController extends Controller
             ->route('invoices.index');
     }
 
-    public function print_pdf($id)
-    {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $invoice = Invoice::with('products','customer')->findOrFail($id);
-        // dd($invoice);
-    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('reports.sales.invoice_pdf', compact('access','group','invoice'));
-    	return $pdf->stream();
-    }
     public function approved($id)
     {
         try{
@@ -241,6 +231,7 @@ class InvoiceController extends Controller
         }
 
     }
+
     public function Report()
     {
         $month = date('m');
@@ -258,6 +249,38 @@ class InvoiceController extends Controller
                             ->whereMonth('invoices.invoice_date', '=', $month)->whereYear('invoices.invoice_date', '=', $year)
                             ->paginate(10);
         return view('invoices.report', compact('access','group','income','unpaid','notvalidate','invoices'));
+    }
+
+    public function print_pdf($id)
+    {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $invoice = Invoice::with('products','customer')->findOrFail($id);
+        // dd($invoice);
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.sales.invoice_pdf', compact('access','group','invoice'));
+    	return $pdf->stream();
+    }
+
+    public function print_report(){
+        $month = date('m');
+        $year = date('Y');
+        $monthName = date("F", mktime(0, 0, 0, $month, 10));
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $income=invoice::whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->sum('grand_total');
+        $unpaid=invoice::where('paid','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
+        $notvalidate=invoice::where('approved','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
+        $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
+                            ->join('hr_employees', 'invoices.sales', '=', 'hr_employees.user_id')
+                            ->join('customer_debt', 'invoices.invoice_no', '=', 'customer_debt.invoice_no')
+                            ->select('invoices.*', 'customer_debt.payment','customer_debt.status','res_customers.name','hr_employees.employee_name')
+                            ->orderBy('created_at', 'desc')
+                            ->whereMonth('invoices.invoice_date', '=', $month)->whereYear('invoices.invoice_date', '=', $year)
+                            ->paginate(10);
+            $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.sales.invoice_report_pdf', compact('monthName','year','invoices'));
+        return $pdf->stream();
     }
 }
  
