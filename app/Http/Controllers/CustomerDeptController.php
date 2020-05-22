@@ -91,7 +91,7 @@ class CustomerDeptController extends Controller
         $credit=res_customer::sum('credit_limit');
         $customer = res_customer::orderBy('name', 'asc')->where('debit_limit','>',0)->paginate(30);
         $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('reports.customer.customer_credit_report_pdf', compact('access','group','credit','debit','customer','access','group'));
+            ->loadview('reports.customer.customer_credit_report_pdf', compact('access','group','credit','debit','customer'));
         return $pdf->stream();
     }
 }
