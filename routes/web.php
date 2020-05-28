@@ -137,10 +137,10 @@ Route::group(['middleware' => 'auth'], function (){
     
     
     // ==== PartnerCredit=
-    Route::get('/PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
-    Route::get('/PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');
-    Route::get('/PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
-    Route::post('/PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
+    Route::get('PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
+    Route::get('PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');
+    Route::get('PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
+    Route::post('PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
     
     // ==== Portal User ====
     Route::get('User/Portal','AccessRightsController@portal')->name('portal.index');
@@ -200,6 +200,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('product/filter', 'ProductController@search')->name('product.filter');
     Route::get('product/destroy{id}', 'ProductController@destroy')->name('product.destroy');
     Route::put('product/update', 'ProductController@update')->name('product.update');
+    Route::get('product/Report/productlist', 'ProductController@product_report')->name('report.productlist');
+    Route::get('product/Report/Stock', 'ProductController@stock_report')->name('report.productstock');
 
     // ==== Product Categories ==== 
     Route::get('/product-categories', 'CategoryController@index')->name('product-categories');

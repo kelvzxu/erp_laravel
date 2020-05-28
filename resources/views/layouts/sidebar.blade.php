@@ -170,13 +170,13 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="{{route('report.productlist')}}">
                                     <i class="metismenu-icon"></i>
                                     Product Report
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{route('report.productstock')}}">
                                     <i class="metismenu-icon"></i>
                                     Stock Report
                                 </a>

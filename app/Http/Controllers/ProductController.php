@@ -12,6 +12,7 @@ use App\access_right;
 use App\User;
 use File;
 use Image;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -200,6 +201,22 @@ class ProductController extends Controller
             'status' => 'failed',
             'data' => []
         ]);
+    }
+
+    public function product_report()
+    {
+        $products = Product::with('category')->orderBy('name', 'ASC')->get();
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.product.product_list', compact('products'));
+    	return $pdf->stream();
+    }
+
+    public function stock_report()
+    {
+        $products = Product::with('category')->orderBy('name', 'ASC')->get();
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.product.product_stock', compact('products'));
+    	return $pdf->stream();
     }
 
     public function Products()
