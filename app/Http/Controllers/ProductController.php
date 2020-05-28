@@ -19,7 +19,7 @@ class ProductController extends Controller
     {
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
-        $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
+        $products = Product::with('category')->orderBy('name', 'ASC')->paginate(30);
         return view('products.index', compact('access','group','products'));
     }
 
@@ -36,7 +36,7 @@ class ProductController extends Controller
                     ->paginate(10);
             $products ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
-            $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
+            $products = Product::with('category')->orderBy('name', 'ASC')->paginate(30);
         }
         return view('products.index',compact('access','group','products'));
     }
@@ -77,7 +77,10 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'category_id' => $request->category_id,
                 'barcode' => $request->barcode,
-                'photo' => $nama_file
+                'photo' => $nama_file,
+                'cost'=>$request->cost,
+                'can_be_sold'=>$request->can_be_sold,
+                'can_be_purchase'=>$request->can_be_purchase
             ]);
             return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
@@ -149,7 +152,10 @@ class ProductController extends Controller
                 'price' => $request->price, 
                 'category_id' => $request->category_id,
                 'barcode'=> $request->barcode,
-                'photo' => $nama_file
+                'cost'=>$request->cost,
+                'photo' => $nama_file,
+                'can_be_sold'=>$request->can_be_sold,
+                'can_be_purchase'=>$request->can_be_purchase
             ]);
 
             return redirect(route('product'))
