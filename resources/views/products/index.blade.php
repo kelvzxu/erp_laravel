@@ -86,7 +86,7 @@
                     @foreach ($products as $row)
                         <a class="oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article"
                             style="color: black;text-decoration: none;" href="{{route('product.edit', $row->id)}}">
-                            <div class="o_kanban_image" modifiers="{}">
+                            <div class="o_kanban_image text-center" modifiers="{}">
                                 <img src="{{ asset('uploads/product/' . $row->photo) }}"
                                     alt="Product" class="o_image_64_contain" modifiers="{}">
                             </div>

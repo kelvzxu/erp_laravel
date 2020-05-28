@@ -1,5 +1,6 @@
 /* <inline asset> defined in bundle 'web.assets_backend' */
 @charset "UTF-8";
+
 :root {
     --blue: #007bff;
     --indigo: #6610f2;
@@ -27,7 +28,7 @@
     --gamma: #5C5B80;
     --delta: #5B899E;
     --epsilon: #E46F78;
-   
+
 }
 
 
@@ -26656,4 +26657,10 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
 
 .o_recruitment_list .o_list_button {
     text-align: right;
+}
+
+.o_image_64_contain {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
 }
