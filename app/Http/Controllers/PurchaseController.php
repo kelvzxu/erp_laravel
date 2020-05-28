@@ -56,7 +56,7 @@ class PurchaseController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
-        $product = Product::orderBy('name', 'asc')->get();
+        $product = Product::orderBy('name', 'asc')->where('can_be_purchase','1')->get();
         return view('purchases.create', compact('access','group','product','partner'));
     }
 
