@@ -145,20 +145,30 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Portal User ====
     Route::get('User/Portal','AccessRightsController@portal')->name('portal.index');
 
-    // ==== purchases ====
-    Route::get('purchases', 'PurchaseController@index')->name('purchases');
-    Route::get('purchases/create', 'PurchaseController@create')->name('purchases.create');
-    Route::post('purchases', 'PurchaseController@store')->name('purchases.store');
-    Route::get('purchases/show{id}', 'PurchaseController@show')->name('purchases.show');
-    Route::get('purchases/edit{id}', 'PurchaseController@edit')->name('purchases.edit');
-    Route::put('purchases/update/{id}', 'PurchaseController@update')->name('purchases.update');
-    Route::get('purchases/destroy', 'PurchaseController@destroy')->name('purchases.destroy');
-    Route::get('purchases/filter', 'PurchaseController@search')->name('purchases.filter');
-    Route::get('purchases/approved/{id}', 'PurchaseController@approved')->name('purchases.approved');
-    Route::get('purchases/print{id}', 'PurchaseController@print_pdf')->name('purchases.print');
-    Route::get('Reports/purchases', 'PurchaseController@report')->name('purchases.report');
-    Route::get('Reports/purchases/print', 'PurchaseController@report_print')->name('purchases_report.print');
+    // ==== Bills ====
+    Route::get('VendorBills', 'BillsController@index')->name('purchases');
+    Route::get('VendorBills/create', 'BillsController@create')->name('purchases.create');
+    Route::get('VendorBills/create/{id}', 'BillsController@wizard_create')->name('purchases.wizard_create');
+    Route::post('VendorBills', 'BillsController@store')->name('purchases.store');
+    Route::get('VendorBills/show{id}', 'BillsController@show')->name('purchases.show');
+    Route::get('VendorBills/edit{id}', 'BillsController@edit')->name('purchases.edit');
+    Route::put('VendorBills/update/{id}', 'BillsController@update')->name('purchases.update');
+    Route::get('VendorBills/destroy', 'BillsController@destroy')->name('purchases.destroy');
+    Route::get('VendorBills/filter', 'BillsController@search')->name('purchases.filter');
+    Route::get('VendorBills/approved/{id}', 'BillsController@approved')->name('purchases.approved');
+    Route::get('VendorBills/print{id}', 'BillsController@print_pdf')->name('purchases.print');
+    Route::get('Reports/VendorBills', 'BillsController@report')->name('purchases.report');
+    Route::get('Reports/VendorBills/print', 'BillsController@report_print')->name('purchases_report.print');
     
+    // ==== Purchase Order ====
+    Route::get('purchases', 'PurchasesOrdersController@index')->name('purchase_orders');
+    Route::get('purchases/create', 'PurchasesOrdersController@create')->name('purchase_orders.create');
+    Route::post('purchases', 'PurchasesOrdersController@store')->name('purchase_orders.store');
+    Route::get('purchases/show/{id}', 'PurchasesOrdersController@show')->name('purchase_orders.show');
+    Route::get('purchases/edit/{id}', 'PurchasesOrdersController@edit')->name('purchase_orders.edit');
+    Route::get('purchases/confirm/{id}', 'PurchasesOrdersController@confirm')->name('purchase_orders.confirm');
+    Route::put('purchases/update/{id}', 'PurchasesOrdersController@update')->name('purchase_orders.update');
+
     // ==== Receipt ====
     Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');
     Route::get('receipt/store/{id}', 'ReceiptProductController@store')->name('receipt.store');

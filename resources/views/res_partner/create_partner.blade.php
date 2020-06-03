@@ -313,7 +313,6 @@
                                                             <option value="5" style="">45 Days</option>
                                                             <option value="6" style="">2 Months</option>
                                                             <option value="7" style="">End of Following Month</option>
-                                                            <option value="8" style="">30% Now, Balance 60 Days</option>
                                                         </select>
                                                     </div>
                                                 </td>

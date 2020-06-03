@@ -4,15 +4,15 @@ namespace App\Models\Merchandises;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PurchaseProduct extends Model
+class purchases_order_products extends Model
 {
     protected $fillable = [
-        'purchase_id','name', 'price', 'qty', 'total'
+        'name', 'price', 'qty', 'total'
     ];
 
     public function purchase()
     {
-        return $this->belongsTo(Purchase::class);
+        return $this->belongsTo(purchases_order::class);
     }
     public function product()
     {

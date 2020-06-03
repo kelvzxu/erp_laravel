@@ -9,11 +9,11 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('invoices.report')}}">Invoices Report</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchases.report')}}">Vendor Bills Report</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
-                    <form action="{{ route('invoices.filter') }}" method="get" >
+                    <form action="{{ route('purchases.filter') }}" method="get" >
                         <button class="o_searchview_more fa fa-search-minus" title="Advanced Search..." role="img"
                             aria-label="Advanced Search..." type="submit"></button>
 
@@ -27,7 +27,7 @@
                     </form>
                 </div>
             </div>
-        </div> 
+        </div>
         <div>
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
@@ -45,7 +45,7 @@
                             </a>
                             
                             <div class="dropdown-menu o_dropdown_menu" role="menu">
-                                <a href="{{route('invoices_report.print')}}" class="dropdown-item undefined"><i class="fa fa-print"></i>&nbsp;Print Report</a>     
+                                <a href="{{route('purchases_report.print')}}" class="dropdown-item undefined"><i class="fa fa-print"></i>&nbsp;Print Report</a>     
                             </div>
                         </div>
 
@@ -109,7 +109,7 @@
             <div class="card mb-3 bg-midnight-bloom">
                 <div class="widget-content text-white">
                     <div class="col-6 pull-left text-left">
-                        <div class="widget-heading"><h3>Income This Month</h3></div>
+                        <div class="widget-heading"><h3>expenses This Month</h3></div>
                     </div>
                     <div class="col-6 pull-right text-right">
                         <div class="widget-numbers text-white"><h5>Rp. {{ number_format($income)}}</h5></div>
@@ -121,7 +121,7 @@
             <div class="card mb-3 bg-danger">
                 <div class="widget-content text-white">
                     <div class="col-7 pull-left text-left">
-                        <div class="widget-heading"><h3>Unpaid Invoices  </h3></div>
+                        <div class="widget-heading"><h3>Unpaid <br>Bills</h3></div>
                     </div>
                     <div class="col-5 pull-right text-right">
                         <div class="widget-numbers text-white"><h5>{{$unpaid}}</h5></div>
@@ -133,7 +133,7 @@
             <div class="card mb-3 bg-warning">
                 <div class="widget-content text-white">
                     <div class="col-8 pull-left text-left">
-                        <div class="widget-heading"><h3>Invoice to Approved</h3></div>
+                        <div class="widget-heading"><h3>Bills to <br>Posted  </h3></div>
                     </div>
                     <div class="col-4 pull-right text-right">
                         <div class="widget-numbers text-white"><h5>{{$notvalidate}}</h5></div>
@@ -144,15 +144,15 @@
     </div>
     <div class="o-content">
         <div class="panel-body ml-2">
-            @if($invoices->count())
+            @if($purchases->count())
             <div class="table-responsive-lg mb-4">
                 <table class="table table-striped">
                     <thead class="table table-sm">
                         <tr>
                             <th scope="col">Date</th>
-                            <th scope="col">Invoice No</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">Sales Person</th>
+                            <th scope="col">Purchase No</th>
+                            <th scope="col">Vendors</th>
+                            <th scope="col">Merchandise</th>
                             <th scope="col">Discount</th>
                             <th scope="col">Total</th> 
                             <th scope="col">Due Amount</th>
@@ -160,21 +160,21 @@
                         </tr>
                     </thead> 
                     <tbody> 
-                        @foreach($invoices as $invoice)
+                        @foreach($purchases as $purchase)
                             <tr>
-                                <td>{{$invoice->invoice_date}}</td>
-                                <td>{{$invoice->invoice_no}}</td>
-                                <td>{{$invoice->name}}</td>
-                                <td>{{$invoice->employee_name}}</td>
-                                <td>Rp. {{ number_format($invoice->discount)}}</td>
-                                <td>Rp. {{ number_format($invoice->grand_total)}}</td>
-                                <td>Rp. {{ number_format($invoice->grand_total-$invoice->payment)}}</td>
+                                <td>{{$purchase->purchase_date}}</td>
+                                <td>{{$purchase->purchase_no}}</td>
+                                <td>{{$purchase->partner_name}}</td>
+                                <td>{{$purchase->employee_name}}</td>
+                                <td>Rp. {{ number_format(- $purchase->discount)}}</td>
+                                <td>Rp. {{ number_format(- $purchase->grand_total)}}</td>
+                                <td>Rp. {{ number_format(- $purchase->grand_total-$purchase->payment)}}</td>
                                 <td>
-                                    @if(($invoice->grand_total-$invoice->payment)==0) 
+                                    @if(($purchase->grand_total-$purchase->payment)==0) 
                                         <div class="mb-2 mr-2 badge badge-pill badge-success">PAID</div>
                                         <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
                                     @endif
-                                    @if(($invoice->grand_total-$invoice->payment)!=0) 
+                                    @if(($purchase->grand_total-$purchase->payment)!=0) 
                                         <div class="mb-2 mr-2 badge badge-pill badge-danger">UNPAID</div>
                                         <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
                                     @endif
@@ -189,81 +189,25 @@
             <div class="o_nocontent_help">
                 <p class="o_view_nocontent_smiling_face">
                     <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a customer invoice
+                    Create a Vendors Bill
                 </p>
                 <p>
-                    Create invoices, register payments and keep track of the discussions with your customers.
+                    Create purchases, register payments and keep track of the discussions with your Vendors.
                 </p>
             </div>
             @endif
         </div>
         <!-- </div> -->
     </div>
-    <!-- <div class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
-        <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
-            <div class="o_kanban_record_top mb16" modifiers="{}">
-                <div class="o_kanban_record_headings mt4" modifiers="{}">
-                    <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">Wilmar Consultancy Services,
-                            Kelvin Leonardi</span></strong>
-                </div>
-                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                        name="amount_total">¥&nbsp;1,353.00</span></strong>
-            </div>
-            <div class="o_kanban_record_bottom" modifiers="{}">
-                <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
-                    <span modifiers="{}">S00001 04/16/2020 22:24:19</span>
-                    <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
-                        name="activity_ids">
-                        <a class="dropdown-toggle o-no-caret o_activity_btn" data-toggle="dropdown" role="button">
-
-                            <span role="img" class="fa fa-lg fa-fw o_activity_color_default fa-clock-o"></span>
-                        </a>
-                        <div class="dropdown-menu o_activity" role="menu"></div>
-                    </div>
-                </div>
-                <div class="oe_kanban_bottom_right" modifiers="{}">
-                    <div name="state" class="o_field_widget badge badge-default">Cancelled</div>
-                </div>
-            </div>
-        </div>
-        <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
-            <div class="o_kanban_record_top mb16" modifiers="{}">
-                <div class="o_kanban_record_headings mt4" modifiers="{}">
-                    <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">Wilmar Consultancy Services,
-                            Kelvin Leonardi</span></strong>
-                </div>
-                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                        name="amount_total">¥&nbsp;1,353.00</span></strong>
-            </div>
-            <div class="o_kanban_record_bottom" modifiers="{}">
-                <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
-                    <span modifiers="{}">S00001 04/16/2020 22:24:19</span>
-                    <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
-                        name="activity_ids">
-                        <a class="dropdown-toggle o-no-caret o_activity_btn" data-toggle="dropdown" role="button">
-
-                            <span role="img" class="fa fa-lg fa-fw o_activity_color_default fa-clock-o"></span>
-                        </a>
-                        <div class="dropdown-menu o_activity" role="menu"></div>
-                    </div>
-                </div>
-                <div class="oe_kanban_bottom_right" modifiers="{}">
-                    <div name="state" class="o_field_widget badge badge-default">Cancelled</div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>
 @endsection
 @section('js')
 <script>
     $('a#accounting_reports').addClass('mm-active');
-    $('a#sales_report').addClass('mm-active');
-    $('#report_invoice_accounting').addClass('mm-active');
-    $('#report_invoice').addClass('mm-active');
-    $("#report-invoice").change(function() {
+    $('a#purchase_report').addClass('mm-active');
+    $("#report_purchases").change(function() {
     var value = $("#key").val();
     $("input[name='filter']").val(value);
 });
 </script>
-@endsection 
+@endsection

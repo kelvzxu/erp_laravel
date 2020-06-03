@@ -9,7 +9,7 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchase_orders')}}">Requests for Quotation</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchases')}}">Vendors Bills</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
@@ -32,7 +32,7 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('purchase_orders.create')}}">
+                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('purchases.create')}}">
                             Create
                         </a>
 
@@ -62,7 +62,7 @@
                 <nav class="o_cp_pager" role="search" aria-label="Pager">
                     <div class="o_pager o_hidden">
                         <span class="o_pager_counter">
-                            <span class="o_pager_value">{{$orders->total()}}</span> / <span class="o_pager_limit">{{$orders->perPage()}}</span>
+                            <span class="o_pager_value">{{$purchases->total()}}</span> / <span class="o_pager_limit">{{$purchases->perPage()}}</span>
                         </span>
                         <span class="btn-group d-none" aria-atomic="true">
                             <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
@@ -84,41 +84,41 @@
     <div class="tab-content">
         <div class="tab-pane active" id="notebook_page_511">
             <div class="panel-body ml-2">
-                @if($orders->count())
+                @if($purchases->count())
                 <div class="table-responsive-lg mb-4">
                     <table class="table table-striped">
                         <thead class="table table-sm">
                             <tr>
-                                <th scope="col">Reference</th>
-                                <th scope="col">Vendor</th>
-                                <th scope="col">Order Date</th>
-                                <th scope="col">Purchase Representative</th>
-                                <th scope="col">Total</th>
+                                <th scope="col">Bills No.</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Bills Date</th>
+                                <th scope="col">Due Date</th>
+                                <th scope="col">Grand Total</th>
                                 <th scope="col">status</th>
                                 <th scope="col" colspan="2">Created At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($orders as $purchase)
+                            @foreach($purchases as $purchase)
                                 <tr>
-                                    <td>{{$purchase->order_no}}</td>
-                                    <td>{{$purchase->partner->partner_name}}</td>
-                                    <td>{{$purchase->order_date}}</td>
-                                    <td>{{$purchase->sales->employee_name}}</td>
+                                    <td>{{$purchase->purchase_no}}</td>
+                                    <td>{{$purchase->partner_name}}</td>
+                                    <td>{{$purchase->purchase_date}}</td>
+                                    <td>{{$purchase->due_date}}</td>
                                     <td>Rp. {{ number_format($purchase->grand_total)}}</td>
                                     <td>
-                                        @if($purchase->status == "Quotation" ) 
-                                            <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">RFQ</div>
+                                        @if($purchase->status == "Pending" ) 
+                                            <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Pending...</div>
                                             <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
                                         @endif
-                                        @if($purchase->status == "PO" ) 
-                                            <div class="mb-2 mr-2 badge badge-pill badge-success">PO</div>
+                                        @if($purchase->status == "Complete" ) 
+                                            <div class="mb-2 mr-2 badge badge-pill badge-success">Complete</div>
                                             <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
                                         @endif
                                     </td>
                                     <td>{{$purchase->created_at->diffForHumans()}}</td>
                                     <td class="text-right">
-                                        <a href="{{route('purchase_orders.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
+                                        <a href="{{route('purchases.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
                                         @if($purchase->status == "Pending" ) 
                                             <a href="{{route('purchases.approved', $purchase)}}" class="btn btn-success btn-sm">Approved</a>
                                         @endif
@@ -132,19 +132,19 @@
                 <div class="o_nocontent_help">
                     <p class="o_view_nocontent_smiling_face">
                         <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                        Create a request for quotation
+                        Create a vendor bill
                     </p>
                     <p>
-                    The quotation contains the history of the discussion you had with your vendor.
+                        Create invoices, register payments and keep track of the discussions with your vendors.
                     </p>
                 </div>
                 @endif
             </div>
         </div>
         <div class="tab-pane" id="notebook_page_521">
-            @if($orders->count())
+            @if($purchases->count())
                 <div class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
-                @foreach($orders as $purchase)
+                @foreach($purchases as $purchase)
                     <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
                         <div class="o_kanban_record_top mb16" modifiers="{}">
                             <div class="o_kanban_record_headings mt4" modifiers="{}">
@@ -153,7 +153,7 @@
                             <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
                                     name="amount_total">Rp.&nbsp;{{ number_format($purchase->grand_total)}}</span></strong>
                         </div>
-                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchase_orders.show', $purchase)}}">
+                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchases.show', $purchase)}}">
                             <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
                                 <span modifiers="{}">{{$purchase->purchase_no}}<br>{{$purchase->created_at}}</span>
                                 <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
@@ -174,7 +174,7 @@
                     </div>
                 @endforeach
                 <?php 
-                    $ghost=30-count($orders);
+                    $ghost=30-count($purchases);
                     for ($x = 0; $x < $ghost; $x++){
                         echo"<div class='o_kanban_record o_kanban_ghost'></div>";
                     }
@@ -184,23 +184,23 @@
                 <div class="o_nocontent_help">
                     <p class="o_view_nocontent_smiling_face">
                         <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                        Create a request for quotation
+                        Create a Vendors Bill
                     </p>
                     <p>
-                        The quotation contains the history of the discussion you had with your vendor.
+                        Create Bill, register payments and keep track of the discussions with your Vendors.
                     </p>
                 </div>
             @endif
         </div>
     </div>
     <div class="row mx-4">
-        {!! $orders->render() !!}
+        {!! $purchases->render() !!}
     </div>
 </div>
 @endsection
 @section('js')
 <script>
-$('a#purchases_orders').addClass('mm-active');
+$('a#purchases').addClass('mm-active');
 $("#key").change(function() {
     var value = $("#key").val();
     $("input[name='filter']").val(value);

@@ -17,10 +17,10 @@ var app = new Vue({
     },
     create: function() {
       this.isProcessing = true;
-      this.$http.post('/VendorBills', this.form)
+      this.$http.post('/purchases', this.form)
         .then(function (response) {
           if(response.data.created != "error") {
-            window.location = '/VendorBills';
+            window.location = '/purchases';
           } else {
             this.isProcessing = false;
           }
@@ -32,10 +32,10 @@ var app = new Vue({
     },
     update: function() {
       this.isProcessing = true;
-      this.$http.put('/VendorBills/update/' + this.form.id, this.form)
+      this.$http.put('/purchases/update/' + this.form.id, this.form)
         .then(function(response) {
           if(response.data.updated != "error") {
-            window.location = '/VendorBills/';
+            window.location = '/purchases/';
           } else {
             this.isProcessing = false;
           }

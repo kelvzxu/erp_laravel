@@ -88,7 +88,7 @@
                 @if($access->purchase == True ) 
                 <li class="app-sidebar__heading">Purchase</li>
                     <li>
-                        <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
+                        <a href="{{ route ('purchase_orders')}}" id="purchases_orders" class="menu-item">
                             <i class="metismenu-icon fa fa-shopping-basket"></i>
                             Purchase Order
                         </a>
@@ -200,6 +200,18 @@
                 @if($access->accounting == True ) 
                 <li class="app-sidebar__heading">Accounting</li>
                     <li>
+                        <a href="">
+                            <i class="metismenu-icon fa fa-pencil-square-o">
+                            </i>Invoices
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
+                            <i class="metismenu-icon fa fa-pencil-square-o">
+                            </i>Bills
+                        </a>
+                    </li>
+                    <li>
                         <a href="#" id="payment">
                             <i class="metismenu-icon fa fa-file-text"></i>
                             Register Payments
@@ -240,6 +252,27 @@
                         </ul>
                     </li>
                     @if($group->user_groups == 2 )
+                    <li>
+                        <a href="#" id="accounting_reports">
+                            <i class="metismenu-icon fa fa-file-pdf-o"></i>
+                            Report
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route ('invoices.report')}}" id="report_invoice_accounting" class="menu-item" >
+                                    <i class="metismenu-icon"></i>
+                                    Invoices Report
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('purchases.report')}}" id="report_purchases" class="menu-item">
+                                    <i class="metismenu-icon"></i>
+                                    Bills Report
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="#" id="account-config">
                             <i class="metismenu-icon fa fa-cogs"></i>

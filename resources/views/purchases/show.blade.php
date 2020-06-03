@@ -15,21 +15,21 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchases')}}">Purchases Orders</a></li>
-                <li class="breadcrumb-item active">{{$purchases->purchase_no}}</li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchase_orders')}}">Request for Quotation</a></li>
+                <li class="breadcrumb-item active">{{$orders->order_no}}</li>
             </ol>
         </div>
         <div>
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        @if($purchases->receipt_validate == True )
-                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new disabled">Edit</a>
+                        @if($orders->invoice== True )
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>
                         @endif
-                        @if($purchases->receipt_validate == False )
-                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
+                        @if($orders->invoice== False )
+                            <a type="button" href="{{route('purchase_orders.edit', $orders)}}" class="btn btn-primary">Edit</a>
                         @endif
-                        <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('purchases.create')}}">
+                        <a type="button" class="btn btn-secondary" accesskey="c" href="{{route('purchase_orders.create')}}">
                             Create
                         </a>
                     </div>
@@ -58,180 +58,195 @@
 
         <div class="o_form_statusbar">
             <div class="o_statusbar_buttons">
-                @if($purchases->receipt == False )                
-                    <a href="{{route('receipt.store', $purchases)}}" class="btn btn-primary"><i class="fa fa-truck"> Receipt</i></a>
+                @if($orders->status == "PO" ) 
+                    @if($orders->invoice == False )                
+                        <a href="{{route('purchases.wizard_create', $orders)}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"> Create Bills</i></a>
+                    @endif
                 @endif
-                <a href="{{route('purchases.print', $purchases)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
+                @if($orders->status == "Quotation" )
+                <a href="{{route('purchase_orders.confirm', $orders)}}" class="btn btn-primary"><i class="fa fa fa-check"> Confirm Order</i></a>
+                @endif
+                <a href="{{route('purchases.print', $orders)}}" class="btn btn-secondary"><i class="fa fa-print"></i> Print</a>
                 <a href="{{route('purchases')}}" class="btn btn-secondary">Back</a>
             </div>
-            <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
-                name="authorized_transaction_ids" id="o_field_input_290" data-original-title="" title=""></div>
             <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
-                @if($purchases->status == "Pending" ) 
-                    <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
+                @if($orders->status == "Quotation" ) 
+                    <button type="button" data-value="Purchase Order" disabled="disabled" title="Not active state" aria-pressed="false"
                         class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                        Paid
+                        Purchase Order
                     </button>
-                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                        Receive
-                    </button>
-                    <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                        Posted
-                    </button>
-                    <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
+                    <button type="button" data-value="Request for Quotation" disabled="disabled" title="Current state" aria-pressed="true"
                         class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                        Draft
+                        Request for Quotation
                     </button>
                 @endif
-                @if($purchases->status == "Complete" ) 
-                    @if($purchases->receipt_validate == True ) 
-                        @if($purchases->paid == True ) 
-                            <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
-                                class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                                Paid
-                            </button>
-                            <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
-                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Receive
-                            </button>
-                            <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Posted
-                            </button>
-                            <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
-                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Draft
-                            </button>
-                        @endif
-                        @if($purchases->paid == False ) 
-                            <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
-                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Paid
-                            </button>
-                            <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
-                                class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                                Receive
-                            </button>
-                            <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Posted
-                            </button>
-                            <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
-                                class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                                Draft
-                            </button>
-                        @endif
-                    @endif
-                    @if($purchases->receipt_validate == False ) 
-                        <button type="button" data-value="sale" disabled="disabled" title="Not active state" aria-pressed="false"
-                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                            Paid
-                        </button>
-                        <button type="button" data-value="sent" disabled="disabled" title="Not active state" aria-pressed="false"
-                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                            Receive
-                        </button>
-                        <button type="button" data-value="sent" disabled="disabled" title="Current state" aria-pressed="true"
-                            class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                            Posted
-                        </button>
-                        <button type="button" data-value="draft" disabled="disabled" title="Current state" aria-pressed="true"
-                            class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                            Draft
-                        </button>
-                    @endif
+                @if($orders->status == "PO" ) 
+                    <button type="button" data-value="Purchase Order" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
+                        Purchase Order
+                    </button>
+                    <button type="button" data-value="Request for Quotation" disabled="disabled" title="Current state" aria-pressed="true"
+                        class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
+                        Request for Quotation
+                    </button>
                 @endif
             </div>
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12 mt-4">
-        <div class="card container">
-            <div class="row mt-4 mx-2">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Purchase No.</label>
-                        <p>{{$purchases->purchase_no}}</p>
+<div class="o_content my-4" v-cloak>
+        <div class="o_form_view o_form_editable">
+            <div class="o_form_sheet_bg">
+                <div class="clearfix position-relative o_form_sheet">
+                    <div class="oe_title">
+                        <span class="o_form_label">Request for Quotation</span>
+                        <h1><span class="o_field_char o_field_widget o_readonly_modifier o_required_modifier" name="name">{{$orders->order_no}}</span></h1>
                     </div>
-                    <div class="form-group">
-                        <label>Grand Total</label>
-                        <p>Rp. {{ number_format($purchases->grand_total)}}</p>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Supplier</label>
-                        <p id="client">{{$purchases->client}}</p>
-                    </div>
-                    <div class="form-group">
-                        <label>Supplier Address</label>
-                        <pre class="pre">{{$purchases->client_address}}</pre>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Title</label>
-                        <p>{{$purchases->title}}</p>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <label>purchase Date</label>
-                            <p>{{$purchases->purchase_date}}</p>
+                    <div class="o_group">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <table class="o_group o_inner_group">
+                                    <tbody>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label class="o_form_label o_required_modifier">Vendor</label>
+                                            </td>
+                                            <td>
+                                                <div class="wrap-input200">
+                                                    <p class="input200">{{$orders->partner->partner_name}}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label">
+                                                <label class="o_form_label">Vendor Reference</label>
+                                            </td>
+                                            <td>
+                                                <div class="wrap-input200">
+                                                    <p class="input200">{{$orders->vendor_reference}}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <table class="o_group o_inner_group">
+                                    <tbody>
+                                        <tr>
+                                            <td class="o_td_label"><label class="o_form_label o_required_modifier" for="o_field_input_19"
+                                                    data-original-title="" title="">Order Date</label></td>
+                                            <td>
+                                                <div class="wrap-input200">
+                                                    <p class="input200">{{$orders->order_date}}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label"><label class="o_form_label o_invisible_modifier o_readonly_modifier"
+                                                    for="o_field_input_20">Confirmation Date</label></td>
+                                            <td style="width: 100%;"><span
+                                                    class="o_field_date o_field_widget o_invisible_modifier o_readonly_modifier"
+                                                    name="date_approve"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label"><label class="o_form_label o_invisible_modifier" for="o_field_input_21"
+                                                    data-original-title="" title="">Source Document</label></td>
+                                            <td style="width: 100%;"><input class="o_field_char o_field_widget o_input o_invisible_modifier"
+                                                    name="origin" placeholder="" type="text" id="o_field_input_21"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="o_td_label"><label class="o_form_label o_invisible_modifier o_required_modifier"
+                                                    for="o_field_input_22">Company</label></td>
+                                            <td style="width: 100%;">
+                                                <div class="o_field_widget o_field_many2one o_with_button o_invisible_modifier o_required_modifier"
+                                                    aria-atomic="true" name="company_id">
+                                                    <div class="o_input_dropdown">
+                                                        <input type="text" class="o_input ui-autocomplete-input" autocomplete="off"
+                                                            id="o_field_input_22">
+                                                        <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                                    </div>
+                                                    <button type="button" class="fa fa-external-link btn btn-secondary o_external_button"
+                                                        tabindex="-1" draggable="false" aria-label="External link" title="External link"></button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="col-sm-6">
-                            <label>Due Date</label>
-                            <p>{{$purchases->due_date}}</p>
+                    </div>
+                    <hr>
+                    <div class="o_list_view o_list_optional_columns">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-form">
+                                <thead>
+                                    <tr>
+                                        <th>Product Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($orders->products as $data)
+                                        <tr>
+                                            <td id="product" class="table-name">{{$data->product->name}}</td>
+                                            <td class="table-price">Rp. {{ number_format($data->price)}}</td>
+                                            <td class="table-qty">{{$data->qty}}</td>
+                                            <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="table-empty" colspan="2">
+                                            <span @click="addLine" class="table-add_line">Add a Product</span>
+                                        </td>
+                                        <td class="table-label">Sub Total</td>
+                                        <td class="table-amount">Rp. {{ number_format($orders->sub_total)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-empty" colspan="2" style="border:none;"></td>
+                                        <td class="table-label">Discount</td>
+                                        <td class="table-amount">Rp. {{ number_format($orders->discount)}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-empty" colspan="2" style="border:none;"></td>
+                                        <td class="table-label">Grand Total</td>
+                                        <td class="table-amount">Rp. {{ number_format($orders->grand_total)}}</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="mb-4 mx-2">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Qty</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($purchases->products as $data)
-                            <tr>
-                            <td id="product" class="table-name">{{$data->product->name}}</td>
-                                <td class="table-price">Rp. {{ number_format($data->price)}}</td>
-                                <td class="table-qty">{{$data->qty}}</td>
-                                <td class="table-total text-right">Rp. {{ number_format($data->qty * $data->price)}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td class="table-empty" colspan="2" style="border:none;"></td>
-                            <td class="table-label">Sub Total</td>
-                            <td class="table-amount">Rp. {{ number_format($purchases->sub_total)}}</td>
-                        </tr>
-                        <tr>
-                            <td class="table-empty" colspan="2" style="border:none;"></td>
-                            <td class="table-label">Discount</td>
-                            <td class="table-amount">Rp. {{ number_format($purchases->discount)}}</td>
-                        </tr>
-                        <tr>
-                            <td class="table-empty" colspan="2" style="border:none;"></td>
-                            <td class="table-label">Grand Total</td>
-                            <td class="table-amount">Rp. {{ number_format($purchases->grand_total)}}</td>
-                        </tr>
-                    </tfoot>
-                </table>
+        </div>
+    </div>
+<br>
+@endsection
+@section('modal')
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Something Wrong</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{asset('images/icons/warning.png')}}" alt=""><br>
+                <p class="mb-0">You Can't Edit this Record </p>
+                <p class="mb-0">because this record already has an invoice</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
             </div>
         </div>
     </div>
 </div>
-<br>
 @endsection
 @section('js')
 <script>
@@ -241,7 +256,7 @@ $.ajax  ({
     type: 'post',
     dataType: 'json',
     data :{
-        'id': "{{$purchases->client}}"
+        'id': "{{$orders->client}}"
     },
     success: function (result) {
         $("#client").html(result.data.partner_name);

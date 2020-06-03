@@ -10,8 +10,8 @@
         <div class="o_control_panel">
             <div>
                 <ol class="breadcrumb" role="navigation">
-                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchase_orders')}}">Request for Quotation</a></li>
-                    <li class="breadcrumb-item active">{{$orders->order_no}}</li>
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchases')}}">Vendor Bills</a></li>
+                    <li class="breadcrumb-item active">{{$purchase->purchase_no}}</li>
                 </ol>
             </div>
             <div>
@@ -19,7 +19,7 @@
                     <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                         <div>
                             <button class="btn btn-primary my-2" @click="update" :disabled="isProcessing">Save</button>
-                            <a href="{{route('purchase_orders.show', $orders)}}" class="btn btn-secondary mby-2">Discard</a>
+                            <a href="{{route('purchases.show', $purchase)}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
@@ -43,11 +43,14 @@
             </div>
         </div>
     </div>
-    <div class="o_content my-4" v-cloak>
-        <div class="o_form_view o_form_editable">
-            <div class="o_form_sheet_bg">
-                <div class="clearfix position-relative o_form_sheet">
-                    @include('purchases.form')
+    <div class="row">
+        <div class="col-12 mt-5">
+            <div class="panel panel-default container bg-white" v-cloak>
+                <div class="panel-body">
+                    @include('bills.form')
+                </div>
+                <div class="panel-footer mb-4">
+                    <br>
                 </div>
             </div>
         </div>
@@ -61,8 +64,8 @@
     <script type="text/javascript">
         Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
-        window._form = {!! $orders->toJson() !!};
-        var data  = {!! $orders->toJson() !!};
+        window._form = {!! $purchase->toJson() !!};
+        var data  = {!! $purchase->toJson() !!};
         console.log(data);
         $('a#purchases').addClass('mm-active');
         // $.each(product, function (i) {
@@ -84,7 +87,7 @@
             type: 'post',
             dataType: 'json',
             data :{
-                'id': "{{$orders->vendor}}"
+                'id': "{{$purchase->client}}"
             },
             success: function (result) {
                 $("#client").val(result.data.partner_name);
@@ -92,6 +95,6 @@
         })
         
         
-    </script> 
-    <script src="{{asset('/js/transaksi/purchase_order.js')}}"></script>
+    </script>
+    <script src="{{asset('/js/transaksi/purchase.js')}}"></script>
 @endsection
