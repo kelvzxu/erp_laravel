@@ -1,10 +1,10 @@
 <div class="oe_title">
     <span class="o_form_label">
         @if($orders->status == "Quotation" )
-            Request for Quotation
+            Quotation
         @endif
-        @if($orders->status == "PO" ) 
-            Purchase Order
+        @if($orders->status == "SO" ) 
+            Sales Order
         @endif
     </span>
     <h1><span class="o_field_char o_field_widget o_readonly_modifier o_required_modifier" name="name">{{$orders->order_no}}</span></h1>
@@ -16,23 +16,23 @@
                 <tbody>
                     <tr>
                         <td class="o_td_label">
-                            <label class="o_form_label o_required_modifier">Vendor</label>
+                            <label class="o_form_label o_required_modifier">customer</label>
                         </td>
                         <td>
                             <div class="wrap-input200">
                                 <input type="hidden" id="order_no" class="input200" v-model="form.order_no">
                                 <input type="text" id="client" class="input200" readonly>
-                                <input type="hidden" id="client_id" class="input200" v-model="form.vendor">
+                                <input type="hidden" id="client_id" class="input200" v-model="form.customer">
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td class="o_td_label">
-                            <label class="o_form_label">Vendor Reference</label>
+                            <label class="o_form_label">customer Reference</label>
                         </td>
                         <td>
                             <div class="wrap-input200">
-                                <input class="input200" type="text" v-model="form.vendor_reference">
+                                <input class="input200" type="text" v-model="form.customer_reference">
                             </div>
                         </td>
                     </tr>
@@ -52,13 +52,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="o_td_label"><label class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_20">Confirmation Date</label></td>
-                        <td style="width: 100%;"><span
-                                class="o_field_date o_field_widget o_invisible_modifier o_readonly_modifier"
-                                name="date_approve"></span></td>
+                        <td class="o_td_label"><label class="o_form_label o_required_modifier" for="o_field_input_19"
+                                data-original-title="" title="">Expiration</label></td>
+                        <td>
+                            <div class="wrap-input200">
+                                <input type="date" class="input200" v-model="form.expiration" readonly>
+                            </div>
+                        </td>
                     </tr>
-                    <tr>
                         <td class="o_td_label"><label class="o_form_label o_invisible_modifier" for="o_field_input_21"
                                 data-original-title="" title="">Source Document</label></td>
                         <td style="width: 100%;"><input class="o_field_char o_field_widget o_input o_invisible_modifier"

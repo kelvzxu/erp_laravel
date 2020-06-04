@@ -5,18 +5,18 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div id="purchase">
+<div id="sales">
     <div class="app-page-title bg-white">
         <div class="o_control_panel">
             <div>
                 <ol class="breadcrumb" role="navigation">
                     <li class="breadcrumb-item" accesskey="b">
-                        <a href="{{route('purchase_orders')}}">
+                        <a href="{{route('sales_orders')}}">
                             @if($orders->status == "Quotation" )
-                                Request for Quotation
+                                Quotation
                             @endif
-                            @if($orders->status == "PO" ) 
-                                Purchase Order
+                            @if($orders->status == "SO" ) 
+                                Sales Order
                             @endif
                         </a>
                     </li>
@@ -28,7 +28,7 @@
                     <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                         <div>
                             <button class="btn btn-primary my-2" @click="update" :disabled="isProcessing">Save</button>
-                            <a href="{{route('purchase_orders.show', $orders)}}" class="btn btn-secondary mby-2">Discard</a>
+                            <a href="{{route('sales_orders.show', $orders)}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
         <div class="o_form_view o_form_editable">
             <div class="o_form_sheet_bg">
                 <div class="clearfix position-relative o_form_sheet">
-                    @include('purchases.form')
+                    @include('sales.form')
                 </div>
             </div>
         </div>
@@ -89,18 +89,18 @@
         //     })
         // });
         $.ajax  ({
-            url: "{{asset('api/partner/search')}}",
+            url: "{{asset('api/customer/search')}}",
             type: 'post',
             dataType: 'json',
             data :{
-                'id': "{{$orders->vendor}}"
+                'id': "{{$orders->customer}}"
             },
             success: function (result) {
-                $("#client").val(result.data.partner_name);
+                $("#client").val(result.data.name);
             }
         })
         
-        $('a#purchases_orders').addClass('mm-active');
+        $('a#sales_orders').addClass('mm-active');
     </script> 
-    <script src="{{asset('/js/transaksi/purchase_order.js')}}"></script>
+    <script src="{{asset('/js/transaksi/sales_order.js')}}"></script>
 @endsection

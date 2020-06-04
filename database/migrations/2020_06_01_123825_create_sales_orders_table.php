@@ -15,19 +15,21 @@ class CreateSalesOrdersTable extends Migration
     {
         Schema::create('sales_orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('order_no');
-            $table->date('order_date');
-            $table->integer('vendor');
-            $table->string('vendor_reference')->nullable();
-            $table->bigInteger('sub_total');
-            $table->bigInteger('discount');
-            $table->bigInteger('taxes');
-            $table->bigInteger('grand_total');
+            $table->string('order_no')->nullable();
+            $table->date('order_date')->nullable();
+            $table->date('confirm_date')->nullable();
+            $table->date('expiration')->nullable();
+            $table->integer('customer')->nullable();
+            $table->string('customer_reference')->nullable();
+            $table->bigInteger('sub_total')->nullable();
+            $table->bigInteger('discount')->nullable();
+            $table->bigInteger('taxes')->nullable();
+            $table->bigInteger('grand_total')->nullable();
             $table->boolean('invoice')->default(False);
-            $table->string('status')->default("RFQ");
+            $table->string('status')->default("Quotation");
             $table->boolean('receipt')->default(False);
             $table->boolean('receipt_validate')->default(False);
-            $table->integer('merchandise')->nullable();
+            $table->integer('sales')->nullable();
             $table->timestamps();
         });
     }

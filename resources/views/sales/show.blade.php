@@ -16,12 +16,12 @@
         <div>
             <ol class="breadcrumb" role="navigation">
                 <li class="breadcrumb-item" accesskey="b">
-                    <a href="{{route('purchase_orders')}}">
+                    <a href="{{route('sales_orders')}}">
                         @if($orders->status == "Quotation" )
-                            Request for Quotation
+                            Quotation
                         @endif
-                        @if($orders->status == "PO" ) 
-                            Purchase Order
+                        @if($orders->status == "SO" ) 
+                            Sales Order
                         @endif
                     </a>
                 </li>
@@ -36,9 +36,9 @@
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>
                         @endif
                         @if($orders->invoice== False )
-                            <a type="button" href="{{route('purchase_orders.edit', $orders)}}" class="btn btn-primary">Edit</a>
+                            <a type="button" href="{{route('sales_orders.edit', $orders)}}" class="btn btn-primary">Edit</a>
                         @endif
-                        <a type="button" class="btn btn-secondary" accesskey="c" href="{{route('purchase_orders.create')}}">
+                        <a type="button" class="btn btn-secondary" accesskey="c" href="{{route('sales_orders.create')}}">
                             Create
                         </a>
                     </div>
@@ -67,32 +67,32 @@
 
         <div class="o_form_statusbar">
             <div class="o_statusbar_buttons">
-                @if($orders->status == "PO" ) 
+                @if($orders->status == "SO" ) 
                     @if($orders->invoice == False )                
-                        <a href="{{route('purchases.wizard_create', $orders)}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"> Create Bills</i></a>
+                        <a href="{{route('invoices.wizard_create', $orders)}}" class="btn btn-primary"><i class="fa fa-pencil-square-o"> Create Invoice</i></a>
                     @endif
                 @endif
                 @if($orders->status == "Quotation" )
-                <a href="{{route('purchase_orders.confirm', $orders)}}" class="btn btn-primary"><i class="fa fa fa-check"> Confirm Order</i></a>
+                <a href="{{route('sales_orders.confirm', $orders)}}" class="btn btn-primary"><i class="fa fa fa-check"> Confirm Order</i></a>
                 @endif
                 <a href="" class="btn btn-secondary"><i class="fa fa-print"></i> Print</a>
-                <a href="{{route('purchase_orders')}}" class="btn btn-secondary">Back</a>
+                <a href="{{route('sales_orders')}}" class="btn btn-secondary">Back</a>
             </div>
             <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">
                 @if($orders->status == "Quotation" ) 
-                    <button type="button" data-value="Purchase Order" disabled="disabled" title="Not active state" aria-pressed="false"
+                    <button type="button" data-value="Sales Order" disabled="disabled" title="Not active state" aria-pressed="false"
                         class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
-                        Purchase Order
+                        Sales Order
                     </button>
                     <button type="button" data-value="Request for Quotation" disabled="disabled" title="Current state" aria-pressed="true"
                         class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
                         Request for Quotation
                     </button>
                 @endif
-                @if($orders->status == "PO" ) 
-                    <button type="button" data-value="Purchase Order" disabled="disabled" title="Current state" aria-pressed="true"
+                @if($orders->status == "SO" ) 
+                    <button type="button" data-value="Sales Order" disabled="disabled" title="Current state" aria-pressed="true"
                         class="btn o_arrow_button btn-primary disabled d-none d-md-block" aria-current="step">
-                        Purchase Order
+                        Sales Order
                     </button>
                     <button type="button" data-value="Request for Quotation" disabled="disabled" title="Current state" aria-pressed="true"
                         class="btn o_arrow_button btn-secondary disabled d-none d-md-block">
@@ -110,10 +110,10 @@
                     <div class="oe_title">
                         <span class="o_form_label">
                             @if($orders->status == "Quotation" )
-                                Request for Quotation
+                                Quotation
                             @endif
-                            @if($orders->status == "PO" ) 
-                                Purchase Order
+                            @if($orders->status == "SO" ) 
+                                Sales Order
                             @endif
                         </span>
                         <h1><span class="o_field_char o_field_widget o_readonly_modifier o_required_modifier" name="name">{{$orders->order_no}}</span></h1>
@@ -125,21 +125,21 @@
                                     <tbody>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label o_required_modifier">Vendor</label>
+                                                <label class="o_form_label o_required_modifier">customer</label>
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <p class="input200">{{$orders->partner->partner_name}}</p>
+                                                    <p class="input200">{{$orders->partner->name}}</p>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label">Vendor Reference</label>
+                                                <label class="o_form_label">customer Reference</label>
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <p class="input200">{{$orders->vendor_reference}}</p>
+                                                    <p class="input200">{{$orders->customer_reference}}</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -159,11 +159,13 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="o_td_label"><label class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                                    for="o_field_input_20">Confirmation Date</label></td>
-                                            <td style="width: 100%;"><span
-                                                    class="o_field_date o_field_widget o_invisible_modifier o_readonly_modifier"
-                                                    name="date_approve"></span></td>
+                                            <td class="o_td_label"><label class="o_form_label o_required_modifier" for="o_field_input_19"
+                                                    data-original-title="" title="">Expiration</label></td>
+                                            <td>
+                                                <div class="wrap-input200">
+                                                    <p class="input200">{{$orders->expiration}}</p>
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label"><label class="o_form_label o_invisible_modifier" for="o_field_input_21"
@@ -266,7 +268,7 @@
 @endsection
 @section('js')
 <script>
-$('a#purchases_orders').addClass('mm-active');
+$('a#sales_orders').addClass('mm-active');
 $.ajax  ({
     url: "{{asset('api/partner/search')}}",
     type: 'post',

@@ -5,12 +5,12 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div id="purchase">
+<div id="sales">
     <div class="app-page-title bg-white">
         <div class="o_control_panel">
             <div>
                 <ol class="breadcrumb" role="navigation">
-                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchase_orders')}}">Request for Quotation</a></li>
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('sales_orders')}}">Quotation</a></li>
                     <li class="breadcrumb-item active">New</li>
                 </ol>
             </div>
@@ -19,7 +19,7 @@
                     <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                         <div>
                             <button class="btn btn-primary my-2" @click="create" :disabled="isProcessing">Save</button>
-                            <a href="{{route('purchase_orders')}}" class="btn btn-secondary mby-2">Discard</a>
+                            <a href="{{route('sales_orders')}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
             <div class="o_form_sheet_bg">
                 <div class="clearfix position-relative o_form_sheet">
                     <div class="oe_title">
-                        <span class="o_form_label">Request for Quotation</span>
+                        <span class="o_form_label">Quotation</span>
                         <h1><span class="o_field_char o_field_widget o_readonly_modifier o_required_modifier" name="name">New</span></h1>
                     </div>
                     <div class="o_group">
@@ -41,14 +41,14 @@
                                     <tbody>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label o_required_modifier">Vendor</label>
+                                                <label class="o_form_label o_required_modifier">customer</label>
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <select id="vendor" class="input200" required style="border:none;" v-model="form.vendor">
+                                                    <select id="Customer" class="input200" required style="border:none;" v-model="form.customer">
                                                         <option value=""></option>
                                                         @foreach ($partner as $row)
-                                                            <option value="{{ $row->id }}">{{ ucfirst($row->partner_name) }}</option>
+                                                            <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -56,11 +56,11 @@
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label">Vendor Reference</label>
+                                                <label class="o_form_label">Customer Reference</label>
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <input class="input200" type="text" v-model="form.vendor_reference">
+                                                    <input class="input200" type="text" v-model="form.customer_reference">
                                                 </div>
                                             </td>
                                         </tr>
@@ -80,11 +80,13 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="o_td_label"><label class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                                    for="o_field_input_20">Confirmation Date</label></td>
-                                            <td style="width: 100%;"><span
-                                                    class="o_field_date o_field_widget o_invisible_modifier o_readonly_modifier"
-                                                    name="date_approve"></span></td>
+                                            <td class="o_td_label"><label class="o_form_label o_required_modifier" for="o_field_input_19"
+                                                    data-original-title="" title="">Expiration</label></td>
+                                            <td>
+                                                <div class="wrap-input200">
+                                                    <input type="date" class="input200" v-model="form.expiration">
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label"><label class="o_form_label o_invisible_modifier" for="o_field_input_21"
@@ -205,7 +207,7 @@
             }]
         };
 
-        $('a#purchases_orders').addClass('mm-active');
+        $('a#sales_orders').addClass('mm-active');
     </script>
-    <script src="{{asset('/js/transaksi/purchase_order.js')}}"></script>
+    <script src="{{asset('/js/transaksi/sales_order.js')}}"></script>
 @endsection

@@ -9,11 +9,11 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchase_orders')}}">Requests for Quotation</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('sales_orders')}}">Quotation</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
-                    <form action="" method="get" >
+                    <form action="{{ route('sales_orders.filter') }}" method="get" >
                         <button class="o_searchview_more fa fa-search-minus" title="Advanced Search..." role="img"
                             aria-label="Advanced Search..." type="submit"></button>
 
@@ -32,7 +32,7 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('purchase_orders.create')}}">
+                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('sales_orders.create')}}">
                             Create
                         </a>
 
@@ -51,9 +51,9 @@
                                 data-toggle="dropdown" aria-expanded="false" tabindex="-1" data-flip="false"
                                 data-boundary="viewport" name="key" id="key">
                                 <option value="" data-icon="fa fa-filter">Filters</option>
-                                <option value="purchase_no">Bill No</option>
-                                <option value="partner_name">Name</option>
-                                <option value="due_date">Due Date</option>
+                                <option value="order_no">Order No</option>
+                                <option value="vendor">Name</option>
+                                <option value="order_date">Order Date</option>
                                 <!-- <span class="fa fa-filter"></span> Filters -->
                             </select>
                         </div>
@@ -90,38 +90,35 @@
                         <thead class="table table-sm">
                             <tr>
                                 <th scope="col">Reference</th>
-                                <th scope="col">Vendor</th>
+                                <th scope="col">Customer</th>
                                 <th scope="col">Order Date</th>
-                                <th scope="col">Purchase Representative</th>
+                                <th scope="col">Sales Representative</th>
                                 <th scope="col">Total</th>
                                 <th scope="col">status</th>
                                 <th scope="col" colspan="2">Created At</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($orders as $purchase)
+                            @foreach($orders as $data)
                                 <tr>
-                                    <td>{{$purchase->order_no}}</td>
-                                    <td>{{$purchase->partner->partner_name}}</td>
-                                    <td>{{$purchase->order_date}}</td>
-                                    <td>{{$purchase->sales->employee_name}}</td>
-                                    <td>Rp. {{ number_format($purchase->grand_total)}}</td>
+                                    <td>{{$data->order_no}}</td>
+                                    <td>{{$data->partner->name}}</td>
+                                    <td>{{$data->order_date}}</td>
+                                    <td>{{$data->sales_person->employee_name}}</td>
+                                    <td>Rp. {{ number_format($data->grand_total)}}</td>
                                     <td>
-                                        @if($purchase->status == "Quotation" ) 
-                                            <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">RFQ</div>
+                                        @if($data->status == "Quotation" ) 
+                                            <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Quotation</div>
                                             <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
                                         @endif
-                                        @if($purchase->status == "PO" ) 
-                                            <div class="mb-2 mr-2 badge badge-pill badge-success">PO</div>
+                                        @if($data->status == "SO" ) 
+                                            <div class="mb-2 mr-2 badge badge-pill badge-success">Sales Order</div>
                                             <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
                                         @endif
                                     </td>
-                                    <td>{{$purchase->created_at->diffForHumans()}}</td>
+                                    <td>{{$data->created_at->diffForHumans()}}</td>
                                     <td class="text-right">
-                                        <a href="{{route('purchase_orders.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
-                                        @if($purchase->status == "Pending" ) 
-                                            <a href="{{route('purchases.approved', $purchase)}}" class="btn btn-success btn-sm">Approved</a>
-                                        @endif
+                                        <a href="{{route('sales_orders.show', $data)}}" class="btn btn-primary btn-sm">View</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -132,10 +129,11 @@
                 <div class="o_nocontent_help">
                     <p class="o_view_nocontent_smiling_face">
                         <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                        Create a request for quotation
+                        Create a new quotation, the first step of a new sale!
                     </p>
                     <p>
-                    The quotation contains the history of the discussion you had with your vendor.
+                        Once the quotation is confirmed by the customer, it becomes a sales order.
+                        You will be able to create an invoice and collect the payment.
                     </p>
                 </div>
                 @endif
@@ -144,29 +142,29 @@
         <div class="tab-pane" id="notebook_page_521">
             @if($orders->count())
                 <div class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
-                @foreach($orders as $purchase)
+                @foreach($orders as $data)
                     <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
                         <div class="o_kanban_record_top mb16" modifiers="{}">
                             <div class="o_kanban_record_headings mt4" modifiers="{}">
-                                <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$purchase->partner_name}}</span></strong>
+                                <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$data->partner->name}}</span></strong>
                             </div>
                             <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                                    name="amount_total">Rp.&nbsp;{{ number_format($purchase->grand_total)}}</span></strong>
+                                    name="amount_total">Rp.&nbsp;{{ number_format($data->grand_total)}}</span></strong>
                         </div>
-                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchase_orders.show', $purchase)}}">
+                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchase_orders.show', $data)}}">
                             <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
-                                <span modifiers="{}">{{$purchase->purchase_no}}<br>{{$purchase->created_at}}</span>
+                                <span modifiers="{}">{{$data->purchase_no}}<br>{{$data->created_at}}</span>
                                 <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
                                     name="activity_ids">
                                 </div>
                             </div>
                             <div class="oe_kanban_bottom_right" modifiers="{}">
                                 <div name="state" class="o_field_widget badge badge-default">
-                                    @if($purchase->status == "Pending" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white"><span style="font-size:10px;">Pending</span></div>
+                                    @if($data->status == "Quotation" ) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white"><span style="font-size:10px;">Quotation></div>
                                     @endif
-                                    @if($purchase->status == "Complete" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-success"><span style="font-size:10px;">Complete</span></div>
+                                    @if($data->status == "SO" ) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-success"><span style="font-size:10px;">Sales Order</span></div>
                                     @endif
                                 </div>
                             </div>
@@ -184,10 +182,11 @@
                 <div class="o_nocontent_help">
                     <p class="o_view_nocontent_smiling_face">
                         <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                        Create a request for quotation
+                        Create a new quotation, the first step of a new sale!
                     </p>
                     <p>
-                        The quotation contains the history of the discussion you had with your vendor.
+                        Once the quotation is confirmed by the customer, it becomes a sales order.
+                        You will be able to create an invoice and collect the payment.
                     </p>
                 </div>
             @endif
@@ -200,7 +199,7 @@
 @endsection
 @section('js')
 <script>
-$('a#purchases_orders').addClass('mm-active');
+$('a#sales_orders').addClass('mm-active');
 $("#key").change(function() {
     var value = $("#key").val();
     $("input[name='filter']").val(value);

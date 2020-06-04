@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Customer\customer_dept;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\InvoiceProduct;
+use App\Models\Sales\sales_order;
+use App\Models\Sales\sales_order_product;
 use App\Models\Product\Product;
 use App\Models\Customer\res_customer;
 use Brian2694\Toastr\Facades\Toastr;
@@ -281,6 +283,81 @@ class InvoiceController extends Controller
             $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.sales.invoice_report_pdf', compact('monthName','year','invoices'));
         return $pdf->stream();
+    }
+    public function wizard_create($id)
+    {
+        $year=date("Y");
+        $prefixcode = "INV-$year-";
+        $count = Invoice::all()->count();
+        if ($count==0){
+            $invoice_no= "$prefixcode"."000001";
+        }else {
+            $latestPo = Invoice::orderBy('id','DESC')->first();
+            $invoice_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
+        }
+        $orders = sales_order::findOrFail($id);
+        $orders_line = sales_order_product::where('sales_order_id','=',$id)->get();
+        $partner = res_customer::findOrFail($orders->customer);
+        $address = "$partner->street,$partner->zip,$partner->city";
+        switch ($partner->payment_terms) {
+            case 1:
+                $due_date=date('Y-m-d H:i:s');
+                break;
+            case 2:
+                $Date = date('Y-m-d H:i:s');
+                $due_date= date('Y-m-d', strtotime($Date. ' + 15 days'));
+                break;
+            case 3:
+                $Date = date('Y-m-d H:i:s');
+                $due_date= date('Y-m-d', strtotime($Date. ' + 21 days'));
+                break;
+            case 4:
+                $Date = date('Y-m-d H:i:s');
+                $due_date= date('Y-m-d', strtotime($Date. ' + 30 days'));
+                break;
+            case 5:
+                $Date = date('Y-m-d H:i:s');
+                $due_date= date('Y-m-d', strtotime($Date. ' + 45 days'));
+                break;
+            case 6:
+                $Date = date('Y-m-d H:i:s');
+                $due_date= date('Y-m-d', strtotime($Date. ' + 2 Month'));
+                break;
+            case 7:
+                $Date = date('Y-m-d H:i:s');
+                $due_date= date("Y-m-t", strtotime($Date));
+                break;
+            default:
+                $due_date=date('Y-m-d H:i:s');;
+        }
+        $inv = Invoice::insertGetId([   
+            'invoice_no'=>$invoice_no,
+            'invoice_date'=>date('Y-m-d H:i:s'),
+            'due_date'=>$due_date,
+            'client'=>$orders->customer,
+            'client_address'=>$address,
+            'title'=>$orders->order_no,
+            'sales'=>Auth::id(),
+            'sub_total'=>$orders->sub_total,
+            'discount'=>$orders->discount,
+            'grand_total'=>$orders->grand_total,
+            'created_at'=>date('Y-m-d H:i:s'),
+            'updated_at'=>date('Y-m-d H:i:s'),
+        ]);
+        foreach($orders_line as $e => $data){
+            $bill_line = InvoiceProduct::create([
+                'invoice_id'=>$inv,
+                'name'=>$data->name,
+                'qty'=>$data->qty,
+                'price'=>$data->price,
+                'total'=>$data->total,
+            ]);
+        }
+        echo $invoice_no;
+        $orders->update([
+            'invoice'=> True,
+        ]);
+        return redirect()->route('invoices.show',$inv);    
     }
 }
  

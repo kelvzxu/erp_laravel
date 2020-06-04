@@ -4,15 +4,15 @@ namespace App\Models\Sales;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InvoiceProduct extends Model
+class sales_order_product extends Model
 {
     protected $fillable = [
-        'invoice_id','name', 'price', 'qty', 'total'
+        'name', 'price', 'qty', 'total'
     ];
 
-    public function invoice()
+    public function sales()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(sales_order::class);
     }
     public function product()
     {

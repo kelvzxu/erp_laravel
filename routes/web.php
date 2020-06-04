@@ -115,6 +115,7 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Invoices ====
     Route::get('invoices', 'InvoiceController@index')->name('invoices');
     Route::get('invoices/create', 'InvoiceController@create')->name('invoices.create');
+    Route::get('invoices/create/{id}', 'InvoiceController@wizard_create')->name('invoices.wizard_create');
     Route::post('invoices', 'InvoiceController@store')->name('invoices.store');
     Route::get('invoices/show/{id}', 'InvoiceController@show')->name('invoices.show');
     Route::get('invoices/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
@@ -230,6 +231,15 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/checkout', 'OrdrController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 
+    // ==== Sales Order ====
+    Route::get('Sales', 'SalesOrdersController@index')->name('sales_orders');
+    Route::get('Sales/create', 'SalesOrdersController@create')->name('sales_orders.create');
+    Route::post('Sales', 'SalesOrdersController@store')->name('sales_orders.store');
+    Route::get('Sales/show/{id}', 'SalesOrdersController@show')->name('sales_orders.show');
+    Route::get('Sales/edit/{id}', 'SalesOrdersController@edit')->name('sales_orders.edit');
+    Route::get('Sales/confirm/{id}', 'SalesOrdersController@confirm')->name('sales_orders.confirm');
+    Route::put('Sales/update/{id}', 'SalesOrdersController@update')->name('sales_orders.update');
+    Route::get('Sales/filter', 'SalesOrdersController@search')->name('sales_orders.filter');
 });  
 Auth::routes(['verify' => true]);
 
