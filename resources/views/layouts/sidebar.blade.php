@@ -44,7 +44,7 @@
                 @if($access->sales == True ) 
                 <li class="app-sidebar__heading">Sales</li>
                     <li>
-                        <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
+                        <a href="">
                             <i class="metismenu-icon fa fa-shopping-bag"></i>
                             Sales Order
                         </a>
@@ -200,7 +200,7 @@
                 @if($access->accounting == True ) 
                 <li class="app-sidebar__heading">Accounting</li>
                     <li>
-                        <a href="">
+                        <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
                             <i class="metismenu-icon fa fa-pencil-square-o">
                             </i>Invoices
                         </a>

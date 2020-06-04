@@ -250,7 +250,7 @@
 @endsection
 @section('js')
 <script>
-$('a#purchases').addClass('mm-active');
+$('a#purchases_orders').addClass('mm-active');
 $.ajax  ({
     url: "{{asset('api/partner/search')}}",
     type: 'post',

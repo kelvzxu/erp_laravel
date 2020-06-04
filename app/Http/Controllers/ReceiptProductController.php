@@ -23,7 +23,7 @@ class ReceiptProductController extends Controller
     {
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
-        $receipt = receipt_product::orderBy('created_at','asc')->paginate(25);
+        $receipt = receipt_product::orderBy('created_at','DESC')->paginate(25);
         return view('receipt.index', compact('access','group','receipt'));
     }
 
@@ -102,7 +102,7 @@ class ReceiptProductController extends Controller
      */
     public function validation($id)
     {
-        try {
+        // try {
             $receipt_product = receipt_product::findOrFail($id);
             $receipt_product->update([
                 'validate'=> True,
@@ -112,22 +112,27 @@ class ReceiptProductController extends Controller
             ]);
             foreach ($receipt_product->po->products as $data){
                 $qty = $data->qty;
+                $price = $data->price;
+                $new_valuation = $qty * $price;
                 $product_id = $data->name;
 
                 $product = Product::find($product_id);
                 $oldstock = $product->stock;
+                $old_valuation = $oldstock * $product->cost;
                 $newstock = $oldstock + $qty;
+                $new_cost = ($new_valuation + $old_valuation)/$newstock;
 
                 Product::where('id',$product_id)->update([
                     'stock' => $newstock,
+                    'cost' => $new_cost,
                 ]);
             }
             Toastr::success('Receipt Product Validation Successfully','Success');
             return redirect(route('product'));
-        } catch (\Exception $e) {
-            Toastr::error($e->getMessage(),'Something Wrong');
-            // Toastr::error('Check In Error!','Something Wrong');
-            return redirect()->back();
-        }
+        // } catch (\Exception $e) {
+        //     Toastr::error($e->getMessage(),'Something Wrong');
+        //     // Toastr::error('Check In Error!','Something Wrong');
+        //     return redirect()->back();
+        // }
     }
 }

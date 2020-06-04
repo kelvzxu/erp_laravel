@@ -91,7 +91,7 @@
             }
         })
         
-        
+        $('a#purchases_orders').addClass('mm-active');
     </script> 
     <script src="{{asset('/js/transaksi/purchase_order.js')}}"></script>
 @endsection
