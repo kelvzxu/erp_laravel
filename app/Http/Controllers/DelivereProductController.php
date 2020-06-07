@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sales\delivere_product;
-use App\Models\Sales\return_invoice;
-use Brian2694\Toastr\Facades\Toastr;
-use App\Models\Product\Product;
-use App\Models\Sales\Invoice;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\access_right;
 use App\User;
+use Brian2694\Toastr\Facades\Toastr;
+use App\Models\Product\Product;
+use App\Models\Product\stock_move;
+use App\Models\Product\stock_valuation;
+use App\Models\Sales\Invoice;
+use App\Models\Sales\delivere_product;
+use App\Models\Sales\return_invoice;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DelivereProductController extends Controller
 {
@@ -42,6 +44,23 @@ class DelivereProductController extends Controller
                 'created_at'=>date('Y-m-d H:i:s'),
                 'updated_at'=>date('Y-m-d H:i:s'),
             ]);
+
+            // insert  Stock Move
+            $delivere_product = delivere_product::where('delivery_no',$delivery_no)->first();
+            foreach ($delivere_product->inv->products as $data){
+                $product = Product::find($data->name);
+                stock_move::insert([
+                    'product_id'=>$data->name,
+                    'quantity'=>$data->qty,
+                    'location_id'=>$product->location,
+                    'location_destination'=>$id,
+                    'partner_id'=>$invoice->client,
+                    'type'=>'Invoice',
+                    'reference'=>$delivery_no,
+                    'create_uid'=>Auth::id(),
+                    'created_at'=>date('Y-m-d H:i:s'),
+                ]);
+            }
             $invoice->update([
                 'deliver'=> True,
             ]);
@@ -81,7 +100,8 @@ class DelivereProductController extends Controller
             $delivery->update([
                 'validate'=> True,
             ]);
-            $invoice = invoice::where('invoice_no',$delivery->invoice_no)->update([
+            $invoice = invoice::where('invoice_no',$delivery->invoice_no)->first();
+            $invoice->update([
                 'deliver_validate'=> True,
             ]);
             foreach ($delivery->inv->products as $data){
@@ -91,9 +111,22 @@ class DelivereProductController extends Controller
                 $product = Product::find($product_id);
                 $oldstock = $product->stock;
                 $newstock = $oldstock - $qty;
+                $value = $data->qty*$product->cost;
+                // Product::where('id',$product_id)->update([
+                //     'stock' => $newstock,
+                // ]);
 
-                Product::where('id',$product_id)->update([
-                    'stock' => $newstock,
+                // insert stock Valuation
+                $stock_move_id = stock_move::where([['location_destination',$invoice->id],['type','Invoice'],['product_id',$product_id]])->first();
+                stock_valuation::insert([
+                    'product_id'=>$data->name,
+                    'quantity'=>"-$data->qty",
+                    'unit_cost'=>"-$product->cost",
+                    'value'=>"-$value",
+                    'description'=>" $delivery->delivery_no - $product->name",
+                    'stock_move_id'=>$stock_move_id->id,
+                    'create_uid'=>Auth::id(),
+                    'created_at'=>date('Y-m-d H:i:s'),
                 ]);
             }
             Toastr::success('Delivery Product with inv_no: '.$delivery->invoice_no.' Validation Successfully','Success');

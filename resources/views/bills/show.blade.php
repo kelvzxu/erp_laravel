@@ -58,8 +58,13 @@
 
         <div class="o_form_statusbar">
             <div class="o_statusbar_buttons">
-                @if($purchases->receipt == False )                
-                    <a href="{{route('receipt.store', $purchases)}}" class="btn btn-primary"><i class="fa fa-truck"> Receipt</i></a>
+                @if($purchases->status == "Pending" ) 
+                    <a href="{{route('purchases.approved', $purchases)}}" class="btn btn-primary"><i class="fa fa-check">Approved</i></a>
+                @endif
+                @if($purchases->status == "Complete" ) 
+                    @if($purchases->receipt == False )                
+                        <a href="{{route('receipt.store', $purchases)}}" class="btn btn-primary"><i class="fa fa-truck"> Receipt</i></a>
+                    @endif
                 @endif
                 <a href="{{route('purchases.print', $purchases)}}" class="btn btn-success"><i class="fa fa-print"></i> Print</a>
                 <a href="{{route('purchases')}}" class="btn btn-secondary">Back</a>

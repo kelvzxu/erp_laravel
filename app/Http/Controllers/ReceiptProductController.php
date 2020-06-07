@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\access_right;
+use App\User;
 use App\Models\Merchandises\Purchase;
 use App\Models\Merchandises\receipt_product;
 use App\Models\Merchandises\return_purchase;
-use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Product\Product;
+use App\Models\Product\stock_move;
+use App\Models\Product\stock_valuation;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
 
 class ReceiptProductController extends Controller
 {
@@ -63,11 +65,28 @@ class ReceiptProductController extends Controller
             $purchase = purchase::findOrFail($id);
             receipt_product::insert([
                 'receipt_no'=>$receipt_no,
-                'purchase_no'=>$purchase->purchase_no,
+                'purchase_no'=>$purchase->purchase_no, 
                 'receipt_date'=>date('Y-m-d H:i:s'),
                 'created_at'=>date('Y-m-d H:i:s'),
                 'updated_at'=>date('Y-m-d H:i:s'),
             ]);
+
+            // insert  Stock Move
+            $receipt_product = receipt_product::where('receipt_no',$receipt_no)->first();
+            foreach ($receipt_product->po->products as $data){
+                $product = Product::find($data->name);
+                stock_move::insert([
+                    'product_id'=>$data->name,
+                    'quantity'=>$data->qty,
+                    'location_id'=>$id, 
+                    'location_destination'=>$product->location,
+                    'partner_id'=>$purchase->client,
+                    'type'=>'Purchase',
+                    'reference'=>$receipt_no,
+                    'create_uid'=>Auth::id(),
+                    'created_at'=>date('Y-m-d H:i:s'),
+                ]);
+            }
             $purchase->update([
                 'receipt'=> True,
             ]);
@@ -102,12 +121,13 @@ class ReceiptProductController extends Controller
      */
     public function validation($id)
     {
-        // try {
+        try {
             $receipt_product = receipt_product::findOrFail($id);
             $receipt_product->update([
                 'validate'=> True,
             ]);
-            $purchase = purchase::where('purchase_no',$receipt_product->purchase_no)->update([
+            $purchase = purchase::where('purchase_no',$receipt_product->purchase_no)->first();
+            $purchase->update([
                 'receipt_validate'=> True,
             ]);
             foreach ($receipt_product->po->products as $data){
@@ -115,24 +135,41 @@ class ReceiptProductController extends Controller
                 $price = $data->price;
                 $new_valuation = $qty * $price;
                 $product_id = $data->name;
-
+                
+                
                 $product = Product::find($product_id);
                 $oldstock = $product->stock;
                 $old_valuation = $oldstock * $product->cost;
                 $newstock = $oldstock + $qty;
-                $new_cost = ($new_valuation + $old_valuation)/$newstock;
-
+                $new_cost = ceil(($new_valuation + $old_valuation)/$newstock);
+                
                 Product::where('id',$product_id)->update([
                     'stock' => $newstock,
                     'cost' => $new_cost,
+                    ]);
+
+                // insert stock Valuation
+                $stock_move_id = stock_move::where([['location_id',$purchase->id],['type','Purchase'],['product_id',$product_id]])->first();
+                stock_valuation::insert([
+                    'product_id'=>$data->name,
+                    'quantity'=>$data->qty,
+                    'unit_cost'=>$new_cost,
+                    'value'=>$data->qty*$new_cost,
+                    'description'=>" $receipt_product->receipt_no - $product->name",
+                    'stock_move_id'=>$stock_move_id->id,
+                    'create_uid'=>Auth::id(),
+                    'created_at'=>date('Y-m-d H:i:s'),
                 ]);
             }
+            stock_move::where([['location_id',$purchase->id],['type','Purchase']])->update([
+                'state'=>"Done"
+            ]);
             Toastr::success('Receipt Product Validation Successfully','Success');
             return redirect(route('product'));
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage(),'Something Wrong');
-        //     // Toastr::error('Check In Error!','Something Wrong');
-        //     return redirect()->back();
-        // }
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
     }
 }

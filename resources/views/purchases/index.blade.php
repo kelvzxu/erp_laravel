@@ -148,7 +148,7 @@
                     <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
                         <div class="o_kanban_record_top mb16" modifiers="{}">
                             <div class="o_kanban_record_headings mt4" modifiers="{}">
-                                <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$purchase->partner_name}}</span></strong>
+                                <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$purchase->partner->partner_name}}</span></strong>
                             </div>
                             <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
                                     name="amount_total">Rp.&nbsp;{{ number_format($purchase->grand_total)}}</span></strong>
