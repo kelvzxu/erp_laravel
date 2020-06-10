@@ -136,7 +136,14 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
     Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
     
-    
+    // ==== Manage Companies ===== 
+    Route::get('Companies', 'ResCompaniesController@index')->name('companies.index');
+    Route::get('Companies/new', 'ResCompaniesController@create')->name('companies.create');
+    Route::post('Companies/store', 'ResCompaniesController@store')->name('companies.store');
+    Route::get('Companies/view/{id}', 'ResCompaniesController@show')->name('companies.show');
+    Route::get('Companies/edit/{id}', 'ResCompaniesController@edit')->name('companies.edit');
+    Route::post('Companies/update', 'ResCompaniesController@update')->name('companies.update');
+
     // ==== PartnerCredit=
     Route::get('PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
     Route::get('PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');

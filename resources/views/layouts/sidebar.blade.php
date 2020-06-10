@@ -404,6 +404,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="{{ route ('companies.index')}}" id="companies">
+                            <i class="metismenu-icon fa fa-building">
+                            </i>Manage Companies
+                        </a>
+                    </li>
                 @endif
             </ul>
         </div>

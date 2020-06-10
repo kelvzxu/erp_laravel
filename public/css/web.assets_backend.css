@@ -13997,6 +13997,19 @@ div.o_boolean_toggle.custom-control.custom-checkbox>input.custom-control-input:c
     position: relative;
 }
 
+.o_form_image_controls {
+    position: absolute;
+    top: 0;
+    left: auto;
+    bottom: auto;
+    right: 0;
+    width: 100%;
+    color: white;
+    background-color: #7C7BAD;
+    opacity: 0;
+    transition: opacity ease 400ms;
+}
+
 .o_field_widget.o_field_image .o_form_image_controls {
     position: absolute;
     top: 0;
