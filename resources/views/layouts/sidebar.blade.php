@@ -70,7 +70,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('return-invoice.index')}}" id="report-return" class="menu-item">
+                                <a href="{{ route ('return-invoice.index')}}" id="report-return_inv" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Report Return Invoice
                                 </a>

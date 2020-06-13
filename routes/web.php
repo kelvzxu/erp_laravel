@@ -191,7 +191,9 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Retur Invoice ====
     Route::get('Report/Return/SalesOrder/','ReturnInvoiceController@index')->name('return-invoice.index');
     Route::post('Return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
-    Route::get('Report/Return/SalesOrder/{id}','ReturnInvoiceController@show')->name('return-invoice.show');
+    Route::get('Report/Return/SalesOrder/{id}','ReturnInvoiceController@view')->name('return-invoice.view');
+    Route::get('Report/Return/SalesOrder/Edit/{id}','ReturnInvoiceController@edit')->name('return-invoice.edit');
+    Route::post('Return/SalesOrder/update', 'ReturnInvoiceController@update')->name('return-invoice.update');
 
     // ==== Retur Purchase ====
     Route::get('Report/Return/Purchase/','ReturnPurchaseController@index')->name('return-po.index');

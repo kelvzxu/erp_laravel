@@ -197,7 +197,7 @@
                                         <div class="col-sm-11">
                                             <div class="wrap-input200 mt-4">
                                                 <label for="">Internal Note</label>
-                                                <textarea name="description" id="description" value="{{ $product->description }}
+                                                <textarea name="description" id="description" value="{{ $product->description }}"
                                                     cols="5" rows="5" placeholder="This note is only for internal purpose"
                                                     class="input200 {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
                                                 <p class="text-danger">{{ $errors->first('description') }}</p>

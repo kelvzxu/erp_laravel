@@ -112,9 +112,9 @@ class DelivereProductController extends Controller
                 $oldstock = $product->stock;
                 $newstock = $oldstock - $qty;
                 $value = $data->qty*$product->cost;
-                // Product::where('id',$product_id)->update([
-                //     'stock' => $newstock,
-                // ]);
+                Product::where('id',$product_id)->update([
+                    'stock' => $newstock,
+                ]);
 
                 // insert stock Valuation
                 $stock_move_id = stock_move::where([['location_destination',$invoice->id],['type','Invoice'],['product_id',$product_id]])->first();
