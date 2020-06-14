@@ -3,11 +3,6 @@
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
-<style>
-    .table-row{
-        cursor:pointer;
-    }
-</style>
 @endsection
 @section('content')
 <div class="app-page-title bg-white">

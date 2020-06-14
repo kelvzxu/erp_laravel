@@ -5,7 +5,7 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content') 
-<form action="{{ route('return-invoice.update') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('return-po.update') }}" method="post" enctype="multipart/form-data">
     @csrf
     <input type="hidden" name="id" value="{{ $data-> id }}">
     <div class="app-page-title bg-white">
@@ -13,8 +13,8 @@
             <div>
                 <ol class="breadcrumb" role="navigation">
                     <li class="breadcrumb-item" accesskey="b">
-                        <a href="{{route('return-invoice.index')}}">
-                            Report Return Invoice
+                        <a href="{{route('return-po.index')}}">
+                            Report Return Purchase
                         </a>
                     </li>
                     <li class="breadcrumb-item active">{{$data->return_no}}</li>
@@ -25,7 +25,7 @@
                     <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                         <div>
                             <button class="btn btn-primary my-2" @click="update" :disabled="isProcessing">Save</button>
-                            <a href="{{route('return-invoice.view', $data)}}" class="btn btn-secondary mby-2">Discard</a>
+                            <a href="{{route('return-po.view', $data)}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
@@ -68,27 +68,27 @@
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <p class="input200">{{$data->invoice_no}}</p>
+                                                    <p class="input200">{{$data->purchase_no}}</p>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label">customer</label>
+                                                <label class="o_form_label">Partner</label>
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <p class="input200">{{$data->customer->name}}</p>
+                                                    <p class="input200">{{$data->partner->partner_name}}</p>
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label">Delivery No</label>
+                                                <label class="o_form_label">Receive No</label>
                                             </td>
                                             <td>
                                                 <div class="wrap-input200">
-                                                    <p class="input200">{{$data->delivery_no}}</p>
+                                                    <p class="input200">{{$data->receipt_no}}</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -196,5 +196,5 @@
     window._form = {!! $data->toJson() !!};
     var data  = {!! $data->toJson() !!};
 </script>
-<script src="{{asset('js/asset_common/return_inv.js')}}"></script>
+<script src="{{asset('js/asset_common/return_po.js')}}"></script>
 @endsection

@@ -65,42 +65,14 @@
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-    <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
-    <script type="text/javascript">
-        Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+<script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
+<script type="text/javascript">
+    Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
-        window._form = {!! $orders->toJson() !!};
-        var data  = {!! $orders->toJson() !!};
-        console.log(data);
-        $('a#purchases').addClass('mm-active');
-        // $.each(product, function (i) {
-        //     $.ajax  ({
-        //         url: "{{asset('api/product/search')}}",
-        //         type: 'post',
-        //         dataType: 'json',
-        //         data :{
-        //             'id': product[i].name
-        //         },
-        //         success: function (result) {
-        //             console.log(result.data.price);
-        //             $("#product").val(result.data.name);
-        //         }
-        //     })
-        // });
-        $.ajax  ({
-            url: "{{asset('api/partner/search')}}",
-            type: 'post',
-            dataType: 'json',
-            data :{
-                'id': "{{$orders->vendor}}"
-            },
-            success: function (result) {
-                $("#client").val(result.data.partner_name);
-            }
-        })
-        
-        $('a#purchases_orders').addClass('mm-active');
-    </script> 
-    <script src="{{asset('/js/transaksi/purchase_order.js')}}"></script>
+    window._form = {!! $orders->toJson() !!};
+    var data  = {!! $orders->toJson() !!};
+</script> 
+<script src="{{asset('/js/transaksi/purchase_order.js')}}"></script>
+<script src="{{asset('js/asset_common/purchase_order.js')}}"></script>
 @endsection

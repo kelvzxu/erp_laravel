@@ -101,7 +101,7 @@
                         </thead> 
                         <tbody> 
                             @foreach($invoices as $invoice)
-                                <tr>
+                                <tr class="table-row" data-href="{{route('invoices.show', $invoice)}}">
                                     <td>{{$invoice->invoice_no}}</td>
                                     <td>Rp. {{ number_format($invoice->grand_total)}}</td>
                                     <td>{{$invoice->name}}</td>
@@ -118,12 +118,6 @@
                                         @endif
                                     </td>
                                     <td>{{$invoice->created_at->diffForHumans()}}</td>
-                                    <td class="text-right">
-                                        <a href="{{route('invoices.show', $invoice)}}" class="btn btn-primary btn-sm">View</a>
-                                        @if($invoice->status == "Pending" ) 
-                                            <a href="{{route('invoices.approved', $invoice)}}" class="btn btn-success btn-sm">Posted</a>
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -200,11 +194,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-    $('a#invoices').addClass('mm-active');
-    $("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/invoice.js')}}"></script>
 @endsection

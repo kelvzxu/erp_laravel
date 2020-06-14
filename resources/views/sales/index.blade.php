@@ -100,7 +100,7 @@
                         </thead>
                         <tbody>
                             @foreach($orders as $data)
-                                <tr>
+                                <tr class="table-row" data-href="{{route('sales_orders.show', $data)}}">
                                     <td>{{$data->order_no}}</td>
                                     <td>{{$data->partner->name}}</td>
                                     <td>{{$data->order_date}}</td>
@@ -117,9 +117,6 @@
                                         @endif
                                     </td>
                                     <td>{{$data->created_at->diffForHumans()}}</td>
-                                    <td class="text-right">
-                                        <a href="{{route('sales_orders.show', $data)}}" class="btn btn-primary btn-sm">View</a>
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -198,11 +195,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#sales_orders').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/sales.js')}}"></script>
 @endsection

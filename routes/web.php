@@ -158,13 +158,13 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('VendorBills/create', 'BillsController@create')->name('purchases.create');
     Route::get('VendorBills/create/{id}', 'BillsController@wizard_create')->name('purchases.wizard_create');
     Route::post('VendorBills', 'BillsController@store')->name('purchases.store');
-    Route::get('VendorBills/show{id}', 'BillsController@show')->name('purchases.show');
-    Route::get('VendorBills/edit{id}', 'BillsController@edit')->name('purchases.edit');
+    Route::get('VendorBills/show/{id}', 'BillsController@show')->name('purchases.show');
+    Route::get('VendorBills/edit/{id}', 'BillsController@edit')->name('purchases.edit');
     Route::put('VendorBills/update/{id}', 'BillsController@update')->name('purchases.update');
     Route::get('VendorBills/destroy', 'BillsController@destroy')->name('purchases.destroy');
     Route::get('VendorBills/filter', 'BillsController@search')->name('purchases.filter');
     Route::get('VendorBills/approved/{id}', 'BillsController@approved')->name('purchases.approved');
-    Route::get('VendorBills/print{id}', 'BillsController@print_pdf')->name('purchases.print');
+    Route::get('VendorBills/print/{id}', 'BillsController@print_pdf')->name('purchases.print');
     Route::get('Reports/VendorBills', 'BillsController@report')->name('purchases.report');
     Route::get('Reports/VendorBills/print', 'BillsController@report_print')->name('purchases_report.print');
     
@@ -198,7 +198,9 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Retur Purchase ====
     Route::get('Report/Return/Purchase/','ReturnPurchaseController@index')->name('return-po.index');
     Route::post('Return/Purchase/', 'ReturnPurchaseController@store')->name('return-po.store');
-    Route::get('Report/Return/Purchase/{id}','ReturnPurchaseController@show')->name('return-po.show');
+    Route::get('Report/Return/Purchase/{id}','ReturnPurchaseController@view')->name('return-po.view');
+    Route::get('Report/Return/Purchase/Edit/{id}','ReturnPurchaseController@edit')->name('return-po.edit');
+    Route::post('Return/Purchase/Update', 'ReturnPurchaseController@update')->name('return-po.update');
 
     // ==== Recruitment ====
     Route::get('recruitment','HrRecruitmentController@index')->name('recruitment');

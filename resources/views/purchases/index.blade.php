@@ -100,7 +100,7 @@
                         </thead>
                         <tbody>
                             @foreach($orders as $purchase)
-                                <tr>
+                                <tr class="table-row" data-href="{{route('purchase_orders.show', $purchase)}}">
                                     <td>{{$purchase->order_no}}</td>
                                     <td>{{$purchase->partner->partner_name}}</td>
                                     <td>{{$purchase->order_date}}</td>
@@ -117,12 +117,6 @@
                                         @endif
                                     </td>
                                     <td>{{$purchase->created_at->diffForHumans()}}</td>
-                                    <td class="text-right">
-                                        <a href="{{route('purchase_orders.show', $purchase)}}" class="btn btn-primary btn-sm">View</a>
-                                        @if($purchase->status == "Pending" ) 
-                                            <a href="{{route('purchases.approved', $purchase)}}" class="btn btn-success btn-sm">Approved</a>
-                                        @endif
-                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -199,11 +193,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#purchases_orders').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/purchase_order.js')}}"></script>
 @endsection

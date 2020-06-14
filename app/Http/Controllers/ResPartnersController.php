@@ -93,8 +93,6 @@ class ResPartnersController extends Controller
                 'currency_id'=> $request->currency_id,
                 'bank_account'=> $request->bank_account,
                 'website'=> $request->website,
-                'credit_limit'=> $request->credit,
-                'debit_limit'=> $request->debit,
                 'active'=> $active=True,
                 'address'=> $request->type,
                 'street'=> $request->street1,

@@ -59,43 +59,14 @@
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-    <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
-    <script type="text/javascript">
-        Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+<script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
+<script type="text/javascript">
+    Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
-        window._form = {!! $invoice->toJson() !!};
-        var data  = {!! $invoice->toJson() !!};
-        console.log(data);
-        $('a#invoices').addClass('mm-active');
-
-        // $.each(product, function (i) {
-        //     $.ajax  ({
-        //         url: "{{asset('api/product/search')}}",
-        //         type: 'post',
-        //         dataType: 'json',
-        //         data :{
-        //             'id': product[i].name
-        //         },
-        //         success: function (result) {
-        //             console.log(result.data.price);
-        //             $("#product").val(result.data.name);
-        //         }
-        //     })
-        // });
-        $.ajax  ({
-            url: "{{asset('api/customer/search')}}",
-            type: 'post',
-            dataType: 'json',
-            data :{
-                'id': "{{$invoice->client}}"
-            },
-            success: function (result) {
-                $("#client").val(result.data.name);
-            }
-        })
-        
-        
-    </script>
-    <script src="{{asset('/js/transaksi/invoice.js')}}"></script>
+    window._form = {!! $invoice->toJson() !!};
+    var data  = {!! $invoice->toJson() !!};
+</script>
+<script src="{{asset('/js/transaksi/invoice.js')}}"></script>
+<script src="{{asset('js/asset_common/invoice.js')}}"></script>
 @endsection

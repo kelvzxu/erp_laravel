@@ -16,6 +16,11 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/base.css') }}">
     @yield('css')
+    <style>
+    .table-row{
+        cursor:pointer;
+    }
+</style>
 </head>
 
 <body>
@@ -303,6 +308,7 @@
     {{--<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
     {!! Toastr::message() !!}
     <script>
     function unactive(){

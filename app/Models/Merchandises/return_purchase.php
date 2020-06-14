@@ -8,7 +8,7 @@ class return_purchase extends Model
 {
     public function products()
     {
-        return $this->hasMany(return_invoice_product::class);
+        return $this->hasMany(return_purchase_product::class);
     }
     public function invoice()
     {
@@ -16,6 +16,10 @@ class return_purchase extends Model
     }
     public function user()
     {
-        return $this->hasOne('App\User','id','user_id');
+        return $this->belongsTo('App\Models\Human_Resource\hr_employee','user_id','user_id');
+    }
+    public function partner()
+    {
+        return $this->hasOne('App\Models\Partner\res_partner','id','client');
     }
 }

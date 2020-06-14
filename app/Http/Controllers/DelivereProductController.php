@@ -128,6 +128,9 @@ class DelivereProductController extends Controller
                     'create_uid'=>Auth::id(),
                     'created_at'=>date('Y-m-d H:i:s'),
                 ]);
+                stock_move::where([['location_destination',$invoice->id],['type','Invoice'],['product_id',$product_id]])->update([
+                    'state'=>"Done"
+                ]);
             }
             Toastr::success('Delivery Product with inv_no: '.$delivery->invoice_no.' Validation Successfully','Success');
             return redirect(route('product'));

@@ -146,28 +146,26 @@
 @endsection
 
 @section('js')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-    <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
-    <script type="text/javascript">
-        Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+<script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
+<script type="text/javascript">
+    Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
-        window._form = {
-            invoice_no: '',
-            client: '',
-            client_address: '',
-            title: '',
-            invoice_date: '',
-            due_date: '',
-            discount: 0,
-            products: [{
-                name: '',
-                price: 0,
-                qty: 1
-            }]
-        };
-
-        $('a#invoices').addClass('mm-active');
-
-    </script>
-    <script src="{{asset('/js/transaksi/invoice.js')}}"></script>
+    window._form = {
+        invoice_no: '',
+        client: '',
+        client_address: '',
+        title: '',
+        invoice_date: '',
+        due_date: '',
+        discount: 0,
+        products: [{
+            name: '',
+            price: 0,
+            qty: 1
+        }]
+    };
+</script>
+<script src="{{asset('/js/transaksi/invoice.js')}}"></script>
+<script src="{{asset('js/asset_common/invoice.js')}}"></script>
 @endsection

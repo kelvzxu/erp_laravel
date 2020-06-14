@@ -23,10 +23,9 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        @if($invoice->deliver_validate == True )
-                            <a type="button" href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary o-kanban-button-new disabled">Edit</a>
-                        @endif
-                        @if($invoice->deliver_validate == False )
+                        @if($invoice->deliver == True )
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit</button>                        @endif
+                        @if($invoice->deliver == False )  
                             <a type="button" href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
                         @endif
                         <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('invoices.create')}}">
@@ -173,6 +172,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Client</label>
+                        <input type="hidden" id="client_id" value="{{$invoice->client}}">
                         <p id="client">{{$invoice->client}}</p>
                     </div>
                     <div class="form-group">
@@ -242,22 +242,31 @@
 </div>
 <br>
 @endsection
+@section('modal')
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Something Went Wrong</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{asset('images/icons/warning.png')}}" alt=""><br>
+                <p class="mb-0">You Can't Edit this Record </p>
+                <p class="mb-0">
+                    because this order has been delivered to the customer.<br>
+                    if there is a change in the number of items it is expected to return the order
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
 @section('js')
-<script>
-function pdf() {
-    window.print();
-}
-$('a#invoices').addClass('mm-active');
-$.ajax  ({
-    url: "{{asset('api/customer/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$invoice->client}}"
-    },
-    success: function (result) {
-        $("#client").html(result.data.name);
-    }
-})
-</script>
+<script src="{{asset('js/asset_common/invoice.js')}}"></script>
 @endsection

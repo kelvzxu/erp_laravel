@@ -265,18 +265,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#purchases_orders').addClass('mm-active');
-$.ajax  ({
-    url: "{{asset('api/partner/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$orders->client}}"
-    },
-    success: function (result) {
-        $("#client").html(result.data.partner_name);
-    }
-})
-</script>
+<script src="{{asset('js/asset_common/purchase_order.js')}}"></script>
 @endsection

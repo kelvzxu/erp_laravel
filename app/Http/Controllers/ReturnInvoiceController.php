@@ -79,6 +79,7 @@ class ReturnInvoiceController extends Controller
                     'partner_id'=>$invoice->client,
                     'type'=>'Retur Invoice',
                     'reference'=>$return_no,
+                    'state'=>"Done",
                     'create_uid'=>Auth::id(),
                     'created_at'=>date('Y-m-d H:i:s'),
                 ]);
@@ -156,6 +157,7 @@ class ReturnInvoiceController extends Controller
                     'partner_id'=>$invoice->client,
                     'type'=>'Retur Invoice',
                     'reference'=>$return_inv->return_no,
+                    'state'=>"Done",
                     'create_uid'=>Auth::id(),
                     'created_at'=>date('Y-m-d H:i:s'),
                 ]);

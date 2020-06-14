@@ -114,7 +114,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('return-po.index')}}">
+                                <a href="{{ route ('return-po.index')}}" id="report-return_po">
                                     <i class="metismenu-icon"></i>
                                     Report Return Bill
                                 </a>

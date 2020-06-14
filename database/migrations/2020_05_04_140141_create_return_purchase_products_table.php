@@ -15,7 +15,7 @@ class CreateReturnPurchaseProductsTable extends Migration
     {
         Schema::create('return_purchase_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('return_id')->unsigned();
+            $table->integer('return_purchase_id')->unsigned();
             $table->integer('name');
             $table->integer('price');
             $table->integer('qty');

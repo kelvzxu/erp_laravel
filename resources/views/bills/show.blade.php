@@ -169,6 +169,7 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Supplier</label>
+                        <input type="hidden" id="client_id" value="{{$purchases->client}}">
                         <p id="client">{{$purchases->client}}</p>
                     </div>
                     <div class="form-group">
@@ -239,18 +240,5 @@
 <br>
 @endsection
 @section('js')
-<script>
-$('a#purchases').addClass('mm-active');
-$.ajax  ({
-    url: "{{asset('api/partner/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$purchases->client}}"
-    },
-    success: function (result) {
-        $("#client").html(result.data.partner_name);
-    }
-})
-</script>
+<script src="{{asset('js/asset_common/bill.js')}}"></script>
 @endsection

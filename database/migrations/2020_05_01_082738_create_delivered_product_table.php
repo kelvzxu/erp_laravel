@@ -16,7 +16,7 @@ class CreateDeliveredProductTable extends Migration
         Schema::create('delivered_products', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('delivery_no');
-            $tabbigIncrementsle->string('invoice_no');
+            $table->string('invoice_no');
             $table->date('delivery_date');
             $table->boolean('validate')->default(False);
             $table->timestamps();

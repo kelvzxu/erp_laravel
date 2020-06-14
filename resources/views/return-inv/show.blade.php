@@ -233,19 +233,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('#report-return_inv').addClass('mm-active');
-$('a#sales_report').addClass('mm-active');
-$.ajax  ({
-    url: "{{asset('api/partner/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$data->client}}"
-    },
-    success: function (result) {
-        $("#client").html(result.data.partner_name);
-    }
-})
-</script>
+<script src="{{asset('js/asset_common/return_inv.js')}}"></script>
 @endsection
