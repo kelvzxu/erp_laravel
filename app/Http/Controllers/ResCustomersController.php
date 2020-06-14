@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer\res_customer;
-use App\Models\World_database\res_country;
-use App\Models\World_database\res_country_state;
+use App\access_right;
+use App\User;
 use App\Models\Accounting\account_journal;
-use App\Models\Human_Resource\hr_employee;
-use App\Models\Data\res_partner_industry;
+use App\Models\Customer\res_customer;
 use App\Models\Currency\res_currency;
+use App\Models\Data\res_partner_industry;
 use App\Models\Data\res_lang;
 use App\Models\Data\timezone;
-use Illuminate\Support\Facades\DB;
+use App\Models\Human_Resource\hr_employee;
+use App\Models\Sales\Invoice;
+use App\Models\World_database\res_country;
+use App\Models\World_database\res_country_state;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
+use Illuminate\Support\Facades\DB;
 
 class ResCustomersController extends Controller
 {
@@ -142,8 +143,9 @@ class ResCustomersController extends Controller
         $lang = res_lang::orderBy('lang_name', 'ASC')->get();
         $tz = timezone::orderBy('timezone', 'ASC')->get();
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
+        $invoice=Invoice::where('client',$res_customer->id)->count();
         return view('res_customer.edit_customer',
-            compact('access','group','res_customer','country','state','currency','lang','tz','industry','employee','account'));
+            compact('access','group','res_customer','invoice','country','state','currency','lang','tz','industry','employee','account'));
     }
 
     /**

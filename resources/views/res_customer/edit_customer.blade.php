@@ -81,25 +81,22 @@
                                 <span class="o_stat_text">Saldo</span>
                             </div>
                         </button>
-                        <button type="button" class="btn oe_stat_button" name="457" width="200px">
+                        <a type="button" href="{{ route('CustomerDebt.show', $res_customer->id) }}" class="btn oe_stat_button" name="457" width="200px">
                             <i class="fa fa-fw o_button_icon fa-usd"></i>
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 <span class="o_stat_value">Rp. {{ number_format($res_customer->debit_limit)}}</span>
                                 <span class="o_stat_text">Sales</span>
                             </div>
-                        </button>
-                        <button type="button" class="btn oe_stat_button" name="action_view_partner_invoices"
+                        </a>
+                        <a type="button" href="{{ url('invoices/filter?value='.$res_customer ->name.'&filter=name') }}" class="btn oe_stat_button" name="action_view_partner_invoices"
                             context="{'default_partner_id': active_id}">
                             <i class="fa fa-fw o_button_icon fa-pencil-square-o"></i>
                             <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <span class="o_field_monetary o_field_number o_field_widget o_readonly_modifier"
-                                    name="total_invoiced" data-original-title="" title="">0.00</span>
-                                </span>
+                                <span class="o_stat_value">{{$invoice}}</span>
                                 <span class="o_stat_text">Invoiced</span>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-10">
@@ -190,7 +187,10 @@
                                                                     {{ ucfirst($row->country_name) }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>
+                                                        </select>col-6">
+                                                        <div class="wrap-input200">
+                                                            <select id="tz" name="tz" class="input200" required style="border:none;">
+                                                                <option value="">Timezone</option>
                                                     </div>
                                                     <div class="wrap-input200">
                                                         <select id="state" name="state" class="input200" style="border:none;">

@@ -89,17 +89,14 @@
                                 <span class="o_stat_text">Purchases</span>
                             </div>
                         </button>
-                        <button type="button" class="btn oe_stat_button" name="action_view_partner_invoices"
+                        <a type="button" href="{{ url('VendorBills/filter?value='.$res_partner ->partner_name.'&filter=partner_name') }}" class="btn oe_stat_button" name="action_view_partner_invoices"
                             context="{'default_partner_id': active_id}">
                             <i class="fa fa-fw o_button_icon fa-pencil-square-o"></i>
                             <div class="o_form_field o_stat_info">
-                                <span class="o_stat_value">
-                                    <span class="o_field_monetary o_field_number o_field_widget o_readonly_modifier"
-                                    name="total_invoiced" data-original-title="" title="">0.00</span>
-                                </span>
+                                <span class="o_stat_value">{{$bills}}</span>
                                 <span class="o_stat_text">Bill</span>
                             </div>
-                        </button>
+                        </a>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-10">

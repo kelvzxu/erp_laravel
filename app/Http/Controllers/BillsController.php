@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\access_right;
+use App\User;
 use App\Http\Requests;
 use App\Models\Merchandises\Purchase;
-use App\Models\Merchandises\receipt_product;
 use App\Models\Merchandises\purchases_order_products;
 use App\Models\Merchandises\purchases_order;
 use App\Models\Merchandises\PurchaseProduct;
+use App\Models\Merchandises\receipt_product;
 use App\Models\Product\Product;
 use App\Models\Partner\partner_credit;
 use App\Models\Partner\res_partner;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
 use PDF;
 
 class BillsController extends Controller

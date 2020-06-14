@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\access_right;
+use App\User;
+use App\Models\Accounting\account_journal;
+use App\Models\Currency\res_currency;
+use App\Models\Data\res_partner_industry;
+use App\Models\Data\res_lang;
+use App\Models\Data\timezone;
+use App\Models\Human_Resource\hr_employee;
+use App\Models\Merchandises\Purchase;
 use App\Models\Partner\res_partner;
 use App\Models\World_database\res_country;
 use App\Models\World_database\res_country_state;
-use App\Models\Accounting\account_journal;
-use App\Models\Human_Resource\hr_employee;
-use App\Models\Data\res_partner_industry;
-use App\Models\Currency\res_currency;
-use App\Models\Data\res_lang;
-use App\Models\Data\timezone;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
+use Illuminate\Support\Facades\DB;
 
 class ResPartnersController extends Controller
 {
@@ -136,8 +137,9 @@ class ResPartnersController extends Controller
         $lang = res_lang::orderBy('lang_name', 'ASC')->get();
         $tz = timezone::orderBy('timezone', 'ASC')->get();
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
+        $bills=Purchase::where('client',$res_partner->id)->count();
         return view('res_partner.edit_partner',
-            compact('access','group','res_partner','country','state','currency','lang','tz','industry','account','employee'));
+            compact('access','group','res_partner','country','bills','state','currency','lang','tz','industry','account','employee'));
     }
 
     public function edit(res_partner $res_partner)
