@@ -129,7 +129,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="wrap-input200">
-                                                                    <select id="country" name="country" class="input200" style="border:none;">
+                                                                    <select id="country" name="country_id" class="input200" style="border:none;">
                                                                     <option value="">country</option>
                                                                         @foreach ($country as $row)
                                                                             <option value="{{ $row->id }}" {{ $row->id == $data -> country_id ? 'selected':'' }}>
@@ -139,7 +139,7 @@
                                                                     </select>
                                                                 </div>
                                                                 <div class="wrap-input200">
-                                                                    <select id="state" name="state" class="input200" style="border:none;">
+                                                                    <select id="state" name="state_id" class="input200" style="border:none;">
                                                                         <option value="">State</option>
                                                                         @foreach ($state as $row)
                                                                             <option value="{{ $row->id }}" {{ $row->id == $data -> state_id ? 'selected':'' }}>

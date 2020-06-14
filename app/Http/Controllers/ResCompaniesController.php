@@ -124,7 +124,7 @@ class ResCompaniesController extends Controller
             'company_name' => 'required|string|max:50',
             'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
-        // try {
+        try {
 
             $data = res_company::where('id',$request->id)->first();
             $nama_file=$data->photo;
@@ -170,11 +170,11 @@ class ResCompaniesController extends Controller
 
             Toastr::success('Company ' .$request->company_name. ' updated successfully','Success');
             return redirect(route('companies.index'));
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage(),'Something Wrong');
-        //     // Toastr::error('Check In Error!','Something Wrong');
-        //     return redirect()->back();
-        // }
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
     }
 
     /**
