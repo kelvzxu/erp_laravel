@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Product\Category;
-use App\Models\Product\Product;
-use App\Models\Currency\res_currency;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Auth;
 use App\access_right;
 use App\User;
-use File;
+use App\Models\Accounting\account_account;
+use App\Models\Accounting\account_journal;
+use App\Models\Currency\res_currency;
+use App\Models\Product\Category;
+use App\Models\Product\Product;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Image;
+use File;
 use PDF;
 
 class ProductController extends Controller
@@ -47,7 +49,9 @@ class ProductController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $categories = Category::orderBy('name', 'ASC')->get();
-        return view('products.create', compact('access','group','categories'));
+        $account = account_account::orderBy('code','asc')->get();
+        $journal = account_journal::orderBy('code','asc')->get();
+        return view('products.create', compact('access','group','categories','journal','account'));
     }
 
     public function store(Request $request)
@@ -81,7 +85,13 @@ class ProductController extends Controller
                 'photo' => $nama_file,
                 'cost'=>$request->cost,
                 'can_be_sold'=>$request->can_be_sold,
-                'can_be_purchase'=>$request->can_be_purchase
+                'can_be_purchase'=>$request->can_be_purchase,
+                'income_account'=>$request->income_account,
+                'expense_account'=>$request->expense_account,
+                'stock_input_account'=>$request->stock_input_account,
+                'stock_output_account'=>$request->stock_output_account,
+                'stock_valuation_account'=>$request->stock_valuation_account,
+                'stock_journal'=>$request->stock_journal,
             ]);
             return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
@@ -120,8 +130,10 @@ class ProductController extends Controller
         $group=user::find(Auth::id());
         $product = Product::findOrFail($request->id);
         $categories = Category::orderBy('name', 'ASC')->get();
+        $account = account_account::orderBy('code','asc')->get();
+        $journal = account_journal::orderBy('code','asc')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        return view('products.edit', compact('access','group','product', 'categories'));
+        return view('products.edit', compact('access','group','product', 'categories','journal','account'));
     }
 
     public function update(Request $request)
@@ -156,7 +168,13 @@ class ProductController extends Controller
                 'cost'=>$request->cost,
                 'photo' => $nama_file,
                 'can_be_sold'=>$request->can_be_sold,
-                'can_be_purchase'=>$request->can_be_purchase
+                'can_be_purchase'=>$request->can_be_purchase,
+                'income_account'=>$request->income_account,
+                'expense_account'=>$request->expense_account,
+                'stock_input_account'=>$request->stock_input_account,
+                'stock_output_account'=>$request->stock_output_account,
+                'stock_valuation_account'=>$request->stock_valuation_account,
+                'stock_journal'=>$request->stock_journal,
             ]);
 
             return redirect(route('product'))

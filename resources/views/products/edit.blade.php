@@ -138,6 +138,9 @@
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
                                     class="nav-link active" role="tab" aria-selected="true">General Information</a>
                             </li>
+                            <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_582"
+                                    class="nav-link" role="tab" aria-selected="true">Accounting</a>
+                            </li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="notebook_page_581">
@@ -201,6 +204,88 @@
                                                     cols="5" rows="5" placeholder="This note is only for internal purpose"
                                                     class="input200 {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
                                                 <p class="text-danger">{{ $errors->first('description') }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div class="tab-pane" id="notebook_page_582">
+                                <div class="o_group">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Income Account</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="income_account" id="income_account" style="border:none"
+                                                        required class="input200 {{ $errors->has('income_account') ? 'is-invalid':'' }}">
+                                                        @foreach ($account as $row)
+                                                            <option value="{{ $row->id }}"  {{ $row->id == $product->income_account ? 'selected':'' }}>{{ $row->code }}&nbsp;{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('income_account') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Expense Account</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="expense_account" id="expense_account" style="border:none"
+                                                        required class="input200 {{ $errors->has('expense_account') ? 'is-invalid':'' }}">
+                                                        @foreach ($account as $row)
+                                                            <option value="{{ $row->id }}" {{ $row->id == $product->expense_account ? 'selected':'' }}>{{ $row->code }}&nbsp;{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('expense_account') }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Stock Input Account</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="stock_input_account" id="stock_input_account" style="border:none"
+                                                        required class="input200 {{ $errors->has('stock_input_account') ? 'is-invalid':'' }}">
+                                                        @foreach ($account as $row)
+                                                            <option value="{{ $row->id }}" {{ $row->id == $product->stock_input_account ? 'selected':'' }}>{{ $row->code }}&nbsp;{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('stock_input_account') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Stock output Account</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="stock_output_account" id="stock_output_account" style="border:none"
+                                                        required class="input200 {{ $errors->has('stock_output_account') ? 'is-invalid':'' }}">
+                                                        @foreach ($account as $row)
+                                                            <option value="{{ $row->id }}" {{ $row->id == $product->stock_output_account ? 'selected':'' }}>{{ $row->code }}&nbsp;{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('stock_output_account') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Stock valuation Account</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="stock_valuation_account" id="stock_valuation_account" style="border:none"
+                                                        required class="input200 {{ $errors->has('stock_valuation_account') ? 'is-invalid':'' }}">
+                                                        @foreach ($account as $row)
+                                                            <option value="{{ $row->id }}" {{ $row->id == $product->stock_valuation_account ? 'selected':'' }}>{{ $row->code }}&nbsp;{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('stock_valuation_account') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <label class="col-sm-5 col-form-label">Stock Journal</label>
+                                                <div class="wrap-input200 col-sm-6">
+                                                    <select name="stock_journal" id="stock_journal" style="border:none"
+                                                        required class="input200 {{ $errors->has('stock_journal') ? 'is-invalid':'' }}">
+                                                        @foreach ($journal as $row)
+                                                            <option value="{{ $row->id }}" {{ $row->id == $product->stock_journal ? 'selected':'' }}>{{ $row->code }}&nbsp;{{ ucfirst($row->name) }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                    <p class="text-danger">{{ $errors->first('stock_journal') }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

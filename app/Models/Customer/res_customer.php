@@ -38,7 +38,8 @@ class res_customer extends Model
         'note',
         'user_id',
         'receivable_account',
-        'logo'
+        'logo',
+        'journal',
     ];
     public function state()
     {
