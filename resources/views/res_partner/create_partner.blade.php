@@ -37,7 +37,7 @@
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 <span class="o_stat_value">0</span>
-                                <span class="o_stat_text">Saldo</span>
+                                <span class="o_stat_text">Credit Note</span>
                             </div>
                         </button>
                         <button type="button" class="btn oe_stat_button" name="457">
@@ -313,7 +313,6 @@
                                                             <option value="5" style="">45 Days</option>
                                                             <option value="6" style="">2 Months</option>
                                                             <option value="7" style="">End of Following Month</option>
-                                                            <option value="8" style="">30% Now, Balance 60 Days</option>
                                                         </select>
                                                     </div>
                                                 </td>

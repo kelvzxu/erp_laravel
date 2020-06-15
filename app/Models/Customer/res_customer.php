@@ -36,6 +36,7 @@ class res_customer extends Model
         'sales',
         'payment_terms',
         'note',
+        'user_id',
         'receivable_account',
         'logo'
     ];

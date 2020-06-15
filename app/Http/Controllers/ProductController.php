@@ -7,19 +7,27 @@ use App\Models\Product\Category;
 use App\Models\Product\Product;
 use App\Models\Currency\res_currency;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 use File;
 use Image;
+use PDF;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
-        return view('products.index', compact('products'));
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $products = Product::with('category')->orderBy('name', 'ASC')->paginate(30);
+        return view('products.index', compact('access','group','products'));
     }
 
     public function search(Request $request)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
         if ($key!=""){
@@ -29,15 +37,17 @@ class ProductController extends Controller
                     ->paginate(10);
             $products ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
-            $products = Product::with('category')->orderBy('name', 'ASC')->paginate(10);
+            $products = Product::with('category')->orderBy('name', 'ASC')->paginate(30);
         }
-        return view('products.index',compact('products'));
+        return view('products.index',compact('access','group','products'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $categories = Category::orderBy('name', 'ASC')->get();
-        return view('products.create', compact('categories'));
+        return view('products.create', compact('access','group','categories'));
     }
 
     public function store(Request $request)
@@ -68,7 +78,10 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'category_id' => $request->category_id,
                 'barcode' => $request->barcode,
-                'photo' => $nama_file
+                'photo' => $nama_file,
+                'cost'=>$request->cost,
+                'can_be_sold'=>$request->can_be_sold,
+                'can_be_purchase'=>$request->can_be_purchase
             ]);
             return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
@@ -103,10 +116,12 @@ class ProductController extends Controller
 
     public function edit(Request $request)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $product = Product::findOrFail($request->id);
         $categories = Category::orderBy('name', 'ASC')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        return view('products.edit', compact('product', 'categories'));
+        return view('products.edit', compact('access','group','product', 'categories'));
     }
 
     public function update(Request $request)
@@ -138,7 +153,10 @@ class ProductController extends Controller
                 'price' => $request->price, 
                 'category_id' => $request->category_id,
                 'barcode'=> $request->barcode,
-                'photo' => $nama_file
+                'cost'=>$request->cost,
+                'photo' => $nama_file,
+                'can_be_sold'=>$request->can_be_sold,
+                'can_be_purchase'=>$request->can_be_purchase
             ]);
 
             return redirect(route('product'))
@@ -183,6 +201,22 @@ class ProductController extends Controller
             'status' => 'failed',
             'data' => []
         ]);
+    }
+
+    public function product_report()
+    {
+        $products = Product::with('category')->orderBy('name', 'ASC')->get();
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.product.product_list', compact('products'));
+    	return $pdf->stream();
+    }
+
+    public function stock_report()
+    {
+        $products = Product::with('category')->orderBy('name', 'ASC')->get();
+    	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            ->loadview('reports.product.product_stock', compact('products'));
+    	return $pdf->stream();
     }
 
     public function Products()

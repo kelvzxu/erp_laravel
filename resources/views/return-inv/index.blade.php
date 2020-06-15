@@ -95,17 +95,13 @@
                     </thead>
                     @foreach($return_inv as $data)
                     <tbody>
-                        <tr>
+                        <tr class="table-row" data-href="{{ route('return-invoice.view', $data) }}">
                             <td scope="row">{{$loop->iteration}}</td>
                             <td>{{$data->return_no}}</td>
                             <td>{{$data->invoice_no}}</td>
                             <td>{{$data->delivery_no}}</td>
                             <td>{{$data->created_at}}</td>
-                            <td>{{$data->user->name}}</td>
-                            <td class="text-right">
-                                <a href="" class="btn btn-primary btn-sm">View</a>
-                                <!-- <a href="{{ route('return-invoice.show', $data->invoice_no) }}" class="btn btn-primary btn-sm">View</a> -->
-                            </td>
+                            <td>{{$data->user->employee_name}}</td>
                         </tr>
                     </tbody>
                     @endforeach
@@ -127,7 +123,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#delivere').addClass('mm-active');
-</script>
+<script src="{{asset('js/asset_common/return_inv.js')}}"></script>
 @endsection

@@ -6,39 +6,29 @@ use App\Models\Human_Resource\hr_department;
 use App\Models\Human_Resource\hr_employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class HrDepartmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     { 
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $department = hr_department::with('manager')->orderBy('department_name', 'asc')->paginate(25);
-        // dd($departments);
-        return view('department.index',compact('department'));
+        return view('department.index',compact('access','group','department'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $departments = hr_department::orderBy('department_name', 'ASC')->get();
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        return view('department.create',compact('departments','employee'));
+        return view('department.create',compact('access','group','departments','employee'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request -> validate([
@@ -56,29 +46,14 @@ class HrDepartmentController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\hr_department  $hr_department
-     * @return \Illuminate\Http\Response
-     */
-    public function show(hr_department $hr_department)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\hr_department  $hr_department
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $departments = hr_department::orderBy('department_name', 'ASC')->get();
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         $department = hr_department::find($id);
-        return view('department.edit',compact('department','departments','employee'));
+        return view('department.edit',compact('access','group','department','departments','employee'));
     }
 
     /**

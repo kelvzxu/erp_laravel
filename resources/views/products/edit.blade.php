@@ -106,14 +106,14 @@
                                             <p class="text-danger">{{ $errors->first('name') }}</p>
                                     </div>
                                     <div class="form-check mt-0">
-                                        <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
+                                        <input class="form-check-input" type="checkbox" id="can_be_sold" name="can_be_sold" value="1"  @if($product->can_be_sold == "1" ) checked @endif>
                                         <label class="form-check-label" for="canbesold">
                                             Can Be Sold
                                         </label>
                                     </div>
                                     <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
-                                        <label class="form-check-label" for="canbesold">
+                                    <input class="form-check-input" type="checkbox" id="can_be_purchase" name="can_be_purchase" value="1" @if($product->can_be_purchase == "1" ) checked @endif>
+                                        <label class="form-check-label" for="canbepurchase">
                                             Can Be Purchase
                                         </label>
                                     </div>
@@ -186,7 +186,7 @@
                                             <div class="row">
                                                 <label class="col-sm-5 col-form-label">Cost</label>
                                                 <div class="wrap-input200 col-sm-5">
-                                                    <input type="number" name="cost" required 
+                                                    <input type="number" name="cost" required value="{{ $product->cost }}"
                                                     class="input200 {{ $errors->has('cost') ? 'is-invalid':'' }}">
                                                     <p class="text-danger">{{ $errors->first('cost') }}</p>
                                                 </div>
@@ -197,7 +197,7 @@
                                         <div class="col-sm-11">
                                             <div class="wrap-input200 mt-4">
                                                 <label for="">Internal Note</label>
-                                                <textarea name="description" id="description" value="{{ $product->description }}
+                                                <textarea name="description" id="description" value="{{ $product->description }}"
                                                     cols="5" rows="5" placeholder="This note is only for internal purpose"
                                                     class="input200 {{ $errors->has('description') ? 'is-invalid':'' }}"></textarea>
                                                 <p class="text-danger">{{ $errors->first('description') }}</p>

@@ -28,5 +28,4 @@
 	<script src="{{ asset('vendor/daterangepicker/daterangepicker.js') }}"></script>
 	<script src="{{ asset('vendor/countdowntime/countdowntime.js') }}"></script>
 	<script src="{{ asset('js/main.js') }}"></script>
-
 </body>

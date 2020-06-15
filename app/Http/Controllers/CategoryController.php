@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product\Category;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class CategoryController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $categories = Category::orderBy('created_at', 'DESC')->paginate(10);
-        return view('categories.index', compact('categories'));
+        return view('categories.index', compact('categories','access','group'));
     }
 
     public function store(Request $request)
@@ -42,8 +47,10 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $categories = Category::findOrFail($id);
-        return view('categories.edit', compact('categories'));
+        return view('categories.edit', compact('categories','access','group'));
     }
 
     public function update(Request $request)

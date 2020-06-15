@@ -19,7 +19,7 @@
         <div class="card-header"><i class="fa fa-comments text-primary"><span class="text-primary"><b> Company Forum</b></span></i></div>
             <div class="scroll-area-lg erp_chatbox">
                 <div class="scrollbar-container ps ps--active-y">
-                    <div class="chat-wrapper p-1">
+                    <div class="chat-wrapper card-body o_mail_thread p-1">
                     </div>
                 <div class="ps__rail-x" style="left: 0px; bottom: -395px;">
                     <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;">
@@ -32,7 +32,16 @@
                 </div>
             </div>
             <div class="card-footer">
-                <input placeholder="Write here and hit enter to send..." type="text" class="form-control-lg form-control">
+                <form id="chat-form">
+                    <div class="input-group">
+                        <input type="text" id="content" name="content" class="form-control" placeholder="Type your message ..." autocomplete="off">
+                        <input type="hidden" name="name" id="name" value="{{ Auth::user()->name }}">
+                        <input type="hidden" name="image" id="image">
+                        <div class="input-group-btn">
+                            <button id="send_message" class="btn btn-primary">Send</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="col-12 col-md-4 bg-white">
@@ -88,6 +97,8 @@
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+<script src="{{asset('/js/chat.js')}}"></script>
 <script type="text/javascript">
     $('a#home').addClass('mm-active');
     function jam() {

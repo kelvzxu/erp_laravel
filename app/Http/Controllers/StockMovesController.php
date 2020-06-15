@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company\res_company;
+use App\stock_move;
 use Illuminate\Http\Request;
 
-class ResCompanies extends Controller
+class StockMovesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ResCompanies extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\res_company  $res_company
+     * @param  \App\stock_move  $stock_move
      * @return \Illuminate\Http\Response
      */
-    public function show(res_company $res_company)
+    public function show(stock_move $stock_move)
     {
         //
     }
@@ -52,10 +52,10 @@ class ResCompanies extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\res_company  $res_company
+     * @param  \App\stock_move  $stock_move
      * @return \Illuminate\Http\Response
      */
-    public function edit(res_company $res_company)
+    public function edit(stock_move $stock_move)
     {
         //
     }
@@ -64,10 +64,10 @@ class ResCompanies extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\res_company  $res_company
+     * @param  \App\stock_move  $stock_move
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, res_company $res_company)
+    public function update(Request $request, stock_move $stock_move)
     {
         //
     }
@@ -75,10 +75,10 @@ class ResCompanies extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\res_company  $res_company
+     * @param  \App\stock_move  $stock_move
      * @return \Illuminate\Http\Response
      */
-    public function destroy(res_company $res_company)
+    public function destroy(stock_move $stock_move)
     {
         //
     }

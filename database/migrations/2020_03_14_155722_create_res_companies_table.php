@@ -19,12 +19,12 @@ class CreateResCompaniesTable extends Migration
             $table->string('display_name')->nullable();
             $table->integer('currency_id')->nullable()->index();
             $table->integer('parent_id')->nullable();
-            $table->integer('industry_id')->nullable()->index();
+            $table->integer('vat')->nullable();
             $table->string('email')->nullable();
-            $table->string('Phone')->nullable();
+            $table->string('Phone')->nullable(); 
             $table->string('website')->nullable();
-            $table->string('logo_web')->nullable();
-            $table->string('logo')->nullable();
+            $table->string('icon')->nullable();
+            $table->string('photo')->nullable();
             $table->string('company_registry')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();
@@ -38,6 +38,7 @@ class CreateResCompaniesTable extends Migration
             $table->string('social_twitter')->nullable();
             $table->string('social_facebook')->nullable();
             $table->string('social_youtube')->nullable();
+            $table->string('social_instagram')->nullable();
             $table->string('social_github')->nullable();
             $table->string('social_linkedin')->nullable();
             $table->string('tax_id')->nullable();

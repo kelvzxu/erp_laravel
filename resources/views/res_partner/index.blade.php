@@ -73,71 +73,131 @@
                         </span>
                     </div>
                 </nav>
-                <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher">
-                    <button type="button" accesskey="l" class="btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
-                        aria-label="View list" data-view-type="list" title="" tabindex="-1"
-                        data-original-title="View list"></button>
-                    <button type="button" class="btn btn-secondary fa fa-lg fa-bar-chart o_cp_switch_graph "
-                        aria-label="View graph" data-view-type="graph" title="" tabindex="-1"
-                        data-original-title="View graph"></button>
+                <nav class="btn-group o_cp_switch_buttons nav" role="toolbar" aria-label="View switcher">
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
+                                class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban active" role="tab"></a>
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
+                                class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list" role="tab" aria-selected="true"></a></li>
                 </nav>
             </div>
         </div>
     </div>
-    <div class="o-content">
-        <div class="panel-body ml-2">
+    <div class="tab-content">
+        <div class="tab-pane active" id="notebook_page_511">
             @if($partner->count())
-            <div class="table-responsive-lg mb-4">
-                <table class="table">
-                    <thead class="table table-sm">
-                        <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">logo</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Company Name</th>
-                            <th scope="col">city</th>
-                            <th scope="col">country</th>
-                            <th scope="col">website</th>
-                            <th scope="col">action</th>
-                        </tr>
-                    </thead>
+                <div class="o_kanban_view o_res_partner_kanban o_kanban_ungrouped">
                     @foreach($partner as $row)
-                    <tbody>
-                        <tr>
-                            <td scope="row">{{$loop->iteration}}</td>
-                            <td >
-                                @if (!empty($row->logo))
-                                    <img src="{{asset('uploads/Partners/'.$row->logo)}}" 
-                                    width="80px" height="50px" alt="{{$row->display_name}}">
-                                @else
-                                    <img src="http://via.placeholder.com/80x50" alt="{{ $row->display_name }}">
-                                @endif
-                            </td>
-                            <td >{{$row->display_name}}</td>
-                            <td >{{$row->parent_id}}</td>
-                            <td >{{$row->city}}</td>
-                            <td >{{$row->country_name}}</td>
-                            <td ><a href="https://{{$row->website}}">{{$row->website}}</a></td>
-                            <td >
-                                <a href="{{ route('partner.show', $row->id) }}" class="btn btn-success btn-sm">
-                                <i class="fa fa-edit"> View Detail</i></a>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <a class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban o_kanban_record" modifiers="{}"
+                        tabindex="0" role="article" style="color: black;text-decoration: none;" href="{{ route('partner.show', $row->id) }}">
+                        @if (!empty($row->logo))
+                        <div class="o_kanban_image_fill_left o_kanban_image_full"
+                            style="background-image: url('{{asset('uploads/Partners/'.$row->logo)}}')"
+                            role="img" modifiers="{}"></div>
+                        @else
+                        <div class="o_kanban_image_fill_left o_kanban_image_full"  
+                            style="background-image: url('images/icons/company_image.png')"
+                            role="img" modifiers="{}"></div>
+                        @endif
+                        <div class="oe_kanban_details" modifiers="{}">
+                            <strong class="o_kanban_record_title oe_partner_heading" modifiers="{}"><span>{{$row->display_name}}</span></strong>
+                            <div class="o_kanban_tags_section oe_kanban_partner_categories" modifiers="{}">
+                                <span class="oe_kanban_list_many2many" modifiers="{}">
+                                    @if (!empty($row->parent_id))
+                                        <div class="o_field_many2manytags o_field_widget o_kanban_tags" name="category_id"><span
+                                            class="o_tag o_tag_color_7"><span></span>{{$row->parent_id}}</span></div>
+                                    @else
+                                        <div class="o_field_many2manytags o_field_widget o_kanban_tags" name="category_id"><span
+                                            class="o_tag o_tag_color_7"><span></span>individual</span></div>
+                                    @endif
+                                </span>
+                            </div>
+                            <ul modifiers="{}">
+                                <li modifiers="{}"><span>{{$row->city}}</span>, <span>{{$row->country_name}}</span></li>
+                                <li class="o_text_overflow" modifiers="{}"><span>{{$row->email}}</span></li>
+                            </ul>
+                            <div class="oe_kanban_partner_links" modifiers="{}">
+                                <span class="badge badge-pill" modifiers="{}"><i class="fa fa-fw fa-star" aria-label="Favorites" role="img"
+                                        title="Favorites" modifiers="{}"></i>3</span>
+                                <span class="badge badge-pill" modifiers="{}"><i class="fa fa-fw fa-usd" role="img" aria-label="Sale orders"
+                                        title="Sales orders" modifiers="{}"></i>{{ number_format($row->debit_limit)}}</span>
+                            </div>
+                        </div>
+                    </a>
                     @endforeach
-                </table>
-            </div>
+                    <?php 
+                        $ghost=30-count($partner);
+                        for ($x = 0; $x < $ghost; $x++){
+                            echo"<div class='o_kanban_record o_kanban_ghost'></div>";
+                        }
+                    ?>
+                </div>
             @else
-            <div class="o_nocontent_help">
-                <p class="o_view_nocontent_smiling_face">
-                    <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a new Vendors in your address book
-                </p>
-                <p>
-                    We helps you easily track all activities related to a Vendors.
-                </p>
-            </div>
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a new customer in your address book
+                    </p>
+                    <p>
+                        We helps you easily track all activities related to a customer.
+                    </p>
+                </div>
             @endif
+        </div>
+        <div class="tab-pane" id="notebook_page_521">
+            <div class="panel-body ml-2">
+                @if($partner->count())
+                <div class="table-responsive-lg mb-4">
+                    <table class="table">
+                        <thead class="table table-sm">
+                            <tr>
+                                <th scope="col">No.</th>
+                                <th scope="col">logo</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Company Name</th>
+                                <th scope="col">city</th>
+                                <th scope="col">country</th>
+                                <th scope="col">website</th>
+                                <th scope="col">action</th>
+                            </tr>
+                        </thead>
+                        @foreach($partner as $row)
+                        <tbody>
+                            <tr>
+                                <td scope="row">{{$loop->iteration}}</td>
+                                <td >
+                                    @if (!empty($row->logo))
+                                        <img src="{{asset('uploads/Partners/'.$row->logo)}}" 
+                                        width="80px" height="50px" alt="{{$row->display_name}}">
+                                    @else
+                                        <img src="http://via.placeholder.com/80x50" alt="{{ $row->display_name }}">
+                                    @endif
+                                </td>
+                                <td >{{$row->display_name}}</td>
+                                <td >{{$row->parent_id}}</td>
+                                <td >{{$row->city}}</td>
+                                <td >{{$row->country_name}}</td>
+                                <td ><a href="https://{{$row->website}}">{{$row->website}}</a></td>
+                                <td >
+                                    <a href="{{ route('partner.show', $row->id) }}" class="btn btn-success btn-sm">
+                                    <i class="fa fa-edit"> View Detail</i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        @endforeach
+                    </table>
+                </div>
+                @else
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a new Vendors in your address book
+                    </p>
+                    <p>
+                        We helps you easily track all activities related to a Vendors.
+                    </p>
+                </div>
+                @endif
+            </div>
         </div>
     </div>
     <div class="row mx-4">

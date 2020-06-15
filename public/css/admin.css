@@ -11061,7 +11061,7 @@ button,
 .app-header__logo .logo-src {
     height: 23px;
     width: 97px;
-    background: url(assets/images/logo-inverse.png)
+    background: url(../images/icons/kltech-intl.png)
 }
 
 .app-header__menu,
@@ -11285,7 +11285,7 @@ button,
 }
 
 .app-header.header-text-dark .app-header__logo .logo-src {
-    background: url(assets/images/logo-inverse.png)
+    background: url(../images/icons/kltech-intl.png)
 }
 
 .app-sidebar {
@@ -11953,7 +11953,7 @@ button,
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    background-image: url('../images/background/chat.jpg');
+    /* background-image: url('../images/background/chat.jpg'); */
 }
 
 .app-page-title {

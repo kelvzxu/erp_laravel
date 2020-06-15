@@ -59,6 +59,7 @@
                     <div class="form-group">
                         <label for="customer_name">Customer Name</label>
                         <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{$customer_debt[0]->name}}" readonly>
+                        <input type="hidden" class="form-control" id="partner_id" name="partner_id" value="{{$customer_debt[0]->customer_id}}" readonly>
                     </div>
                 </div>
             </div>

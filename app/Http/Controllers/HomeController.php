@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 
 use App\Models\Human_Resource\hr_attendance;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\access_right;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -25,6 +28,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard');
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        if ($group->user_type!=1){
+            return redirect()->route('ECommerce.index');
+        }
+        return view('dashboard', compact('access','group'));
     }
 }

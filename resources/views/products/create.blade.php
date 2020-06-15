@@ -63,14 +63,14 @@
                                             <p class="text-danger">{{ $errors->first('name') }}</p>
                                     </div>
                                     <div class="form-check mt-0">
-                                        <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
+                                        <input class="form-check-input" type="checkbox" id="can_be_sold" name="can_be_sold" value="1">
                                         <label class="form-check-label" for="canbesold">
                                             Can Be Sold
                                         </label>
                                     </div>
                                     <div class="form-check mb-3">
-                                        <input class="form-check-input" type="checkbox" value="" id="canbesold" name="canbesold">
-                                        <label class="form-check-label" for="canbesold">
+                                    <input class="form-check-input" type="checkbox" id="can_be_purchase" name="can_be_purchase" value="1">
+                                        <label class="form-check-label" for="canbepurchase">
                                             Can Be Purchase
                                         </label>
                                     </div>
@@ -133,7 +133,7 @@
                                             <div class="row">
                                                 <label class="col-sm-5 col-form-label">Sales Price</label>
                                                 <div class="wrap-input200 col-sm-5">
-                                                    <input type="number" name="price" required 
+                                                    <input type="number" name="price" required value="0"
                                                     class="input200 {{ $errors->has('price') ? 'is-invalid':'' }}">
                                                     <p class="text-danger">{{ $errors->first('price') }}</p>
                                                 </div>
@@ -141,7 +141,7 @@
                                             <div class="row">
                                                 <label class="col-sm-5 col-form-label">Cost</label>
                                                 <div class="wrap-input200 col-sm-5">
-                                                    <input type="number" name="cost" required 
+                                                    <input type="number" name="cost" required value="0"
                                                     class="input200 {{ $errors->has('cost') ? 'is-invalid':'' }}">
                                                     <p class="text-danger">{{ $errors->first('cost') }}</p>
                                                 </div>

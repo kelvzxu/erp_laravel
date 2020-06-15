@@ -72,76 +72,121 @@
                         </span>
                     </div>
                 </nav>
-                <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher">
-                    <button type="button" accesskey="l" class="btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
-                        aria-label="View list" data-view-type="list" title="" tabindex="-1"
-                        data-original-title="View list"></button>
-                    <button type="button" class="btn btn-secondary fa fa-lg fa-bar-chart o_cp_switch_graph "
-                        aria-label="View graph" data-view-type="graph" title="" tabindex="-1"
-                        data-original-title="View graph"></button>
+                <nav class="btn-group o_cp_switch_buttonsnav nav" role="toolbar" aria-label="View switcher">
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
+                                class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active" role="tab" aria-selected="true"></a></li>
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
+                                class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban" role="tab"></a>
                 </nav>
             </div>
         </div>
     </div>
-    <div class="o-content">
-        <div class="panel-body ml-2">
-            @if($invoices->count())
-            <div class="table-responsive-lg mb-4">
-                <table class="table table-striped">
-                    <thead class="table table-sm">
-                        <tr>
-                            <th scope="col">Invoice No.</th>
-                            <th scope="col">Grand Total</th>
-                            <th scope="col">Client</th>
-                            <th scope="col">Invoice Date</th> 
-                            <th scope="col">Due Date</th>
-                            <th scope="col">status</th>
-                            <th scope="col" colspan="2">Created At</th>
-                        </tr>
-                    </thead> 
-                    <tbody> 
-                        @foreach($invoices as $invoice)
+    <!-- <div class="o-content"> -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="notebook_page_511">
+            <div class="panel-body ml-2">
+                @if($invoices->count())
+                <div class="table-responsive-lg mb-4">
+                    <table class="table table-striped">
+                        <thead class="table table-sm">
                             <tr>
-                                <td>{{$invoice->invoice_no}}</td>
-                                <td>Rp. {{ number_format($invoice->grand_total)}}</td>
-                                <td>{{$invoice->name}}</td>
-                                <td>{{$invoice->invoice_date}}</td>
-                                <td>{{$invoice->due_date}}</td>
-                                <td>
+                                <th scope="col">Invoice No.</th>
+                                <th scope="col">Grand Total</th>
+                                <th scope="col">Client</th>
+                                <th scope="col">Invoice Date</th> 
+                                <th scope="col">Due Date</th>
+                                <th scope="col">status</th>
+                                <th scope="col" colspan="2">Created At</th>
+                            </tr>
+                        </thead> 
+                        <tbody> 
+                            @foreach($invoices as $invoice)
+                                <tr class="table-row" data-href="{{route('invoices.show', $invoice)}}">
+                                    <td>{{$invoice->invoice_no}}</td>
+                                    <td>Rp. {{ number_format($invoice->grand_total)}}</td>
+                                    <td>{{$invoice->name}}</td>
+                                    <td>{{$invoice->invoice_date}}</td>
+                                    <td>{{$invoice->due_date}}</td>
+                                    <td>
+                                        @if($invoice->status == "Pending" ) 
+                                            <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Pending...</div>
+                                            <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
+                                        @endif
+                                        @if($invoice->status == "Complete" ) 
+                                            <div class="mb-2 mr-2 badge badge-pill badge-success">Complete</div>
+                                            <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
+                                        @endif
+                                    </td>
+                                    <td>{{$invoice->created_at->diffForHumans()}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a customer invoice
+                    </p>
+                    <p>
+                        Create invoices, register payments and keep track of the discussions with your customers.
+                    </p>
+                </div>
+                @endif
+            </div>
+        </div>
+        <div class="tab-pane" id="notebook_page_521">
+            @if($invoices->count())
+                <div class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
+                @foreach($invoices as $invoice)
+                    <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
+                        <div class="o_kanban_record_top mb16" modifiers="{}">
+                            <div class="o_kanban_record_headings mt4" modifiers="{}">
+                                <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$invoice->name}}</span></strong>
+                            </div>
+                            <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">Rp.&nbsp;{{ number_format($invoice->grand_total)}}</span></strong>
+                        </div>
+                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('invoices.show', $invoice)}}">
+                            <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
+                                <span modifiers="{}">{{$invoice->invoice_no}}<br>{{$invoice->created_at}}</span>
+                                <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
+                                    name="activity_ids">
+                                </div>
+                            </div>
+                            <div class="oe_kanban_bottom_right" modifiers="{}">
+                                <div name="state" class="o_field_widget badge badge-default">
                                     @if($invoice->status == "Pending" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Pending...</div>
-                                        <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
+                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white"><span style="font-size:10px;">Pending</span></div>
                                     @endif
                                     @if($invoice->status == "Complete" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-success">Complete</div>
-                                        <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
+                                        <div class="mb-2 mr-2 badge badge-pill badge-success"><span style="font-size:10px;">Complete</span></div>
                                     @endif
-                                </td>
-                                <td>{{$invoice->created_at->diffForHumans()}}</td>
-                                <td class="text-right">
-                                    <a href="{{route('invoices.show', $invoice)}}" class="btn btn-primary btn-sm">View</a>
-                                    @if($invoice->status == "Pending" ) 
-                                        <a href="{{route('invoices.approved', $invoice)}}" class="btn btn-success btn-sm">Posted</a>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+                <?php 
+                    $ghost=30-count($invoices);
+                    for ($x = 0; $x < $ghost; $x++){
+                        echo"<div class='o_kanban_record o_kanban_ghost'></div>";
+                    }
+                ?>
+                </div>
             @else
-            <div class="o_nocontent_help">
-                <p class="o_view_nocontent_smiling_face">
-                    <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a customer invoice
-                </p>
-                <p>
-                    Create invoices, register payments and keep track of the discussions with your customers.
-                </p>
-            </div>
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a customer invoice
+                    </p>
+                    <p>
+                        Create invoices, register payments and keep track of the discussions with your customers.
+                    </p>
+                </div>
             @endif
         </div>
-        <!-- </div> -->
     </div>
     <div class="row mx-4">
         {!! $invoices->render() !!}
@@ -149,11 +194,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-    $('a#invoices').addClass('mm-active');
-    $("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/invoice.js')}}"></script>
 @endsection

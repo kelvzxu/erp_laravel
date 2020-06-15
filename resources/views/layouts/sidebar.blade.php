@@ -41,9 +41,10 @@
                         Home
                     </a>
                 </li>
+                @if($access->sales == True ) 
                 <li class="app-sidebar__heading">Sales</li>
                     <li>
-                        <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
+                        <a href="{{ route ('sales_orders')}}" id="sales_orders" class="menu-item">
                             <i class="metismenu-icon fa fa-shopping-bag"></i>
                             Sales Order
                         </a>
@@ -54,31 +55,40 @@
                             Customers
                         </a>
                     </li>
+                    @if($group->user_groups == 2 ) 
                     <li>
-                        <a href="#">
+                        <a href="" id="sales_report">
                             <i class="metismenu-icon fa fa-file-pdf-o"></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="" id="report_invoice" class="menu-item" >
+                                <a href="{{ route ('invoices.report')}}" id="report_invoice" class="menu-item" >
                                     <i class="metismenu-icon"></i>
                                     Report Sales Order
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('return-invoice.index')}}" id="report-return" class="menu-item">
+                                <a href="{{ route ('return-invoice.index')}}" id="report-return_inv" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Report Return Invoice
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route ('CustomerDebt.report')}}" id="report-return" class="menu-item">
+                                    <i class="metismenu-icon"></i>
+                                    Report customer debt
+                                </a>
+                            </li>
                         </ul>
                     </li>
-                </li>
+                    @endif
+                @endif
+                @if($access->purchase == True ) 
                 <li class="app-sidebar__heading">Purchase</li>
                     <li>
-                        <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
+                        <a href="{{ route ('purchase_orders')}}" id="purchases_orders" class="menu-item">
                             <i class="metismenu-icon fa fa-shopping-basket"></i>
                             Purchase Order
                         </a>
@@ -89,27 +99,31 @@
                             Vendors
                         </a>
                     </li>
+                    @if($group->user_groups == 2 )
                     <li>
-                        <a href="#">
+                        <a href="#" id="purchase_report">
                             <i class="metismenu-icon fa fa-file-pdf-o"></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="{{ route ('purchases.report')}}" id="report_purchases" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Purchase Order Report
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('return-po.index')}}">
+                                <a href="{{ route ('return-po.index')}}" id="report-return_po">
                                     <i class="metismenu-icon"></i>
                                     Report Return Bill
                                 </a>
                             </li>
                         </ul>
                     </li>
+                    @endif
+                @endif
+                @if($access->inventory == True ) 
                 <li class="app-sidebar__heading">Inventory</li>
                     <li>
                         <a href="{{route('product')}}" id="product">
@@ -147,6 +161,7 @@
                             </i>Delivere Product
                         </a>
                     </li>
+                    @if($group->user_groups == 2 )
                     <li>
                         <a href="#">
                             <i class="metismenu-icon fa fa-file-pdf-o"></i>
@@ -155,13 +170,13 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="">
+                                <a href="{{route('report.productlist')}}">
                                     <i class="metismenu-icon"></i>
                                     Product Report
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="{{route('report.productstock')}}">
                                     <i class="metismenu-icon"></i>
                                     Stock Report
                                 </a>
@@ -180,7 +195,22 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                @endif
+                @if($access->accounting == True ) 
                 <li class="app-sidebar__heading">Accounting</li>
+                    <li>
+                        <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
+                            <i class="metismenu-icon fa fa-pencil-square-o">
+                            </i>Invoices
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
+                            <i class="metismenu-icon fa fa-pencil-square-o">
+                            </i>Bills
+                        </a>
+                    </li>
                     <li>
                         <a href="#" id="payment">
                             <i class="metismenu-icon fa fa-file-text"></i>
@@ -221,6 +251,28 @@
                             </li>
                         </ul>
                     </li>
+                    @if($group->user_groups == 2 )
+                    <li>
+                        <a href="#" id="accounting_reports">
+                            <i class="metismenu-icon fa fa-file-pdf-o"></i>
+                            Report
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route ('invoices.report')}}" id="report_invoice_accounting" class="menu-item" >
+                                    <i class="metismenu-icon"></i>
+                                    Invoices Report
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('purchases.report')}}" id="report_purchases" class="menu-item">
+                                    <i class="metismenu-icon"></i>
+                                    Bills Report
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li>
                         <a href="#" id="account-config">
                             <i class="metismenu-icon fa fa-cogs"></i>
@@ -242,6 +294,9 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                @endif
+                @if($access->point_of_sale == True ) 
                 <li class="app-sidebar__heading">Point Of Sales</li>
                     <li>
                         <a href="{{ route ('pos')}}" id="pos">
@@ -249,6 +304,8 @@
                             POS
                         </a>
                     </li>
+                @endif
+                @if($access->human_resources == True ) 
                 <li class="app-sidebar__heading">Human Resource</li>
                     <li>
                         <a href="{{ route ('employee')}}" id="employee">
@@ -261,27 +318,6 @@
                             <i class="metismenu-icon fa fa-user-plus">
                             </i>Recruitment
                         </a>
-                    </li>
-                    <li>
-                        <a href="#" id="hr-management">
-                            <i class="metismenu-icon fa fa-file-text"></i>
-                            System Management
-                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="{{ route ('department')}}" id="department">
-                                    <i class="metismenu-icon"></i>
-                                    Department
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route ('jobs')}}" id="jobs">
-                                    <i class="metismenu-icon">
-                                    </i>Jobs
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li>
                         <a href="#" id="leave-mgmt">
@@ -321,7 +357,60 @@
                             </li>
                         </ul>
                     </li>
-                </li>
+                    @if($group->user_groups == 2 )
+                    <li>
+                        <a href="#" id="hr-management">
+                            <i class="metismenu-icon fa fa-file-text"></i>
+                            System Management
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route ('department')}}" id="department">
+                                    <i class="metismenu-icon"></i>
+                                    Department
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('jobs')}}" id="jobs">
+                                    <i class="metismenu-icon">
+                                    </i>Jobs
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    @endif
+                @endif
+                @if($access->administration == True ) 
+                <li class="app-sidebar__heading">Settings</li>
+                    <li>
+                        <a href="#" id="setting">
+                            <i class="metismenu-icon fa fa-users"></i>
+                            Manage Users
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route ('internaluser.index')}}" id="internaluser">
+                                    <i class="metismenu-icon">
+                                    </i>Internal User
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('portal.index')}}" id="internaluser">
+                                    <i class="metismenu-icon">
+                                    </i>Portal
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{{ route ('companies.index')}}" id="companies">
+                            <i class="metismenu-icon fa fa-building">
+                            </i>Manage Companies
+                        </a>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

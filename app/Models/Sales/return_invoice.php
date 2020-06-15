@@ -16,6 +16,10 @@ class return_invoice extends Model
     }
     public function user()
     {
-        return $this->hasOne('App\User','id','user_id');
+        return $this->belongsTo('App\Models\Human_Resource\hr_employee','user_id','user_id');
+    }
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Customer\res_customer','id','client');
     }
 }

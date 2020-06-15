@@ -105,7 +105,7 @@
                                             <td>
                                                 <div class="o_address_format">
                                                     <div class="wrap-input200">
-                                                        <input class="input200 " name="street1" required value="{{ old('street') }}" 
+                                                        <input class="input200 " name="street1" required value="{{ old('street1') }}" 
                                                             placeholder="Street..." type="text" id="street1" >
                                                     </div>
                                                     <div class="wrap-input200">
@@ -165,7 +165,7 @@
                                                     </div>
                                                     <div class="col-6">
                                                         <div class="wrap-input200">
-                                                            <select name="country_of_birth" id="country_of_birth" style="border:none;" required
+                                                            <select name="country_of_birth" id="country_of_birth" required style="border:none;" required
                                                             class="input200 @error('country_of_birth') is-invalid @enderror" autofocus>
                                                                 <option value="NULL">Country</option>
                                                             </select>   
@@ -187,7 +187,7 @@
                                             <td style="width: 100%;">
                                                 <div class="wrap-input200">
                                                     <input class="input200 " name="work_email" required value="{{ old('work_email') }}" 
-                                                        placeholder="work_email@example.com" type="text" id="work_email" required>
+                                                        placeholder="work_email@example.com" type="email" id="work_email" required>
                                                 </div>
                                             </td>
                                         </tr>
@@ -434,7 +434,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="o_td_label">
-                                                        <label for="" name="visa_exp" class="col-form-label"><b>Work Permit No</b></label>
+                                                        <label for="" name="visa_exp" class="col-form-label"><b>Visa Expire</b></label>
                                                     </td>
                                                     <td style="width: 100%;">
                                                         <div class="wrap-input200">

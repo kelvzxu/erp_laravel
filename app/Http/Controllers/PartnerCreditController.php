@@ -6,6 +6,9 @@ use App\Models\Partner\partner_credit;
 use App\Models\Partner\res_partner;
 use App\Models\Merchandises\Purchase;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 
 class PartnerCreditController extends Controller
 {
@@ -16,8 +19,10 @@ class PartnerCreditController extends Controller
      */
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $partner = res_partner::orderBy('partner_name', 'asc')->where('debit_limit','>',0)->paginate(10);
-        return view('partner_dept.index', compact('partner'));
+        return view('partner_dept.index', compact('access','group','partner'));
     }
 
     /**
@@ -49,11 +54,13 @@ class PartnerCreditController extends Controller
      */
     public function show($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $partnerdebt = partner_credit::join('res_partners', 'partner_credit.partner_id', '=', 'res_partners.id')
                                         ->select('partner_credit.*', 'res_partners.partner_name')
                                         ->orderBy('purchase_date', 'asc')
                                         ->where([ ['status', 'UNPAID'],['partner_id',$id] ])->paginate(10);
-        return view('partner_dept.show', compact('partnerdebt'));
+        return view('partner_dept.show', compact('access','group','partnerdebt'));
     }
 
     /**
@@ -64,10 +71,12 @@ class PartnerCreditController extends Controller
      */
     public function edit($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $partner_debt = partner_credit::join('res_partners', 'partner_credit.partner_id', '=', 'res_partners.id')
                                         ->select('partner_credit.*', 'res_partners.partner_name','res_partners.credit_limit')
                                         ->where('purchase_no', $id)->get();
-        return view('partner_dept.edit', compact('partner_debt'));
+        return view('partner_dept.edit', compact('access','group','partner_debt'));
     }
 
     /**

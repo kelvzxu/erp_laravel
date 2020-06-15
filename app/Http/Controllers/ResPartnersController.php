@@ -2,37 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\access_right;
+use App\User;
+use App\Models\Accounting\account_journal;
+use App\Models\Currency\res_currency;
+use App\Models\Data\res_partner_industry;
+use App\Models\Data\res_lang;
+use App\Models\Data\timezone;
+use App\Models\Human_Resource\hr_employee;
+use App\Models\Merchandises\Purchase;
 use App\Models\Partner\res_partner;
 use App\Models\World_database\res_country;
 use App\Models\World_database\res_country_state;
-use App\Models\Accounting\account_journal;
-use App\Models\Human_Resource\hr_employee;
-use App\Models\Data\res_partner_industry;
-use App\Models\Currency\res_currency;
-use App\Models\Data\res_lang;
-use App\Models\Data\timezone;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ResPartnersController extends Controller
 {
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $partner = DB::table('res_partners')
                     ->join('res_country', 'res_partners.country_id', '=', 'res_country.id')
                     ->select('res_partners.*', 'res_country.country_name')
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
-                    ->paginate(10);
-        return view('res_partner.index',compact('partner'));
+                    ->paginate(30);
+        return view('res_partner.index',compact('access','group','partner'));
     }
 
     public function search(Request $request)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
-        echo "$key $value";
         if ($key!=""){
             $partner = DB::table('res_partners')
                     ->join('res_country', 'res_partners.country_id', '=', 'res_country.id')
@@ -40,7 +47,7 @@ class ResPartnersController extends Controller
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
                     ->where($key,'like',"%".$value."%")
-                    ->paginate(10);
+                    ->paginate(30);
             $customer ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
             $partner = DB::table('res_partners')
@@ -48,16 +55,18 @@ class ResPartnersController extends Controller
                     ->select('res_partners.*', 'res_country.country_name')
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
-                    ->paginate(10);
+                    ->paginate(30);
         }
-        return view('res_partner.index',compact('partner'));
+        return view('res_partner.index',compact('access','group','partner'));
     }
 
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         $account = account_journal::orderBy('code','asc')->get();
-        return view('res_partner.create_partner',compact('account','employee'));
+        return view('res_partner.create_partner',compact('access','group','account','employee'));
     }
 
     public function store(Request $request)
@@ -85,8 +94,6 @@ class ResPartnersController extends Controller
                 'currency_id'=> $request->currency_id,
                 'bank_account'=> $request->bank_account,
                 'website'=> $request->website,
-                'credit_limit'=> $request->credit,
-                'debit_limit'=> $request->debit,
                 'active'=> $active=True,
                 'address'=> $request->type,
                 'street'=> $request->street1,
@@ -120,6 +127,8 @@ class ResPartnersController extends Controller
 
     public function show(res_partner $res_partner)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
         $account = account_journal::orderBy('code','asc')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
@@ -128,8 +137,9 @@ class ResPartnersController extends Controller
         $lang = res_lang::orderBy('lang_name', 'ASC')->get();
         $tz = timezone::orderBy('timezone', 'ASC')->get();
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
+        $bills=Purchase::where('client',$res_partner->id)->count();
         return view('res_partner.edit_partner',
-            compact('res_partner','country','state','currency','lang','tz','industry','account','employee'));
+            compact('access','group','res_partner','country','bills','state','currency','lang','tz','industry','account','employee'));
     }
 
     public function edit(res_partner $res_partner)
@@ -145,16 +155,15 @@ class ResPartnersController extends Controller
         ]);
         try {
             $res_partner = res_partner::where('id',$request->id)->first();
-            $nama_file = $res_partner->photo;
+            $nama_file=$res_partner->logo;
             $debit_limit=$res_partner->debit_limit;
             $credit_limit=$res_partner->credit_limit;
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/partners';
+                $destination = base_path() . '/public/uploads/Partners';
                 $request->file('photo')->move($destination, $nama_file);
             }
-
             $res_partner = res_partner::where('id',$request->id)->update([
                 'partner_name'=> $request->name,
                 'display_name'=> $request->name,

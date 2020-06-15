@@ -9,7 +9,7 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('return-po.index')}}">Report Return Invoice</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('return-po.index')}}">Report Return Purchase</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
@@ -47,7 +47,7 @@
                                 data-toggle="dropdown" aria-expanded="false" tabindex="-1" data-flip="false"
                                 data-boundary="viewport" name="key" id="key">
                                 <option value="" data-icon="fa fa-filter">Filters</option>
-                                <option value="invoice_no">invoice No</option>
+                                <option value="purchase_no">Purchase No</option>
                                 <option value="delivery_no">delivery No</option>
                                 <!-- <span class="fa fa-filter"></span> Filters -->
                             </select>
@@ -90,22 +90,18 @@
                             <th scope="col">Purchase No</th>
                             <th scope="col">Receive No</th>
                             <th scope="col">Return Date</th>
-                            <th scope="col" colspan="2">Created By</th>
+                            <th scope="col" colspan="2">Representative</th>
                         </tr>
                     </thead>
                     @foreach($return_po as $data)
                     <tbody>
-                        <tr>
+                        <tr class="table-row" data-href="{{ route('return-po.view', $data) }}">
                             <td scope="row">{{$loop->iteration}}</td>
                             <td>{{$data->return_no}}</td>
                             <td>{{$data->purchase_no}}</td>
                             <td>{{$data->receipt_no}}</td>
                             <td>{{$data->created_at}}</td>
-                            <td>{{$data->user->name}}</td>
-                            <td class="text-right">
-                                <a href="" class="btn btn-primary btn-sm">View</a>
-                                <!-- <a href="{{ route('return-po.show', $data->purchase_no) }}" class="btn btn-primary btn-sm">View</a> -->
-                            </td>
+                            <td>{{$data->user->employee_name}}</td>
                         </tr>
                     </tbody>
                     @endforeach
@@ -115,7 +111,7 @@
             <div class="o_nocontent_help">
                 <p class="o_view_nocontent_smiling_face">
                     <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    You Don't have Delivere Record
+                    You Don't have Returns Record
                 </p>
             </div>
             @endif
@@ -127,7 +123,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#delivere').addClass('mm-active');
-</script>
+<script src="{{asset('js/asset_common/return_po.js')}}"></script>
 @endsection

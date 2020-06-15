@@ -16,7 +16,7 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(css|js|images|portal|fonts|uploads|vendor)/(.*)$ public/$1/$2
+    RewriteRule ^(css|js|images|portal|ecommerce|fonts|uploads|vendor)/(.*)$ public/$1/$2
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_URI} !^/public/portal/

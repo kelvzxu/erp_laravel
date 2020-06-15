@@ -162,13 +162,13 @@
                 <div class="row">
                     <label class="col-sm-5">Allow Reconciliation</label>
                     <div class="col-sm-6">
-                        <input class="form-check-input" type="checkbox" id="reconcile" name="reconcile" value="True" @if($account->reconcile == "True" ) checked @endif>
+                        <input class="form-check-input" type="checkbox" id="reconcile" name="reconcile" value="1" @if($account->reconcile == "1" ) checked @endif>
                     </div>
                 </div>
                 <div class="row">
                     <label class="col-sm-5">Deprecated</label>
                     <div class="col-sm-6">
-                        <input class="form-check-input" type="checkbox" id="deprecated" name="deprecated" value="True" @if($account->deprecated == "True" ) checked @endif>
+                        <input class="form-check-input" type="checkbox" id="deprecated" name="deprecated" value="1" @if($account->deprecated == "1" ) checked @endif>
                     </div>
                 </div>
             </div>

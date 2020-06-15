@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class return_purchase_product extends Model
 {
     protected $fillable = [
-        'return_id','name','qty','return_qty','price','total'
+        'return_purchase_id','name','qty','return_qty','price','total'
     ];
     public function invoice()
     {

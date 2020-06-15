@@ -3,29 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Human_Resource\hr_attendance;
+use App\Models\Human_Resource\hr_employee;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\access_right;
 use App\User;
 
 class HrAttendanceController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $attendance = hr_attendance::join('users', 'attendance.user_id', '=', 'users.id')
                     ->select('attendance.*', 'users.name')
                     ->orderBy('created_at', 'desc')
                     ->paginate(15);
-        return view('attendance.index', compact('attendance'));
+        return view('attendance.index', compact('access','group','attendance'));
     }
 
     /**
@@ -38,6 +33,8 @@ class HrAttendanceController extends Controller
         $startDate=$request->start;
         $endDate=$request->end;
         $name = $request->value;
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         if($startDate!=""||$endDate!="" ){
             $attendance = hr_attendance::join('users', 'attendance.user_id', '=', 'users.id')
                         ->select('attendance.*', 'users.name')
@@ -54,7 +51,7 @@ class HrAttendanceController extends Controller
                         ->paginate(31);
             $attendance->appends(['name' => $name ,'submit' => 'Submit' ])->links();
         }
-        return view('attendance.index', compact('attendance'));
+        return view('attendance.index', compact('access','group','attendance'));
     }
 
     /**
@@ -73,7 +70,9 @@ class HrAttendanceController extends Controller
                 'user_id'=> $id,
                 'date'=> $date,
                 'check_in'=> $request->time,
-                'check_out'=> $request->time,
+            ]);
+            $employee = hr_employee::where('user_id',$id)->update([
+                'active'=> True,
             ]);
             Toastr::success('Welcome '.$name.' <br> Check in Date: ' . $date. ' Time :'.$request->time ,'Success');
             return redirect()->back();
@@ -83,35 +82,6 @@ class HrAttendanceController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\hr_attendance  $hr_attendance
-     * @return \Illuminate\Http\Response
-     */
-    public function show(hr_attendance $hr_attendance)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\hr_attendance  $hr_attendance
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(hr_attendance $hr_attendance)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\hr_attendance  $hr_attendance
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request,$id)
     {
         try {
@@ -123,6 +93,9 @@ class HrAttendanceController extends Controller
                                         ->update([
                                                     'check_out'=> $request->time,
                                                 ]);
+            $employee = hr_employee::where('user_id',$id)->update([
+                'active'=> False,
+            ]);
             Toastr::success('Goodbye '.$name.' <br> Check out Date: ' . $date. ' Time :'.$request->time ,'Success');
             return redirect()->back();
         } catch (\Exception $e) {
@@ -130,16 +103,6 @@ class HrAttendanceController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\hr_attendance  $hr_attendance
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(hr_attendance $hr_attendance)
-    {
-        //
-    }
     public function checkatd(Request $request){
         $this->validate($request, [
             'id' => 'required'

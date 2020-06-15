@@ -15,7 +15,7 @@ class CreateReturnInvoiceProductsTable extends Migration
     {
         Schema::create('return_invoice_products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('return_id')->unsigned();
+            $table->integer('return_invoice_id')->unsigned();
             $table->integer('name');
             $table->integer('price');
             $table->integer('qty');

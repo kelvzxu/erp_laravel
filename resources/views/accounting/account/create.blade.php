@@ -136,13 +136,13 @@
                 <div class="row">
                     <label class="col-sm-5">Allow Reconciliation</label>
                     <div class="col-sm-6">
-                        <input class="form-check-input" type="checkbox" id="reconcile" name="reconcile" value="True">
+                        <input class="form-check-input" type="checkbox" id="reconcile" name="reconcile" value="1">
                     </div>
                 </div>
                 <div class="row">
                     <label class="col-sm-5">Deprecated</label>
                     <div class="col-sm-6">
-                        <input class="form-check-input" type="checkbox" id="deprecated" name="deprecated" value="True">
+                        <input class="form-check-input" type="checkbox" id="deprecated" name="deprecated" value="1">
                     </div>
                 </div>
             </div>

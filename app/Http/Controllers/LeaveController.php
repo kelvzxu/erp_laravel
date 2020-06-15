@@ -6,6 +6,8 @@ use App\Models\Human_Resource\leave;
 use Illuminate\Support\Facades\Auth;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use App\access_right;
+use App\User;
 
 class LeaveController extends Controller
 {
@@ -16,18 +18,21 @@ class LeaveController extends Controller
 
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $leaves = Leave::join('users', 'leaves.user_id', '=', 'users.id')
         ->select('leaves.*', 'users.name')
         ->orderBy('created_at', 'desc')
         ->paginate(15);
-        return view('leave.index',compact('leaves'));
+        return view('leave.index',compact('access','group','leaves'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
-        echo "$key $value";
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         if ($key!=""){
             $leaves = Leave::join('users', 'leaves.user_id', '=', 'users.id')
                             ->select('leaves.*', 'users.name')
@@ -41,7 +46,7 @@ class LeaveController extends Controller
                             ->orderBy('created_at', 'desc')
                             ->paginate(15);
         }
-        return view('leave.index',compact('leaves'));
+        return view('leave.index',compact('access','group','leaves'));
     }
 
     public function store(Request $request)
@@ -62,22 +67,6 @@ class LeaveController extends Controller
             return redirect()->back();
         }
     }
-
-    public function show(leave $leave)
-    {
-        //
-    }
-
-    public function edit(leave $leave)
-    {
-        //
-    }
-
-    public function update(Request $request, leave $leave)
-    {
-        //
-    }
-
     
     public function approve(Request $request,$id)
     {

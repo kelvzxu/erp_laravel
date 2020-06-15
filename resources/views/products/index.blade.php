@@ -70,80 +70,127 @@
                         </span>
                     </div>
                 </nav>
-                <nav class="btn-group o_cp_switch_buttons" role="toolbar" aria-label="View switcher">
-                    <button type="button" accesskey="l" class="btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
-                        aria-label="View list" data-view-type="list" title="" tabindex="-1"
-                        data-original-title="View list"></button>
-                    <button type="button" accesskey="k" class="btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban" 
-                        aria-label="View kanban" data-view-type="kanban" title="" tabindex="-1" 
-                        data-original-title="View kanban"></button>
+                <nav class="btn-group o_cp_switch_buttons nav" role="toolbar" aria-label="View switcher">
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
+                                class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban active" role="tab"></a>
+                    <a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
+                                class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list" role="tab" aria-selected="true"></a></li>
                 </nav>
             </div>
         </div>
     </div>
-    <div class="o-content">
-        <div class="panel-body ml-2">
-            @if($products->count())
-            <div class="table-responsive mb-3">
-                <table class="table table-hover">
-                    <thead class="table table-sm">
-                        <tr>
-                            <th scope="col">Image</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">On Hands</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Last Update</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($products as $row)
-                        <tr>
-                            <td>
-                                @if (!empty($row->photo))
-                                    <img src="{{ asset('uploads/product/' . $row->photo) }}" 
-                                        alt="{{ $row->name }}" width="50px" height="50px">
-                                @else
-                                    <img src="http://via.placeholder.com/50x50" alt="{{ $row->name }}">
-                                @endif
-                            </td>
-                            <td>
-                                <sup class="label label-success">({{ $row->code }})</sup>
-                                <strong>{{ ucfirst($row->name) }}</strong>
-                            </td>
-                            <td>{{ $row->stock }}</td>
-                            <td>Rp {{ number_format($row->price) }}</td>
-                            <td>{{ $row->category->name }}</td>
-                            <td>{{ $row->updated_at }}</td>
-                            <td>
-                                <form id="delete-form-{{ $row->id }}" action="{{route('product.destroy', $row->id)}}" method="put">
-                                    @csrf
-                                    @method('DELETE')
-                                        <a href="{{route('product.edit', $row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  View Detail</i></a>
-                                    <!-- <button type="button" onclick="deletePost({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash">  Delete</i></button> -->
-                                    <!-- {{--onclick="return confirm('Are you sure?')"--}} -->
-                                </form>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            @else
-            <div class="o_nocontent_help">
-                <p class="o_view_nocontent_smiling_face">
-                    <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a new Products and Start your trading
-                </p>
-                <p>
-                    You must define a product for everything you sell or purchase,
-                    whether it's a storable product, a consumable or a service.
-                </p>
-            </div>
-            @endif
+    <div class="tab-content">
+        <div class="tab-pane active" id="notebook_page_511">
+            <div class="o_kanban_view o_kanban_ungrouped">
+                @if($products->count())
+                    @foreach ($products as $row)
+                        <a class="oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article"
+                            style="color: black;text-decoration: none;" href="{{route('product.edit', $row->id)}}">
+                            <div class="o_kanban_image text-center" modifiers="{}">
+                                <img src="{{ asset('uploads/product/' . $row->photo) }}"
+                                    alt="Product" class="o_image_64_contain" modifiers="{}">
+                            </div>
+                            <div class="oe_kanban_details" modifiers="{}">
+                                <strong class="o_kanban_record_title" modifiers="{}">
+                                    <span>{{ ucfirst($row->name) }}</span>
+                                    <small modifiers="{}">[<span>{{ $row->code }}</span>]</small>
+                                </strong>
+
+                                <div name="tags" modifiers="{}"></div>
+                                <ul modifiers="{}">
+                                    <li modifiers="{}">Price: <span class="o_field_monetary o_field_number o_field_widget"
+                                            name="lst_price">Rp.&nbsp;{{ number_format($row->price) }}</span></li>
+
+                                    <li modifiers="{}">On hand: <span>{{ $row->stock }}</span> <span>Units</span></li>
+                                </ul>
+                                <div name="tags" modifiers="{}"></div>
+                            </div>
+                        </a>
+                    @endforeach
+                    <?php 
+                    $ghost=30-count($products);
+                    for ($x = 0; $x < $ghost; $x++){
+                        echo"<div class='o_kanban_record o_kanban_ghost'></div>";
+                    }
+                ?>
+                @else
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a new Products and Start your trading
+                    </p>
+                    <p>
+                        You must define a product for everything you sell or purchase,
+                        whether it's a storable product, a consumable or a service.
+                    </p>
+                </div>
+                @endif
             </div>
         </div>
+        <div class="tab-pane" id="notebook_page_521">
+            <div class="panel-body ml-2">
+                @if($products->count())
+                <div class="table-responsive mb-3">
+                    <table class="table table-hover">
+                        <thead class="table table-sm">
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">On Hands</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Last Update</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $row)
+                            <tr>
+                                <td>
+                                    @if (!empty($row->photo))
+                                        <img src="{{ asset('uploads/product/' . $row->photo) }}" 
+                                            alt="{{ $row->name }}" width="50px" height="50px">
+                                    @else
+                                        <img src="http://via.placeholder.com/50x50" alt="{{ $row->name }}">
+                                    @endif
+                                </td>
+                                <td>
+                                    <sup class="label label-success">({{ $row->code }})</sup>
+                                    <strong>{{ ucfirst($row->name) }}</strong>
+                                </td>
+                                <td>{{ $row->stock }}</td>
+                                <td>Rp {{ number_format($row->price) }}</td>
+                                <td>{{ $row->category->name }}</td>
+                                <td>{{ $row->updated_at }}</td>
+                                <td>
+                                    <form id="delete-form-{{ $row->id }}" action="{{route('product.destroy', $row->id)}}" method="put">
+                                        @csrf
+                                        @method('DELETE')
+                                            <a href="{{route('product.edit', $row->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  View Detail</i></a>
+                                        <!-- <button type="button" onclick="deletePost({{ $row->id }})" class="btn btn-sm btn-danger"><i class="fa fa-trash">  Delete</i></button> -->
+                                        <!-- {{--onclick="return confirm('Are you sure?')"--}} -->
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                @else
+                <div class="o_nocontent_help">
+                    <p class="o_view_nocontent_smiling_face">
+                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                        Create a new Products and Start your trading
+                    </p>
+                    <p>
+                        You must define a product for everything you sell or purchase,
+                        whether it's a storable product, a consumable or a service.
+                    </p>
+                </div>
+                @endif
+            </div>
+        </div>
+    </div>
     <div class="row mx-4">
         {!! $products->render() !!}
     </div>

@@ -61,34 +61,13 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-    <script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
-    <script type="text/javascript">
-        Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+<script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
+<script type="text/javascript">
+    Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
-        window._form = {!! $invoice->toJson() !!};
-        var data  = {!! $invoice->toJson() !!};
-        const swalWithBootstrapButtons = swal.mixin({
-            confirmButtonClass: 'btn btn-success',
-            cancelButtonClass: 'btn btn-danger',
-            buttonsStyling: false,
-        })
-
-        $('a#delivere').addClass('mm-active');
-        
-        $("input[name='return_qty[]']").keyup(function(e){
-            e.preventDefault();
-            var old_qty= parseInt($(this).closest('tr').find("input[name='buy_qty[]']").val());
-            var return_qty = parseInt($(this).val());
-            if (return_qty > old_qty){
-                $(this).val('0');
-                swalWithBootstrapButtons(
-                    'Something Wrong',
-                    'quantity retur cannot be greater than quantity order',
-                    'error'
-                )
-            }
-        })
-    </script>
+    window._form = {!! $invoice->toJson() !!};
+    var data  = {!! $invoice->toJson() !!};
+</script>
+<script src="{{asset('js/asset_common/return_inv.js')}}"></script>
 @endsection

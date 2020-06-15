@@ -119,7 +119,7 @@
                                             <td>
                                                 <div class="o_address_format">
                                                     <div class="wrap-input200">
-                                                        <input class="input200 " name="street1" required value="{{ old('street') }}" 
+                                                        <input class="input200 " name="street1" required value="{{ old('street1') }}" 
                                                             placeholder="Street..." type="text" id="street1" >
                                                     </div>
                                                     <div class="wrap-input200">

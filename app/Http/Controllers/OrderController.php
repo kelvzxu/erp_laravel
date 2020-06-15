@@ -9,6 +9,8 @@ use App\Models\Sales\Order;
 use App\Models\Sales\Order_detail;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
+use App\access_right;
+use App\User;
 use Cookie;
 use DB;
 use PDF;
@@ -21,21 +23,26 @@ class OrderController extends Controller
     }
     public function index()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $orders = order::with('customer')->orderBy('created_at', 'DESC')->paginate(25);
-        return view('pos.index', compact('orders'));
+        return view('pos.index', compact('access','group','orders'));
     }
     public function create()
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $products = Product::orderBy('created_at', 'DESC')->get();
         $customer = res_customer::orderBy('name', 'DESC')->get();
-        return view('pos.create', compact('products','customer'));
+        return view('pos.create', compact('access','group','products','customer'));
     }
     public function view($id)
     {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
         $order = order::with('order_detail.product','customer','sales')->findOrFail($id);
         $order1 = order_detail::with('product')->findOrFail($id);
-        // dd($order1);
-        return view('pos.view', compact('order'));
+        return view('pos.view', compact('access','group','order'));
     }
     public function store(Request $request)
     {
