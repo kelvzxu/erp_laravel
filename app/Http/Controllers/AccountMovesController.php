@@ -107,7 +107,7 @@ class AccountMovesController extends Controller
                 'create_uid'=>Auth::id(),
             ]);
             Toastr::success('Invoice '.$invoice->invoice_no .' Posted Success','Success');
-            return redirect(route('invoices',$id));
+            return redirect(route('invoices'));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
