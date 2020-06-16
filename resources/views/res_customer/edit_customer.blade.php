@@ -187,10 +187,7 @@
                                                                     {{ ucfirst($row->country_name) }}
                                                                 </option>
                                                             @endforeach
-                                                        </select>col-6">
-                                                        <div class="wrap-input200">
-                                                            <select id="tz" name="tz" class="input200" required style="border:none;">
-                                                                <option value="">Timezone</option>
+                                                        </select>
                                                     </div>
                                                     <div class="wrap-input200">
                                                         <select id="state" name="state" class="input200" style="border:none;">
@@ -202,7 +199,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                </div>
+                                                </>
                                             </td>
                                         </tr>
                                         <tr>
@@ -401,6 +398,21 @@
                                             <tr>
                                                 <td colspan="2" style="width: 100%;">
                                                     <div class="o_horizontal_separator">Accounting Entries</div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="o_td_label">
+                                                    <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
+                                                </td>
+                                                <td style="width: 100%;">
+                                                    <div class="wrap-input200">
+                                                        <select id="journal" required name="journal" class="input200" style="border:none;">
+                                                            <option value=""></option>
+                                                            @foreach ($journal as $row)
+                                                                <option value="{{ $row->id }}" {{ $row->id == $res_customer -> journal ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>

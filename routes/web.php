@@ -35,6 +35,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Account/Journal/destroy/{id}','AccountJournalController@destroy')->name('journal.destroy');
     Route::get('Account/Journal/filter','AccountJournalController@search')->name('journal.filter');
     
+    // ==== Account Move ====
+    Route::get('AccountMove','AccountMovesController@index')->name('accountmove.index');
+    Route::get('AccountMove/store/{id}','AccountMovesController@invoice')->name('accountmove.invoice');
+
+
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
     Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');

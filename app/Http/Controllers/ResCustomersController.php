@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\access_right;
 use App\User;
+use App\Models\Accounting\account_account;
 use App\Models\Accounting\account_journal;
 use App\Models\Customer\res_customer;
 use App\Models\Currency\res_currency;
@@ -65,9 +66,10 @@ class ResCustomersController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_journal::orderBy('code','asc')->get();
+        $account = account_account::orderBy('code','asc')->get();
+        $journal = account_journal::orderBy('code','asc')->get();
         return view('res_customer.create_customer',
-            compact('access','group','account','employee'));
+            compact('access','group','account','employee','journal'));
     }
 
     public function store(Request $request)
@@ -114,6 +116,7 @@ class ResCustomersController extends Controller
                 'payment_terms'=>$request->payment_terms,
                 'note'=>$request->note,
                 'receivable_account'=>$request->receivable_account,
+                'journal'=> $request->journal,
                 'logo'=> $nama_file,
             ]);
             Toastr::success('Customers ' .$request->name. ' created successfully','Success');
@@ -136,7 +139,8 @@ class ResCustomersController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_journal::orderBy('code','asc')->get();
+        $account = account_account::orderBy('code','asc')->get();
+        $journal = account_journal::orderBy('code','asc')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
         $state=res_country_state::orderBy('state_name', 'ASC')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
@@ -145,7 +149,7 @@ class ResCustomersController extends Controller
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
         $invoice=Invoice::where('client',$res_customer->id)->count();
         return view('res_customer.edit_customer',
-            compact('access','group','res_customer','invoice','country','state','currency','lang','tz','industry','employee','account'));
+            compact('access','group','res_customer','invoice','journal','country','state','currency','lang','tz','industry','employee','account'));
     }
 
     /**
@@ -211,6 +215,7 @@ class ResCustomersController extends Controller
                     'note'=>$request->note,
                     'receivable_account'=>$request->receivable_account,
                     'logo'=> $nama_file,
+                    'journal'=> $request->journal,
                 ]);
                 Toastr::success('Customer ' .$request->name. ' update successfully','Success');
                 return redirect(route('customer'));
@@ -242,6 +247,7 @@ class ResCustomersController extends Controller
                     'payment_terms'=>$request->payment_terms,
                     'note'=>$request->note,
                     'receivable_account'=>$request->receivable_account,
+                    'journal'=> $request->journal,
                 ]);
                 Toastr::success('Customer ' .$request->name. ' update successfully','Success');
                 return redirect(route('customer'));

@@ -224,8 +224,7 @@ class InvoiceController extends Controller
                 'approved'=> True,
                 'status'=>"Complete",
             ]);
-            Toastr::success('Invoice '.$invoice->invoice_no .' Posted Success','Success');
-            return redirect(route('invoices'));
+            return redirect(route('accountmove.invoice',$id));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
