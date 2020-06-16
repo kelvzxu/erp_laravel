@@ -37,8 +37,8 @@ Route::group(['middleware' => 'auth'], function (){
     
     // ==== Account Move ====
     Route::get('AccountMove','AccountMovesController@index')->name('accountmove.index');
-    Route::get('AccountMove/store/{id}','AccountMovesController@invoice')->name('accountmove.invoice');
-
+    Route::get('AccountMove/invoice/{id}','AccountMovesController@invoice')->name('accountmove.invoice');
+    Route::get('AccountMove/purchase/{id}','AccountMovesController@purchase')->name('accountmove.purchase');
 
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');

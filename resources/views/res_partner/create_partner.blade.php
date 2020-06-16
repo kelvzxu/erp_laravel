@@ -332,6 +332,21 @@
                                             </tr>
                                             <tr>
                                                 <td class="o_td_label">
+                                                    <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
+                                                </td>
+                                                <td style="width: 100%;">
+                                                    <div class="wrap-input200">
+                                                        <select id="journal" required name="journal" class="input200" style="border:none;">
+                                                            <option value=""></option>
+                                                            @foreach ($journal as $row)
+                                                                <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="o_td_label">
                                                     <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
                                                 </td>
                                                 <td style="width: 100%;">
