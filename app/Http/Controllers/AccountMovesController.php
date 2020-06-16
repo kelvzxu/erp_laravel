@@ -151,7 +151,7 @@ class AccountMovesController extends Controller
             ]);
             foreach($invoice->products as $e => $data){
                 $product = Product::find($data->name);
-                $account = account_account::find($product->income_account);
+                $account = account_account::find($product->expense_account);
                 account_move_line::create([
                     'account_move_id'=>$account_move,
                     'account_move_name'=>$invoice->purchase_no,
@@ -160,7 +160,7 @@ class AccountMovesController extends Controller
                     'journal_id'=>$partner->journal,
                     'company_id'=>1,
                     'company_currency_id'=>12,
-                    'account_id'=>$product->income_account,
+                    'account_id'=>$product->expense_account,
                     'account_internal_type'=>$account->internal_type,
                     'product_id'=>$data->name,
                     'name'=>$product->name,
