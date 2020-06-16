@@ -219,7 +219,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('CustomerDebt')}}" id="CustomerDebt">
+                                <a href="{{ route ('payment_invoices.index')}}" id="CustomerDebt">
                                     <i class="metismenu-icon ">
                                     </i>Customer Payment
                                 </a>

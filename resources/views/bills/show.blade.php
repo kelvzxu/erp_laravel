@@ -23,13 +23,14 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        @if($purchases->status == "Complete") 
+                        @if($purchases->status == "Complete")
+                            @if($purchases->receipt == false )
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#journalPosted">Edit</button>                        
-                        @endif
-                        @if($purchases->receipt == False )
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deliverwarning">Edit</button>                        
-                        @endif
-                        @if($purchases->receipt_validate == False )
+                            @endif
+                            @if($purchases->receipt == true )
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deliverwarning">Edit</button>                        
+                            @endif
+                        @else
                             <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
                         @endif
                         <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('purchases.create')}}">

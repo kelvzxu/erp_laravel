@@ -409,7 +409,7 @@
                                                         <select id="journal" required name="journal" class="input200" style="border:none;">
                                                             <option value=""></option>
                                                             @foreach ($journal as $row)
-                                                                <option value="{{ $row->id }}" {{ $row->id == $res_customer -> journal ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> journal ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
                                                             @endforeach
                                                         </select>
                                                     </div>

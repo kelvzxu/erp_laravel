@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\access_right;
 use App\User;
+use App\Models\Accounting\account_account;
 use App\Models\Accounting\account_journal;
 use App\Models\Currency\res_currency;
 use App\Models\Data\res_partner_industry;
