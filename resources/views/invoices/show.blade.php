@@ -25,7 +25,7 @@
                     <div>
                         @if($invoice->status == "Complete") 
                             @if($invoice->deliver == False )
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#journalPosted">Edit</button>                        
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#journalPosted">Edit</button>                        
                             @endif
                             @if($invoice->deliver == True )
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deliverwarning">Edit</button>                        
