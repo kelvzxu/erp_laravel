@@ -225,7 +225,7 @@ class BillsController extends Controller
                 'approved'=> True,
                 'status'=>"Complete",
             ]);
-            // return redirect(route('accountmove.purchase',$id));
+            return redirect(route('accountmove.purchase',$id));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
