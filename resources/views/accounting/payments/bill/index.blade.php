@@ -9,7 +9,7 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment_invoices.index')}}">Payments</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment_bills.index')}}">Payments</a></li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
@@ -32,7 +32,7 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('payment_invoices.create')}}">
+                        <a type="button" class="btn btn-primary o-kanban-button-new" accesskey="c" href="{{route('payment_bills.create')}}">
                             Create
                         </a>
                         <button type="button" class="btn btn-secondary o_button_import">
@@ -102,7 +102,7 @@
                                     <td>{{$row->name}}</td>
                                     <td>{{$row->journal->name}}</td>
                                     <td>{{$row->payment_method_id}}</td>
-                                    <td>{{$row->partner->name}}</td>
+                                    <td>{{$row->vendor->partner_name}}</td>
                                     <td>Rp. {{ number_format($row->amount)}}</td>
                                     <td>
                                         @if($row->state == "draft" ) 
@@ -143,9 +143,9 @@
                             <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
                                     name="amount_total"><i class="fa fa-clock">&nbsp;{{$row->payment_date}}</i></span></strong>
                         </div>
-                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('payment.view', $row)}}">
+                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchases.show', $row)}}">
                             <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
-                                <span modifiers="{}">{{$row->partner->name}}<br>Rp. {{ number_format($row->amount)}}</span>
+                                <span modifiers="{}">{{$row->vendor->name}}<br>Rp. {{ number_format($row->amount)}}</span>
                                 <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
                                     name="activity_ids">
                                 </div>

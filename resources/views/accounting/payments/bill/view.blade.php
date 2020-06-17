@@ -10,7 +10,7 @@
         <div class="o_control_panel">
             <div>
                 <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment_invoices.index')}}">Payments</a></li>
+                    <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment_bills.index')}}">Payments</a></li>
                     <li class="breadcrumb-item active">{{$data->name}}</li>
                 </ol>
             </div>
@@ -23,7 +23,7 @@
                             @else
                                 <a type="button" href="{{route('payment.edit', $data)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
                             @endif
-                            <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('payment_invoices.create')}}">
+                            <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('payment_bills.create')}}">
                                 Create
                             </a>
                         </div>
@@ -127,7 +127,7 @@
                                                 <label for="" name="partner" class="col-form-label"><b>Partner</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                {{$data->partner->name}}
+                                                {{$data->vendor->partner_name}}
                                             </td>
                                         </tr>
                                         <tr>

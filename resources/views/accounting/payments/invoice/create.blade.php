@@ -5,13 +5,13 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<form action="{{ route('payment_invoices.store') }}" method="post" enctype="multipart/form-data">
+<form action="{{ route('payment.store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="app-page-title bg-white">
         <div class="o_control_panel">
             <div>
                 <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment_invoices.index')}}">Payments</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment.index')}}">Payments</a></li>
                     <li class="breadcrumb-item active">New</li>
                 </ol>
             </div>
