@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountPaymentBillsTable extends Migration
+class CreateAccountPaymentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAccountPaymentBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('account_payment_bills', function (Blueprint $table) {
+        Schema::create('account_payments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
             $table->string('payment_reference')->nullable();
@@ -48,6 +48,6 @@ class CreateAccountPaymentBillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_payment_bills');
+        Schema::dropIfExists('account_payment_invoices');
     }
 }

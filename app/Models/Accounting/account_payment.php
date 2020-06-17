@@ -4,7 +4,7 @@ namespace App\Models\Accounting;
 
 use Illuminate\Database\Eloquent\Model;
 
-class account_payment_invoice extends Model
+class account_payment extends Model
 {
     protected $fillable = [
         'name','payment_reference','move_name','company_id','destination_journal_id','state','payment_type','payment_method_id','partner_type','partner_id','amount','currency_id','payment_date','communication','journal_id','payment_difference_handling','check_amount_in_words','check_number','bank_reference','cheque_reference','effective_date','create_uid',
