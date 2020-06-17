@@ -173,6 +173,20 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Reports/VendorBills', 'BillsController@report')->name('purchases.report');
     Route::get('Reports/VendorBills/print', 'BillsController@report_print')->name('purchases_report.print');
     
+    // ==== Paymeny Invoice ====
+    Route::get('Payments/Invoices', 'AccountPaymentsController@index')->name('payment_invoices.index');
+    Route::get('Payments/Invoices/Register', 'AccountPaymentsController@create')->name('payment_invoices.create');
+    
+    // ==== Paymeny Bills ====
+    Route::get('Payments/Bills', 'AccountPaymentsController@vendor_index')->name('payment_bills.index');
+    Route::get('Payments/Bills/Register', 'AccountPaymentsController@vendor_create')->name('payment_bills.create');
+    
+    // save &Update Payments ==== 
+    Route::post('Payments/store', 'AccountPaymentsController@store')->name('payment.store');
+    Route::post('Payments/update', 'AccountPaymentsController@update')->name('payment.update');
+    Route::get('Payments/View/{id}', 'AccountPaymentsController@view')->name('payment.view');
+    Route::get('Payments/edit/{id}', 'AccountPaymentsController@edit')->name('payment.edit');
+
     // ==== Purchase Order ====
     Route::get('purchases', 'PurchasesOrdersController@index')->name('purchase_orders');
     Route::get('purchases/create', 'PurchasesOrdersController@create')->name('purchase_orders.create');

@@ -13,7 +13,7 @@ class AddFieldsJournalInResPartnersTable extends Migration
      */
     public function up()
     {
-        Schema::create('res_partners', function (Blueprint $table) {
+        Schema::table('res_partners', function (Blueprint $table) {
             $table->integer('journal')->nullable()->index();
         });
     }
@@ -25,7 +25,7 @@ class AddFieldsJournalInResPartnersTable extends Migration
      */
     public function down()
     {
-        Schema::create('res_partners', function (Blueprint $table) {
+        Schema::table('res_partners', function (Blueprint $table) {
             //
         });
     }

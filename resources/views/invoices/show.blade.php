@@ -24,12 +24,13 @@
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
                         @if($invoice->status == "Complete") 
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#journalPosted">Edit</button>                        
-                        @endif
-                        @if($invoice->deliver == True )
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deliverwarning">Edit</button>                        
-                        @endif
-                        @if($invoice->deliver == False )  
+                            @if($invoice->deliver == False )
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#journalPosted">Edit</button>                        
+                            @endif
+                            @if($invoice->deliver == True )
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deliverwarning">Edit</button>                        
+                            @endif
+                        @else 
                             <a type="button" href="{{route('invoices.edit', $invoice)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
                         @endif
                         <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('invoices.create')}}">
