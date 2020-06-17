@@ -52,7 +52,7 @@
             <div class="o_form_statusbar">
                 <div class="o_statusbar_buttons">
                     @if($data->state == "draft" ) 
-                        <a href="{{route('purchases.approved', $purchases)}}" class="btn btn-primary"><i class="fa fa-check">Approved</i></a>
+                        <a href="{{route('payment.posted', $data)}}" class="btn btn-primary"><i class="fa fa-check">Approved</i></a>
                     @endif
                 </div>
                 <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
@@ -217,4 +217,7 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+<script src="{{asset('js/asset_common/payment.js')}}"></script>
 @endsection

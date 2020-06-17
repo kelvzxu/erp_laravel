@@ -52,7 +52,7 @@
             <div class="o_form_statusbar">
                 <div class="o_statusbar_buttons">
                     @if($data->state == "draft" ) 
-                        <a href="{{route('purchases.approved', $purchases)}}" class="btn btn-primary"><i class="fa fa-check">Approved</i></a>
+                        <a href="{{route('payment.posted', $data)}}" class="btn btn-primary"><i class="fa fa-check">Approved</i></a>
                     @endif
                 </div>
                 <div class="o_field_many2many o_field_widget o_invisible_modifier o_readonly_modifier"
@@ -87,10 +87,10 @@
             <div class="container-fluid my-5">
                 <div class="clearfix o_form_sheet">
                     <div class="o_not_full oe_button_box mx-0">
-                        <button type="button" class="btn oe_stat_button">
+                        <a href="{{route('reconcile.invoice', $data->partner_id)}}" type="button" class="btn oe_stat_button">
                             <i class="fa fa-fw o_button_icon fa-dollar"></i>
                             <span>Payment Matching</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="oe_title ml-3 mt-5">
                         <h1>
@@ -217,4 +217,7 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+<script src="{{asset('js/asset_common/payment.js')}}"></script>
 @endsection

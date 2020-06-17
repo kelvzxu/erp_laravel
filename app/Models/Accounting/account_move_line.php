@@ -11,6 +11,6 @@ class account_move_line extends Model
         'journal_id','company_id','company_currency_id','account_id',
         'account_internal_type','product_id','name','quantity','price_unit',
         'price_total','debit','credit','balance','reconciled','currency_id',
-        'partner_id','create_uid',
+        'partner_id','create_uid','payment_id',
     ];
 }

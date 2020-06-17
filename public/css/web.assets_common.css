@@ -1,0 +1,391 @@
+
+.progress-reconciliation .progress-bar {
+    font-size: 1.08333333rem;
+    height: 14px;
+    background-color: #875A7B;
+  }
+  
+  .progress-reconciliation .progress-bar span {
+    display: contents;
+  }
+  
+  .o_reconciliation {
+    /* Match view */
+    /* Create view */
+  }
+  
+  .o_reconciliation .o_filter_input_wrapper {
+    position: relative;
+    width: 150px;
+    margin: 0.5rem !important;
+  }
+  
+  .o_reconciliation .o_filter_input_wrapper .searchIcon {
+    position: absolute;
+    right: 10px;
+  }
+  
+  .o_reconciliation .o_filter_input_wrapper .o_filter_input {
+    border: none;
+    border-bottom: 1px black solid;
+  }
+  
+  .o_reconciliation .import_to_suspense {
+    margin: 0.5rem !important;
+  }
+  
+  .o_reconciliation .notification_area {
+    clear: both;
+  }
+  
+  .o_reconciliation .o_view_noreconciliation {
+    max-width: none;
+    padding: 0 10%;
+    color: #a8a8a8;
+    font-size: 125%;
+  }
+  
+  .o_reconciliation .accounting_view {
+    width: 100%;
+  }
+  
+  .o_reconciliation .accounting_view .cell_left {
+    border-right: 1px solid #333;
+    padding-right: 5px;
+  }
+  
+  .o_reconciliation .accounting_view .edit_amount {
+    margin-left: 20px;
+    color: #bbb;
+  }
+  
+  .o_reconciliation .accounting_view .cell:hover .edit_amount {
+    color: #00A09D;
+  }
+  
+  .o_reconciliation .accounting_view .strike_amount {
+    text-decoration: line-through;
+  }
+  
+  .o_reconciliation .accounting_view tbody tr:hover .cell_account_code::before {
+    content: "\f068";
+    font-family: FontAwesome;
+    position: relative;
+    margin-left: -17px;
+    left: -4px;
+    line-height: 0;
+    padding: 3px 2px 5px 5px;
+  }
+  
+  .o_reconciliation .o_multi_currency {
+    margin-right: 5px;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_0 {
+    color: #dd6666;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_1 {
+    color: #aaaaaa;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_2 {
+    color: #66dd66;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_3 {
+    color: #6666dd;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_4 {
+    color: #dddd66;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_5 {
+    color: #dd66dd;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_6 {
+    color: #66dddd;
+  }
+  
+  .o_reconciliation .o_multi_currency.o_multi_currency_color_7 {
+    color: #aaa333;
+  }
+  
+  .o_reconciliation .o_reconciliation_line {
+    margin-bottom: 30px;
+    /* columns */
+    /* info popover */
+    /* Icons */
+    /* Match view & Create view */
+  }
+  
+  .o_reconciliation .o_reconciliation_line table {
+    width: 100%;
+    vertical-align: top;
+  }
+  
+  .o_reconciliation .o_reconciliation_line tbody tr {
+    cursor: pointer;
+  }
+  
+  .o_reconciliation .o_reconciliation_line tr.already_reconciled {
+    color: #44c;
+  }
+  
+  .o_reconciliation .o_reconciliation_line tr.invalid {
+    text-decoration: line-through;
+  }
+  
+  .o_reconciliation .o_reconciliation_line td {
+    padding: 1px 2px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line thead td {
+    border-top: 1px solid #bbb;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    background-color: #f0f0f0;
+  }
+  
+  .o_reconciliation .o_reconciliation_line tfoot td {
+    color: #bbb;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_action {
+    width: 15px;
+    color: #495057;
+    background: #fff;
+    border: 0;
+    text-align: center;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_action .fa-add-remove:before {
+    content: "";
+  }
+  
+  .o_reconciliation .o_reconciliation_line tr:hover .cell_action .fa-add-remove:before {
+    content: "\f068";
+  }
+  
+  .o_reconciliation .o_reconciliation_line .is_tax .cell_action .fa-add-remove:before {
+    position: relative;
+    top: -18px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_account_code {
+    width: 80px;
+    padding-left: 5px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_due_date {
+    width: 100px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_label {
+    width: auto;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_left {
+    padding-right: 5px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_right, .o_reconciliation .o_reconciliation_line .cell_left {
+    text-align: right;
+    width: 120px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_info_popover {
+    text-align: right;
+    width: 15px;
+    color: #ccc;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .cell_info_popover:empty {
+    padding: 0;
+    width: 0;
+  }
+  
+  .o_reconciliation .o_reconciliation_line table.accounting_view .cell_right, .o_reconciliation .o_reconciliation_line table.accounting_view .cell_left, .o_reconciliation .o_reconciliation_line table.accounting_view .cell_label, .o_reconciliation .o_reconciliation_line table.accounting_view .cell_due_date, .o_reconciliation .o_reconciliation_line table.accounting_view .cell_account_code, .o_reconciliation .o_reconciliation_line table.accounting_view .cell_info_popover {
+    box-shadow: 0 1px 0 #EAEAEA;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .popover {
+    max-width: none;
+  }
+  
+  .o_reconciliation .o_reconciliation_line table.details {
+    vertical-align: top;
+  }
+  
+  .o_reconciliation .o_reconciliation_line table.details td:first-child {
+    vertical-align: top;
+    padding-right: 10px;
+    font-weight: bold;
+  }
+  
+  .o_reconciliation .o_reconciliation_line tr.one_line_info td {
+    padding-top: 10px;
+    text-align: center;
+    color: #44c;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .toggle_match, .o_reconciliation .o_reconciliation_line .toggle_create {
+    transform: rotate(0deg);
+    transition: transform 300ms ease 0s;
+  }
+  
+  .o_reconciliation .o_reconciliation_line .visible_toggle, .o_reconciliation .o_reconciliation_line[data-mode="match"] .toggle_match, .o_reconciliation .o_reconciliation_line[data-mode="create"] .toggle_create {
+    visibility: visible !important;
+    transform: rotate(90deg);
+  }
+  
+  .o_reconciliation .o_reconciliation_line .toggle_create {
+    font-size: 10px;
+  }
+  
+  .o_reconciliation .o_reconciliation_line > .o_notebook {
+    display: none;
+  }
+  
+  .o_reconciliation .o_reconciliation_line > .o_notebook > .o_notebook_headers {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .o_reconciliation .o_reconciliation_line > .o_notebook > .tab-content > div {
+    border: 1px solid #ddd;
+    border-top: 0;
+  }
+  
+  .o_reconciliation .o_reconciliation_line > .o_notebook .match table tr:hover {
+    background-color: #eee;
+  }
+  
+  .o_reconciliation .o_reconciliation_line:not([data-mode="inactive"]) > .o_notebook {
+    display: block;
+  }
+  
+  .o_reconciliation .o_reconciliation_line:not(:focus-within) .o_web_accesskey_overlay {
+    display: none;
+  }
+  
+  .o_reconciliation .o_reconciliation_line:focus caption .o_buttons button {
+    outline: none;
+    box-shadow: 4px 4px 4px 0px #875A7B;
+  }
+  
+  .o_reconciliation .o_reconciliation_line:focus {
+    outline: none;
+    box-shadow: 0 0 0 0;
+  }
+  
+  .o_reconciliation .o_reconcile_models .btn-primary {
+    margin: 0 2px 3px 0;
+  }
+  
+  .o_reconciliation .match .cell_action .fa-add-remove:before {
+    content: "";
+  }
+  
+  .o_reconciliation .match tr:hover .cell_action .fa-add-remove:before {
+    content: "\f067";
+  }
+  
+  .o_reconciliation .match .match_controls {
+    padding: 5px 0 5px 18px;
+  }
+  
+  .o_reconciliation .match .match_controls .filter {
+    width: 240px;
+    display: inline-block;
+  }
+  
+  .o_reconciliation .match .match_controls .fa-chevron-left, .o_reconciliation .match .match_controls .fa-chevron-right {
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .o_reconciliation .match .match_controls .fa-chevron-left {
+    margin-right: 10px;
+  }
+  
+  .o_reconciliation .match .match_controls .fa-chevron-left.disabled, .o_reconciliation .match .match_controls .fa-chevron-right.disabled {
+    color: #ddd;
+    cursor: default;
+  }
+  
+  .o_reconciliation .match .show_more {
+    display: inline-block;
+    margin-left: 18px;
+    margin-top: 5px;
+  }
+  
+  .o_reconciliation .create > div > div.quick_add > .o_reconcile_models {
+    max-width: 100%;
+    max-height: 70px;
+    -webkit-flex-wrap: wrap; flex-wrap: wrap;
+    overflow: auto;
+  }
+  
+  .o_reconciliation .create > div > div.quick_add > .o_reconcile_models > * {
+    flex-grow: 0;
+  }
+  
+  .o_reconciliation .create .quick_add {
+    margin-bottom: 7px;
+    padding: 0 8px;
+  }
+  
+  .o_reconciliation .create .o_group table.o_group_col_6 {
+    width: 49%;
+    margin: 0;
+    vertical-align: top;
+  }
+  
+  .o_reconciliation .create .o_group table.o_group_col_6:first-child {
+    margin-left: 8px;
+  }
+  
+  .o_reconciliation .create .btn {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  .o_reconciliation .create .add_line_container {
+    text-align: center;
+    clear: both;
+    color: #00A09D;
+    cursor: pointer;
+  }
+  
+  .o_reconciliation .o_notebook .tab-content > .tab-pane {
+    padding: 5px 0;
+  }
+  
+  /*Manual Reconciliation*/
+  .o_manual_statement .accounting_view td[colspan="3"] span:first-child {
+    width: 100%;
+    display: inline-block;
+  }
+  
+  .o_manual_statement .accounting_view td[colspan="2"] {
+    border-bottom: 1px solid #333;
+    text-align: center;
+    width: 240px;
+  }
+  
+  .o_manual_statement .accounting_view .do_partial_reconcile_true {
+    display: none;
+  }
+  
+  .o_rtl .o_reconciliation .o_reconciliation_line .toggle_match, .o_rtl .o_reconciliation .o_reconciliation_line .toggle_create {
+    transform: rotate(180deg);
+    transition: transform 300ms;
+  }
+  
+  .o_rtl .o_reconciliation .o_reconciliation_line .visible_toggle, .o_rtl .o_reconciliation .o_reconciliation_line[data-mode="match"] .toggle_match, .o_rtl .o_reconciliation .o_reconciliation_line[data-mode="create"] .toggle_create {
+    transform: rotate(270deg);
+  }
+  

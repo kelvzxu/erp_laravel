@@ -1,5 +1,5 @@
-$('a#CustomerDebt').addClass('mm-active');
-$('a#payment').addClass('mm-active');
+$('a#register_payment').addClass('mm-active');
+// console.log($('a#register_payment').val);
 
 $("#key").change(function() {
     var value = $("#key").val();

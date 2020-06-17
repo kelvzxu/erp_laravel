@@ -187,3 +187,6 @@
     </div>
 </form>
 @endsection
+@section('js')
+<script src="{{asset('js/asset_common/payment.js')}}"></script>
+@endsection

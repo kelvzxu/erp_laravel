@@ -24,7 +24,7 @@ class AccountPaymentsController extends Controller
     {
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
-        $data= account_payment::with('company','partner','journal')->orderBy('name', 'ASC')->paginate(25);
+        $data= account_payment::with('company','partner','journal')->where('partner_type','customer')->orderBy('name', 'DESC')->paginate(25);
         return view ('accounting.payments.invoice.index',compact('data','access','group'));
     }
 
@@ -32,8 +32,8 @@ class AccountPaymentsController extends Controller
     {
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
-        $data= account_payment::with('company','vendor','journal')->orderBy('name', 'ASC')->paginate(25);
-        return view ('accounting.payments.invoice.index',compact('data','access','group'));
+        $data= account_payment::with('company','vendor','journal')->where('partner_type','vendor')->orderBy('name', 'DESC')->paginate(25);
+        return view ('accounting.payments.bill.index',compact('data','access','group'));
     }
 
     public function create()
@@ -44,20 +44,7 @@ class AccountPaymentsController extends Controller
         $company = res_company::find(1);
         $partner = res_customer::orderBy('name','ASC')->get();
         return view ('accounting.payments.invoice.create',compact('company','journal','partner','access','group'));
-    }account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
-    account_payment_invoice
+    }
 
     public function vendor_create()
     {
@@ -65,8 +52,8 @@ class AccountPaymentsController extends Controller
         $group=user::find(Auth::id());
         $journal = account_journal::where('type','Cash')->orWhere('type','Bank')->orderBy('name','asc')->get();
         $company = res_company::find(1);
-        $partner = res_partner::orderBy('name','ASC')->get();
-        return view ('accounting.payments.invoice.create',compact('company','journal','partner','access','group'));
+        $partner = res_partner::orderBy('partner_name','ASC')->get();
+        return view ('accounting.payments.bill.create',compact('company','journal','partner','access','group'));
     }
 
     public function store(Request $request)
@@ -77,16 +64,16 @@ class AccountPaymentsController extends Controller
             {
                 $prefixcode = "CUST.IN/$year/";
                 $partner = res_customer::find($request->partner_id);
-            }else if ($request->partner_type == "customer")
+            }else if ($request->partner_type == "vendor")
             {
                 $prefixcode = "SUPP.OUT/$year/";
                 $partner = res_partner::find($request->partner_id);
             }
-            $count = account_payment::where('name','like',"%".$code_journal->code."%")->count();
+            $count = account_payment::where('name','like',"%".$prefixcode."%")->count();
             if ($count==0){
                 $payment_no= "$prefixcode"."000001";
             }else {
-                $payment_no = $prefixcode.str_pad($latest->id + 1, 6, "0", STR_PAD_LEFT);
+                $payment_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
             }
             $code_journal=account_journal::find($request->journal_id);
             $prefixcode = "$code_journal->code/$year/";
@@ -101,7 +88,7 @@ class AccountPaymentsController extends Controller
                 'move_name'=>$move_name,
                 'company_id'=>1,
                 'state'=>"draft",
-                'payment_type'=>$request->payment_type,
+                'payBNK1/2020/0002ment_type'=>$request->payment_type,
                 'payment_method_id'=>$request->payment_method,
                 'partner_type'=>$request->partner_type,
                 'partner_id'=>$request->partner_id,
@@ -145,21 +132,30 @@ class AccountPaymentsController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $journal = account_journal::where('type','Cash')->orWhere('type','Bank')->orderBy('name','asc')->get();
-        $partner = res_customer::orderBy('name','ASC')->get();
         $payment = account_payment::find($id);
+        $company = res_company::find(1);
         if ($payment->partner_type =="customer")
         {
+            $partner = res_customer::orderBy('name','ASC')->get();
             $data= account_payment::with('company','partner','journal')->findOrFail($id);
-            return view ('accounting.payments.invoice.create',compact('data','journal','partner','access','group'));
+            return view ('accounting.payments.invoice.edit',compact('company','data','journal','partner','access','group'));
         } else{
+            $partner = res_partner::orderBy('partner_name','ASC')->get();
             $data= account_payment::with('company','vendor','journal')->findOrFail($id);
-            return view ('accounting.payments.bill.create',compact('data','journal','partner','access','group'));
+            return view ('accounting.payments.bill.edit',compact('company','data','journal','partner','access','group'));
         }
     }
 
-    public function store(Request $request)
+    public function update(Request $request)
     {
         try{
+            if ($request->partner_type == "customer")
+            {
+                $partner = res_customer::find($request->partner_id);
+            }else if ($request->partner_type == "vendor")
+            {
+                $partner = res_partner::find($request->partner_id);
+            }
             $payment= account_payment::findOrFail($request->id);
             $payment->update([
                 'payment_type'=>$request->payment_type,
@@ -174,8 +170,50 @@ class AccountPaymentsController extends Controller
                 'cheque_reference'=>$request->cheque_reference,
                 'communication'=>$request->communication,
             ]);
-            Toastr::success('Payment Update Successfully','Success');
-            return redirect(route('payment_invoices.view', $payment->id));
+            if ($request->partner_type == "customer")
+            {
+                Toastr::success('Payment Update Successfully','Success');
+                return redirect(route('payment.view', $payment->id));
+            }else if ($request->partner_type == "vendor")
+            {
+                Toastr::success('Payment Update Successfully','Success');
+                return redirect(route('payment.view', $payment->id));
+            }
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
+    }
+
+    public function posted($id)
+    {
+        try{
+
+            $access=access_right::where('user_id',Auth::id())->first();
+            $group=user::find(Auth::id());
+            $payment = account_payment::find($id);
+            if ($payment->partner_type =="customer")
+            {
+                $partner = res_customer::find($payment->partner_id);
+                $credit = $partner->credit_limit;
+                $partner->update([
+                    'credit_limit'=> $payment->amount,
+                ]);
+                $payment->update([
+                    'state'=>"posted"
+                ]);
+            } else {
+                $partner = res_partner::find($payment->partner_id);
+                $credit = $partner->credit_limit;
+                $partner->update([
+                    'credit_limit'=> $payment->amount,
+                ]);
+                $payment->update([
+                    'state'=>"posted"
+                ]);
+            }
+            return redirect(route('accountmove.payment',$id));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');

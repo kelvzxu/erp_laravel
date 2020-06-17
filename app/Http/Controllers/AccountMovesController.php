@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\Accounting\account_account;
+use App\Models\Accounting\account_journal;
 use App\Models\Accounting\account_account_type;
 use App\Models\Accounting\account_move;
 use App\Models\Accounting\account_move_line;
+use App\Models\Accounting\account_payment;
 use App\Models\Customer\res_customer;
 use App\Models\Merchandises\Purchase;
 use App\Models\Partner\res_partner;
@@ -123,7 +125,7 @@ class AccountMovesController extends Controller
             $invoice = purchase::with('products')->findOrFail($id);
             $partner = res_partner::findOrFail($invoice->client);
             $account_move = account_move::insertGetId([
-                'name'=>$invoice->invoice_no,
+                'name'=>$invoice->purchase_no,
                 'date'=>date('Y-m-d H:i:s'),
                 'state'=>'Posted',
                 'type'=>'in_invoice',
@@ -199,6 +201,98 @@ class AccountMovesController extends Controller
             ]);
             Toastr::success('BILL '.$invoice->purchase_no .' Posted Success','Success');
             return redirect(route('purchases'));
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
+    }
+
+    public function payment($id)
+    {
+        try{
+            $payment = account_payment::find($id);
+            if ($payment->partner_type =="customer"){
+                $partner = res_customer::find($payment->partner_id);
+                $name = $partner->name;
+                $type = "Customer Payment";
+            } else {
+                $partner = res_partner::find($payment->partner_id);
+                $name = $partner->partner_name;
+                $type = "Vendor Payment";
+            }
+            $journal = account_journal::find($payment->journal_id);
+            $payment_account = account_account::where('code',$journal->default_debit_account_id)->first();
+            $account = account_account::find($partner->receivable_account);
+            $account_move = account_move::insertGetId([
+                'name'=>$payment->name,
+                'date'=>date('Y-m-d H:i:s'),
+                'state'=>'Posted',
+                'type'=>'entry',
+                'journal_id'=>$payment->journal_id,
+                'company_id'=>'1',
+                'currency_id'=>'12',
+                'partner_id'=>$payment->partner_id,
+                'amount_untaxed'=>0,
+                'amount_tax'=>0,
+                'amount_total'=>$payment->amount,
+                'amount_residual'=>0,
+                'amount_untaxed_signed'=>0,
+                'amount_tax_signed'=>0,
+                'amount_total_signed'=>0,
+                'amount_residual_signed'=>$payment->amount,
+                'fiscal_position_id'=>0,
+                'invoice_partner_display_name'=>$name,
+                'create_uid'=>Auth::id(),
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s'),
+            ]);
+            account_move_line::create([
+                'account_move_id'=>$account_move,
+                'account_move_name'=>$payment->name,
+                'date'=>date('Y-m-d H:i:s'),
+                'parent_state'=>"Posted",
+                'journal_id'=>$payment->journal_id,
+                'company_id'=>1,
+                'company_currency_id'=>12,
+                'account_id'=>$partner->receivable_account,
+                'account_internal_type'=>$account->internal_type,
+                'name'=>$payment->name,
+                'quantity'=>1,
+                'price_unit'=>"0",
+                'price_total'=>"0",
+                'debit'=>$payment->amount,
+                'credit'=>0,
+                'balance'=>$payment->amount - 0,
+                'currency_id'=>$partner->currency_id,
+                'partner_id'=>$payment->partner_id,
+                'payment_id'=>$id,
+                'create_uid'=>Auth::id(),
+            ]);
+            account_move_line::create([
+                'account_move_id'=>$account_move,
+                'account_move_name'=>$payment->name,
+                'date'=>date('Y-m-d H:i:s'),
+                'parent_state'=>"Posted",
+                'journal_id'=>$payment->journal_id,
+                'company_id'=>1,
+                'company_currency_id'=>12,
+                'account_id'=>$payment->journal_id,
+                'account_internal_type'=>$payment_account->internal_type,
+                'name'=>$type,
+                'quantity'=>1,
+                'price_unit'=>"0",
+                'price_total'=>"0",
+                'debit'=>0,
+                'credit'=>$payment->amount,
+                'balance'=>0 - $payment->amount,
+                'currency_id'=>$partner->currency_id,
+                'partner_id'=>$payment->partner_id,
+                'payment_id'=>$id,
+                'create_uid'=>Auth::id(),
+            ]);
+            Toastr::success('Confirm Payment Successfully','Success');
+            return redirect(route('payment.view', $id));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');

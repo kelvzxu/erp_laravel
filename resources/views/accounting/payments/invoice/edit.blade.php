@@ -39,7 +39,7 @@
                     </div>
                     <div class="oe_title ml-3 mt-5">
                         <h1>
-                            <input type="hidden" name="id" value="{{$data-id}}">
+                            <input type="hidden" name="id" value="{{$data->id}}">
                             <span class="o_field_char o_field_widget o_readonly_modifier">{{$data->name}}</span>
                         </h1>
                     </div>
@@ -196,4 +196,7 @@
         </div>
     </div>
 </form>
+@endsection
+@section('js')
+<script src="{{asset('js/asset_common/payment.js')}}"></script>
 @endsection
