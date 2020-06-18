@@ -20,7 +20,7 @@ class HrJobsController extends Controller
     {
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
-        $jobs = hr_job::paginate(15);
+        $jobs = hr_job::orderby('jobs_name','ASC')->paginate(15);
         return view('jobs.index',compact('access','group','jobs'));
     }
 

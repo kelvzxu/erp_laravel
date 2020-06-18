@@ -223,8 +223,7 @@ class PurchaseController extends Controller
                 'approved'=> True,
                 'status'=>"Complete",
             ]);
-            Toastr::success('Purchase Order Approved Success','Success');
-            return redirect(route('purchases'));
+            return redirect(route('accountmove.purchase',$id));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');

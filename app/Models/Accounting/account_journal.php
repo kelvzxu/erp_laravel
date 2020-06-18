@@ -41,4 +41,8 @@ class account_journal extends Model
     {
         return $this->hasOne('App\Models\Company\res_company','id','company_id');
     }
+    public function currency()
+    {
+        return $this->hasOne('App\Models\Currency\res_currency','id','currency_id');
+    }
 }

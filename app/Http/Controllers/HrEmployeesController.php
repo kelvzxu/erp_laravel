@@ -167,6 +167,8 @@ class HrEmployeesController extends Controller
             Toastr::success('Employee With Name '.$request->name .' was successfully added','Success');
             return redirect(route('employee'));
         } catch (\Exception $e) {
+            $user = User::find($user->id);
+            $user -> delete();
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
             return redirect()->back();

@@ -23,10 +23,14 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        @if($purchases->receipt_validate == True )
-                            <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new disabled">Edit</a>
-                        @endif
-                        @if($purchases->receipt_validate == False )
+                        @if($purchases->status == "Complete")
+                            @if($purchases->receipt == false )
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#journalPosted">Edit</button>                        
+                            @endif
+                            @if($purchases->receipt == true )
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deliverwarning">Edit</button>                        
+                            @endif
+                        @else
                             <a type="button" href="{{route('purchases.edit', $purchases)}}" class="btn btn-primary o-kanban-button-new">Edit</a>
                         @endif
                         <a type="button" class="btn btn-secondary o-kanban-button-new" accesskey="c" href="{{route('purchases.create')}}">
@@ -238,6 +242,54 @@
     </div>
 </div>
 <br>
+@endsection
+@section('modal')
+<div class="modal fade" id="deliverwarning" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Something Went Wrong</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{asset('images/icons/warning.png')}}" alt=""><br>
+                <p class="mb-0">You Can't Edit this Record </p>
+                <p class="mb-0">
+                    because this order has been delivered to the customer.<br>
+                    if there is a change in the number of items it is expected to return the order
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="journalPosted" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Something Went Wrong</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{asset('images/icons/warning.png')}}" alt=""><br>
+                <p class="mb-0">You Can't Edit this Record </p>
+                <p class="mb-0">
+                    because this factor has been posted in a journal entry.<br>
+                    if there is a change in the number of items it is expected to return the order
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
 <script src="{{asset('js/asset_common/bill.js')}}"></script>

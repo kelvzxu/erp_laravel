@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\access_right;
 use App\User;
+use App\Models\Accounting\account_account;
 use App\Models\Accounting\account_journal;
 use App\Models\Currency\res_currency;
 use App\Models\Data\res_partner_industry;
@@ -65,8 +66,9 @@ class ResPartnersController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_journal::orderBy('code','asc')->get();
-        return view('res_partner.create_partner',compact('access','group','account','employee'));
+        $account = account_account::orderBy('code','asc')->get();
+        $journal = account_journal::orderBy('code','asc')->get();
+        return view('res_partner.create_partner',compact('access','group','account','journal','employee'));
     }
 
     public function store(Request $request)
@@ -112,6 +114,7 @@ class ResPartnersController extends Controller
                 'commercial_company_name'=>$request->name,
                 'mcd'=> $request->mcd,
                 'payment_terms'=>$request->payment_terms,
+                'journal'=> $request->journal,
                 'note'=>$request->note,
                 'receivable_account'=>$request->receivable_account,
                 'logo'=> $nama_file,
@@ -130,7 +133,8 @@ class ResPartnersController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_journal::orderBy('code','asc')->get();
+        $account = account_account::orderBy('code','asc')->get();
+        $journal = account_journal::orderBy('code','asc')->get();
         $country=res_country::orderBy('country_name', 'ASC')->get();
         $state=res_country_state::orderBy('state_name', 'ASC')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
@@ -139,7 +143,7 @@ class ResPartnersController extends Controller
         $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
         $bills=Purchase::where('client',$res_partner->id)->count();
         return view('res_partner.edit_partner',
-            compact('access','group','res_partner','country','bills','state','currency','lang','tz','industry','account','employee'));
+            compact('access','group','res_partner','country','bills','state','currency','lang','tz','journal','industry','account','employee'));
     }
 
     public function edit(res_partner $res_partner)
@@ -194,6 +198,7 @@ class ResPartnersController extends Controller
                 'payment_terms'=>$request->payment_terms,
                 'note'=>$request->note,
                 'receivable_account'=>$request->receivable_account,
+                'journal'=> $request->journal,
                 'logo'=> $nama_file,
             ]);
             Toastr::success('Vendors ' .$request->name. ' created successfully','Success');
