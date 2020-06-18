@@ -189,5 +189,5 @@
 </div>
 @endsection
 @section('js')
-<script src="{{asset('js/asset_common/bill.js')}}"></script>
+<script src="{{asset('js/asset_common/payment.js')}}"></script>
 @endsection

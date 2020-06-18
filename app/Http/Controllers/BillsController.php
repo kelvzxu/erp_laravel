@@ -285,76 +285,83 @@ class BillsController extends Controller
 
     public function wizard_create($id)
     {
-        $year=date("Y");
-        $prefixcode = "BILL-$year-";
-        $count = Purchase::all()->count();
-        if ($count==0){
-            $Purchase_no= "$prefixcode"."000001";
-        }else {
-            $latestPo = Purchase::orderBy('id','DESC')->first();
-            $Purchase_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
-        }
-        $orders = purchases_order::findOrFail($id);
-        $orders_line = purchases_order_products::where('purchases_order_id','=',$id)->get();
-        $partner = res_partner::findOrFail($orders->vendor);
-        $address = "$partner->street,$partner->zip,$partner->city";
-        switch ($partner->payment_terms) {
-            case 1:
-                $due_date=date('Y-m-d H:i:s');
-                break;
-            case 2:
-                $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 15 days'));
-                break;
-            case 3:
-                $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 21 days'));
-                break;
-            case 4:
-                $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 30 days'));
-                break;
-            case 5:
-                $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 45 days'));
-                break;
-            case 6:
-                $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 2 Month'));
-                break;
-            case 7:
-                $Date = date('Y-m-d H:i:s');
-                $due_date= date("Y-m-t", strtotime($Date));
-                break;
-            default:
-                $due_date=date('Y-m-d H:i:s');;
-        }
-        $Bills = Purchase::insertGetId([   
-            'purchase_no'=>$Purchase_no,
-            'purchase_date'=>date('Y-m-d H:i:s'),
-            'due_date'=>$due_date,
-            'client'=>$orders->vendor,
-            'client_address'=>$address,
-            'title'=>$orders->order_no,
-            'merchandise'=>Auth::id(),
-            'sub_total'=>$orders->sub_total,
-            'discount'=>$orders->discount,
-            'grand_total'=>$orders->grand_total,
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s'),
-        ]);
-        foreach($orders_line as $e => $data){
-            $bill_line = PurchaseProduct::create([
-                'purchase_id'=>$Bills,
-                'name'=>$data->name,
-                'qty'=>$data->qty,
-                'price'=>$data->price,
-                'total'=>$data->total,
+        try{
+
+            $year=date("Y");
+            $prefixcode = "BILL-$year-";
+            $count = Purchase::all()->count();
+            if ($count==0){
+                $Purchase_no= "$prefixcode"."000001";
+            }else {
+                $latestPo = Purchase::orderBy('id','DESC')->first();
+                $Purchase_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
+            }
+            $orders = purchases_order::findOrFail($id);
+            $orders_line = purchases_order_products::where('purchases_order_id','=',$id)->get();
+            $partner = res_partner::findOrFail($orders->vendor);
+            $address = "$partner->street,$partner->zip,$partner->city";
+            switch ($partner->payment_terms) {
+                case 1:
+                    $due_date=date('Y-m-d H:i:s');
+                    break;
+                case 2:
+                    $Date = date('Y-m-d H:i:s');
+                    $due_date= date('Y-m-d', strtotime($Date. ' + 15 days'));
+                    break;
+                case 3:
+                    $Date = date('Y-m-d H:i:s');
+                    $due_date= date('Y-m-d', strtotime($Date. ' + 21 days'));
+                    break;
+                case 4:
+                    $Date = date('Y-m-d H:i:s');
+                    $due_date= date('Y-m-d', strtotime($Date. ' + 30 days'));
+                    break;
+                case 5:
+                    $Date = date('Y-m-d H:i:s');
+                    $due_date= date('Y-m-d', strtotime($Date. ' + 45 days'));
+                    break;
+                case 6:
+                    $Date = date('Y-m-d H:i:s');
+                    $due_date= date('Y-m-d', strtotime($Date. ' + 2 Month'));
+                    break;
+                case 7:
+                    $Date = date('Y-m-d H:i:s');
+                    $due_date= date("Y-m-t", strtotime($Date));
+                    break;
+                default:
+                    $due_date=date('Y-m-d H:i:s');;
+            }
+            $Bills = Purchase::insertGetId([   
+                'purchase_no'=>$Purchase_no,
+                'purchase_date'=>date('Y-m-d H:i:s'),
+                'due_date'=>$due_date,
+                'client'=>$orders->vendor,
+                'client_address'=>$address,
+                'title'=>$orders->order_no,
+                'merchandise'=>Auth::id(),
+                'sub_total'=>$orders->sub_total,
+                'discount'=>$orders->discount,
+                'grand_total'=>$orders->grand_total,
+                'created_at'=>date('Y-m-d H:i:s'),
+                'updated_at'=>date('Y-m-d H:i:s'),
             ]);
+            foreach($orders_line as $e => $data){
+                $bill_line = PurchaseProduct::create([
+                    'purchase_id'=>$Bills,
+                    'name'=>$data->name,
+                    'qty'=>$data->qty,
+                    'price'=>$data->price,
+                    'total'=>$data->total,
+                ]);
+            }
+            $orders->update([
+                'invoice'=> True,
+            ]);
+            return redirect()->route('purchases.show',$Bills);    
+        }catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
         }
-        $orders->update([
-            'invoice'=> True,
-        ]);
-        return redirect()->route('purchases.show',$Bills);    
     }
 }

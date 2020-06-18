@@ -212,7 +212,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="payment">
+                        <a href="#" id="register_payment">
                             <i class="metismenu-icon fa fa-file-text"></i>
                             Register Payments
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
@@ -223,7 +223,7 @@
                                     <i class="metismenu-icon ">
                                     </i>Customer Payment
                                 </a>
-                                <a href="{{ route ('PartnerDebt')}}" id="paybill">
+                                <a href="{{ route ('payment_bills.index')}}" id="paybill">
                                     <i class="metismenu-icon ">
                                     </i>Vendor Payment
                                 </a>
