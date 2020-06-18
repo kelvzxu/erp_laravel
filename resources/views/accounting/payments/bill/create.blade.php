@@ -104,7 +104,7 @@
                                                 <label class="o_form_label o_required_modifier">Journal</label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <select class="o_input o_field_widget o_required_modifier" required name="journal_id">
+                                                <select class="o_input o_field_widget o_required_modifier required" required name="journal_id">
                                                     <option value=""></option>
                                                     @foreach ($journal as $row)
                                                         <option value="{{ $row->id }}">{{ ucfirst($row->name) }} ({{ ucfirst($row->currency->currency_name) }})</option>
@@ -114,7 +114,7 @@
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label class="o_form_label o_required_modifier">Payment Method</label></td>
+                                                <label class="o_form_label o_required_modifier required">Payment Method</label></td>
                                             <td style="width: 100%;">
                                                 <div class="row ml-3">
                                                     <input class="form-check-input" type="radio" id="payment_method" name="payment_method" value="Manual" checked="True">
@@ -140,7 +140,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <div name="amount_div" class="o_row">
-                                                    <input type="text" class="o_input o_field_widget o_required_modifier" name="amount">
+                                                    <input type="text" class="o_input o_field_widget o_required_modifier" required name="amount">
                                                 </div>
                                             </td>
                                         </tr>
@@ -149,7 +149,7 @@
                                                 <label class="o_form_label o_required_modifier">Date</label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <input type="date" class="o_input o_field_widget o_required_modifier" name="payment_date">
+                                                <input type="date" class="o_input o_field_widget o_required_modifier" required name="payment_date">
                                             </td>
                                         </tr>
                                         <tr>

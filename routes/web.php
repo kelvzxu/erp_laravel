@@ -178,12 +178,15 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Payments/Invoices', 'AccountPaymentsController@index')->name('payment_invoices.index');
     Route::get('Payments/Invoices/Register', 'AccountPaymentsController@create')->name('payment_invoices.create');
     Route::get('Payments/Invoices/Reconcile/{id}', 'PaymentMatchingController@invoice')->name('reconcile.invoice');
+    Route::post('Payments/Invoices/Reconcile/store', 'PaymentMatchingController@invoice_store')->name('reconcile.invoice_store');
+
     
     // ==== Paymeny Bills ====
     Route::get('Payments/Bills', 'AccountPaymentsController@vendor_index')->name('payment_bills.index');
     Route::get('Payments/Bills/Register', 'AccountPaymentsController@vendor_create')->name('payment_bills.create');
-    
-    
+    Route::get('Payments/Bill/Reconcile/{id}', 'PaymentMatchingController@bill')->name('reconcile.bill');
+    Route::post('Payments/Bill/Reconcile/store', 'PaymentMatchingController@bill_store')->name('reconcile.bill_store');
+
     // save &Update Payments ==== 
     Route::post('Payments/store', 'AccountPaymentsController@store')->name('payment.store');
     Route::post('Payments/update', 'AccountPaymentsController@update')->name('payment.update');

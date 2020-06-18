@@ -10,7 +10,7 @@ class Purchase extends Model
         'purchase_no', 'purchase_date', 'due_date',
         'title', 'sub_total', 'discount',
         'grand_total', 'client','receipt','receipt_validate',
-        'client_address','approved','status','merchandise'
+        'client_address','approved','status','merchandise','paid',
     ];
 
     public function products()

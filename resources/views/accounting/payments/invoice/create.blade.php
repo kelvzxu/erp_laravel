@@ -117,7 +117,7 @@
                                                 <label class="o_form_label o_required_modifier">Payment Method</label></td>
                                             <td style="width: 100%;">
                                                 <div class="row ml-3">
-                                                    <input class="form-check-input" type="radio" id="payment_method" name="payment_method" value="Manual" checked="True">
+                                                    <input class="form-check-input" type="radio" id="payment_method" required name="payment_method" value="Manual" checked="True">
                                                     <label class="o_form_label">Manual</label>
                                                 </div>
                                                 <div class="row ml-3">
@@ -144,7 +144,7 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <div name="amount_div" class="o_row">
-                                                    <input type="text" class="o_input o_field_widget o_required_modifier" name="amount">
+                                                    <input type="text" class="o_input o_field_widget o_required_modifier" required name="amount">
                                                 </div>
                                             </td>
                                         </tr>
@@ -153,7 +153,7 @@
                                                 <label class="o_form_label o_required_modifier">Date</label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <input type="date" class="o_input o_field_widget o_required_modifier" name="payment_date">
+                                                <input type="date" class="o_input o_field_widget o_required_modifier" required name="payment_date">
                                             </td>
                                         </tr>
                                         <tr>

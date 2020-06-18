@@ -88,7 +88,7 @@ class AccountPaymentsController extends Controller
                 'move_name'=>$move_name,
                 'company_id'=>1,
                 'state'=>"draft",
-                'payBNK1/2020/0002ment_type'=>$request->payment_type,
+                'payment_type'=>$request->payment_type,
                 'payment_method_id'=>$request->payment_method,
                 'partner_type'=>$request->partner_type,
                 'partner_id'=>$request->partner_id,
@@ -196,18 +196,18 @@ class AccountPaymentsController extends Controller
             if ($payment->partner_type =="customer")
             {
                 $partner = res_customer::find($payment->partner_id);
-                $credit = $partner->credit_limit;
+                $credit = $partner->credit_limit + $payment->amount;
                 $partner->update([
-                    'credit_limit'=> $payment->amount,
+                    'credit_limit'=> $credit,
                 ]);
                 $payment->update([
                     'state'=>"posted"
                 ]);
             } else {
                 $partner = res_partner::find($payment->partner_id);
-                $credit = $partner->credit_limit;
+                $credit = $partner->credit_limit + $payment->amount;
                 $partner->update([
-                    'credit_limit'=> $payment->amount,
+                    'credit_limit'=> $credit,
                 ]);
                 $payment->update([
                     'state'=>"posted"

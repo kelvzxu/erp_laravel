@@ -87,10 +87,10 @@
             <div class="container-fluid my-5">
                 <div class="clearfix o_form_sheet">
                     <div class="o_not_full oe_button_box mx-0">
-                        <button type="button" class="btn oe_stat_button">
+                        <a href="{{route('reconcile.bill', $data->partner_id)}}" type="button" class="btn oe_stat_button">
                             <i class="fa fa-fw o_button_icon fa-dollar"></i>
                             <span>Payment Matching</span>
-                        </button>
+                        </a>
                     </div>
                     <div class="oe_title ml-3 mt-5">
                         <h1>
