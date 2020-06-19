@@ -4,7 +4,7 @@ const swalWithBootstrapButtons = swal.mixin({
     buttonsStyling: false,
 })
 
-$(".development").click(function() {
+$("a.development").click(function(e) {
     e.preventDefault();
     swalWithBootstrapButtons(
             'Something Went Wrong',
