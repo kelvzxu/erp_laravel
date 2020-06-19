@@ -94,7 +94,7 @@ class PaymentMatchingController extends Controller
                 ]);
             };
             Toastr::success('Reconcile Payment Successfully','Success');
-            return redirect(route('payment_bill.index'));
+            return redirect(route('payment_bills.index'));
         } catch (\Exception $e) {
             // Toastr::error($e->getMessage(),'Something Wrong');
             Toastr::error('Check In Error!','Something Wrong');
