@@ -48,11 +48,11 @@
                                             </td>
                                             <td style="width: 100%;">
                                                 <div class="row ml-3">
-                                                    <input class="form-check-input" type="radio" id="payment_type" name="payment_type" value="inbound" checked="True">
+                                                    <input class="form-check-input" type="radio" id="payment_type" name="payment_type" value="inbound">
                                                     <label class="o_form_label">Send Money</label>
                                                 </div>
                                                 <div class="row ml-3 mb-2">
-                                                    <input class="form-check-input" type="radio" id="payment_type" name="payment_type" value="outbound">
+                                                    <input class="form-check-input" type="radio" id="payment_type" name="payment_type" value="outbound" checked="True">
                                                     <label class="o_form_label">Receive Money</label>
                                                 </div>
                                             </td>

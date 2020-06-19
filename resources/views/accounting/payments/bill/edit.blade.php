@@ -20,7 +20,7 @@
                     <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                         <div>
                             <button class="btn btn-primary my-2" @click="create" :disabled="isProcessing">Save</button>
-                            <a href="{{route('purchases')}}" class="btn btn-secondary mby-2">Discard</a>
+                            <a href="{{route('payment_bills.index')}}" class="btn btn-secondary mby-2">Discard</a>
                         </div>
                     </div>
                 </div>
