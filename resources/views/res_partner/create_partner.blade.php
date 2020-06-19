@@ -397,8 +397,6 @@
 </form>
 @endsection
 @section('js')
-<script>
-$('a#partner').addClass('mm-active');
-</script>
+<script src="{{asset('js/asset_common/vendor.js')}}"></script>
 @include('api.api')
 @endsection

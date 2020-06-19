@@ -467,40 +467,7 @@
 </form>
 @endsection
 @section('js')
-<script>
-$('a#customer').addClass('mm-active');
-function deletePost(id){
-    const swalWithBootstrapButtons = swal.mixin({
-        confirmButtonClass: 'btn btn-success',
-        cancelButtonClass: 'btn btn-danger',
-        buttonsStyling: false,
-    })
-
-    swalWithBootstrapButtons({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        type: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, delete it!',
-        cancelButtonText: 'No, cancel!',
-        reverseButtons: true
-    }).then((result) => {
-        if (result.value) {
-            event.preventDefault();
-            document.getElementById('delete-form-'+id).submit();
-        } else if (
-            // Read more about handling dismissals
-            result.dismiss === swal.DismissReason.cancel
-        ) {
-            swalWithBootstrapButtons(
-                'Cancelled',
-                'Your file is safe :)',
-                'error'
-            )
-        }
-    })
-}
-</script>
+<script src="{{asset('js/asset_common/customer.js')}}"></script>
 @endsection
 @section('modal')
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -149,26 +149,25 @@
                         <thead class="table table-sm">
                             <tr>
                                 <th scope="col">No.</th>
-                                <th scope="col">Photo</th>
-                                <th scope="col">Employee Name</th>
-                                <th scope="col">City</th>
-                                <th scope="col">Country</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Work Phone</th>
+                                <th scope="col">Work Email</th>
                                 <th scope="col">Department</th>
-                                <th scope="col">action</th>
+                                <th scope="col">Job Position</th>
+                                <th scope="col">Country</th>
                             </tr>
                         </thead>
                         @foreach($employee as $data)
                         <tbody>
-                            <tr>
+                            <tr class="table-row"data-href="{{route('employee.edit',$data->id)}}" >
                                 <td scope="row">{{$loop->iteration}}
-                                <td ><img src="{{asset('uploads/Employees/'.$data->photo)}}" width="50px" height="60px"></td>
                                 <td >{{$data->employee_name}}</td>
+                                <td >{{$data->work_phone}}</td>
+                                <td >{{$data->work_email}}</td>
+                                <td >{{$data->department_name}}</td>
+                                <td >{{$data->jobs_name}}</td>
                                 <td >{{$data->city}}</td>
                                 <td >{{$data->country_name}}</td>
-                                <td >{{$data->department_name}}</td>
-                                <td >
-                                    <a href="{{route('employee.edit',$data->id)}}" class="btn btn-sm btn-success"><i class="fa fa-edit">  Edit</i></a>
-                                </td>
                             </tr>
                         </tbody>
                         @endforeach
@@ -191,11 +190,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#employee').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/employee.js')}}"></script>
 @endsection

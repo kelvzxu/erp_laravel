@@ -151,36 +151,32 @@
                         <thead class="table table-sm">
                             <tr>
                                 <th scope="col">No.</th>
-                                <th scope="col">logo</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col">city</th>
+                                <th scope="col">Phone</th>
                                 <th scope="col">country</th>
                                 <th scope="col">website</th>
-                                <th scope="col">action</th>
+                                <th scope="col">Email</th>
                             </tr>
                         </thead> 
                         <tbody>
-                            @foreach($customer as $cust)
-                                <tr>
+                            @foreach($customer as $row)
+                                <tr class="table-row"data-href="{{ route('customer.show', $row->id) }}">
                                     <td scope="row">{{$loop->iteration}}</td>
                                     <td >
-                                        @if (!empty($cust->logo))
-                                        <img src="{{asset('uploads/customers/'.$cust->logo)}}" 
-                                        width="80px" height="50px" alt="{{$cust->name}}">
-                                        @else
-                                            <img src="http://via.placeholder.com/80x50" alt="{{ $cust->name }}">
-                                        @endif
+                                    @if (!empty($row->parent_id))
+                                        {{$row->display_name}}
+                                    @else 
+                                        individual
+                                    @endif
                                     </td>
-                                    <td >{{$cust->display_name}}</td>
-                                    <td >{{$cust->parent_id}}</td>
-                                    <td >{{$cust->city}}</td>
-                                    <td >{{$cust->country_name}}</td>
-                                    <td ><a href="https://{{$cust->website}}">{{$cust->website}}</a></td>
-                                    <td >
-                                        <a href="{{ route('customer.show', $cust->id) }}" class="btn btn-success btn-sm">
-                                        <i class="fa fa-edit"> View Detail</i></a>
-                                    </td>
+                                    <td >{{$row->parent_id}}</td>
+                                    <td >{{$row->phone}}</td>
+                                    <td >{{$row->city}}</td>
+                                    <td >{{$row->country_name}}</td>
+                                    <td ><a href="https://{{$row->website}}">{{$row->website}}</a></td>
+                                    <td >{{$row->email}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -206,11 +202,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#customer').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/customer.js')}}"></script>
 @endsection

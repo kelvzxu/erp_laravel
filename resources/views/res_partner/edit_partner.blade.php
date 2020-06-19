@@ -467,9 +467,8 @@
 </form>
 @endsection
 @section('js')
-<script>
-$('a#partner').addClass('mm-active');
-</script>
+<script src="{{asset('js/asset_common/vendor.js')}}"></script>
+@include('api.api')
 @endsection
 @section('modal')
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

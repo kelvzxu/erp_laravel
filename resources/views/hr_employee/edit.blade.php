@@ -691,7 +691,7 @@
 @endsection
 @section('js')
 @include('api.api')
-<script src="{{asset('js/employee.js')}}"></script>
+<script src="{{asset('js/asset_common/employee.js')}}"></script>
 @endsection
 @section('modal')
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

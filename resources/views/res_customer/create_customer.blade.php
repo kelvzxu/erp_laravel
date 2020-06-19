@@ -398,8 +398,6 @@
 </form>
 @endsection
 @section('js')
-<script>
-$('a#customer').addClass('mm-active');
-</script>
+<script src="{{asset('js/asset_common/customer.js')}}"></script>
 @include('api.api')
 @endsection

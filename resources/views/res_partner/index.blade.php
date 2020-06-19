@@ -151,36 +151,33 @@
                         <thead class="table table-sm">
                             <tr>
                                 <th scope="col">No.</th>
-                                <th scope="col">logo</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Company Name</th>
                                 <th scope="col">city</th>
+                                <th scope="col">Phone</th>
                                 <th scope="col">country</th>
                                 <th scope="col">website</th>
-                                <th scope="col">action</th>
+                                <th scope="col">Email</th>
                             </tr>
                         </thead>
                         @foreach($partner as $row)
                         <tbody>
-                            <tr>
+                            <tr >
+                            <tr class="table-row"data-href="{{ route('partner.show', $row->id) }}">
                                 <td scope="row">{{$loop->iteration}}</td>
+                                <td >{{$row->display_name}}</td>
                                 <td >
-                                    @if (!empty($row->logo))
-                                        <img src="{{asset('uploads/Partners/'.$row->logo)}}" 
-                                        width="80px" height="50px" alt="{{$row->display_name}}">
-                                    @else
-                                        <img src="http://via.placeholder.com/80x50" alt="{{ $row->display_name }}">
+                                    @if (!empty($row->parent_id))
+                                        {{$row->display_name}}
+                                    @else 
+                                        individual
                                     @endif
                                 </td>
-                                <td >{{$row->display_name}}</td>
-                                <td >{{$row->parent_id}}</td>
+                                <td >{{$row->phone}}</td>
                                 <td >{{$row->city}}</td>
                                 <td >{{$row->country_name}}</td>
                                 <td ><a href="https://{{$row->website}}">{{$row->website}}</a></td>
-                                <td >
-                                    <a href="{{ route('partner.show', $row->id) }}" class="btn btn-success btn-sm">
-                                    <i class="fa fa-edit"> View Detail</i></a>
-                                </td>
+                                <td >{{$row->email}}</td>
                             </tr>
                         </tbody>
                         @endforeach
@@ -206,11 +203,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#partner').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/vendor.js')}}"></script>
 @endsection
