@@ -138,13 +138,13 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="" class="development">
                             <i class="metismenu-icon fa fa-pencil-square-o">
                             </i>Inventory Adjustments
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a href="" class="development">
                             <i class="metismenu-icon fa fa-usd ">
                             </i>PriceList
                         </a>
@@ -182,13 +182,13 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="" class="development">
                                     <i class="metismenu-icon"></i>
                                     PriceList Report
                                 </a>
                             </li>
                             <li>
-                                <a href="">
+                                <a href="" class="development">
                                     <i class="metismenu-icon"></i>
                                     Onloading Reports
                                 </a>
@@ -314,7 +314,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route ('recruitment')}}">
+                        <a href="{{ route ('recruitment')}}" class="development">
                             <i class="metismenu-icon fa fa-user-plus">
                             </i>Recruitment
                         </a>
