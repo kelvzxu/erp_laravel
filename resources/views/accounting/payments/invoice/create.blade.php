@@ -11,11 +11,7 @@
         <div class="o_control_panel">
             <div>
                 <ol class="breadcrumb" role="navigation">
-<<<<<<< HEAD
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment.index')}}">Payments</a></li>
-=======
                 <li class="breadcrumb-item" accesskey="b"><a href="{{route('payment_invoices.index')}}">Payments</a></li>
->>>>>>> reconcile
                     <li class="breadcrumb-item active">New</li>
                 </ol>
             </div>
@@ -24,11 +20,7 @@
                     <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                         <div>
                             <button class="btn btn-primary my-2" @click="create" :disabled="isProcessing">Save</button>
-<<<<<<< HEAD
-                            <a href="{{route('purchases')}}" class="btn btn-secondary mby-2">Discard</a>
-=======
                             <a href="{{route('payment_invoices.index')}}" class="btn btn-secondary mby-2">Discard</a>
->>>>>>> reconcile
                         </div>
                     </div>
                 </div>
