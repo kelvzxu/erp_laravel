@@ -310,7 +310,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
     {!! Toastr::message() !!}
-    <script src="{{asset('js/asset_common/payment.js')}}"></script>
+    <script src="{{asset('js/asset_common/base.js')}}"></script>
     <script>
     function unactive(){
     $('.menu-item').removeClass('mm-active');
