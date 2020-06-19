@@ -154,6 +154,7 @@
                                 <th scope="col">Work Email</th>
                                 <th scope="col">Department</th>
                                 <th scope="col">Job Position</th>
+                                <th scope="col">City</th>
                                 <th scope="col">Country</th>
                             </tr>
                         </thead>

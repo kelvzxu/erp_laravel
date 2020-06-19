@@ -50,7 +50,7 @@ class PaymentMatchingController extends Controller
                 'debit_limit' => $debit,
             ]);
             foreach($line as $e => $data){
-                customer_dept::findOrFail($data)->update([
+                customer_dept::where('invoice_no',$data)->update([
                     'payment'=>$request->amount[$e],
                     'status'=>"PAID",
                 ]);
@@ -82,7 +82,7 @@ class PaymentMatchingController extends Controller
                 'debit_limit' => $debit,
             ]);
             foreach($line as $e => $data){
-                partner_credit::findOrFail($data)->update([
+                partner_credit::where('purchase_no',$data)->update([
                     'payment'=>$request->amount[$e],
                     'status'=>"PAID",
                 ]);

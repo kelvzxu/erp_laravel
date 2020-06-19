@@ -168,7 +168,7 @@
                                     @if (!empty($row->parent_id))
                                         {{$row->display_name}}
                                     @else 
-                                        individual
+                                        <div>Individual</div>
                                     @endif
                                     </td>
                                     <td >{{$row->parent_id}}</td>
