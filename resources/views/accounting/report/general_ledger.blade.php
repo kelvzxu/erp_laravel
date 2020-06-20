@@ -101,9 +101,9 @@
                         <tbody>
                             <tr class="o_data_row {{$row->code}}" style="display:none;">
                                 <td class="o_data_cell o_field_cell o_readonly_modifier">{{$items->date}}</td>
-                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">My Company (San Francisco)</td>
+                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->company->company_name}}</td>
                                 <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->account_move_name}}</td>
-                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">Ace Hardware Indonesia</td>
+                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->account_move->invoice_partner_display_name}}</td>
                                 <td class="o_data_cell o_field_cell o_list_char">{{$items->name}}</td>
                                 <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier"></td>
                                 <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->debit)}}</td>

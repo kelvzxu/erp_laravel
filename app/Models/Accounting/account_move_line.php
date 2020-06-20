@@ -13,4 +13,12 @@ class account_move_line extends Model
         'price_total','debit','credit','balance','reconciled','currency_id',
         'partner_id','create_uid','payment_id',
     ];
+    public function account_move()
+    {
+        return $this->belongsTo(account_move::class);
+    }
+    public function company()
+    {
+        return $this->hasOne('App\Models\Company\res_company','id','company_id');
+    }
 }
