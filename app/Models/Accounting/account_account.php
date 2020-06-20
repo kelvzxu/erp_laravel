@@ -29,4 +29,8 @@ class account_account extends Model
     {
         return $this->hasOne('App\Models\Accounting\account_account_type','id','type');
     }
+    public function move_lines()
+    {
+        return $this->hasMany(account_move_line::class,'account_id');
+    }
 }

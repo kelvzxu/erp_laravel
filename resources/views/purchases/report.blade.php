@@ -9,7 +9,8 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchases.report')}}">Purchases Report</a></li>
+                <li class="breadcrumb-item" accesskey="b"><a href="{{route('purchase_orders.report')}}">Purchase Order Report</a></li>
+                <li class="breadcrumb-item active">{{date("F Y ")}}</li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
@@ -45,7 +46,7 @@
                             </a>
                             
                             <div class="dropdown-menu o_dropdown_menu" role="menu">
-                                <a href="{{route('purchases_report.print')}}" class="dropdown-item undefined"><i class="fa fa-print"></i>&nbsp;Print Report</a>     
+                                <a href="{{route('purchase_orders.print')}}" class="dropdown-item undefined"><i class="fa fa-print"></i>&nbsp;Print Report</a>     
                             </div>
                         </div>
 
@@ -109,10 +110,10 @@
             <div class="card mb-3 bg-midnight-bloom">
                 <div class="widget-content text-white">
                     <div class="col-6 pull-left text-left">
-                        <div class="widget-heading"><h3>Income This Month</h3></div>
+                        <div class="widget-heading"><h3>Purchase This Month</h3></div>
                     </div>
                     <div class="col-6 pull-right text-right">
-                        <div class="widget-numbers text-white"><h5>Rp. {{ number_format($income)}}</h5></div>
+                        <div class="widget-numbers text-white"><h5>Rp. {{ number_format($sales)}}</h5></div>
                     </div>
                 </div>
             </div>
@@ -120,11 +121,11 @@
         <div class="col-md-6 col-xl-4">
             <div class="card mb-3 bg-danger">
                 <div class="widget-content text-white">
-                    <div class="col-7 pull-left text-left">
-                        <div class="widget-heading"><h3>Unpaid purchases  </h3></div>
+                    <div class="col-8 pull-left text-left">
+                        <div class="widget-heading"><h3>Purchase To Be Invoice </h3></div>
                     </div>
-                    <div class="col-5 pull-right text-right">
-                        <div class="widget-numbers text-white"><h5>{{$unpaid}}</h5></div>
+                    <div class="col-4 pull-right text-right">
+                        <div class="widget-numbers text-white"><h5>{{$invoice}}</h5></div>
                     </div>
                 </div>
             </div>
@@ -133,10 +134,10 @@
             <div class="card mb-3 bg-warning">
                 <div class="widget-content text-white">
                     <div class="col-8 pull-left text-left">
-                        <div class="widget-heading"><h3>Purchase Order to Approved</h3></div>
+                        <div class="widget-heading"><h3>This Month Quotation</h3></div>
                     </div>
                     <div class="col-4 pull-right text-right">
-                        <div class="widget-numbers text-white"><h5>{{$notvalidate}}</h5></div>
+                        <div class="widget-numbers text-white"><h5>{{$quotation}}</h5></div>
                     </div>
                 </div>
             </div>
@@ -144,38 +145,45 @@
     </div>
     <div class="o-content">
         <div class="panel-body ml-2">
-            @if($purchases->count())
+            @if($data->count())
             <div class="table-responsive-lg mb-4">
                 <table class="table table-striped">
                     <thead class="table table-sm">
                         <tr>
-                            <th scope="col">Date</th>
-                            <th scope="col">Purchase No</th>
-                            <th scope="col">Vendors</th>
-                            <th scope="col">Merchandise</th>
-                            <th scope="col">Discount</th>
-                            <th scope="col">Total</th> 
-                            <th scope="col">Due Amount</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Reference</th>
+                            <th scope="col">Customer</th>
+                            <th scope="col">Order Date</th>
+                            <th scope="col">Sales Representative</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">status</th>
+                            <th scope="col">Invoice</th>
                         </tr>
                     </thead> 
                     <tbody> 
-                        @foreach($purchases as $purchase)
+                        @foreach($data as $row)
                             <tr>
-                                <td>{{$purchase->purchase_date}}</td>
-                                <td>{{$purchase->purchase_no}}</td>
-                                <td>{{$purchase->partner_name}}</td>
-                                <td>{{$purchase->employee_name}}</td>
-                                <td>- Rp. {{ number_format($purchase->discount)}}</td>
-                                <td>- Rp. {{ number_format($purchase->grand_total)}}</td>
-                                <td>- Rp. {{ number_format($purchase->grand_total-$purchase->payment)}}</td>
+                                <td>{{$row->order_no}}</td>
+                                <td>{{$row->partner->partner_name}}</td>
+                                <td>{{$row->order_date}}</td>
+                                <td>{{$row->sales->employee_name}}</td>
+                                <td>Rp. {{ number_format($row->grand_total)}}</td>
                                 <td>
-                                    @if(($purchase->grand_total-$purchase->payment)==0) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-success">PAID</div>
+                                    @if($row->status == "Quotation" ) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">RFQ</div>
                                         <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
                                     @endif
-                                    @if(($purchase->grand_total-$purchase->payment)!=0) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-danger">UNPAID</div>
+                                    @if($row->status == "PO" ) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-success">Purchase Order</div>
+                                        <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($row->invoice == False ) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-danger text-white">No_Invoice</div>
+                                        <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
+                                    @endif
+                                    @if($row->invoice == True ) 
+                                        <div class="mb-2 mr-2 badge badge-pill badge-success">invoice</div>
                                         <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
                                     @endif
                                 </td>
@@ -189,21 +197,25 @@
             <div class="o_nocontent_help">
                 <p class="o_view_nocontent_smiling_face">
                     <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                    Create a Vendors Bill
+                    Create a request for quotation
                 </p>
                 <p>
-                    Create purchases, register payments and keep track of the discussions with your Vendors.
+                    The quotation contains the history of the discussion you had with your vendor.
                 </p>
             </div>
             @endif
         </div>
         <!-- </div> -->
     </div>
+    <div class="row mx-4">
+        {!! $data->render() !!}
+    </div>
 </div>
 @endsection
 @section('js')
 <script>
-    $('a#purchase_report').addClass('mm-active');
+    $("a#purchase_report").addClass("mm-active");
+    $('a#report_purchases').addClass('mm-active');
     $("#report_purchases").change(function() {
     var value = $("#key").val();
     $("input[name='filter']").val(value);

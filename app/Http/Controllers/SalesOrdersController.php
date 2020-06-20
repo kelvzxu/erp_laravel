@@ -159,4 +159,40 @@ class SalesOrdersController extends Controller
                 'id' => $orders->id
             ]);
     }
+
+    public function report()
+    {
+        $month = date('m');
+        $year = date('Y');
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $data = sales_order::with('partner','sales_person')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(30);
+        $quotation = sales_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('status','quotation')->count();
+        $invoice = sales_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('invoice','False')->count();
+        $sales = sales_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('status','SO')->sum('grand_total');
+        return view('sales.report', compact('access','group','data','quotation','invoice','sales'));
+    }
+
+    public function print_report()
+    {
+        try{
+            $month = date('m');
+            $year = date('Y');
+            $monthName = date("F", mktime(0, 0, 0, $month, 10));
+            $access=access_right::where('user_id',Auth::id())->first();
+            $group=user::find(Auth::id());
+            $data = sales_order::with('partner','sales_person')
+                        ->orderBy('created_at', 'desc')
+                        ->paginate(30);
+            $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+                                    ->loadview('reports.sales.sales_order_pdf', compact('monthName','year','data'));
+            return $pdf->stream();
+        } catch (\Exception $e) {
+            // Toastr::error($e->getMessage(),'Something Wrong');
+            Toastr::error('an unexpected error occurred, please contact Your Support Service','Something Went Wrong');
+            return redirect()->back();
+        }
+    }
 }

@@ -64,7 +64,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('invoices.report')}}" id="report_invoice" class="menu-item" >
+                                <a href="{{ route ('sales_orders.report')}}" id="report_invoice" class="menu-item" >
                                     <i class="metismenu-icon"></i>
                                     Report Sales Order
                                 </a>
@@ -108,7 +108,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('purchases.report')}}" id="report_purchases" class="menu-item">
+                                <a href="{{ route ('purchase_orders.report')}}" id="report_purchases" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Purchase Order Report
                                 </a>
@@ -269,6 +269,18 @@
                                 <a href="{{ route ('purchases.report')}}" id="report_purchases" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Bills Report
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('accounting.general_ledger')}}" id="general_ledger" class="menu-item">
+                                    <i class="metismenu-icon"></i>
+                                    General Ledger
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('accounting.partner_ledger')}}" id="partner_ledger" class="menu-item development">
+                                    <i class="metismenu-icon"></i>
+                                    partner Ledger
                                 </a>
                             </li>
                         </ul>

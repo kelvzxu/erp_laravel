@@ -41,6 +41,9 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('AccountMove/purchase/{id}','AccountMovesController@purchase')->name('accountmove.purchase');
     Route::get('AccountMove/payment/{id}','AccountMovesController@payment')->name('accountmove.payment');
 
+    // Accounting Report ====
+    Route::get('Accounting/Report/General_Ledger','AccountReportController@generalledger')->name('accounting.general_ledger');
+    Route::get('Accounting/Report/Partner_Ledger','AccountReportController@partnerledger')->name('accounting.partner_ledger');
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
     Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');
@@ -201,6 +204,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('purchases/edit/{id}', 'PurchasesOrdersController@edit')->name('purchase_orders.edit');
     Route::get('purchases/confirm/{id}', 'PurchasesOrdersController@confirm')->name('purchase_orders.confirm');
     Route::put('purchases/update/{id}', 'PurchasesOrdersController@update')->name('purchase_orders.update');
+    Route::get('purchases/Report', 'PurchasesOrdersController@report')->name('purchase_orders.report');
+    Route::get('purchases/Report/Print', 'PurchasesOrdersController@print_report')->name('purchase_orders.print');
 
     // ==== Receipt ====
     Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');
@@ -276,6 +281,8 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Sales/confirm/{id}', 'SalesOrdersController@confirm')->name('sales_orders.confirm');
     Route::put('Sales/update/{id}', 'SalesOrdersController@update')->name('sales_orders.update');
     Route::get('Sales/filter', 'SalesOrdersController@search')->name('sales_orders.filter');
+    Route::get('Sales/Report', 'SalesOrdersController@report')->name('sales_orders.report');
+    Route::get('Sales/Report/print', 'SalesOrdersController@print_report')->name('sales_orders.print');
 });  
 Auth::routes(['verify' => true]);
 
