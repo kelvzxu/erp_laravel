@@ -1,4 +1,4 @@
-const swalWithBootstrapButtons = swal.mixin({
+const exceptiondialog = swal.mixin({
     confirmButtonClass: 'btn btn-success',
     cancelButtonClass: 'btn btn-danger',
     buttonsStyling: false,
@@ -6,7 +6,7 @@ const swalWithBootstrapButtons = swal.mixin({
 
 $("a.development").click(function(e) {
     e.preventDefault();
-    swalWithBootstrapButtons(
+    exceptiondialog(
             'Something Went Wrong',
             'This feature is not yet available for the current version.',
             'warning'
