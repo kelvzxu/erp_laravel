@@ -124,6 +124,11 @@
                                     <i class="dropdown-icon fa fa-building">
                                     </i>Manage Companies
                                 </a>
+                                <div tabindex="-1" class="dropdown-divider"></div>
+                                <a data-toggle="modal" data-target="#aboutmodal" class="dropdown-item">
+                                    <i class="dropdown-icon fa fa-info-circle">
+                                    </i>About 
+                                </a>
                             </div>
                         </li>
                     </ul>
@@ -362,6 +367,63 @@
                                 </div>
                             </div>
                         </div>  
+                    </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Ok</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="aboutmodal" tabindex="-1" role="dialog" aria-labelledby="aboutmodalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route ('accounting.partner_ledger')}}" method="get" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="aboutmodalLabel">About</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <img src="{{asset('images/icons/kltech-intl.png')}}" alt="" height="30px" width="150px" class="my-0">                            
+                            </div>
+                        </div>  
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                Applications name
+                            </div>
+                            <div class="col-8">
+                                : {{ config('app.name') }}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Version
+                            </div>
+                            <div class="col-8">
+                                : 2.0.3
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Developer
+                            </div>
+                            <div class="col-8">
+                                : <a href="https://kltech-intl.odoo.com" >Kltech-intl (kelvin leonardi)</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Download
+                            </div>
+                            <div class="col-8">
+                                : <a href="https://github.com/kelvzxu/erp_laravel.git" >Link Download</a>
+                            </div>
+                        </div>
                     </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-secondary">Ok</button>
