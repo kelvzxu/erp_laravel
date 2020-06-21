@@ -15,4 +15,8 @@ class res_partner extends Model
     {
         return $this->belongsTo(Category::class);
     }
+    public function move_lines()
+    {
+        return $this->hasMany('App\Models\Accounting\account_move_line','partner_id','id')->where('account_internal_type','payable');
+    }
 }

@@ -338,5 +338,37 @@
     @yield('js')
 </body>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ route ('accounting.partner_ledger')}}" method="get" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Partner Ledger Report</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <div class="modal-body text-center">
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="" name="partner_type" class="col-form-label"><b>Partner Type </b></label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <select id="partner_type" required name="partner_type" class="form-control o_input o_field_widget o_required_modifier">
+                                        <option value="customer">Customer</option>
+                                        <option value="vendor">Vendor</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-secondary">Ok</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </html>
 @yield('modal')

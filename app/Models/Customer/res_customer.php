@@ -17,4 +17,8 @@ class res_customer extends Model
     {
         return $this->hasOne('App\Models\World_database\res_country_state','id','state_id');
     }
+    public function move_lines()
+    {
+        return $this->hasMany('App\Models\Accounting\account_move_line','partner_id','id')->where('account_internal_type','receivable');
+    }
 }

@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function (){
     // Accounting Report ====
     Route::get('Accounting/Report/General_Ledger','AccountReportController@generalledger')->name('accounting.general_ledger');
     Route::get('Accounting/Report/Partner_Ledger','AccountReportController@partnerledger')->name('accounting.partner_ledger');
+    
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
     Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');

@@ -212,17 +212,29 @@ class AccountMovesController extends Controller
     {
         try{
             $payment = account_payment::find($id);
+            $journal = account_journal::find($payment->journal_id);
+            $payment_account = account_account::where('code',$journal->default_debit_account_id)->first();
             if ($payment->partner_type =="customer"){
                 $partner = res_customer::find($payment->partner_id);
                 $name = $partner->name;
                 $type = "Customer Payment";
+                $debit = $payment->amount;
+                $credit = 0;
+                $balance = $payment->amount - 0;
+                $debit1 = 0;
+                $credit1 = $payment->amount;
+                $balance1 = 0 -$payment->amount;
             } else {
                 $partner = res_partner::find($payment->partner_id);
                 $name = $partner->partner_name;
                 $type = "Vendor Payment";
+                $debit = 0;
+                $credit = $payment->amount;
+                $balance = 0 -$payment->amount;
+                $debit1 = $payment->amount;
+                $credit1 = 0;
+                $balance1 = $payment->amount - 0;
             }
-            $journal = account_journal::find($payment->journal_id);
-            $payment_account = account_account::where('code',$journal->default_debit_account_id)->first();
             $account = account_account::find($partner->receivable_account);
             $account_move = account_move::insertGetId([
                 'name'=>$payment->name,
@@ -261,9 +273,9 @@ class AccountMovesController extends Controller
                 'quantity'=>1,
                 'price_unit'=>"0",
                 'price_total'=>"0",
-                'debit'=>0,
-                'credit'=>$payment->amount,
-                'balance'=>0 - $payment->amount,
+                'debit'=>$debit1,
+                'credit'=>$credit1,
+                'balance'=>$balance1,
                 'currency_id'=>$partner->currency_id,
                 'partner_id'=>$payment->partner_id,
                 'payment_id'=>$id,
@@ -277,15 +289,15 @@ class AccountMovesController extends Controller
                 'journal_id'=>$payment->journal_id,
                 'company_id'=>1,
                 'company_currency_id'=>12,
-                'account_id'=>$payment->journal_id,
+                'account_id'=>$payment_account->id,
                 'account_internal_type'=>$payment_account->internal_type,
                 'name'=>$payment->name,
                 'quantity'=>1,
                 'price_unit'=>"0",
                 'price_total'=>"0",
-                'debit'=>$payment->amount,
-                'credit'=>0,
-                'balance'=>$payment->amount - 0,
+                'debit'=>$debit,
+                'credit'=>$credit,
+                'balance'=>$balance,
                 'currency_id'=>$partner->currency_id,
                 'partner_id'=>$payment->partner_id,
                 'payment_id'=>$id,

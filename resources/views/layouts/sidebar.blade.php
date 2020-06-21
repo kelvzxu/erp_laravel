@@ -230,27 +230,6 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
-                        <a href="#" id="partner_ledger">
-                            <i class="metismenu-icon fa fa-file-text"></i>
-                            Partner Ledger
-                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
-                        </a>
-                        <ul>
-                            <li>
-                                <a href="{{ route ('ReceivableAccount.index')}}" id="receivable">
-                                    <i class="metismenu-icon"></i>
-                                    Receivable Account
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route ('PayableAccount.index')}}" id="payable">
-                                    <i class="metismenu-icon"></i>
-                                    Payable Account
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     @if($group->user_groups == 2 )
                     <li>
                         <a href="#" id="accounting_reports">
@@ -277,8 +256,8 @@
                                     General Ledger
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route ('accounting.partner_ledger')}}" id="partner_ledger" class="menu-item development">
+                            <li> 
+                                <a class="menu-item" data-toggle="modal" data-target="#exampleModal">
                                     <i class="metismenu-icon"></i>
                                     partner Ledger
                                 </a>

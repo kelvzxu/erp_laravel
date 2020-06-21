@@ -21,4 +21,8 @@ class account_move_line extends Model
     {
         return $this->hasOne('App\Models\Company\res_company','id','company_id');
     }
+    public function account()
+    {
+        return $this->BelongsTo(account_account::class);
+    }
 }
