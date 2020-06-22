@@ -102,7 +102,7 @@
                                 <td class="o_data_cell o_field_cell o_readonly_modifier">{{$items->created_at}}</td>
                                 <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->company->company_name}}</td>
                                 <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">[{{$row->code}}] {{$row->name}}</td>
-                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->quantity}}</td>
+                                <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">{{$items->quantity}}</td>
                                 <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->unit_cost)}}</td>
                                 <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->value)}}</td>
                             </tr>
@@ -114,9 +114,9 @@
                             <th data-name="date"></th>
                             <th data-name="company"></th>
                             <th data-name="product"></th>
-                            <th data-name="quantity" >Quantity</th>
-                            <th data-name="cost">Cost</th>
-                            <th data-name="value">Total Value</th>
+                            <th data-name="quantity" >{{$valuation->sum('quantity')}}</th>
+                            <th data-name="cost">{{number_format($valuation->sum('unit_cost'))}}</th>
+                            <th data-name="value">{{number_format($valuation->sum('value'))}}</th>
                         </tr>
                     </tfoot><i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
                 </table>
