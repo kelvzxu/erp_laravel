@@ -93,7 +93,7 @@
                                     style="padding-left: 0px; padding-right: 5px;"></span>[{{$row->code}}] {{$row->name}} ({{ $row->valuation->count() }})</th>
                             <td class="debit o_list_number">{{$row->valuation->sum('quantity')}}</td>
                             <td class="credit o_list_number">{{number_format($row->valuation->sum('unit_cost'))}}</td>
-                            <td class="credit o_list_number">{{number_format($row->valuation->sum('value'))}</td>
+                            <td class="credit o_list_number">{{number_format($row->valuation->sum('value'))}}</td>
                         </tr>
                     </tbody>
                     @foreach ($row->valuation as $items)
