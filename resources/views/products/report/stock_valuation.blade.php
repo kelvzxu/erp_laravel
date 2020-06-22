@@ -92,8 +92,8 @@
                             <th class="o_group_name" tabindex="-1" colspan="3"><span class="fa fa-caret-right"
                                     style="padding-left: 0px; padding-right: 5px;"></span>[{{$row->code}}] {{$row->name}} ({{ $row->valuation->count() }})</th>
                             <td class="debit o_list_number">{{$row->valuation->sum('quantity')}}</td>
-                            <td class="credit o_list_number">{{number_format($row->valuation->sum('unit_cost'))}}</td>
-                            <td class="credit o_list_number">{{number_format($row->valuation->sum('value'))}}</td>
+                            <td class="credit o_list_number">Rp. {{number_format($row->valuation->sum('unit_cost'))}}</td>
+                            <td class="credit o_list_number">Rp. {{number_format($row->valuation->sum('value'))}}</td>
                         </tr>
                     </tbody>
                     @foreach ($row->valuation as $items)
@@ -114,9 +114,9 @@
                             <th data-name="date"></th>
                             <th data-name="company"></th>
                             <th data-name="product"></th>
-                            <th data-name="quantity" >{{$valuation->sum('quantity')}}</th>
-                            <th data-name="cost">{{number_format($valuation->sum('unit_cost'))}}</th>
-                            <th data-name="value">{{number_format($valuation->sum('value'))}}</th>
+                            <th data-name="quantity o_list_number" >{{$valuation->sum('quantity')}}</th>
+                            <th data-name="cost o_list_number">Rp. {{number_format($valuation->sum('unit_cost'))}}</th>
+                            <th data-name="value o_list_number">Rp. {{number_format($valuation->sum('value'))}}</th>
                         </tr>
                     </tfoot><i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
                 </table>
