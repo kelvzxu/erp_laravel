@@ -144,7 +144,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="" class="development">
+                        <a href="" class="development d-none">
                             <i class="metismenu-icon fa fa-usd ">
                             </i>PriceList
                         </a>
@@ -169,6 +169,12 @@
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
+                            <li>
+                                <a href="{{route('inventory.valuation')}}">
+                                    <i class="metismenu-icon"></i>
+                                    Inventory Valuation
+                                </a>
+                            </li>
                             <li>
                                 <a href="{{route('report.productlist')}}">
                                     <i class="metismenu-icon"></i>

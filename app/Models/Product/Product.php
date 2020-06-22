@@ -14,4 +14,9 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function valuation()
+    {
+        return $this->hasMany(stock_valuation::class,'product_id');
+    }
 }

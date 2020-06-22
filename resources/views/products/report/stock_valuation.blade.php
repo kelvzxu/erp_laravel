@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','General ledger Report')
+@section('title','Inventory Valuation Report')
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
@@ -9,7 +9,7 @@
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
-                <li class="breadcrumb-item active" accesskey="b">General ledger</li>
+                <li class="breadcrumb-item active" accesskey="b">Inventory Valuation</li>
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
@@ -79,49 +79,44 @@
                     <thead>
                         <tr>
                             <th data-name="date">Date</th>
-                            <th data-name="company_id">Company</th>
-                            <th data-name="move_id" >Journal Entry</th>
-                            <th data-name="partner_id">Partner</th>
-                            <th data-name="name">Label</th>
-                            <th data-name="full_reconcile_id">Matching</th>
-                            <th data-name="debit">Debit</th>
-                            <th data-name="credit">Credit</th>
+                            <th data-name="company">Company</th>
+                            <th data-name="product">Product</th>
+                            <th data-name="quantity" >Quantity</th>
+                            <th data-name="cost">Cost</th>
+                            <th data-name="value">Total Value</th>
                         </tr>
                     </thead>
                     @foreach($data as $row)
                     <tbody>
                         <tr id="{{$row->code}}" class="o_group_header o_group_has_content">
-                            <th class="o_group_name" tabindex="-1" colspan="6"><span class="fa fa-caret-right"
-                                    style="padding-left: 0px; padding-right: 5px;"></span>{{$row->code}} {{$row->name}} ({{ $row->move_lines->count() }})</th>
-                            <td class="debit o_list_number">Rp. {{ number_format($row->move_lines->sum('debit'))}}</td>
-                            <td class="credit o_list_number">Rp. {{ number_format($row->move_lines->sum('credit'))}}</td>
+                            <th class="o_group_name" tabindex="-1" colspan="3"><span class="fa fa-caret-right"
+                                    style="padding-left: 0px; padding-right: 5px;"></span>[{{$row->code}}] {{$row->name}} ({{ $row->valuation->count() }})</th>
+                            <td class="debit o_list_number">{{$row->valuation->sum('quantity')}}</td>
+                            <td class="credit o_list_number">{{number_format($row->valuation->sum('unit_cost'))}}</td>
+                            <td class="credit o_list_number">{{number_format($row->valuation->sum('value'))}</td>
                         </tr>
                     </tbody>
-                        @foreach ($row->move_lines as $items)
+                    @foreach ($row->valuation as $items)
                         <tbody>
                             <tr class="o_data_row {{$row->code}}" style="display:none;">
-                                <td class="o_data_cell o_field_cell o_readonly_modifier">{{$items->date}}</td>
+                                <td class="o_data_cell o_field_cell o_readonly_modifier">{{$items->created_at}}</td>
                                 <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->company->company_name}}</td>
-                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->account_move_name}}</td>
-                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->account_move->invoice_partner_display_name}}</td>
-                                <td class="o_data_cell o_field_cell o_list_char">{{$items->name}}</td>
-                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier"></td>
-                                <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->debit)}}</td>
-                                <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->credit)}}</td>
+                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">[{{$row->code}}] {{$row->name}}</td>
+                                <td class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier">{{$items->quantity}}</td>
+                                <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->unit_cost)}}</td>
+                                <td class="o_data_cell o_field_cell o_list_number o_readonly_modifier">Rp. {{number_format($items->value)}}</td>
                             </tr>
                         </tbody>
                         @endforeach
                     @endforeach
                     <tfoot>
                         <tr>
-                            <td class="date"></td>
-                            <td class="company_id"></td>
-                            <td class="move_id"></td>
-                            <td class="partner_id"></td>
-                            <td class="name"></td>
-                            <td class="full_reconcile_id"></td>
-                            <td class="debit o_list_number" title="Total Debit">Rp. {{ number_format($totaldebit)}}</td>
-                            <td class="credit o_list_number" title="Total Credit">Rp. {{ number_format($totalcredit)}}</td>
+                            <th data-name="date"></th>
+                            <th data-name="company"></th>
+                            <th data-name="product"></th>
+                            <th data-name="quantity" >Quantity</th>
+                            <th data-name="cost">Cost</th>
+                            <th data-name="value">Total Value</th>
                         </tr>
                     </tfoot><i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
                 </table>
@@ -134,5 +129,5 @@
 </div>
 @endsection
 @section('js')
-<script src="{{asset('js/asset_common/general_ledger.js')}}"></script>
+<script src="{{asset('js/asset_common/partner_ledger.js')}}"></script>
 @endsection

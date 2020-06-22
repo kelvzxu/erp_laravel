@@ -78,15 +78,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Delivere/validate/{id}', 'DelivereProductController@validation')->name('Delivere.validate');
     Route::get('Delivere/return/{id}', 'DelivereProductController@return')->name('Delivere.return');
     
-    // ==== Employee ====
-    Route::get('employee','HrEmployeesController@index')->name('employee');
-    Route::get('employee/create','HrEmployeesController@create')->name('employee.create');
-    Route::post('employee/store','HrEmployeesController@store')->name('employee.store');
-    Route::get('employee/edit/{hr_employee}','HrEmployeesController@edit')->name('employee.edit');
-    Route::post('employee/update','HrEmployeesController@update')->name('employee.update');
-    Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
-    Route::get('employee/filter','HrEmployeesController@search')->name('employee.filter');
-    
     // ==== HR Department ====
     Route::get('department','HrDepartmentController@index')->name('department');
     Route::get('department/create','HrDepartmentController@create')->name('department.create');
@@ -95,32 +86,14 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('department/update/{id}','HrDepartmentController@update')->name('department.update');
     Route::get('department/delete/{id}','HrDepartmentController@destroy')->name('department.delete');
     
-    // ==== HR Department ====
-    Route::get('jobs','HrJobsController@index')->name('jobs');
-    Route::get('jobs/create','HrJobsController@create')->name('jobs.create');
-    Route::post('jobs/store', 'HrJobsController@store')->name('jobs.store');
-    Route::get('jobs/edit/{id}','HrJobsController@edit')->name('jobs.edit');
-    Route::post('jobs/update/{id}','HrJobsController@update')->name('jobs.update');
-    Route::get('jobs/delete/{id}','HrJobsController@destroy')->name('jobs.delete');
-    
-    // ==== HR PaySlip ====
-    Route::get('payslip','ManageSalaryController@index')->name('payslip');
-    Route::get('payslip/payment/{id}','ManageSalaryController@payment')->name('payslip.payment');
-    Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
-    Route::get('payslip/create','ManageSalaryController@create')->name('payslip.create');
-    Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
-    
-    // ==== Leave ====
-    Route::get('leave','LeaveController@index')->name('leave');
-    Route::post('leave/store','LeaveController@store')->name('leave.store');
-    Route::post('leave/approve/{id}','LeaveController@approve')->name('leave.approve');
-    Route::post('leave/paid/{id}','LeaveController@paid')->name('leave.paid');
-    Route::get('leave/filter','LeaveController@search')->name('leave.filter');
-
-    // ==== Internal User ====
-    Route::get('User/InternalUser','AccessRightsController@internalUser')->name('internaluser.index');
-    Route::get('User/InternalUser/Detail/{id}','AccessRightsController@show')->name('internaluser.show');
-    Route::post('User/update/{id}','AccessRightsController@update')->name('user_setting.update');
+    // ==== Employee ====
+    Route::get('employee','HrEmployeesController@index')->name('employee');
+    Route::get('employee/create','HrEmployeesController@create')->name('employee.create');
+    Route::post('employee/store','HrEmployeesController@store')->name('employee.store');
+    Route::get('employee/edit/{hr_employee}','HrEmployeesController@edit')->name('employee.edit');
+    Route::post('employee/update','HrEmployeesController@update')->name('employee.update');
+    Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
+    Route::get('employee/filter','HrEmployeesController@search')->name('employee.filter');
     
     // ==== Invoices ====
     Route::get('invoices', 'InvoiceController@index')->name('invoices');
@@ -136,6 +109,31 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
     Route::get('Reports/invoices', 'InvoiceController@report')->name('invoices.report');
     Route::get('Reports/invoices/print', 'InvoiceController@print_report')->name('invoices_report.print');
+   
+    // ==== inventory report ====
+    Route::get('Inventory/report/valuation','HrJobsController@valuation')->name('inventory.valuation');
+
+    // ==== HR Department ====
+    Route::get('jobs','HrJobsController@index')->name('jobs');
+    Route::get('jobs/create','HrJobsController@create')->name('jobs.create');
+    Route::post('jobs/store', 'HrJobsController@store')->name('jobs.store');
+    Route::get('jobs/edit/{id}','HrJobsController@edit')->name('jobs.edit');
+    Route::post('jobs/update/{id}','HrJobsController@update')->name('jobs.update');
+    Route::get('jobs/delete/{id}','HrJobsController@destroy')->name('jobs.delete');
+    
+    // ==== Leave ====
+    Route::get('leave','LeaveController@index')->name('leave');
+    Route::post('leave/store','LeaveController@store')->name('leave.store');
+    Route::post('leave/approve/{id}','LeaveController@approve')->name('leave.approve');
+    Route::post('leave/paid/{id}','LeaveController@paid')->name('leave.paid');
+    Route::get('leave/filter','LeaveController@search')->name('leave.filter');
+
+    // ==== HR PaySlip ====
+    Route::get('payslip','ManageSalaryController@index')->name('payslip');
+    Route::get('payslip/payment/{id}','ManageSalaryController@payment')->name('payslip.payment');
+    Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
+    Route::get('payslip/create','ManageSalaryController@create')->name('payslip.create');
+    Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
     
     // ==== Purchase =====
     Route::get('partner', 'ResPartnersController@index')->name('partner');
@@ -145,6 +143,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('partner/update','ResPartnersController@update')->name('partner.update');
     Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
     Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
+   
+    // ==== Internal User ====
+    Route::get('User/InternalUser','AccessRightsController@internalUser')->name('internaluser.index');
+    Route::get('User/InternalUser/Detail/{id}','AccessRightsController@show')->name('internaluser.show');
+    Route::post('User/update/{id}','AccessRightsController@update')->name('user_setting.update');
     
     // ==== Manage Companies ===== 
     Route::get('Companies', 'ResCompaniesController@index')->name('companies.index');
