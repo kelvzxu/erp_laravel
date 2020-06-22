@@ -114,9 +114,9 @@
                             <th data-name="date"></th>
                             <th data-name="company"></th>
                             <th data-name="product"></th>
-                            <th data-name="quantity o_list_number" >{{$valuation->sum('quantity')}}</th>
-                            <th data-name="cost o_list_number">Rp. {{number_format($valuation->sum('unit_cost'))}}</th>
-                            <th data-name="value o_list_number">Rp. {{number_format($valuation->sum('value'))}}</th>
+                            <th data-name="quantity" class="o_list_number">{{$valuation->sum('quantity')}}</th>
+                            <th data-name="cost" class="o_list_number">Rp. {{number_format($valuation->sum('unit_cost'))}}</th>
+                            <th data-name="value" class="o_list_number">Rp. {{number_format($valuation->sum('value'))}}</th>
                         </tr>
                     </tfoot><i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
                 </table>
