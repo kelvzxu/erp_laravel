@@ -163,16 +163,22 @@
                     </li>
                     @if($group->user_groups == 2 )
                     <li>
-                        <a href="#">
+                        <a href="#" id="inventory_report">
                             <i class="metismenu-icon fa fa-file-pdf-o"></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{route('inventory.valuation')}}">
+                                <a href="{{route('inventory.valuation')}}" id="inventory_valuation"> 
                                     <i class="metismenu-icon"></i>
                                     Inventory Valuation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{route('inventory.valuation')}}" id="inventory_move"> 
+                                    <i class="metismenu-icon"></i>
+                                    Stock Move
                                 </a>
                             </li>
                             <li>

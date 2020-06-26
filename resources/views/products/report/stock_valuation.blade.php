@@ -129,5 +129,5 @@
 </div>
 @endsection
 @section('js')
-<script src="{{asset('js/asset_common/partner_ledger.js')}}"></script>
+<script src="{{asset('js/asset_common/stock_valuation.js')}}"></script>
 @endsection
