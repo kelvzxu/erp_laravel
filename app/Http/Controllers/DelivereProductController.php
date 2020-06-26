@@ -52,6 +52,7 @@ class DelivereProductController extends Controller
                 stock_move::insert([
                     'product_id'=>$data->name,
                     'quantity'=>$data->qty,
+                    'company_id'=>1,
                     'location_id'=>$product->location,
                     'location_name'=>"Company Warehouse",
                     'location_destination'=>$id,

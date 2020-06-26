@@ -78,7 +78,8 @@ class ReceiptProductController extends Controller
                 stock_move::insert([
                     'product_id'=>$data->name,
                     'quantity'=>$data->qty,
-                    'location_id'=>$id, 
+                    'location_id'=>$id,
+                    'company_id'=>1, 
                     'location_name'=>$purchase->purchase_no,
                     'location_destination'=>$product->location,
                     'location_destination_name'=>"Company Warehouse",

@@ -19,4 +19,9 @@ class Product extends Model
     {
         return $this->hasMany(stock_valuation::class,'product_id');
     }
+
+    public function move()
+    {
+        return $this->hasMany(stock_move::class,'product_id');
+    }
 }

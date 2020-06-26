@@ -77,6 +77,7 @@ class ReturnPurchaseController extends Controller
                 $stock_move = stock_move::insertGetId([
                     'product_id'=>$data,
                     'quantity'=>$request->return_qty[$e],
+                    'company_id'=>1,
                     'location_id'=>$product->location,
                     'location_name'=>"Company Warehouse",
                     'location_destination'=>$purchase->id,

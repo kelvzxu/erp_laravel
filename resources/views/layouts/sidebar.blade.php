@@ -176,9 +176,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{route('inventory.valuation')}}" id="inventory_move"> 
+                                <a href="{{route('inventory.move')}}" id="inventory_move"> 
                                     <i class="metismenu-icon"></i>
-                                    Stock Move
+                                    Product Move
                                 </a>
                             </li>
                             <li>

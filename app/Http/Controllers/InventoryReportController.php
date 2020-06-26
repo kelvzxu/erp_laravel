@@ -20,4 +20,12 @@ class InventoryReportController extends Controller
         $valuation = stock_valuation::get();
         return view ('products.report.stock_valuation',compact('data','access','group','valuation'));
     }
+
+    public function move()
+    {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $data= product::has('move')->orderBy('name','asc')->paginate(40);
+        return view ('products.report.stock_move',compact('data','access','group'));
+    }
 }

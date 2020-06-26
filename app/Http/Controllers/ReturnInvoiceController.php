@@ -73,6 +73,7 @@ class ReturnInvoiceController extends Controller
                 $cost= $stock_move_id->valuation->unit_cost * -1;
                 $stock_move = stock_move::insertGetId([
                     'product_id'=>$data,
+                    'company_id'=>1,
                     'quantity'=>$request->return_qty[$e],
                     'location_id'=>$invoice->id, 
                     'location_name'=>$invoice->invoice_no,
