@@ -15,7 +15,7 @@ class CreateStockMovesTable extends Migration
     {
         Schema::create('stock_moves', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('company_id')->nullable();
+            $table->integer('company_id')->nullable()->default(1);
             $table->integer('product_id')->nullable();
             $table->integer('quantity')->default(0);
             $table->integer('product_uom_qty')->default(0);
