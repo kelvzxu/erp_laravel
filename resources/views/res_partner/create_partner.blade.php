@@ -398,5 +398,5 @@
 @endsection
 @section('js')
 <script src="{{asset('js/asset_common/vendor.js')}}"></script>
-@include('api.api')
+<script src="{{asset('js/ajax.js')}}"></script>
 @endsection

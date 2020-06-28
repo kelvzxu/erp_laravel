@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Purchase - Quotation')
+@section('title',"$orders->status - $orders->order_no")
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
@@ -75,7 +75,7 @@
                 @if($orders->status == "Quotation" )
                 <a href="{{route('purchase_orders.confirm', $orders)}}" class="btn btn-primary"><i class="fa fa fa-check"> Confirm Order</i></a>
                 @endif
-                <a href="" class="btn btn-secondary"><i class="fa fa-print"></i> Print</a>
+                <a href="{{route('purchase_orders.print_pdf', $orders)}}" class="btn btn-secondary"><i class="fa fa-print"></i> Print</a>
                 <a href="{{route('purchase_orders')}}" class="btn btn-secondary">Back</a>
             </div>
             <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state" data-original-title="" title="">

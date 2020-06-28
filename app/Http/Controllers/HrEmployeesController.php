@@ -218,7 +218,6 @@ class HrEmployeesController extends Controller
             $employee->update([
                 'employee_name'=> $request->name,
                 'identification_id'=> $request->identification_id,
-                'active'=> True,
                 'gender'=> $request->gender,
                 'marital'=> $request->marital,
                 'spouse_complete_name'=> $request->spouse_complete_name,

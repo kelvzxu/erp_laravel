@@ -92,20 +92,15 @@
                             <th scope="col">Name</th>
                             <th scope="col">Login</th>
                             <th scope="col">Latest Authentication</th>
-                            <th scope="col">action</th>
                         </tr>
                     </thead>
                     @foreach($user as $data)
                     <tbody>
-                        <tr>
+                        <tr class="table-row" data-href="{{ route('internaluser.show', $data->id) }}">
                             <th scope="row">{{$loop->iteration}}
                             <th >{{$data->name}}</th>
                             <th >{{$data->email}}</th>
                             <th >{{$data->latest_Authentication}}</th>
-                            <th >
-                                <a href="{{ route('internaluser.show', $data->id) }}" class="btn btn-success btn-sm">
-                                <i class="fa fa-edit"> View Detail</i></a>
-                            </th>
                         </tr>
                     </tbody>
                     @endforeach
@@ -128,12 +123,5 @@
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
-<script type="text/javascript">
-$('a#paybill').addClass('mm-active');
-$('a#payment').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/internal_user.js')}}"></script>
 @endsection

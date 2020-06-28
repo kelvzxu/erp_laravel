@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Payment Invoice')
+@section('title',"Payment | $data->name")
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">

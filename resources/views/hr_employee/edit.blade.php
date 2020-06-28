@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Human Resource - Employee')
+@section('title',"$hr_employee->employee_name")
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">

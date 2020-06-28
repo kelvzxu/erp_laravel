@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth'], function (){
     // Accounting Report ====
     Route::get('Accounting/Report/General_Ledger','AccountReportController@generalledger')->name('accounting.general_ledger');
     Route::get('Accounting/Report/Partner_Ledger','AccountReportController@partnerledger')->name('accounting.partner_ledger');
+    Route::get('Accounting/Report/General_Ledger/Print','AccountReportController@print_gl')->name('accounting.general_ledger_print');
+    Route::get('Accounting/Report/Partner_Ledger/Print/{type}','AccountReportController@print_pl')->name('accounting.partner_ledger_print');
     
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
@@ -210,6 +212,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('purchases/confirm/{id}', 'PurchasesOrdersController@confirm')->name('purchase_orders.confirm');
     Route::put('purchases/update/{id}', 'PurchasesOrdersController@update')->name('purchase_orders.update');
     Route::get('purchases/Report', 'PurchasesOrdersController@report')->name('purchase_orders.report');
+    Route::get('purchases/print/{id}', 'PurchasesOrdersController@print')->name('purchase_orders.print_pdf');
     Route::get('purchases/Report/Print', 'PurchasesOrdersController@print_report')->name('purchase_orders.print');
 
     // ==== Receipt ====
@@ -287,6 +290,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('Sales/update/{id}', 'SalesOrdersController@update')->name('sales_orders.update');
     Route::get('Sales/filter', 'SalesOrdersController@search')->name('sales_orders.filter');
     Route::get('Sales/Report', 'SalesOrdersController@report')->name('sales_orders.report');
+    Route::get('Sales/print/{id}', 'SalesOrdersController@print')->name('sales_orders.print_pdf');
     Route::get('Sales/Report/print', 'SalesOrdersController@print_report')->name('sales_orders.print');
 });  
 Auth::routes(['verify' => true]);

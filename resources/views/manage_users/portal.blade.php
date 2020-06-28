@@ -92,7 +92,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Login</th>
                             <th scope="col">Latest Authentication</th>
-                            <!-- <th scope="col">action</th> -->
                         </tr>
                     </thead>
                     @foreach($user as $data)
@@ -128,12 +127,5 @@
 @endsection
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
-<script type="text/javascript">
-$('a#paybill').addClass('mm-active');
-$('a#payment').addClass('mm-active');
-$("#key").change(function() {
-    var value = $("#key").val();
-    $("input[name='filter']").val(value);
-});
-</script>
+<script src="{{asset('js/asset_common/portal.js')}}"></script>
 @endsection

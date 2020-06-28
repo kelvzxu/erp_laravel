@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Sales - Delivere')
+@section('title',"Delivere | $delivery->delivery_no")
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
@@ -109,7 +109,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label>Customer</label>
-                                <p id="client">{{$delivery->inv->client}}</p>
+                                <p id="client">{{$delivery->inv->customer->name}}</p>
                             </div>
                             <div class="form-group">
                                 <label>Customer Address</label>
@@ -179,18 +179,5 @@
 <br>
 @endsection
 @section('js')
-<script>
-$('a#receipt').addClass('mm-active');
-$.ajax  ({
-    url: "{{asset('api/customer/search')}}",
-    type: 'post',
-    dataType: 'json',
-    data :{
-        'id': "{{$delivery->inv->client}}"
-    },
-    success: function (result) {
-        $("#client").html(result.data.name);
-    }
-})
-</script>
+<script src="{{asset('js/asset_common/delivery.js')}}"></script>
 @endsection

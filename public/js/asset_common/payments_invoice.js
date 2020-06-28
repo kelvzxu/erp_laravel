@@ -1,4 +1,4 @@
-$('a#CustomerDebt').addClass('mm-active');
+$('a#customerpayment').addClass('mm-active');
 $('a#payment').addClass('mm-active');
 
 $("#key").change(function() {

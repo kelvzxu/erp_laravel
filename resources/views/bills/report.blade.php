@@ -204,7 +204,7 @@
 @section('js')
 <script>
     $('a#accounting_reports').addClass('mm-active');
-    $('a#purchase_report').addClass('mm-active');
+    $('a#report_purchases').addClass('mm-active');
     $("#report_purchases").change(function() {
     var value = $("#key").val();
     $("input[name='filter']").val(value);

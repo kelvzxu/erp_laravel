@@ -1,4 +1,5 @@
 $('a#invoices').addClass('mm-active');
+$('a#invoicing').addClass('mm-active');
 
 $(document).ready(function($) {
     $(".table-row").click(function() {

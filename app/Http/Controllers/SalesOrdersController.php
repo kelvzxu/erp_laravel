@@ -175,6 +175,16 @@ class SalesOrdersController extends Controller
         return view('sales.report', compact('access','group','data','quotation','invoice','sales'));
     }
 
+    public function print($id)
+    {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $orders = sales_order::with('partner','sales_person','products')->findOrFail($id);
+        $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+                                    ->loadview('reports.sales.sales_pdf', compact('access','group','orders'));
+        return $pdf->stream();
+    }
+
     public function print_report()
     {
         try{
@@ -186,9 +196,9 @@ class SalesOrdersController extends Controller
             $data = sales_order::with('partner','sales_person')
                         ->orderBy('created_at', 'desc')
                         ->paginate(30);
-            $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+            $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape')
                                     ->loadview('reports.sales.sales_order_pdf', compact('monthName','year','data'));
-            return $pdf->stream();
+            return $pdf->download();
         } catch (\Exception $e) {
             // Toastr::error($e->getMessage(),'Something Wrong');
             Toastr::error('an unexpected error occurred, please contact Your Support Service','Something Went Wrong');

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Partner - Customers')
+@section('title',"Partner - $res_customer->display_name")
 @section('css')
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection

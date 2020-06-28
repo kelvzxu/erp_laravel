@@ -108,7 +108,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('purchase_orders.report')}}" id="report_purchases" class="menu-item">
+                                <a href="{{ route ('purchase_orders.report')}}" id="report_po" class="menu-item">
                                     <i class="metismenu-icon"></i>
                                     Purchase Order Report
                                 </a>
@@ -212,16 +212,25 @@
                 @if($access->accounting == True ) 
                 <li class="app-sidebar__heading">Accounting</li>
                     <li>
-                        <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
-                            <i class="metismenu-icon fa fa-pencil-square-o">
-                            </i>Invoices
+                        <a href="#" id="invoicing">
+                            <i class="metismenu-icon fa fa-pencil-square-o"></i>
+                            Invoicing
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
-                    </li>
-                    <li>
-                        <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
-                            <i class="metismenu-icon fa fa-pencil-square-o">
-                            </i>Bills
-                        </a>
+                        <ul>
+                            <li>
+                                <a href="{{ route ('invoices')}}" id="invoices" class="menu-item">
+                                    <i class="metismenu-icon fa fa-pencil-square-o">
+                                    </i>Invoices
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route ('purchases')}}" id="purchases" class="menu-item">
+                                    <i class="metismenu-icon fa fa-pencil-square-o">
+                                    </i>Bills
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="#" id="register_payment">
@@ -231,7 +240,7 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('payment_invoices.index')}}" id="CustomerDebt">
+                                <a href="{{ route ('payment_invoices.index')}}" id="customerpayment">
                                     <i class="metismenu-icon ">
                                     </i>Customer Payment
                                 </a>
@@ -400,7 +409,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('portal.index')}}" id="internaluser">
+                                <a href="{{ route ('portal.index')}}" id="portal">
                                     <i class="metismenu-icon">
                                     </i>Portal
                                 </a>

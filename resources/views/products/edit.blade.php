@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Inventory - Product')
+@section('title',"[$product->code] $product->name")
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">

@@ -179,6 +179,16 @@ class PurchasesOrdersController extends Controller
         return view('purchases.report', compact('access','group','data','quotation','invoice','sales'));
     }
 
+    public function print($id)
+    {
+        $access=access_right::where('user_id',Auth::id())->first();
+        $group=user::find(Auth::id());
+        $orders = purchases_order::with('partner','sales','products')->findOrFail($id);
+        $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
+                                    ->loadview('reports.purchases.purchases_pdf', compact('access','group','orders'));
+        return $pdf->stream();
+    }
+
     public function print_report()
     {
         try{
@@ -190,12 +200,12 @@ class PurchasesOrdersController extends Controller
             $data = purchases_order::with('partner','sales')
                         ->orderBy('created_at', 'desc')
                         ->paginate(30);
-            $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-                                    ->loadview('reports.sales.purchases_order_pdf', compact('monthName','year','data'));
-            return $pdf->stream();
+            $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])->setPaper('a4', 'landscape')
+                                    ->loadview('reports.purchases.purchases_order_pdf', compact('monthName','year','data'));
+            return $pdf->download();
         } catch (\Exception $e) {
-            // Toastr::error($e->getMessage(),'Something Wrong');
-            Toastr::error('an unexpected error occurred, please contact Your Support Service','Something Went Wrong');
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('an unexpected error occurred, please contact Your Support Service','Something Went Wrong');
             return redirect()->back();
         }
     }

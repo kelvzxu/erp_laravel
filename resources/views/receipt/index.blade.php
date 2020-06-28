@@ -88,20 +88,17 @@
                             <th scope="col">Receipt No</th>
                             <th scope="col">Purchase No</th>
                             <th scope="col">Receipt Date</th>
-                            <th scope="col" colspan="2">Created At</th>
+                            <th scope="col">Created At</th>
                         </tr>
                     </thead>
                     @foreach($receipt as $data)
                     <tbody>
-                        <tr>
+                        <tr class="table-row" data-href="{{route('receipt.show',$data->purchase_no)}}">
                             <td scope="row">{{$loop->iteration}}</td>
                             <td>{{$data->receipt_no}}</td>
                             <td>{{$data->purchase_no}}</td>
                             <td>{{$data->receipt_date}}</td>
                             <td>{{$data->created_at->diffForHumans()}}</td>
-                            <td class="text-right">
-                                <a href="{{route('receipt.show',$data->purchase_no)}}" class="btn btn-primary btn-sm">View</a>
-                            </td>
                         </tr>
                     </tbody>
                     @endforeach
@@ -123,7 +120,5 @@
 </div>
 @endsection
 @section('js')
-<script>
-$('a#receipt').addClass('mm-active');
-</script>
+<script src="{{asset('js/asset_common/receive.js')}}"></script>
 @endsection

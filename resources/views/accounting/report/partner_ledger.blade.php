@@ -33,7 +33,7 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a href="" class="btn btn-primary development"><i class="fa fa-print"></i> Print</a>
+                        <a href="{{route('accounting.partner_ledger_print',$type)}}" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
                     </div>
                 </div>
             </div>
