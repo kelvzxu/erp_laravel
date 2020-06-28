@@ -32,7 +32,7 @@
             <div class="o_cp_left">
                 <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
                     <div>
-                        <a href="" class="btn btn-primary development"><i class="fa fa-print"></i> Print</a>
+                        <a href="{{ route('inventory.print_move') }}" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
                     </div>
                 </div>
             </div>

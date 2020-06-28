@@ -115,6 +115,8 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== inventory report ====
     Route::get('Inventory/report/valuation','InventoryReportController@valuation')->name('inventory.valuation');
     Route::get('Inventory/report/Move','InventoryReportController@move')->name('inventory.move');
+    Route::get('Inventory/report/valuation/Print','InventoryReportController@print_valuation')->name('inventory.print_valuation');
+    Route::get('Inventory/report/Move/Print','InventoryReportController@print_move')->name('inventory.print_move');
 
     // ==== HR Department ====
     Route::get('jobs','HrJobsController@index')->name('jobs');
