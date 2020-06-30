@@ -342,5 +342,5 @@
 <script>
 $('a#companies').addClass('mm-active');
 </script>
-@include('api.api')
+<script src="{{asset('js/ajax.js')}}"></script>
 @endsection
