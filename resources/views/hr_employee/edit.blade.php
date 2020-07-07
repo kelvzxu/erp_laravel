@@ -690,7 +690,6 @@
 </form>
 @endsection
 @section('js')
-@include('api.api')
 <script src="{{asset('js/asset_common/employee.js')}}"></script>
 @endsection
 @section('modal')

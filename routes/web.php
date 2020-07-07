@@ -54,13 +54,13 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/attendance/filter', 'HrAttendanceController@search')->name('attendance.filter');
     
     // ==== Customer ====
-    Route::get('/customer','ResCustomersController@index')->name('customer');
-    Route::get('/customer/new','ResCustomersController@create')->name('customer.new');
-    Route::post('/customer/store','ResCustomersController@store')->name('customer.store');
-    Route::get('/customer/show/{res_customer}','ResCustomersController@show')->name('customer.show');
-    Route::post('/customer/update','ResCustomersController@update')->name('customer.update');
-    Route::get('/customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
-    Route::get('/customer/filter','ResCustomersController@search')->name('customer.filter');
+    Route::get('customer','ResCustomersController@index')->name('customer');
+    Route::get('customer/new','ResCustomersController@create')->name('customer.new');
+    Route::post('customer/store','ResCustomersController@store')->name('customer.store');
+    Route::get('customer/show/{res_customer}','ResCustomersController@show')->name('customer.show');
+    Route::post('customer/update','ResCustomersController@update')->name('customer.update');
+    Route::get('customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
+    Route::get('customer/filter','ResCustomersController@search')->name('customer.filter');
     
     // ==== Customer Payment ====
     Route::get('CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
@@ -229,7 +229,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
 
     // ==== Retur Invoice ====
-    Route::get('Report/Return/SalesOrder/','ReturnInvoiceController@index')->name('return-invoice.index');
+    Route::get('Report/Return/SalesOrder','ReturnInvoiceController@index')->name('return-invoice.index');
     Route::post('Return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
     Route::get('Report/Return/SalesOrder/{id}','ReturnInvoiceController@view')->name('return-invoice.view');
     Route::get('Report/Return/SalesOrder/Edit/{id}','ReturnInvoiceController@edit')->name('return-invoice.edit');

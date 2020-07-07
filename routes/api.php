@@ -40,3 +40,7 @@ Route::get('Products','ProductController@Products');
 Route::get('getProduct','ProductController@getProduct');
 
 Route::get('/chart', 'HomeController@getChart');
+
+// get Access Rights
+Route::get('/user/Access/{id}','UserController@getAccessRight');
+Route::get('/user/Group/{id}','UserController@getGroup');

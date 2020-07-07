@@ -33,7 +33,9 @@
     </div>
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
-            <ul class="vertical-nav-menu">
+            <div id="sidebar_menu">
+            </div>
+            <!-- <ul class="vertical-nav-menu">
                 <li class="app-sidebar__heading">Dashboards</li>
                 <li>
                     <a href="{{route('home')}}" id="home" class="menu-item">
@@ -423,7 +425,7 @@
                         </a>
                     </li>
                 @endif
-            </ul>
+            </ul> -->
         </div>
     </div>
 </div>

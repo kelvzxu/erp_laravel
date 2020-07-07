@@ -205,6 +205,7 @@
                                                             <a tabindex="0" class="nav-link" href="{{ route('profile')}}">
                                                                 {{ __('My Profile') }}
                                                             </a>
+                                                            <input type="hidden" id="current_email" name="current_email" value="{{ Auth::user()->email}}">
                                                         </li>
                                                     </ul>
                                                     <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
@@ -308,40 +309,21 @@
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
-    <script type="text/javascript" src="{{asset('js/admin.js')}}"></script>
-    <script src="{{asset('js/loadimg.js')}}"></script>
-    {{--toastr message--}}
-    {{--<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
+    <script src="{{asset('js/admin.js')}}"></script>
+    <!-- toastr message -->
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+
+    <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
-    {!! Toastr::message() !!}
     <script src="{{asset('js/asset_common/base.js')}}"></script>
-    <script>
-    function unactive(){
-    $('.menu-item').removeClass('mm-active');
-    }
-    $('#dialog-close').click(function(){
-        $('.dropdown-menu').removeClass('show');
-    });
-    $.ajax  ({
-        url: "{{asset('api/employee/search')}}",
-        type: 'post',
-        dataType: 'json',
-        data :{
-            'email': "{{ Auth::user()->email}}"
-        },
-        success: function (result) {
-            $('div.profile').append(`
-                <img width="42" id="picture_profile" class="rounded-circle" width="50px" height="50px" src="{{asset('uploads/Employees/`+result.data.photo+`')}}"
-                    alt="">
-                                    `);
-            $(".widget-subheading").append(`<pre>`+result.data.jobs_name+`</pre>`)
-            $("#image").val(result.data.photo);
-        }
-    })
-    </script>
+
+    <!-- Load React. -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script  type="text/babel" src="{{asset('js/react/admin.js')}}"></script>
     @yield('js')
 </body>
 
