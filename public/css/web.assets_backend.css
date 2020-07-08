@@ -11280,6 +11280,15 @@ a.text-primary:focus {
     color: #FFFFFF !important;
 }
 
+.text-gray{
+    color: #6c757d !important;
+}
+
+a.text-gray:hover,
+a.text-gray:focus {
+    color: #3F6AD8 !important;
+}
+
 a.text-secondary:hover,
 a.text-secondary:focus {
     color: #d9d9d9 !important;

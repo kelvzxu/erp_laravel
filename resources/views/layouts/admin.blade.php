@@ -17,10 +17,14 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/base.css') }}">
     @yield('css')
     <style>
-    .table-row{
-        cursor:pointer;
-    }
-</style>
+        .table-row{
+            cursor:pointer;
+        }
+    </style>
+    <!-- Load React. -->
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script  type="text/babel" src="{{asset('js/react/admin.js')}}"></script>
 </head>
 
 <body>
@@ -319,11 +323,6 @@
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
     <script src="{{asset('js/asset_common/base.js')}}"></script>
-
-    <!-- Load React. -->
-    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-    <script  type="text/babel" src="{{asset('js/react/admin.js')}}"></script>
     @yield('js')
 </body>
 
