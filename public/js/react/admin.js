@@ -34,7 +34,6 @@ class App extends React.Component {
                     administration : result.data.administration,
                     pos : result.data.point_of_sale
                 });
-                console.log(result.data);
                 },
                 // Catatan: sangatlah penting untuk mengatasi error disini
                 // daripada menggunakan blok catch() sehingga kita tidak menenggelamkan
