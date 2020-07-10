@@ -467,6 +467,12 @@ class App extends React.Component {
                     { administration ?
                         <li className="app-sidebar__heading">Settings
                             <li>
+                                <a href='/Companies' id="companies">
+                                    <i className="metismenu-icon fa fa-building">
+                                    </i>Manage Companies
+                                </a>
+                            </li>
+                            <li>
                                 <a href="#" id="setting">
                                     <i className="metismenu-icon fa fa-users"></i>
                                     Manage Users
@@ -487,12 +493,6 @@ class App extends React.Component {
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <a href='/Companies' id="companies">
-                                    <i className="metismenu-icon fa fa-building">
-                                    </i>Manage Companies
-                                </a>
-                            </li>
                         </li>
                         : <li></li>
                     }
@@ -500,24 +500,6 @@ class App extends React.Component {
         );
     }
 }
-// render() {
-    //     const { error, isLoaded, items } = this.state;
-    //     if (error) {
-    //         return <div>Error: {error.message}</div>;
-    //     } else if (!isLoaded) {
-    //         return <div>Loading...</div>;
-    //     } else {
-    //         return (
-    //         <ul>
-    //             {/* {items.map(item => (
-    //             <li key={item.nama}>
-    //                 {item.nama} {item.harga}
-    //             </li>
-    //             ))} */}
-    //         </ul>
-    //         );
-    //     }
-    // }
 
 const domContainer = document.querySelector('#sidebar_menu');
 ReactDOM.render(e(App), domContainer);
