@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header closed-sidebar">
         <div class="app-header header-shadow">
             <div class="app-header__logo align-items-center">
                 <div class="logo-src my-2">
