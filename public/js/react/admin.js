@@ -332,7 +332,7 @@ class App extends React.Component {
                         </li>
                         : <li></li>
                     }
-                    {manufacture ?
+                    {administration ?
                         <li className="app-sidebar__heading">Manufacture
                             <li>
                                 <a href="#" id="register_payment">
