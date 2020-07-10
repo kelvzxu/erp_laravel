@@ -27,9 +27,9 @@
             </div>
         </div>
     </div>
-    <div class="row o-content">
-        <div class="col-12 my-4">
-            <div class="o_form_view o_form_editable">
+    <div class="o_content">
+        <div class="o_form_view o_form_editable">
+            <div class="o_form_sheet_bg">
                 <div class="clearfix position-relative o_form_sheet">
                     <div class="o_not_full oe_button_box">
                         <button type="button" class="btn oe_stat_button o_invisible_modifier">

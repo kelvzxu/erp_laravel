@@ -82,9 +82,9 @@
             </div>
         </div>
     </div>
-    <div class="container">
+    <div class="o_content">
         <div class="o_form_view o_form_editable">
-            <div class="container-fluid my-5">
+            <div class="o_form_sheet_bg">
                 <div class="clearfix o_form_sheet">
                     <div class="o_not_full oe_button_box mx-0">
                         <a href="{{route('reconcile.bill', $data->partner_id)}}" type="button" class="btn oe_stat_button">
