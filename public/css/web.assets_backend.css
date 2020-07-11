@@ -15648,7 +15648,6 @@ select.o_field_widget.o_input {
 }
 
 .o_form_view .o_form_sheet_bg>.o_form_sheet {
-    min-width: 650px;
     max-width: 1140px;
     min-height: 330px;
     border: 1px solid #c8c8d3;
