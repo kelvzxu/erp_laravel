@@ -26,11 +26,12 @@ You can contribute to the development of this system by making a pull request to
 For a standard installation please follow the Setup instructions
 - run COMPOSER INSTALL
 - run php artisan migrate
-- Import / jalankan File Data.sql 
 - run php artisan db:seed
 - jalankan php artisan serve untuk memulai aplikasi
 
-[note] Harap Create Company Terlebih Daluhu Sebelum Melakukan Input data
+superuser
+email: admin@erpsystem.com
+pass : admin
 
 ## Contributing
 
