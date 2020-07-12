@@ -29,9 +29,9 @@ For a standard installation please follow the Setup instructions
 - run php artisan db:seed
 - jalankan php artisan serve untuk memulai aplikasi
 
-superuser
-email: admin@erpsystem.com
-pass : admin
+Superuser Account
+- email: admin@erpsystem.com
+- pass : admin
 
 ## Contributing
 
