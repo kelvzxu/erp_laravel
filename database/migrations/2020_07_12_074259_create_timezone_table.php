@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateResCountryStatesTable extends Migration
+class CreateTimezoneTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateResCountryStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('res_country_state', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('country_id')->nullable();
-            $table->string('state_name')->nullable();
-            $table->string('code')->nullable();
+        Schema::create('timezone', function (Blueprint $table) {
+            $table->string('country_code');
+            $table->string('timezone')->unique();
+            $table->decimal('gmt_offset');
+            $table->decimal('dst_offset');
+            $table->decimal('raw_offset');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateResCountryStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('res_country_state');
+        Schema::dropIfExists('timezone');
     }
 }

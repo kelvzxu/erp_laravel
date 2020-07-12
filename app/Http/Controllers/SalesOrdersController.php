@@ -33,7 +33,7 @@ class SalesOrdersController extends Controller
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $partner = res_customer::orderBy('name', 'asc')->get();
-        $product = Product::orderBy('name', 'asc')->where('can_be_purchase','1')->get();
+        $product = Product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
         return view('sales.create', compact('access','group','product','partner'));
     }
 

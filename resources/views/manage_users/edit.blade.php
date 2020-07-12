@@ -107,62 +107,24 @@
                             <div class="col-12 col-md-6">
                                 <table class="o_group o_inner_group 0_label_nowrap">
                                     <tbody>
+                                    @foreach ($data as $row)
+                                        @if($row->instalation == true)
                                         <tr>
                                             <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Sales Order</div>
+                                                <div class="o_horizontal_separator">{{$row->name}}</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label for="" name="Sales Order" class="col-form-label"><b>Sales Order</b></label>
+                                                <label for="" name="{{$row->name}}" class="col-form-label"><b>{{$row->name}}</b></label>
                                             </td>
                                             <td style="width: 100%;">
                                                 <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="sales" 
-                                                name="sales" value="1" @if($user_access->sales == "1" ) checked @endif>
+                                                name="{{$row->model}}" value="1" <?php echo ($user_access[$row->model]==1 ? 'checked' : '');?>>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Purchases</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="o_td_label">
-                                                <label for="" name="Purchases" class="col-form-label"><b>Purchases</b></label>
-                                            </td>
-                                            <td style="width: 100%;">
-                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="purchase" 
-                                                name="purchase" value="1" @if($user_access->purchase == "1" ) checked @endif>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Accounting</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="o_td_label">
-                                                <label for="" name="Accounting" class="col-form-label"><b>Accounting</b></label>
-                                            </td>
-                                            <td style="width: 100%;">
-                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="accounting" 
-                                                name="accounting" value="1" @if($user_access->accounting == "1" ) checked @endif>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Administration</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="o_td_label">
-                                                <label for="" name="Administration" class="col-form-label"><b>Administration</b></label>
-                                            </td>
-                                            <td style="width: 100%;">
-                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="administration" 
-                                                name="administration" value="1" @if($user_access->administration == "1" ) checked @endif>
-                                            </td>
-                                        </tr>
+                                        @endif
+                                    @endforeach  
                                     </tbody>
                                 </table>
                             </div>
@@ -171,50 +133,36 @@
                                     <tbody>
                                         <tr>
                                             <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Inventory</div>
+                                                <div class="o_horizontal_separator">Administrator</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label for="" name="Inventory" class="col-form-label"><b>Inventory</b></label>
+                                                <label for="" name="Administrator" class="col-form-label"><b>Administrator</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="inventory" 
-                                                name="inventory" value="1" @if($user_access->inventory == "1" ) checked @endif>
+                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="sales" 
+                                                name="administration" value="1" <?php echo ($user_access['administration']==1 ? 'checked' : '');?>>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Human Resource</div>
+                                                <div class="o_horizontal_separator">Developer</div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="o_td_label">
-                                                <label for="" name="Human Resource" class="col-form-label"><b>Human Resource</b></label>
+                                                <label for="" name="Developer Mode" class="col-form-label"><b>Developer Mode</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="human_resources" 
-                                                name="human_resources" value="1" @if($user_access->human_resources == "1" ) checked @endif>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="2" style="width: 100%;">
-                                                <div class="o_horizontal_separator">Point Of Sale</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="o_td_label">
-                                                <label for="" name="Point Of Sale" class="col-form-label"><b>Point Of Sale</b></label>
-                                            </td>
-                                            <td style="width: 100%;">
-                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="point_of_sale" 
-                                                name="point_of_sale" value="1" @if($user_access->point_of_sale == "1" ) checked @endif>
+                                                <input class="o_field_boolean o_field_widget custom-control custom-checkbox" type="checkbox" id="sales" 
+                                                name="developer" value="1" <?php echo ($user_access['developer']==1 ? 'checked' : '');?>>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                        </>
+                        </div>
                     </div>
                 </div>
             </div>

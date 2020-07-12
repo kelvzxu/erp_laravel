@@ -32,27 +32,7 @@ class AddRelationshipsToOrdersTables extends Migration
     public function down()
     {
         Schema::table('orders', function(Blueprint $table) {
-            $table->dropForeign('orders_customer_id_foreign');
-        });
-
-        Schema::table('orders', function(Blueprint $table) {
-            $table->dropIndex('orders_customer_id_foreign');
-        });
-
-        Schema::table('orders', function(Blueprint $table) {
-            $table->integer('customer_id')->change();
-        });
-
-        Schema::table('orders', function(Blueprint $table) {
-            $table->dropForeign('orders_user_id_foreign');
-        });
-
-        Schema::table('orders', function(Blueprint $table) {
-            $table->dropIndex('orders_user_id_foreign');
-        });
-
-        Schema::table('orders', function(Blueprint $table) {
-            $table->integer('user_id')->change();
+            
         });
     }
 }

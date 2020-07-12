@@ -97,7 +97,7 @@
                         <div class="o_kanban_image_fill_left o_kanban_image_full"  
                             style="background-image: url('images/icons/avatar.png')"
                             role="img" modifiers="{}"></div>
-                        @endif
+                        @endif 
                         <div class="oe_kanban_details" modifiers="{}">
                             <strong class="o_kanban_record_title oe_partner_heading" modifiers="{}"><span>{{$cust->display_name}}</span></strong>
                             <div class="o_kanban_tags_section oe_kanban_partner_categories" modifiers="{}">

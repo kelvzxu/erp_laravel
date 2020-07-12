@@ -8687,6 +8687,11 @@ button.bg-alternate:focus {
     margin-bottom: 3rem !important
 }
 
+.mb-6,
+.my-6 {
+    margin-bottom: 4rem !important
+}
+
 .ml-5,
 .mx-5 {
     margin-left: 3rem !important
@@ -11957,7 +11962,7 @@ button,
 }
 
 .app-page-title {
-    padding:0px;
+    padding:30px;
     margin: -30px -30px 0px;
     position: relative
 }

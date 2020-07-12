@@ -16,7 +16,12 @@ Route::get('/', function () {
 });
 Route::group(['middleware' => 'auth'], function (){
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('ECommerce', 'ECommerceController@index')->name('ECommerce.index');
+    Route::get('ECommerce', 'ECommerceController@index')->name('ECommerce.index');  
+
+    // ==== Apps ====
+    Route::get('Apps','AppsController@index')->name('Apps.index');
+    Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');
+    
     // ==== Account Account ====
     Route::get('Account','AccountAccountController@index')->name('account.index');
     Route::get('Account/create','AccountAccountController@create')->name('account.create');

@@ -19,7 +19,7 @@ class CreateResCompaniesTable extends Migration
             $table->string('display_name')->nullable();
             $table->integer('currency_id')->nullable()->index();
             $table->integer('parent_id')->nullable();
-            $table->integer('vat')->nullable();
+            $table->string('vat')->nullable();
             $table->string('email')->nullable();
             $table->string('Phone')->nullable(); 
             $table->string('website')->nullable();

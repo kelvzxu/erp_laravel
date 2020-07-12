@@ -48,6 +48,6 @@ class CreateAccountPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_payment_invoices');
+        Schema::dropIfExists('account_payments');
     }
 }

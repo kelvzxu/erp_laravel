@@ -62,6 +62,7 @@ class CreateHrEmployeesTable extends Migration
             $table->string('salary')->nullable();
             $table->integer('parent_id')->nullable();
             $table->integer('coach_id')->nullable();
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

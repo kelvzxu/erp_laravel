@@ -5,7 +5,7 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="app-page-title bg-white">
+<div class="bg-white">
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
@@ -88,11 +88,17 @@
                 @foreach($employee as $data)
                 <a class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record o_kanban_record" modifiers="{}"
                     tabindex="0" role="article" style="color: black;text-decoration: none;" href="{{route('employee.edit',$data->id)}}">
-                    <div class="o_field_image o_field_widget o_kanban_image_fill_left o_hr_rounded_circle" aria-atomic="true"
-                        name="image_128" data-zoom="1"
+                    @if (!empty($data->logo))
+                    <div class="o_field_image o_field_widget o_kanban_image_fill_left o_hr_rounded_circle" 
                         data-zoom-image="{{asset('uploads/Employees/'.$data->photo)}}"
                         style="background-image: url('{{asset('uploads/Employees/'.$data->photo)}}');">
                     </div>
+                    @else
+                    <div class="o_field_image o_field_widget o_kanban_image_fill_left o_hr_rounded_circle" 
+                        data-zoom-image="{{asset('images/icons/avatar.png')}}"
+                        style="background-image: url('{{asset('images/icons/avatar.png')}}');">
+                    </div>
+                    @endif 
                     <div class="oe_kanban_details" modifiers="{}">
                         <div class="o_kanban_record_top" modifiers="{}">
                             <div class="o_kanban_record_headings" modifiers="{}">

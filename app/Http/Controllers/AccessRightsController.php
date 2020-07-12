@@ -6,6 +6,7 @@ use App\User;
 use App\user_type;
 use App\user_group;
 use App\access_right;
+use App\Models\Apps\ir_model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Brian2694\Toastr\Facades\Toastr;
@@ -38,8 +39,9 @@ class AccessRightsController extends Controller
         $group=user::find(Auth::id());
         $type=user_type::orderBy('id','asc')->get();
         $groups=user_group::orderBy('id','asc')->get();
+        $data = ir_model::where('state','base')->orderBy('id', 'ASC')->get();
         $user_access = access_right::with('user','employee')->where('user_id',$id)->first();
-        return view ('manage_users.edit',compact('user_access','type','access','groups','group'));
+        return view ('manage_users.edit',compact('user_access','data','type','access','groups','group'));
     }
 
     public function update(Request $request, $id)
@@ -60,6 +62,8 @@ class AccessRightsController extends Controller
                 'point_of_sale' =>$request->point_of_sale,
                 'human_resources' =>$request->human_resources,
                 'administration' =>$request->administration,
+                'manufacture' =>$request->manufacture,
+                'developer' =>$request->developer,
             ]);
             Toastr::success('user access with the name '.$request->name.' has been successfully updated','Success');
                 return redirect(route('home'));

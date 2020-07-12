@@ -43,14 +43,11 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 mt-5">
-            <div class="panel container bg-white panel-default" v-cloak>
-                <div class="panel-body">
+    <div class="o_content my-4" v-cloak>
+        <div class="o_form_view o_form_editable">
+            <div class="o_form_sheet_bg">
+                <div class="clearfix position-relative o_form_sheet">
                     @include('invoices.form')
-                </div>
-                <div class="panel-footer mb-4">
-                    <br>
                 </div>
             </div>
         </div>
