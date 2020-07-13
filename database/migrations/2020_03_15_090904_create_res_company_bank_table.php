@@ -16,7 +16,7 @@ class CreateResCompanyBankTable extends Migration
         Schema::create('res_company_bank', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('company_bank_name')->nullable();
-            $table->string('acc_number')->unique();
+            $table->string('acc_number',200)->unique();
             $table->string('sanitized_acc_number')->nullable();
             $table->string('acc_holder_name')->nullable();
             $table->integer('company_id')->nullable()->index();

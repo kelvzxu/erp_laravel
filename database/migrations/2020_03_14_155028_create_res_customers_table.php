@@ -19,7 +19,7 @@ class CreateResCustomersTable extends Migration
             $table->integer('company_id')->nullable()->index();
             $table->string('display_name')->nullable();
             $table->string('title')->nullable();
-            $table->string('parent_id')->nullable()->index();
+            $table->string('parent_id')->nullable();
             $table->string('ref')->nullable();
             $table->string('lag')->nullable();
             $table->string('tz')->nullable();

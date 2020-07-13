@@ -30,7 +30,7 @@ class CreateHrEmployeesTable extends Migration
             $table->string('ssnid')->nullable();
             $table->string('identification_id')->nullable();
             $table->string('passport_id')->nullable();
-            $table->string('bank_account_id')->index()->nullable();
+            $table->string('bank_account_id')->nullable();
             $table->string('permit_no')->nullable();
             $table->string('visa_no')->nullable();
             $table->date('visa_expire')->nullable();
@@ -41,7 +41,7 @@ class CreateHrEmployeesTable extends Migration
             $table->string('emergency_contact')->nullable();
             $table->string('emergency_phone')->nullable();
             $table->longText('notes')->nullable();
-            $table->string('barcode')->nullable()->unique();
+            $table->string('barcode',200)->nullable()->unique();
             $table->string('pin')->nullable();
             $table->string('departure_reason')->nullable();
             $table->string('departure_description')->nullable();

@@ -32,7 +32,7 @@ class CreateResCompaniesTable extends Migration
             $table->string('zip')->nullable();
             $table->string('city')->nullable();
             $table->integer('state_id')->nullable()->index();
-            $table->string('country_id')->nullable()->index();
+            $table->integer('country_id')->nullable()->index();
             $table->string('partner_latitude')->nullable();
             $table->string('partner_longitude')->nullable();
             $table->string('social_twitter')->nullable();

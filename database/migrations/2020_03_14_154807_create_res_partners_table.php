@@ -19,7 +19,7 @@ class CreateResPartnersTable extends Migration
             $table->integer('company_id')->nullable()->index();
             $table->string('display_name')->nullable();
             $table->string('title')->nullable();
-            $table->string('parent_id')->nullable()->index();
+            $table->string('parent_id')->nullable();
             $table->string('ref')->nullable();
             $table->string('lag')->nullable();
             $table->string('tz')->nullable();
@@ -38,7 +38,7 @@ class CreateResPartnersTable extends Migration
             $table->string('zip')->nullable();
             $table->string('city')->nullable();
             $table->integer('state_id')->nullable()->index();
-            $table->string('country_id')->nullable()->index();
+            $table->integer('country_id')->nullable()->index();
             $table->string('partner_latitude')->nullable();
             $table->string('partner_longitude')->nullable();
             $table->string('email')->nullable();

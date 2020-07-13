@@ -14,7 +14,7 @@ class AddFieldPhotoToProductsTable extends Migration
     public function up()
     {
         Schema::table('products', function(Blueprint $table) {
-            $table->string('code')->unique()->after('id');
+            $table->string('code',200)->unique()->after('id');
             $table->string('photo')->nullable()->after('category_id');
         });
     }
