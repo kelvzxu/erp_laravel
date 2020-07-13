@@ -14,7 +14,7 @@ class AddFieldCustomerDebtTable extends Migration
     public function up()
     {
         Schema::table('customer_debt', function (Blueprint $table) {
-            $table->integer('journal')->index()->nullable();
+            $table->integer('journal',200)->index()->nullable();
         });
     }
 

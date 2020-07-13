@@ -14,9 +14,9 @@ class AddFieldsInResCustomersTable extends Migration
     public function up()
     {
         Schema::table('res_customers', function (Blueprint $table) {
-            $table->integer('sales')->nullable()->index();
+            $table->integer('sales',200)->nullable()->index();
             $table->integer('payment_terms')->nullable();
-            $table->integer('receivable_account')->nullable()->index();
+            $table->integer('receivable_account',200)->nullable()->index();
             $table->string('note')->nullable();
         });
     }

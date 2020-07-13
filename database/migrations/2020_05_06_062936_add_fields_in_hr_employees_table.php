@@ -14,7 +14,7 @@ class AddFieldsInHrEmployeesTable extends Migration
     public function up()
     {
         Schema::table('hr_employees', function (Blueprint $table) {
-            $table->integer('nationality')->nullable()->index();
+            $table->integer('nationality',200)->nullable()->index();
         });
     }
 

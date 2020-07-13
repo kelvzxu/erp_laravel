@@ -15,9 +15,9 @@ class CreateReturnInvoicesTable extends Migration
     {
         Schema::create('return_invoices', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('return_no')->index();
-            $table->string('invoice_no')->index();
-            $table->string('delivery_no')->index();
+            $table->string('return_no',200)->index();
+            $table->string('invoice_no',200)->index();
+            $table->string('delivery_no',200)->index();
             $table->integer('user_id');
             $table->timestamps();
         });

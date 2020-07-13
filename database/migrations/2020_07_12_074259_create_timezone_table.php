@@ -15,7 +15,7 @@ class CreateTimezoneTable extends Migration
     {
         Schema::create('timezone', function (Blueprint $table) {
             $table->string('country_code');
-            $table->string('timezone')->unique();
+            $table->string('timezone',200)->unique();
             $table->decimal('gmt_offset');
             $table->decimal('dst_offset');
             $table->decimal('raw_offset');
