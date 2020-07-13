@@ -16,15 +16,15 @@ class CreateAccountAccountsTable extends Migration
         Schema::create('account_accounts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('currency_id',200)->index()->nullable();
+            $table->integer('currency_id')->index()->nullable();
             $table->string('code')->nullable();
             $table->boolean('deprecated')->nullable();
-            $table->integer('type',200)->index()->nullable();
+            $table->integer('type')->index()->nullable();
             $table->string('internal_type')->nullable();
             $table->string('internal_group')->nullable();
             $table->boolean('reconcile')->nullable();
             $table->string('note')->nullable();
-            $table->integer('company_id',200)->index()->nullable();
+            $table->integer('company_id')->index()->nullable();
             $table->integer('root_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

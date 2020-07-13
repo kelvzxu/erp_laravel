@@ -17,7 +17,7 @@ class CreateHrJobsTable extends Migration
             $table->bigIncrements('id');
             $table->string('jobs_name')->nullable();
             $table->boolean('active')->nullable();
-            $table->integer('company_id',200)->nullable()->index();
+            $table->integer('company_id')->nullable()->index();
             $table->integer('department_id')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();

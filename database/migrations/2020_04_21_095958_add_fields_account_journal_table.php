@@ -14,9 +14,9 @@ class AddFieldsAccountJournalTable extends Migration
     public function up()
     {
         Schema::table('account_journals', function (Blueprint $table) {
-            $table->integer('account_type_allowed',200)->index()->nullable();
-            $table->integer('account_allowed',200)->index()->nullable();
-            $table->integer('bank',200)->index()->nullable();
+            $table->integer('account_type_allowed')->index()->nullable();
+            $table->integer('account_allowed')->index()->nullable();
+            $table->integer('bank')->index()->nullable();
         });
     }
 

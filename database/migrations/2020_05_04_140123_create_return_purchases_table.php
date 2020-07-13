@@ -15,9 +15,9 @@ class CreateReturnPurchasesTable extends Migration
     {
         Schema::create('return_purchases', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('return_no',200)->index();
-            $table->string('purchase_no',200)->index();
-            $table->string('receipt_no',200)->index();
+            $table->string('return_no')->index();
+            $table->string('purchase_no')->index();
+            $table->string('receipt_no')->index();
             $table->integer('user_id');
             $table->timestamps();
         });

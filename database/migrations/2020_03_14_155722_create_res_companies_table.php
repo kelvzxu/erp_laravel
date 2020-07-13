@@ -17,7 +17,7 @@ class CreateResCompaniesTable extends Migration
             $table->bigIncrements('id');
             $table->string('company_name')->nullable();
             $table->string('display_name')->nullable();
-            $table->integer('currency_id',200)->nullable()->index();
+            $table->integer('currency_id')->nullable()->index();
             $table->integer('parent_id')->nullable();
             $table->string('vat')->nullable();
             $table->string('email')->nullable();
@@ -31,8 +31,8 @@ class CreateResCompaniesTable extends Migration
             $table->string('street2')->nullable();
             $table->string('zip')->nullable();
             $table->string('city')->nullable();
-            $table->integer('state_id',200)->nullable()->index();
-            $table->string('country_id',200)->nullable()->index();
+            $table->integer('state_id')->nullable()->index();
+            $table->string('country_id')->nullable()->index();
             $table->string('partner_latitude')->nullable();
             $table->string('partner_longitude')->nullable();
             $table->string('social_twitter')->nullable();

@@ -18,9 +18,9 @@ class CreateHrDepartmentsTable extends Migration
             $table->string('department_name')->nullable();
             $table->string('complete_name')->nullable();
             $table->boolean('active')->nullable();
-            $table->integer('company_id',200)->nullable()->index();
+            $table->integer('company_id')->nullable()->index();
             $table->integer('parent_id')->nullable();
-            $table->integer('manager_id',200)->nullable()->index();
+            $table->integer('manager_id')->nullable()->index();
             $table->string('note')->nullable();
             $table->timestamps();
             $table->softDeletes();

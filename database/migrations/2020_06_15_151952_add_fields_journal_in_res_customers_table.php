@@ -14,7 +14,7 @@ class AddFieldsJournalInResCustomersTable extends Migration
     public function up()
     {
         Schema::table('res_customers', function (Blueprint $table) {
-            $table->integer('journal',200)->nullable()->index();
+            $table->integer('journal')->nullable()->index();
         });
     }
 
