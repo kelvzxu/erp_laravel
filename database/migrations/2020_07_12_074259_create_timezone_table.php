@@ -19,7 +19,6 @@ class CreateTimezoneTable extends Migration
             $table->decimal('gmt_offset');
             $table->decimal('dst_offset');
             $table->decimal('raw_offset');
-            $table->timestamps();
         });
     }
 
