@@ -16,16 +16,16 @@ class CreateResPartnersTable extends Migration
         Schema::create('res_partners', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('partner_name')->nullable();
-            $table->integer('company_id')->nullable()->index();
+            $table->integer('company_id',200)->nullable()->index();
             $table->string('display_name')->nullable();
             $table->string('title')->nullable();
-            $table->string('parent_id')->nullable()->index();
+            $table->string('parent_id',200)->nullable()->index();
             $table->string('ref')->nullable();
             $table->string('lag')->nullable();
             $table->string('tz')->nullable();
             $table->string('user_id')->nullable();
             $table->string('tax_id')->nullable();
-            $table->integer('currency_id')->nullable()->index();
+            $table->integer('currency_id',200)->nullable()->index();
             $table->integer('bank_account')->nullable();
             $table->string('website')->nullable();
             $table->string('comment')->nullable();
@@ -37,15 +37,15 @@ class CreateResPartnersTable extends Migration
             $table->string('street2')->nullable();
             $table->string('zip')->nullable();
             $table->string('city')->nullable();
-            $table->integer('state_id')->nullable()->index();
-            $table->string('country_id')->nullable()->index();
+            $table->integer('state_id',200)->nullable()->index();
+            $table->string('country_id',200)->nullable()->index();
             $table->string('partner_latitude')->nullable();
             $table->string('partner_longitude')->nullable();
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->boolean('is_company')->nullable();
-            $table->integer('industry_id')->nullable()->index();
+            $table->integer('industry_id',200)->nullable()->index();
             $table->string('commercial_company_name')->nullable();
             $table->string('company_name')->nullable();
             $table->string('additional_info')->nullable();

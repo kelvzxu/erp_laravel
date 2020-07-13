@@ -14,7 +14,7 @@ class AddFieldsJournalInResPartnersTable extends Migration
     public function up()
     {
         Schema::table('res_partners', function (Blueprint $table) {
-            $table->integer('journal')->nullable()->index();
+            $table->integer('journal',200)->nullable()->index();
         });
     }
 
