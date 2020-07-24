@@ -105,7 +105,11 @@
                                     <td>{{$data->partner->name}}</td>
                                     <td>{{$data->order_date}}</td>
                                     <td>{{$data->sales_person->employee_name}}</td>
-                                    <td>Rp. {{ number_format($data->grand_total)}}</td>
+                                    @if ($data->partner->currency->position == "before")
+                                        <td>{{$data->partner->currency->symbol}}. {{ number_format($data->grand_total)}}</td>
+                                    @else
+                                        <td>{{ number_format($data->grand_total)}} {{$data->partner->currency->symbol}}</td>
+                                    @endif
                                     <td>
                                         @if($data->status == "Quotation" ) 
                                             <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Quotation</div>

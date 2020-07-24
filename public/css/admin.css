@@ -11963,6 +11963,8 @@ button,
 
 .app-page-title {
     padding:30px;
+    padding-bottom: 0px;
+    padding-right: 0px;
     margin: -30px -30px 0px;
     position: relative
 }
@@ -25809,4 +25811,9 @@ a.fc-more:hover {
 
 #img-upload {
     width: 50%;
+}
+
+.system_background {
+    border-bottom: 1px solid #ddd;
+    background: url(/web/static/src/img/form_sheetbg.png);
 }

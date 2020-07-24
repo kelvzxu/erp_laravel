@@ -2,19 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\access_right;
-use App\User;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_journal;
 use App\Models\Customer\res_customer;
-use App\Models\Currency\res_currency;
-use App\Models\Data\res_partner_industry;
-use App\Models\Data\res_lang;
-use App\Models\Data\timezone;
-use App\Models\Human_Resource\hr_employee;
 use App\Models\Sales\Invoice;
-use App\Models\World_database\res_country;
-use App\Models\World_database\res_country_state;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,23 +13,19 @@ class ResCustomersController extends Controller
 {
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $customer = DB::table('res_customers')
                     ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
                     ->select('res_customers.*', 'res_country.country_name')
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
                     ->paginate(30);
-        return view('res_customer.index',compact('access','group','customer'));
+        return view('res_customer.index',compact('customer'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         if ($key!=""){
             $customer = DB::table('res_customers')
                     ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
@@ -58,18 +43,12 @@ class ResCustomersController extends Controller
                     ->orderBy('name', 'ASC')
                     ->paginate(30);
         }
-        return view('res_customer.index',compact('access','group','customer'));
+        return view('res_customer.index',compact('customer'));
     }
     
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_account::orderBy('code','asc')->get();
-        $journal = account_journal::orderBy('code','asc')->get();
-        return view('res_customer.create_customer',
-            compact('access','group','account','employee','journal'));
+        return view('res_customer.create_customer');
     }
 
     public function store(Request $request)
@@ -136,20 +115,9 @@ class ResCustomersController extends Controller
      */
     public function show(res_customer $res_customer)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_account::orderBy('code','asc')->get();
-        $journal = account_journal::orderBy('code','asc')->get();
-        $country=res_country::orderBy('country_name', 'ASC')->get();
-        $state=res_country_state::orderBy('state_name', 'ASC')->get();
-        $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        $lang = res_lang::orderBy('lang_name', 'ASC')->get();
-        $tz = timezone::orderBy('timezone', 'ASC')->get();
-        $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
         $invoice=Invoice::where('client',$res_customer->id)->count();
         return view('res_customer.edit_customer',
-            compact('access','group','res_customer','invoice','journal','country','state','currency','lang','tz','industry','employee','account'));
+            compact('res_customer','invoice'));
     }
 
     /**
@@ -160,10 +128,8 @@ class ResCustomersController extends Controller
      */
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $customer = res_customer::findOrFail($id);
-        return view('res_customer.edit_customer', compact('access','group','customer'));
+        return view('res_customer.edit_customer', compact('customer'));
     }
 
     /**

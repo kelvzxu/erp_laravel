@@ -20,28 +20,22 @@ class AccessRightsController extends Controller
      */
     public function InternalUser()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $user = User::with('type')->where('user_type',1)->orderBy('name')->paginate(25);
-        return view ('manage_users.internal_user',compact('user','access','group'));
+        return view ('manage_users.internal_user',compact('user'));
     }
     public function portal()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $user = User::with('type')->where('user_type',2)->orderBy('name')->paginate(25);
-        return view ('manage_users.portal',compact('user','access','group'));
+        return view ('manage_users.portal',compact('user'));
     }
 
     public function show($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $type=user_type::orderBy('id','asc')->get();
         $groups=user_group::orderBy('id','asc')->get();
         $data = ir_model::where('state','base')->orderBy('id', 'ASC')->get();
         $user_access = access_right::with('user','employee')->where('user_id',$id)->first();
-        return view ('manage_users.edit',compact('user_access','data','type','access','groups','group'));
+        return view ('manage_users.edit',compact('user_access','data','type','groups'));
     }
 
     public function update(Request $request, $id)

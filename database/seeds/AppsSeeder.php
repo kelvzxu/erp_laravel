@@ -23,7 +23,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Purchase',
-            'model' => 'purchases',
+            'model' => 'purchase',
             'info' => 'Purchase orders, tenders and agreements',
             'state' => 'base',
             'icon' => 'purchase.png',

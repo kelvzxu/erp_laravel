@@ -21,19 +21,15 @@ class AccountAccountController extends Controller
      */
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $account = account_account::with('company','account_type')->orderBy('code', 'ASC')->paginate(25);
         // dump($account);
-        return view ('accounting.account.index',compact('account','access','group'));
+        return view ('accounting.account.index',compact('account'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         if ($key!=""){
             $account = account_account::orderBy('code', 'ASC')
                     ->where($key,'like',"%".$value."%")
@@ -43,17 +39,15 @@ class AccountAccountController extends Controller
             $account = account_account::orderBy('code', 'ASC')
                     ->paginate(25);
         }
-        return view('accounting.account.index',compact('account','access','group'));
+        return view('accounting.account.index',compact('account'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $account_type = account_account_type::orderBy('id', 'ASC')->get();
         $company = res_company::orderBy('id','asc')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        return view ('accounting.account.create',compact('account_type','company','currency','access','group'));
+        return view ('accounting.account.create',compact('account_type','company','currency'));
     }
 
     /**
@@ -111,13 +105,11 @@ class AccountAccountController extends Controller
      */
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $account = account_account::findOrFail($id);
         $account_type = account_account_type::orderBy('id', 'ASC')->get();
         $company = res_company::orderBy('id','asc')->get();
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        return view ('accounting.account.edit',compact('account','account_type','company','access','group','currency'));
+        return view ('accounting.account.edit',compact('account','account_type','company','currency'));
     }
 
     /**

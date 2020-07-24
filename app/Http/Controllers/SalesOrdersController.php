@@ -19,22 +19,18 @@ class SalesOrdersController extends Controller
 {
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = sales_order::with('partner','sales_person')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
                     // dd($orders);
-        return view('sales.index', compact('access','group','orders'));
+        return view('sales.index', compact('orders'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $partner = res_customer::orderBy('name', 'asc')->get();
         $product = Product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
-        return view('sales.create', compact('access','group','product','partner'));
+        return view('sales.create', compact('product','partner'));
     }
 
     public function store(Request $request)
@@ -49,13 +45,12 @@ class SalesOrdersController extends Controller
         ]);
  
         $year=date("Y");
-        $prefixcode = "SO-$year-";
-        $count = sales_order::all()->count();
+        $prefixcode = "SO/$year/"; 
+        $count = sales_order::where('order_no','like',"%".$prefixcode."%")->count();
         if ($count==0){
             $Order_no= "$prefixcode"."000001";
         }else {
-            $latestPo = sales_order::orderBy('id','DESC')->first();
-            $Order_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
+            $Order_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
         }
 
         $products = collect($request->products)->transform(function($product) {
@@ -89,18 +84,14 @@ class SalesOrdersController extends Controller
 
     public function show($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = sales_order::with('partner','sales_person','products')->findOrFail($id);
-        return view('sales.show', compact('access','group','orders'));
+        return view('sales.show', compact('orders'));
     }
 
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = sales_order::with('partner','sales_person','products','products.product')->findOrFail($id);
-        return view('sales.edit', compact('access','group','orders'));
+        return view('sales.edit', compact('orders'));
     }
 
     public function confirm($id)
@@ -164,24 +155,20 @@ class SalesOrdersController extends Controller
     {
         $month = date('m');
         $year = date('Y');
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $data = sales_order::with('partner','sales_person')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
         $quotation = sales_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('status','quotation')->count();
         $invoice = sales_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('invoice','False')->count();
         $sales = sales_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('status','SO')->sum('grand_total');
-        return view('sales.report', compact('access','group','data','quotation','invoice','sales'));
+        return view('sales.report', compact('data','quotation','invoice','sales'));
     }
 
     public function print($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = sales_order::with('partner','sales_person','products')->findOrFail($id);
         $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-                                    ->loadview('reports.sales.sales_pdf', compact('access','group','orders'));
+                                    ->loadview('reports.sales.sales_pdf', compact('orders'));
         return $pdf->stream();
     }
 

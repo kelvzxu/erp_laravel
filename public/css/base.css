@@ -214,6 +214,13 @@ iframe {
   margin-bottom: 10px;
 }
 
+.wrap-input-required {
+  width: 100%;
+  position: relative;
+  border-bottom: 2px solid gray;
+  margin-bottom: 10px;
+}
+
 .input200 {
   font-family: Poppins-Regular;
   font-size: 15px;

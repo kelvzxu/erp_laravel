@@ -33,7 +33,7 @@
     </div>
     <div class="scrollbar-sidebar">
         <div class="app-sidebar__inner">
-            <ul class="vertical-nav-menu">
+            <ul class="vertical-nav-menu mb-6">
                 <li class="app-sidebar__heading">Dashboards</li>
                 <li>
                     <a href="{{route('home')}}" id="home" class="menu-item">
@@ -390,7 +390,7 @@
                         </a>
                     </li>
                 </li>
-                <li class="app-sidebar__heading">Settings</li>
+                <li class="app-sidebar__heading">Settings
                     <li>
                         <a href="#" id="setting">
                             <i class="metismenu-icon fa fa-users"></i>
@@ -418,6 +418,7 @@
                             </i>Manage Companies
                         </a>
                     </li>
+                </li>
                 @endif
             </ul>
         </div>

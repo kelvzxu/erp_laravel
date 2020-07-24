@@ -65,7 +65,7 @@
                             <div class="row">
                                 <div class="col-9">
                                     <h1>
-                                        <div class="o_field_partner_autocomplete dropdown open wrap-input200 o_required_modifier" name="name"
+                                        <div class="o_field_partner_autocomplete dropdown open wrap-input-required o_required_modifier" name="name"
                                             placeholder="Name" data-original-title="" title="">
                                             <input class="input200  @error('name') is-invalid @enderror" placeholder="Name" type="text" id="name" name="name" value="{{ old('name') }}" required>
                                         </div>
@@ -100,7 +100,7 @@
                                             <td class="o_td_label"><label class="col-form-label" for="o_field_input_566"
                                                     data-original-title="" title=""><b>Address type</b></label></td>
                                             <td style="width: 100%;">
-                                            <div class="wrap-input200">
+                                            <div class="wrap-input-required">
                                                 <select class="input200" name="type" id="type" style="border:none;" required>
                                                     <option value="" style=""></option>
                                                     <option value="contact" style="">Contact</option>
@@ -118,29 +118,29 @@
                                             </td>
                                             <td>
                                                 <div class="o_address_format">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <input class="input200 " name="street1" required value="{{ old('street1') }}" 
                                                             placeholder="Street..." type="text" id="street1" >
                                                     </div>
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <input class="input200" value="{{ old('street2') }}"
                                                             name="street2" placeholder="Street 2..." type="text" id="street2">
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-6">
-                                                            <div class="wrap-input200">
+                                                            <div class="wrap-input-required">
                                                                 <input class="input200" required value="{{ old('city') }}"
                                                                     name="city" placeholder="City..." type="text" id="city">
                                                             </div>
                                                         </div>
                                                         <div class="col-6">
-                                                            <div class="wrap-input200">
+                                                            <div class="wrap-input-required">
                                                                 <input class="input200" required value="{{ old('zip') }}"
                                                                     name="zip" placeholder="ZIP" type="text" id="zip">
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="country" name="country" class="input200" required style="border:none;">
                                                             <option value="">country</option>
                                                         </select>
@@ -158,7 +158,7 @@
                                                 <label for="" name="industry" class="col-form-label"><b>industry</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <select id="industry_id" required name="industry_id" class="input200" style="border:none;">
                                                         <option value="">Industry</option>
                                                     </select>
@@ -176,7 +176,7 @@
                                                 <label for="" name="email" class="col-form-label"><b>Email</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <input class="input200 " name="email" required value="{{ old('email') }}" 
                                                         placeholder="email@example.com" type="text" id="email" >
                                                 </div>
@@ -187,7 +187,7 @@
                                                 <label for="" name="phone" class="col-form-label"><b>Phone</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <input class="input200 " name="phone" required value="{{ old('phone') }}" type="text" id="phone" >
                                                 </div>
                                             </td>
@@ -227,7 +227,7 @@
                                                 <label for="" name="lag" class="col-form-label"><b>Language</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <select id="lag" name="lag" class="input200" required style="border:none;">
                                                         <option value="">Language</option>
                                                     </select>
@@ -241,14 +241,14 @@
                                             <td style="width: 100%;">
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <div class="wrap-input200">
+                                                        <div class="wrap-input-required">
                                                             <select id="tz" name="tz" class="input200" required style="border:none;">
                                                                 <option value="">Timezone</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <div class="wrap-input200">
+                                                        <div class="wrap-input-required">
                                                             <select id="currency_id" name="currency_id" required class="input200" style="border:none;">
                                                                 <option value="">Currency</option>
                                                             </select>
@@ -288,10 +288,10 @@
                                                     <label for="" name="sales" class="col-form-label"><b>Sales Person</b></label>
                                                 </td>
                                                 <td style="width: 100%;">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="sales" name="sales" class="input200" required style="border:none;">
                                                             <option value=""></option>
-                                                            @foreach ($employee as $row)
+                                                            @foreach (HumanResource::employee() as $row)
                                                                 <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }} </option>
                                                             @endforeach
                                                         </select>
@@ -336,10 +336,10 @@
                                                     <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
                                                 </td>
                                                 <td style="width: 100%;">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="journal" required name="journal" class="input200" style="border:none;">
                                                             <option value=""></option>
-                                                            @foreach ($journal as $row)
+                                                            @foreach (Accounting::account_journal() as $row)
                                                                 <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
                                                             @endforeach
                                                         </select>
@@ -351,10 +351,10 @@
                                                     <label for="" name="receivable_account" class="col-form-label"><b>Account Receivable</b></label>
                                                 </td>
                                                 <td style="width: 100%;">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
                                                             <option value=""></option>
-                                                            @foreach ($account as $row)
+                                                            @foreach (Accounting::account_account() as $row)
                                                                 <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
                                                             @endforeach
                                                         </select>

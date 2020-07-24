@@ -162,6 +162,17 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+
+        /*
+         * Enterprise System Providers
+         */
+        App\Providers\AccountingProvider::class,
+        App\Providers\HumanResourceProvider::class,
+        App\Providers\LanguageProvider::class,
+        App\Providers\ResCountryProvider::class,
+        App\Providers\ResCurrencyProvider::class,
+        App\Providers\ResPartnerProvider::class,
+        App\Providers\TimeZoneProvider::class,
         App\Providers\UserAccessProvider::class,
         App\Providers\UserGroupProvider::class,
 
@@ -230,7 +241,18 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+
+        /*
+         * Enterprise System Aliases
+         */
+        'Accounting'=> App\Helpers\Accounting::class,
         'AccessRight' => App\Helpers\Access::class,
+        'HumanResource' => App\Helpers\HumanResource::class,
+        'Language' => App\Helpers\Language::class,
+        'ResCountry' => App\Helpers\Country::class,
+        'ResCurrency'=> App\Helpers\currency::class,
+        'ResPartner'=> App\Helpers\Partner::class,
+        'TimeZone'=> App\Helpers\EnterpriseTimezone::class,
         'UserGroup' => App\Helpers\Group::class,
     ],
 
