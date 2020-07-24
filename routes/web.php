@@ -284,7 +284,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('PointOfSale/Transaction', 'OrderController@create')->name('pos.create');
     Route::get('PointOfSale/Transaction/View/{id}', 'OrderController@view')->name('pos.view');
     Route::get('PointOfSale/Search', 'OrderController@search')->name('pos.filter');
-    Route::get('/checkout', 'OrdrController@checkout')->name('order.checkout');
+    Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 
     // ==== Sales Order ====
