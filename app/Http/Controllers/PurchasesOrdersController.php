@@ -21,22 +21,18 @@ class PurchasesOrdersController extends Controller
 {
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = purchases_order::with('partner','sales')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
                     // dd($orders);
-        return view('purchases.index', compact('access','group','orders'));
+        return view('purchases.index', compact('orders'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $partner = res_partner::orderBy('partner_name', 'asc')->get();
         $product = Product::orderBy('name', 'asc')->where('can_be_purchase','1')->get();
-        return view('purchases.create', compact('access','group','product','partner'));
+        return view('purchases.create', compact('product','partner'));
     }
 
     public function store(Request $request)
@@ -51,14 +47,13 @@ class PurchasesOrdersController extends Controller
         ]);
  
         $year=date("Y");
-        $prefixcode = "PO-$year-";
-        $count = purchases_order::all()->count();
+        $prefixcode = "PO/$year/";
+        $count = purchases_order::where('order_no','like',"%".$prefixcode."%")->count();
         if ($count==0){
             $Order_no= "$prefixcode"."000001";
         }else {
-            $latestPo = purchases_order::orderBy('id','DESC')->first();
-            $Order_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
-        }
+            $Order_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
+        } 
 
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
@@ -91,20 +86,16 @@ class PurchasesOrdersController extends Controller
     
     public function show($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = purchases_order::with('partner','sales','products')->findOrFail($id);
         $receipt = receipt_product::where('purchase_no',$orders->order_no)->first();
-        return view('purchases.show', compact('access','group','orders','receipt'));
+        return view('purchases.show', compact('orders','receipt'));
     }
 
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = purchases_order::with('partner','sales','products','products.product')->findOrFail($id);
         $receipt = receipt_product::where('purchase_no',$orders->order_no)->first();
-        return view('purchases.edit', compact('access','group','orders','receipt'));
+        return view('purchases.edit', compact('orders','receipt'));
     }
 
     public function confirm($id)
@@ -168,24 +159,20 @@ class PurchasesOrdersController extends Controller
     {
         $month = date('m');
         $year = date('Y');
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $data = purchases_order::with('partner','sales')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
         $quotation = purchases_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('status','quotation')->count();
         $invoice = purchases_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('invoice','False')->count();
         $sales = purchases_order::whereMonth('order_date', '=', $month)->whereYear('order_date', '=', $year)->where('status','PO')->sum('grand_total');
-        return view('purchases.report', compact('access','group','data','quotation','invoice','sales'));
+        return view('purchases.report', compact('data','quotation','invoice','sales'));
     }
 
     public function print($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $orders = purchases_order::with('partner','sales','products')->findOrFail($id);
         $pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-                                    ->loadview('reports.purchases.purchases_pdf', compact('access','group','orders'));
+                                    ->loadview('reports.purchases.purchases_pdf', compact('orders'));
         return $pdf->stream();
     }
 

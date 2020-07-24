@@ -2,19 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\access_right;
-use App\User;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_journal;
-use App\Models\Currency\res_currency;
-use App\Models\Data\res_partner_industry;
-use App\Models\Data\res_lang;
-use App\Models\Data\timezone;
-use App\Models\Human_Resource\hr_employee;
 use App\Models\Merchandises\Purchase;
 use App\Models\Partner\res_partner;
-use App\Models\World_database\res_country;
-use App\Models\World_database\res_country_state;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,21 +13,17 @@ class ResPartnersController extends Controller
 {
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $partner = DB::table('res_partners')
                     ->join('res_country', 'res_partners.country_id', '=', 'res_country.id')
                     ->select('res_partners.*', 'res_country.country_name')
                     ->whereNull('res_partners.deleted_at')
                     ->orderBy('partner_name', 'ASC')
                     ->paginate(30);
-        return view('res_partner.index',compact('access','group','partner'));
+        return view('res_partner.index',compact('partner'));
     }
 
     public function search(Request $request)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
         if ($key!=""){
@@ -58,17 +43,12 @@ class ResPartnersController extends Controller
                     ->orderBy('partner_name', 'ASC')
                     ->paginate(30);
         }
-        return view('res_partner.index',compact('access','group','partner'));
+        return view('res_partner.index',compact('partner'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_account::orderBy('code','asc')->get();
-        $journal = account_journal::orderBy('code','asc')->get();
-        return view('res_partner.create_partner',compact('access','group','account','journal','employee'));
+        return view('res_partner.create_partner');
     }
 
     public function store(Request $request)
@@ -130,20 +110,9 @@ class ResPartnersController extends Controller
 
     public function show(res_partner $res_partner)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $employee = hr_employee::orderBy('employee_name', 'ASC')->get();
-        $account = account_account::orderBy('code','asc')->get();
-        $journal = account_journal::orderBy('code','asc')->get();
-        $country=res_country::orderBy('country_name', 'ASC')->get();
-        $state=res_country_state::orderBy('state_name', 'ASC')->get();
-        $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        $lang = res_lang::orderBy('lang_name', 'ASC')->get();
-        $tz = timezone::orderBy('timezone', 'ASC')->get();
-        $industry= res_partner_industry::orderBy('industry_name', 'ASC')->get();
         $bills=Purchase::where('client',$res_partner->id)->count();
         return view('res_partner.edit_partner',
-            compact('access','group','res_partner','country','bills','state','currency','lang','tz','journal','industry','account','employee'));
+            compact('res_partner','bills'));
     }
 
     public function edit(res_partner $res_partner)

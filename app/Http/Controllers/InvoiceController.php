@@ -286,13 +286,13 @@ class InvoiceController extends Controller
     public function wizard_create($id)
     {
         $year=date("Y");
-        $prefixcode = "INV-$year-";
-        $count = Invoice::all()->count();
+        $month=date("m");
+        $prefixcode = "INV/$year/$month/";
+        $count = Invoice::where('invoice_no','like',"%".$prefixcode."%")->count();
         if ($count==0){
             $invoice_no= "$prefixcode"."000001";
         }else {
-            $latestPo = Invoice::orderBy('id','DESC')->first();
-            $invoice_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
+            $invoice_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
         }
         $orders = sales_order::findOrFail($id);
         $orders_line = sales_order_product::where('sales_order_id','=',$id)->get();

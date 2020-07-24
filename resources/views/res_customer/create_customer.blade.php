@@ -71,7 +71,7 @@
                                         </div>
                                     </h1>
                                     <div class="o_row">
-                                        <div class="wrap-input200 " aria-atomic="true" name="Parent_id" placeholder="Company" data-original-title="" title="">
+                                        <div class="wrap-input-required" aria-atomic="true" name="Parent_id" placeholder="Company" data-original-title="" title="">
                                             <input type="text" class="input200" placeholder="Company" autocomplete="off" value="{{ old('Parent_id') }}" name="Parent_id" id="Parent_id" required>
                                         </div>
                                     </div>

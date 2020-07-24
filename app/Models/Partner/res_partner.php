@@ -19,4 +19,8 @@ class res_partner extends Model
     {
         return $this->hasMany('App\Models\Accounting\account_move_line','partner_id','id')->where('account_internal_type','payable');
     }
+    public function currency()
+    {
+        return $this->hasOne('App\Models\Currency\res_currency','id','currency_id');
+    }
 }

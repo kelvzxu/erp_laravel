@@ -92,6 +92,7 @@ class ProductController extends Controller
                 'stock_output_account'=>$request->stock_output_account,
                 'stock_valuation_account'=>$request->stock_valuation_account,
                 'stock_journal'=>$request->stock_journal,
+                'location'=>1,
             ]);
             return redirect(route('product'))
                 ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);

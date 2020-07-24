@@ -105,8 +105,12 @@
                                     <td>{{$purchase->partner->partner_name}}</td>
                                     <td>{{$purchase->order_date}}</td>
                                     <td>{{$purchase->sales->employee_name}}</td>
-                                    <td>Rp. {{ number_format($purchase->grand_total)}}</td>
-                                    <td>
+                                    @if ($purchase->partner->currency->position == "before")
+                                        <td>{{$purchase->partner->currency->symbol}} {{ number_format($purchase->grand_total)}}</td>
+                                    @else
+                                        <td>{{ number_format($purchase->grand_total)}} {{$purchase->partner->currency->symbol}}</td>
+                                    @endif
+                                    <td> 
                                         @if($purchase->status == "Quotation" ) 
                                             <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">RFQ</div>
                                             <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
@@ -144,8 +148,13 @@
                             <div class="o_kanban_record_headings mt4" modifiers="{}">
                                 <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$purchase->partner->partner_name}}</span></strong>
                             </div>
-                            <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                                    name="amount_total">Rp.&nbsp;{{ number_format($purchase->grand_total)}}</span></strong>
+                            @if ($purchase->partner->currency->position == "before")
+                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">{{$purchase->partner->currency->symbol}}&nbsp;{{ number_format($purchase->grand_total)}}</span></strong>
+                            @else
+                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">{{ number_format($purchase->grand_total)}}&nbsp;{{$purchase->partner->currency->symbol}}</span></strong>
+                            @endif
                         </div>
                         <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchase_orders.show', $purchase)}}">
                             <div class="oe_kanban_bottom_left text-muted" modifiers="{}">

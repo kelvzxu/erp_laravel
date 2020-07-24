@@ -106,7 +106,7 @@
                                     <td>{{$data->order_date}}</td>
                                     <td>{{$data->sales_person->employee_name}}</td>
                                     @if ($data->partner->currency->position == "before")
-                                        <td>{{$data->partner->currency->symbol}}. {{ number_format($data->grand_total)}}</td>
+                                        <td>{{$data->partner->currency->symbol}} {{ number_format($data->grand_total)}}</td>
                                     @else
                                         <td>{{ number_format($data->grand_total)}} {{$data->partner->currency->symbol}}</td>
                                     @endif
@@ -149,8 +149,13 @@
                             <div class="o_kanban_record_headings mt4" modifiers="{}">
                                 <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$data->partner->name}}</span></strong>
                             </div>
-                            <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                                    name="amount_total">Rp.&nbsp;{{ number_format($data->grand_total)}}</span></strong>
+                            @if ($data->partner->currency->position == "before")
+                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">{{$data->partner->currency->symbol}}&nbsp;{{ number_format($data->grand_total)}}</span></strong>
+                            @else
+                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">{{ number_format($data->grand_total)}}&nbsp;{{$data->partner->currency->symbol}}</span></strong>
+                            @endif
                         </div>
                         <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchase_orders.show', $data)}}">
                             <div class="oe_kanban_bottom_left text-muted" modifiers="{}">

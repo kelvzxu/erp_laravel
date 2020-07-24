@@ -77,7 +77,11 @@
                             <i class="fa fa-fw o_button_icon fa-usd"></i>
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
-                                <span class="o_stat_value">Rp. {{ number_format($res_partner->credit_limit)}}</span>
+                                @if ($res_partner->currency->position == "before")
+                                    <span class="o_stat_value">{{$res_partner->currency->symbol}}. {{ number_format($res_partner->credit_limit)}}</span>
+                                @else
+                                    <span class="o_stat_value">{{ number_format($res_partner->credit_limit)}} {{$res_partner->currency->symbol}}</span>
+                                @endif
                                 <span class="o_stat_text">Credit Note</span>
                             </div>
                         </button>
@@ -85,7 +89,11 @@
                             <i class="fa fa-fw o_button_icon fa-usd"></i>
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
-                                <span class="o_stat_value">Rp. {{ number_format($res_partner->debit_limit)}}</span>
+                                @if ($res_partner->currency->position == "before")
+                                    <span class="o_stat_value">{{$res_partner->currency->symbol}}. {{ number_format($res_partner->debit_limit)}}</span>
+                                @else
+                                    <span class="o_stat_value">{{ number_format($res_partner->debit_limit)}} {{$res_partner->currency->symbol}}</span>
+                                @endif
                                 <span class="o_stat_text">Purchases</span>
                             </div>
                         </button>
@@ -103,14 +111,14 @@
                             <div class="row">
                                 <div class="col-9">
                                     <h1>
-                                        <div class="o_field_partner_autocomplete dropdown open wrap-input200 o_required_modifier" name="name"
+                                        <div class="o_field_partner_autocomplete dropdown open wrap-input-required o_required_modifier" name="name"
                                             placeholder="Name" data-original-title="" title="">
                                             <input class="input200  @error('name') is-invalid @enderror" placeholder="Name" type="text" id="name" name="name" value="{{ $res_partner ->partner_name }}" required>
                                             <input type="hidden" name="id" value="{{$res_partner -> id}}">
                                         </div>
                                     </h1>
                                     <div class="o_row">
-                                        <div class="wrap-input200 " aria-atomic="true" name="Parent_id" placeholder="Company" data-original-title="" title="">
+                                        <div class="wrap-input-required " aria-atomic="true" name="Parent_id" placeholder="Company" data-original-title="" title="">
                                             <input type="text" class="input200" placeholder="Company" autocomplete="off" value="{{ $res_partner -> parent_id }}" name="Parent_id" id="Parent_id" required>
                                         </div>
                                     </div>
@@ -139,7 +147,7 @@
                                             <td class="o_td_label"><label class="col-form-label" for="o_field_input_566"
                                                     data-original-title="" title=""><b>Address type</b></label></td>
                                             <td style="width: 100%;">
-                                            <div class="wrap-input200">
+                                            <div class="wrap-input-required">
                                                 <select class="input200" name="type" id="type" style="border:none;" required>
                                                     <option value="" style=""></option>
                                                     <option value="contact" @if($res_partner->address == "contact" ) selected="selected" @endif>Contact</option>
@@ -157,11 +165,11 @@
                                             </td>
                                             <td>
                                                 <div class="o_address_format">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <input class="input200 " name="street1" required value="{{ $res_partner -> street }}" 
                                                             placeholder="Street..." type="text" id="street1" >
                                                     </div>
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <input class="input200" value="{{ $res_partner -> street2 }}"
                                                             name="street2" placeholder="Street 2..." type="text" id="street2">
                                                     </div>
@@ -179,20 +187,20 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="country" name="country" class="input200" required style="border:none;">
                                                             <option value="">country</option>
-                                                            @foreach ($country as $row)
+                                                            @foreach (ResCountry::country() as $row)
                                                                 <option value="{{ $row->id }}" {{ $row->id == $res_partner -> country_id ? 'selected':'' }}>
                                                                     {{ ucfirst($row->country_name) }}
                                                                 </option>
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="state" name="state" class="input200" style="border:none;">
                                                             <option value="">State</option>
-                                                            @foreach ($state as $row)
+                                                            @foreach (ResCountry::state() as $row)
                                                                 <option value="{{ $row->id }}" {{ $row->id == $res_partner -> state_id ? 'selected':'' }}>
                                                                     {{ ucfirst($row->state_name) }}
                                                                 </option>
@@ -207,10 +215,10 @@
                                                 <label for="" name="industry" class="col-form-label"><b>industry</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <select id="industry_id" required name="industry_id" class="input200" style="border:none;">
                                                         <option value="">Industry</option>
-                                                        @foreach ($industry as $row)
+                                                        @foreach (ResPartner::industry() as $row)
                                                             <option value="{{ $row->id }}" {{ $row->id == $res_partner -> industry_id ? 'selected':'' }}>
                                                                 {{ ucfirst($row->industry_name) }}
                                                             </option>
@@ -230,7 +238,7 @@
                                                 <label for="" name="email" class="col-form-label"><b>Email</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <input class="input200 " name="email" required value="{{ $res_partner -> email  }}" 
                                                         placeholder="email@example.com" type="text" id="email" >
                                                 </div>
@@ -241,7 +249,7 @@
                                                 <label for="" name="phone" class="col-form-label"><b>Phone</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <input class="input200 " name="phone" required value="{{ $res_partner -> phone  }}" type="text" id="phone" >
                                                 </div>
                                             </td>
@@ -281,10 +289,10 @@
                                                 <label for="" name="lag" class="col-form-label"><b>Language</b></label>
                                             </td>
                                             <td style="width: 100%;">
-                                                <div class="wrap-input200">
+                                                <div class="wrap-input-required">
                                                     <select id="lag" name="lag" class="input200" required style="border:none;">
                                                         <option value="">Language</option>
-                                                        @foreach ($lang as $row)
+                                                        @foreach (Language::lang() as $row)
                                                             <option value="{{ $row->id }}" {{ $row->id == $res_partner -> lag ? 'selected':'' }}>
                                                                 {{ ucfirst($row->lang_name) }}
                                                             </option>
@@ -300,10 +308,10 @@
                                             <td style="width: 100%;">
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <div class="wrap-input200">
+                                                        <div class="wrap-input-required">
                                                             <select id="tz" name="tz" class="input200" required style="border:none;">
                                                                 <option value="">Timezone</option>
-                                                                @foreach ($tz as $row)
+                                                                @foreach (TimeZone::timezone() as $row)
                                                                     <option value="{{ $row->timezone }}" {{ $row->timezone == $res_partner -> tz ? 'selected':'' }}>
                                                                         {{ ucfirst($row->timezone) }}
                                                                     </option>
@@ -312,10 +320,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <div class="wrap-input200">
+                                                        <div class="wrap-input-required">
                                                             <select id="currency_id" name="currency_id" required class="input200" style="border:none;">
                                                                 <option value="">Currency</option>
-                                                                @foreach ($currency as $row)
+                                                                @foreach (ResCurrency::currency() as $row)
                                                                     <option value="{{ $row->id }}" {{ $row->id == $res_partner -> currency_id ? 'selected':'' }}>
                                                                         {{ ucfirst($row->currency_name) }}
                                                                     </option>
@@ -357,10 +365,10 @@
                                                     <label for="" name="sales" class="col-form-label"><b>Merchandise Person</b></label>
                                                 </td>
                                                 <td style="width: 100%;">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="mcd" name="mcd" class="input200" required style="border:none;">
                                                             <option value=""></option>
-                                                            @foreach ($employee as $row)
+                                                            @foreach (HumanResource::employee() as $row)
                                                                 <option value="{{ $row->id }}"{{ $row->id == $res_partner -> mcd ? 'selected':'' }}>{{ ucfirst($row->employee_name) }} </option>
                                                             @endforeach
                                                         </select>
@@ -405,10 +413,10 @@
                                                     <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
                                                 </td>
                                                 <td style="width: 100%;">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="journal" required name="journal" class="input200" style="border:none;">
                                                             <option value=""></option>
-                                                            @foreach ($journal as $row)
+                                                            @foreach (Accounting::account_journal() as $row)
                                                                 <option value="{{ $row->id }}" {{ $row->id == $res_partner -> journal ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
                                                             @endforeach
                                                         </select>
@@ -420,10 +428,10 @@
                                                     <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
                                                 </td>
                                                 <td style="width: 100%;">
-                                                    <div class="wrap-input200">
+                                                    <div class="wrap-input-required">
                                                         <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
                                                             <option value=""></option>
-                                                            @foreach ($account as $row)
+                                                            @foreach (Accounting::account_account() as $row)
                                                                 <option value="{{ $row->id }}"{{ $row->id == $res_partner -> receivable_account ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
                                                             @endforeach
                                                         </select>
@@ -468,7 +476,6 @@
 @endsection
 @section('js')
 <script src="{{asset('js/asset_common/vendor.js')}}"></script>
-<script src="{{asset('js/ajax.js')}}"></script>
 @endsection
 @section('modal')
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

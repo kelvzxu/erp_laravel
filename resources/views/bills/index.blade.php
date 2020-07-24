@@ -103,7 +103,7 @@
                                     <td>{{$purchase->purchase_no}}</td>
                                     <td>{{$purchase->partner_name}}</td>
                                     <td>{{$purchase->purchase_date}}</td>
-                                    <td>{{$purchase->due_date}}</td>
+                                    <td>{{$purchase->due_date}}</td> 
                                     <td>Rp. {{ number_format($purchase->grand_total)}}</td>
                                     <td>
                                         @if($purchase->status == "Pending" ) 
