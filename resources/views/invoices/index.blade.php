@@ -103,8 +103,12 @@
                             @foreach($invoices as $invoice)
                                 <tr class="table-row" data-href="{{route('invoices.show', $invoice)}}">
                                     <td>{{$invoice->invoice_no}}</td>
-                                    <td>Rp. {{ number_format($invoice->grand_total)}}</td>
-                                    <td>{{$invoice->name}}</td>
+                                    @if ($invoice->partner->currency->position == "before")
+                                        <td>{{$invoice->partner->currency->symbol}} {{ number_format($invoice->grand_total)}}</td>
+                                    @else
+                                        <td>{{ number_format($invoice->grand_total)}} {{$invoice->partner->currency->symbol}}</td>
+                                    @endif
+                                    <td>{{$invoice->name}}</td> 
                                     <td>{{$invoice->invoice_date}}</td>
                                     <td>{{$invoice->due_date}}</td>
                                     <td>
@@ -145,8 +149,13 @@
                             <div class="o_kanban_record_headings mt4" modifiers="{}">
                                 <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$invoice->name}}</span></strong>
                             </div>
-                            <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                                    name="amount_total">Rp.&nbsp;{{ number_format($invoice->grand_total)}}</span></strong>
+                            @if ($invoice->partner->currency->position == "before")
+                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">{{$invoice->partner->currency->symbol}}&nbsp;{{ number_format($invoice->grand_total)}}</span></strong>
+                            @else
+                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">{{ number_format($invoice->grand_total)}}&nbsp;{{$invoice->partner->currency->symbol}}</span></strong>
+                            @endif
                         </div>
                         <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('invoices.show', $invoice)}}">
                             <div class="oe_kanban_bottom_left text-muted" modifiers="{}">

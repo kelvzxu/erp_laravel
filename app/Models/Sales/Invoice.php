@@ -17,7 +17,7 @@ class Invoice extends Model
     {
         return $this->hasMany(InvoiceProduct::class);
     }
-    public function customer()
+    public function partner()
     {
         return $this->hasOne('App\Models\Customer\res_customer','id','client');
     }

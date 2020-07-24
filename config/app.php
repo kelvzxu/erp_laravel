@@ -177,8 +177,14 @@ return [
         App\Providers\UserGroupProvider::class,
 
         /*
-         * Package Service Providers...
+         * Enterprise System Providers Function
          */
+        App\Providers\EncryptServiceProvider::class,
+
+        /*
+         * Enterprise System Providers Addons
+         */
+        App\Addons\Sales\Illuminate\SalesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -254,6 +260,16 @@ return [
         'ResPartner'=> App\Helpers\Partner::class,
         'TimeZone'=> App\Helpers\EnterpriseTimezone::class,
         'UserGroup' => App\Helpers\Group::class,
+
+        /*
+         * Function Enterprise System Aliases
+         */
+        'Encrypt' => App\Helpers\Encrypt::class,
+
+        /*
+         * Addons Enterprise System Aliases
+         */
+        'Sales' => App\Addons\Sales\Helpers\Sales::class,
     ],
 
 ];

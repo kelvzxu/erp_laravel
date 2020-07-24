@@ -93,12 +93,13 @@
                     </thead>
                     @foreach($delivery as $data)
                     <tbody>
-                        <tr class="table-row" data-href="{{route('Delivere.show',$data->invoice_no)}}">
+                        <tr class="table-row" data-href="{{route('Delivere.show',Encrypt::Encryption($data->invoice_no))}}">
                             <td scope="row">{{$loop->iteration}}</td>
                             <td>{{$data->delivery_no}}</td>
                             <td>{{$data->invoice_no}}</td>
                             <td>{{$data->delivery_date}}</td>
                             <td>{{$data->created_at->diffForHumans()}}</td>
+                            <td><a href="{{route('Delivere.show',Encrypt::Encryption($data->invoice_no))}}">link</td>
                         </tr>
                     </tbody>
                     @endforeach

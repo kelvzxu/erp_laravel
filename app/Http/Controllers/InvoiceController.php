@@ -8,34 +8,45 @@ use App\Models\Customer\customer_dept;
 use App\Models\Customer\res_customer;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\InvoiceProduct;
-use App\Models\Sales\sales_order;
-use App\Models\Sales\sales_order_product;
+use App\Addons\Sales\Models\sales_order;
+use App\Addons\Sales\Models\sales_order_product;
 use App\Models\Product\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\access_right;
 use App\User;
 use PDF;
+use Sales;
 
 class InvoiceController extends Controller
 {
+    public function calculate_code()
+    {
+        $year=date("Y");
+        $month=date("m");
+        $prefixcode = "INV/$year/$month/";
+        $count = Invoice::where('invoice_no','like',"%".$prefixcode."%")->count();
+        if ($count==0){
+            return "$prefixcode"."000001";
+        }else {
+            return $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
+        }
+    }
+
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
+        $invoices = Invoice::with('partner')
+                    ->join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
-        return view('invoices.index', compact('access','group','invoices'));
+        return view('invoices.index', compact('invoices'));
     }
 
     public function search(Request $request)
     {
         $key=$request->filter;
         $value=$request->value;
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         if ($key!=""){
             $invoices = Invoice::join('res_customers', 'invoices.client', '=', 'res_customers.id')
                     ->select('invoices.*', 'res_customers.name')
@@ -49,16 +60,14 @@ class InvoiceController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
         }
-        return view('invoices.index', compact('access','group','invoices'));
+        return view('invoices.index', compact('invoices'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $customer = res_customer::orderBy('name', 'asc')->get();
         $product = Product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
-        return view('invoices.create', compact('access','group','product','customer'));
+        return view('invoices.create', compact('product','customer'));
     }
 
     public function store(Request $request)
@@ -72,17 +81,8 @@ class InvoiceController extends Controller
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1'
         ]);
-        $year=date("Y");
-        $prefixcode = "INV-$year-";
-        $count = Invoice::all()->count();
-        if ($count==0){
-            $invoice_no= "$prefixcode"."000001";
-        }else {
-            $latestInv = Invoice::orderBy('id','DESC')->first();
-            $invoice_no = $prefixcode.str_pad($latestInv->id + 1, 6, "0", STR_PAD_LEFT);
-        }
+        $invoice_no = $this->calculate_code();
 
-        echo $request->invoice_no;
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
             return new InvoiceProduct($product);
@@ -114,21 +114,17 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $invoice = Invoice::with('products')->findOrFail($id);
         $customer = res_customer::orderBy('name', 'asc')->get();
-        return view('invoices.show', compact('access','group','invoice','customer'));
+        return view('invoices.show', compact('invoice','customer'));
     }
 
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $invoice = Invoice::where('id', $id)->with('products', 'products.product')->first();
         $invoices = InvoiceProduct::where('invoice_id', $id)->get();
         // dump($invoice);
-        return view('invoices.edit', compact('access','group','invoice','invoices'));
+        return view('invoices.edit', compact('invoice','invoices'));
     }
 
     public function update(Request $request, $id)
@@ -237,8 +233,6 @@ class InvoiceController extends Controller
     {
         $month = date('m');
         $year = date('Y');
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $income=invoice::whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->sum('grand_total');
         $unpaid=invoice::where('paid','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
         $notvalidate=invoice::where('approved','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
@@ -249,17 +243,15 @@ class InvoiceController extends Controller
                             ->orderBy('created_at', 'desc')
                             ->whereMonth('invoices.invoice_date', '=', $month)->whereYear('invoices.invoice_date', '=', $year)
                             ->paginate(10);
-        return view('invoices.report', compact('access','group','income','unpaid','notvalidate','invoices'));
+        return view('invoices.report', compact('income','unpaid','notvalidate','invoices'));
     }
 
     public function print_pdf($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $invoice = Invoice::with('products','customer')->findOrFail($id);
         // dd($invoice);
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
-            ->loadview('reports.sales.invoice_pdf', compact('access','group','invoice'));
+            ->loadview('reports.sales.invoice_pdf', compact('invoice'));
     	return $pdf->stream();
     }
 
@@ -267,8 +259,6 @@ class InvoiceController extends Controller
         $month = date('m');
         $year = date('Y');
         $monthName = date("F", mktime(0, 0, 0, $month, 10));
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $income=invoice::whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->sum('grand_total');
         $unpaid=invoice::where('paid','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
         $notvalidate=invoice::where('approved','0')->whereMonth('invoice_date', '=', $month)->whereYear('invoice_date', '=', $year)->count();
@@ -283,52 +273,50 @@ class InvoiceController extends Controller
             ->loadview('reports.sales.invoice_report_pdf', compact('monthName','year','invoices'));
         return $pdf->stream();
     }
-    public function wizard_create($id)
+
+    public function payment_date($value)
     {
-        $year=date("Y");
-        $month=date("m");
-        $prefixcode = "INV/$year/$month/";
-        $count = Invoice::where('invoice_no','like',"%".$prefixcode."%")->count();
-        if ($count==0){
-            $invoice_no= "$prefixcode"."000001";
-        }else {
-            $invoice_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
-        }
-        $orders = sales_order::findOrFail($id);
-        $orders_line = sales_order_product::where('sales_order_id','=',$id)->get();
-        $partner = res_customer::findOrFail($orders->customer);
-        $address = "$partner->street,$partner->zip,$partner->city";
-        switch ($partner->payment_terms) {
+        switch ($value) {
             case 1:
-                $due_date=date('Y-m-d H:i:s');
+                returndate('Y-m-d H:i:s');
                 break;
             case 2:
                 $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 15 days'));
+                return date('Y-m-d', strtotime($Date. ' + 15 days'));
                 break;
             case 3:
                 $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 21 days'));
+                return date('Y-m-d', strtotime($Date. ' + 21 days'));
                 break;
             case 4:
                 $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 30 days'));
+                return date('Y-m-d', strtotime($Date. ' + 30 days'));
                 break;
             case 5:
                 $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 45 days'));
+                return date('Y-m-d', strtotime($Date. ' + 45 days'));
                 break;
             case 6:
                 $Date = date('Y-m-d H:i:s');
-                $due_date= date('Y-m-d', strtotime($Date. ' + 2 Month'));
+                return date('Y-m-d', strtotime($Date. ' + 2 Month'));
                 break;
             case 7:
                 $Date = date('Y-m-d H:i:s');
-                $due_date= date("Y-m-t", strtotime($Date));
+                return date("Y-m-t", strtotime($Date));
                 break;
             default:
-                $due_date=date('Y-m-d H:i:s');;
+                return date('Y-m-d H:i:s');;
         }
+    }
+
+    public function wizard_create($id)
+    {
+        $invoice_no = $this->calculate_code();
+        $orders = Sales::get_sales($id);
+        $orders_line = sales_order_product::where('sales_order_id','=',$id)->get();
+        $partner = res_customer::findOrFail($orders->customer);
+        $address = "$partner->street,$partner->zip,$partner->city";
+        $due_date = $this->payment_date($partner->payment_terms);
         $inv = Invoice::insertGetId([   
             'invoice_no'=>$invoice_no,
             'invoice_date'=>date('Y-m-d H:i:s'),

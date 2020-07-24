@@ -13,6 +13,7 @@ use App\Models\Sales\delivere_product;
 use App\Models\Sales\return_invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Encrypt;
 
 class DelivereProductController extends Controller
 {
@@ -67,7 +68,7 @@ class DelivereProductController extends Controller
             $invoice->update([
                 'deliver'=> True,
             ]);
-            return redirect(route('Delivere.show',$invoice->invoice_no));
+            return redirect(route('Delivere.show',Encrypt::Encryption($invoice->invoice_no)));
         } catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
@@ -83,6 +84,7 @@ class DelivereProductController extends Controller
      */
     public function show($id)
     {
+        $id=Encrypt::Decryption($id);
         $access=access_right::where('user_id',Auth::id())->first();
         $group=user::find(Auth::id());
         $delivery = delivere_product::with('inv')->where('invoice_no',$id)->first();

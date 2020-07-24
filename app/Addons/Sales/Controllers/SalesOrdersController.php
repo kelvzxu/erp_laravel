@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Sales\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Models\Customer\customer_dept;
-use App\Models\Sales\sales_order;
-use App\Models\Sales\sales_order_product;
+use App\Addons\Sales\Models\sales_order;
+use App\Addons\Sales\Models\sales_order_product;
 use App\Models\Product\Product;
 use App\Models\Customer\res_customer;
 use Brian2694\Toastr\Facades\Toastr;
@@ -17,6 +17,18 @@ use PDF;
 
 class SalesOrdersController extends Controller
 {
+    function calculate_code()
+    {
+        $year=date("Y");
+        $prefixcode = "SO/$year/"; 
+        $count = sales_order::where('order_no','like',"%".$prefixcode."%")->count();
+        if ($count==0){
+            return "$prefixcode"."000001";
+        }else {
+            return $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
+        }
+    }
+    
     public function index()
     {
         $orders = sales_order::with('partner','sales_person')
@@ -44,14 +56,7 @@ class SalesOrdersController extends Controller
             'products.*.qty' => 'required|integer|min:1'
         ]);
  
-        $year=date("Y");
-        $prefixcode = "SO/$year/"; 
-        $count = sales_order::where('order_no','like',"%".$prefixcode."%")->count();
-        if ($count==0){
-            $Order_no= "$prefixcode"."000001";
-        }else {
-            $Order_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
-        }
+        $Order_no = $this->calculate_code();
 
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];
