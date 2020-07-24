@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         UxWeb\SweetAlert\SweetAlertServiceProvider::class,
+        App\Providers\UserAccessProvider::class,
+        App\Providers\UserGroupProvider::class,
 
         /*
          * Package Service Providers...
@@ -228,6 +230,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'AccessRight' => App\Helpers\Access::class,
+        'UserGroup' => App\Helpers\Group::class,
     ],
 
 ];

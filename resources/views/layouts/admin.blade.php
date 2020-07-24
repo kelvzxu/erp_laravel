@@ -115,7 +115,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if($access->administration == True ) 
+                                @if (AccessRight::access()->administration == True ) 
                                 <a href="{{ route ('internaluser.index')}}" class="dropdown-item mt-1">
                                     <i class="dropdown-icon fa fa-user">
                                     </i>Internal User
