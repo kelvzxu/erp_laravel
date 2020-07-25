@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class AccountingProvider extends ServiceProvider
+class AddonsProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -13,7 +13,7 @@ class AccountingProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once app_path() . '/Helpers/Accounting.php';
+        require_once app_path() . '/Helpers/Addons.php';
     }
 
     /**

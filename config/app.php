@@ -166,7 +166,7 @@ return [
         /*
          * Enterprise System Providers
          */
-        App\Providers\AccountingProvider::class,
+        App\Providers\AddonsProvider::class,
         App\Providers\HumanResourceProvider::class,
         App\Providers\LanguageProvider::class,
         App\Providers\ResCountryProvider::class,
@@ -256,7 +256,7 @@ return [
         /*
          * Enterprise System Aliases
          */
-        'Accounting'=> App\Helpers\Accounting::class,
+        'Addons'=> App\Helpers\Addons::class,
         'AccessRight' => App\Helpers\Access::class,
         'HumanResource' => App\Helpers\HumanResource::class,
         'Language' => App\Helpers\Language::class,
@@ -276,7 +276,7 @@ return [
          */
         'Sale' => App\Addons\Sales\Helpers\Sales::class,
         'Purchase'=>App\Addons\Purchase\Helpers\Purchase::class,
-        'Partner' =>App\Addons\Contact\Helpers\Contact::class,
+        'Partner' =>App\Addons\Contact\Helpers\Partner::class,
         'Accounting' =>App\Addons\Accounting\Helpers\Accounting::class,
     ],
 

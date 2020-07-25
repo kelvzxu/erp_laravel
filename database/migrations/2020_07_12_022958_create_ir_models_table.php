@@ -16,7 +16,7 @@ class CreateIrModelsTable extends Migration
         Schema::create('ir_models', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('technical_name')->nullable();
+            $table->string('technical_name',200)->nullable()->unique();
             $table->string('model',200)->nullable()->unique();
             $table->string('info')->nullable();
             $table->string('state')->nullable();

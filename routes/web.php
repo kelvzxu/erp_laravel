@@ -58,15 +58,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/attendance', 'HrAttendanceController@index')->name('attendance');
     Route::get('/attendance/filter', 'HrAttendanceController@search')->name('attendance.filter');
     
-    // ==== Customer ====
-    Route::get('customer','ResCustomersController@index')->name('customer');
-    Route::get('customer/new','ResCustomersController@create')->name('customer.new');
-    Route::post('customer/store','ResCustomersController@store')->name('customer.store');
-    Route::get('customer/show/{res_customer}','ResCustomersController@show')->name('customer.show');
-    Route::post('customer/update','ResCustomersController@update')->name('customer.update');
-    Route::get('customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
-    Route::get('customer/filter','ResCustomersController@search')->name('customer.filter');
-    
     // ==== Customer Payment ====
     Route::get('CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
     Route::get('CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
@@ -144,15 +135,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('payslip/filter','ManageSalaryController@search')->name('payslip.filter');
     Route::get('payslip/create','ManageSalaryController@create')->name('payslip.create');
     Route::post('payslip/store','ManageSalaryController@store')->name('payslip.store');
-    
-    // ==== Purchase =====
-    Route::get('partner', 'ResPartnersController@index')->name('partner');
-    Route::get('partner/new', 'ResPartnersController@create')->name('partner.new');
-    Route::post('partner/store','ResPartnersController@store')->name('partner.store');
-    Route::get('partner/show/{res_partner}','ResPartnersController@show')->name('partner.show');
-    Route::post('partner/update','ResPartnersController@update')->name('partner.update');
-    Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
-    Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
    
     // ==== Internal User ====
     Route::get('User/InternalUser','AccessRightsController@internalUser')->name('internaluser.index');
@@ -209,18 +191,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Payments/View/{id}', 'AccountPaymentsController@view')->name('payment.view');
     Route::get('Payments/edit/{id}', 'AccountPaymentsController@edit')->name('payment.edit');
     Route::get('Payments/Confirm/{id}', 'AccountPaymentsController@posted')->name('payment.posted');
-
-    // ==== Purchase Order ====
-    Route::get('purchases', 'PurchasesOrdersController@index')->name('purchase_orders');
-    Route::get('purchases/create', 'PurchasesOrdersController@create')->name('purchase_orders.create');
-    Route::post('purchases', 'PurchasesOrdersController@store')->name('purchase_orders.store');
-    Route::get('purchases/show/{id}', 'PurchasesOrdersController@show')->name('purchase_orders.show');
-    Route::get('purchases/edit/{id}', 'PurchasesOrdersController@edit')->name('purchase_orders.edit');
-    Route::get('purchases/confirm/{id}', 'PurchasesOrdersController@confirm')->name('purchase_orders.confirm');
-    Route::put('purchases/update/{id}', 'PurchasesOrdersController@update')->name('purchase_orders.update');
-    Route::get('purchases/Report', 'PurchasesOrdersController@report')->name('purchase_orders.report');
-    Route::get('purchases/print/{id}', 'PurchasesOrdersController@print')->name('purchase_orders.print_pdf');
-    Route::get('purchases/Report/Print', 'PurchasesOrdersController@print_report')->name('purchase_orders.print');
 
     // ==== Receipt ====
     Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');
@@ -300,6 +270,41 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('Sales/Report', 'SalesOrdersController@report')->name('sales_orders.report');
         Route::get('Sales/print/{id}', 'SalesOrdersController@print')->name('sales_orders.print_pdf');
         Route::get('Sales/Report/print', 'SalesOrdersController@print_report')->name('sales_orders.print');
+    });
+
+    Route::group(['namespace' => '\App\Addons\Purchase\Controllers'], function()
+    {
+        Route::get('purchases', 'PurchasesOrdersController@index')->name('purchase_orders');
+        Route::get('purchases/create', 'PurchasesOrdersController@create')->name('purchase_orders.create');
+        Route::post('purchases', 'PurchasesOrdersController@store')->name('purchase_orders.store');
+        Route::get('purchases/show/{id}', 'PurchasesOrdersController@show')->name('purchase_orders.show');
+        Route::get('purchases/edit/{id}', 'PurchasesOrdersController@edit')->name('purchase_orders.edit');
+        Route::get('purchases/confirm/{id}', 'PurchasesOrdersController@confirm')->name('purchase_orders.confirm');
+        Route::put('purchases/update/{id}', 'PurchasesOrdersController@update')->name('purchase_orders.update');
+        Route::get('purchases/Report', 'PurchasesOrdersController@report')->name('purchase_orders.report');
+        Route::get('purchases/print/{id}', 'PurchasesOrdersController@print')->name('purchase_orders.print_pdf');
+        Route::get('purchases/Report/Print', 'PurchasesOrdersController@print_report')->name('purchase_orders.print');
+    });
+
+    Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
+    {
+        // ==== Customer ====
+        Route::get('customer','ResCustomersController@index')->name('customer');
+        Route::get('customer/new','ResCustomersController@create')->name('customer.new');
+        Route::post('customer/store','ResCustomersController@store')->name('customer.store');
+        Route::get('customer/show/{res_customer}','ResCustomersController@show')->name('customer.show');
+        Route::post('customer/update','ResCustomersController@update')->name('customer.update');
+        Route::get('customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
+        Route::get('customer/filter','ResCustomersController@search')->name('customer.filter');
+
+        // ==== Vendor =====
+        Route::get('partner', 'ResPartnersController@index')->name('partner');
+        Route::get('partner/new', 'ResPartnersController@create')->name('partner.new');
+        Route::post('partner/store','ResPartnersController@store')->name('partner.store');
+        Route::get('partner/show/{res_partner}','ResPartnersController@show')->name('partner.show');
+        Route::post('partner/update','ResPartnersController@update')->name('partner.update');
+        Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
+        Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
     });
     // ==== Sales Order ====
 });  

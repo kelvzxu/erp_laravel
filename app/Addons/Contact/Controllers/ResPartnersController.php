@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Contact\Controllers;
 
 use App\Models\Merchandises\Purchase;
 use App\Addons\Contact\Models\res_partner;
@@ -8,6 +8,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\controller as Controller;
 
 class ResPartnersController extends Controller
 {

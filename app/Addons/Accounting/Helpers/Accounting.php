@@ -2,10 +2,12 @@
 namespace App\Addons\Accounting\Helpers;
 
 use Artisan;
+use App\Models\Accounting\account_account;
+use App\Models\Accounting\account_journal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class Partner {
+class Accounting {
     public static function installed(){
         try{
             Artisan::call('migrate', array('--path' => 'app/Addons/Accounting/Migrations', '--force' => true));
@@ -22,5 +24,15 @@ class Partner {
         catch (\Exception $e){
             return false;
         }
+    }
+
+    public static function account_account() {
+        $account = account_account::orderBy('code','asc')->get();
+        return $account;
+    }
+
+    public static function account_journal() {
+        $journal = account_journal::orderBy('code','asc')->get();
+        return $journal;
     }
 }

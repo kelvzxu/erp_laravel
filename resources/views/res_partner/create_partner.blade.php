@@ -266,8 +266,10 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
                                     class="nav-link active" role="tab" aria-selected="true">Sales &amp; Purchase</a></li>
+                            @if (Addons::cek_install_modules("Accounting") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_591"
                                     class="nav-link" role="tab">Accounting</a></li>
+                            @endif
                             <li class="nav-item o_invisible_modifier"><a data-toggle="tab" disable_anchor="true"
                                     href="#notebook_page_595" class="nav-link" role="tab">Invoicing</a></li>
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_596"
@@ -321,64 +323,66 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="tab-pane" id="notebook_page_591">
-                                <div class="o_group">
-                                    <table class="o_group o_inner_group o_group_col_6">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2" style="width: 100%;">
-                                                    <div class="o_horizontal_separator">Accounting Entries</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input-required">
-                                                        <select id="journal" required name="journal" class="input200" style="border:none;">
-                                                            <option value=""></option>
-                                                            @foreach (Accounting::account_journal() as $row)
-                                                                <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input-required">
-                                                        <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
-                                                            <option value=""></option>
-                                                            @foreach (Accounting::account_account() as $row)
-                                                                <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" style="width: 100%;">
-                                                    <div class="o_horizontal_separator">Bank Accounts</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="bank_account" class="col-form-label"><b>Bank Account</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input200">
-                                                        <input class="input200" name="bank_account" value="{{ old('bank_account') }}" type="text" id="bank_account" >
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            @if (Addons::cek_install_modules("Accounting") == True)
+                                <div class="tab-pane" id="notebook_page_591">
+                                    <div class="o_group">
+                                        <table class="o_group o_inner_group o_group_col_6">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Accounting Entries</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input-required">
+                                                            <select id="journal" required name="journal" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach (Accounting::account_journal() as $row)
+                                                                    <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input-required">
+                                                            <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach (Accounting::account_account() as $row)
+                                                                    <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Bank Accounts</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="bank_account" class="col-form-label"><b>Bank Account</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="bank_account" value="{{ old('bank_account') }}" type="text" id="bank_account" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="tab-pane" id="notebook_page_596">
                                 <div class="wrap-input200">
                                     <textarea class="input200"

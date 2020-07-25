@@ -343,8 +343,10 @@
                         <ul class="nav nav-tabs">
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
                                     class="nav-link active" role="tab" aria-selected="true">Sales &amp; Purchase</a></li>
+                            @if (Addons::cek_install_modules("Accounting") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_591"
                                     class="nav-link" role="tab">Accounting</a></li>
+                            @endif
                             <li class="nav-item o_invisible_modifier"><a data-toggle="tab" disable_anchor="true"
                                     href="#notebook_page_595" class="nav-link" role="tab">Invoicing</a></li>
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_596"
@@ -399,6 +401,7 @@
                                     </table>
                                 </div>
                             </div>
+                            @if (Addons::cek_install_modules("Accounting") == True)
                             <div class="tab-pane" id="notebook_page_591">
                                 <div class="o_group">
                                     <table class="o_group o_inner_group o_group_col_6">
@@ -457,6 +460,7 @@
                                     </table>
                                 </div>
                             </div>
+                            @endif
                             <div class="tab-pane" id="notebook_page_596">
                                 <div class="wrap-input200">
                                     <textarea class="input200"

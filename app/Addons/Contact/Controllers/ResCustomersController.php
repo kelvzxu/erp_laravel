@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Contact\Controllers;
 
 use App\Addons\Contact\Models\res_customer;
 use App\Models\Sales\Invoice;
@@ -8,6 +8,8 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests;
+use App\Http\Controllers\controller as Controller;
 
 class ResCustomersController extends Controller
 {
@@ -19,7 +21,7 @@ class ResCustomersController extends Controller
                     ->whereNull('res_customers.deleted_at')
                     ->orderBy('name', 'ASC')
                     ->paginate(30);
-        return view('res_customer.index',compact('customer'));
+        return view('customer.index',compact('customer'));
     }
 
     public function search(Request $request)
@@ -43,12 +45,12 @@ class ResCustomersController extends Controller
                     ->orderBy('name', 'ASC')
                     ->paginate(30);
         }
-        return view('res_customer.index',compact('customer'));
+        return view('customer.index',compact('customer'));
     }
     
     public function create()
     {
-        return view('res_customer.create_customer');
+        return view('customer.create');
     }
 
     public function store(Request $request)
@@ -94,10 +96,9 @@ class ResCustomersController extends Controller
                 'sales'=> $request->sales,
                 'payment_terms'=>$request->payment_terms,
                 'note'=>$request->note,
-                'receivable_account'=>$request->receivable_account,
-                'journal'=> $request->journal,
                 'logo'=> $nama_file,
             ]);
+
             Toastr::success('Customers ' .$request->name. ' created successfully','Success');
             return redirect(route('customer'));
         } catch (\Exception $e) {
@@ -116,7 +117,7 @@ class ResCustomersController extends Controller
     public function show(res_customer $res_customer)
     {
         $invoice=Invoice::where('client',$res_customer->id)->count();
-        return view('res_customer.edit_customer',
+        return view('customer.edit_customer',
             compact('res_customer','invoice'));
     }
 
@@ -129,7 +130,7 @@ class ResCustomersController extends Controller
     public function edit($id)
     {
         $customer = res_customer::findOrFail($id);
-        return view('res_customer.edit_customer', compact('customer'));
+        return view('customer.edit_customer', compact('customer'));
     }
 
     /**
