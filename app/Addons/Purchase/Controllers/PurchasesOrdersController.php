@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Purchase\Controllers;
 
 use App\Models\Product\Product;
 use App\Models\Partner\res_partner;

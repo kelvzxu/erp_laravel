@@ -8,7 +8,6 @@ use App\Models\Customer\customer_dept;
 use App\Models\Customer\res_customer;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\InvoiceProduct;
-use App\Addons\Sales\Models\sales_order;
 use App\Addons\Sales\Models\sales_order_product;
 use App\Models\Product\Product;
 use Brian2694\Toastr\Facades\Toastr;
@@ -311,9 +310,10 @@ class InvoiceController extends Controller
 
     public function wizard_create($id)
     {
+        Sales::installed();
         $invoice_no = $this->calculate_code();
-        $orders = Sales::get_sales($id);
-        $orders_line = sales_order_product::where('sales_order_id','=',$id)->get();
+        $orders = Sales::getSales($id);
+        $orders_line = Sales::getSalesLine($id);
         $partner = res_customer::findOrFail($orders->customer);
         $address = "$partner->street,$partner->zip,$partner->city";
         $due_date = $this->payment_date($partner->payment_terms);

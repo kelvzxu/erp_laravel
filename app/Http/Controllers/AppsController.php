@@ -29,18 +29,19 @@ class AppsController extends Controller
      */
     public function install($id)
     {
-        // try{
+        try{
             $data = ir_model::where('model',$id)->first();
+            $data->technical_name::installed();
             $data->update([
                 'instalation'=> True,
             ]);
             Toastr::success('Module '.$data->name.' successfully installed','Success');
             return redirect()->back();
-        // } catch (\Exception $e) {
-        //     Toastr::error($e->getMessage(),'Something Wrong');
-        //     // Toastr::error('Check In Error!','Something Wrong');
-        //     return redirect()->back();
-        // }
+        } catch (\Exception $e) {
+            Toastr::error($e->getMessage(),'Something Wrong');
+            // Toastr::error('Check In Error!','Something Wrong');
+            return redirect()->back();
+        }
     }
 
     /**

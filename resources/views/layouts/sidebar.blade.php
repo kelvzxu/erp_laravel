@@ -138,6 +138,12 @@
                         </a>
                     </li>
                     <li>
+                        <a href="" class="development">
+                            <i class="metismenu-icon fa fa-pencil-square-o">
+                            </i>Inventory Adjustments
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('receipt.index')}}" id="receipt">
                             <i class="metismenu-icon fa fa-truck fa-flip-horizontal">
                             </i>Receipt Product

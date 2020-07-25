@@ -13,6 +13,7 @@ class AppsSeeder extends Seeder
     {
         DB::table('ir_models')->insert([
             'name' => 'Sales Order',
+            'technical_name'=> 'Sales',
             'model' => 'sales',
             'info' => 'From quotations to invoices',
             'state' => 'base',
@@ -23,6 +24,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Purchase',
+            'technical_name'=> 'Purchase',
             'model' => 'purchase',
             'info' => 'Purchase orders, tenders and agreements',
             'state' => 'base',
@@ -33,6 +35,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Inventory',
+            'technical_name' => 'Inventory',
             'model' => 'inventory',
             'info' => 'Manage your stock and logistics activities',
             'state' => 'base',
@@ -43,6 +46,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Accounting',
+            'technical_name' => 'Accounting',
             'model' => 'accounting',
             'info' => 'Purchase orders, tenders and agreements',
             'state' => 'base',
@@ -53,6 +57,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Employee',
+            'technical_name' => 'hr',
             'model' => 'human_resources',
             'info' => 'Centralize employee information',
             'state' => 'base',
@@ -63,6 +68,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Point Of Sale',
+            'technical_name' => 'pos',
             'model' => 'point_of_sale',
             'info' => 'User-friendly PoS interface for shops and restaurants',
             'state' => 'base',
@@ -73,6 +79,7 @@ class AppsSeeder extends Seeder
         ]);
         DB::table('ir_models')->insert([
             'name' => 'Manufacture',
+            'technical_name' => 'mrp',
             'model' => 'manufacture',
             'info' => 'Manufacturing Orders & BOMs',
             'state' => 'base',

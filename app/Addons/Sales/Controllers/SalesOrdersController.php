@@ -3,6 +3,7 @@
 namespace App\Addons\Sales\Controllers;
 
 use App\Http\Requests;
+use App\Http\Controllers\controller as Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer\customer_dept;
 use App\Addons\Sales\Models\sales_order;

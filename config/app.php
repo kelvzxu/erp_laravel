@@ -247,6 +247,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Alert' => UxWeb\SweetAlert\SweetAlert::class,
+        'Toast' => Brian2694\Toastr\Facades\Toastr::class,
 
         /*
          * Enterprise System Aliases
