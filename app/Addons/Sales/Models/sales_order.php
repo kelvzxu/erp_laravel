@@ -19,7 +19,7 @@ class sales_order extends Model
     }
     public function partner()
     {
-        return $this->hasOne('App\Models\Customer\res_customer','id','customer');
+        return $this->hasOne('App\Addons\Contact\Models\res_customer','id','customer');
     }
     public function sales_person()
     {

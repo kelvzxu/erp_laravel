@@ -1,5 +1,5 @@
 <?php
-namespace App\Helpers;
+namespace App\Functions;
 
 class Encrypt {
     public static function get_rnd_iv($iv_len){

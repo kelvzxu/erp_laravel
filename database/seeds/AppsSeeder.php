@@ -13,7 +13,7 @@ class AppsSeeder extends Seeder
     {
         DB::table('ir_models')->insert([
             'name' => 'Sales Order',
-            'technical_name'=> 'Sales',
+            'technical_name'=> 'Sale',
             'model' => 'sales',
             'info' => 'From quotations to invoices',
             'state' => 'base',

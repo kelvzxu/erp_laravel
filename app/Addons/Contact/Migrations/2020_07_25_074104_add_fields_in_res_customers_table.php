@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldsJournalInResPartnersTable extends Migration
+class AddFieldsInResCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddFieldsJournalInResPartnersTable extends Migration
      */
     public function up()
     {
-        Schema::table('res_partners', function (Blueprint $table) {
-            $table->integer('journal')->nullable()->index();
+        Schema::table('res_customers', function (Blueprint $table) {
+            //
         });
     }
 
@@ -25,7 +25,7 @@ class AddFieldsJournalInResPartnersTable extends Migration
      */
     public function down()
     {
-        Schema::table('res_partners', function (Blueprint $table) {
+        Schema::table('res_customers', function (Blueprint $table) {
             //
         });
     }

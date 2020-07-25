@@ -9,12 +9,12 @@ use App\Models\Customer\customer_dept;
 use App\Addons\Sales\Models\sales_order;
 use App\Addons\Sales\Models\sales_order_product;
 use App\Models\Product\Product;
-use App\Models\Customer\res_customer;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use App\access_right;
 use App\User;
 use PDF;
+use Partner;
 
 class SalesOrdersController extends Controller
 {
@@ -41,7 +41,7 @@ class SalesOrdersController extends Controller
 
     public function create()
     {
-        $partner = res_customer::orderBy('name', 'asc')->get();
+        $partner = Partner::customer();
         $product = Product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
         return view('sales.create', compact('product','partner'));
     }

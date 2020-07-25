@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers;
+namespace App\Addons\Purchase\Illuminate;
 
 use Illuminate\Support\ServiceProvider;
 
-class EncryptServiceProvider extends ServiceProvider
+class PurchaseServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
@@ -13,7 +13,7 @@ class EncryptServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        require_once app_path() . '/Functions/Encrypt.php';
+        require_once app_path() . '/Addons/Purchase/Helpers/Purchase.php';
     }
 
     /**

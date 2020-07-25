@@ -184,7 +184,11 @@ return [
         /*
          * Enterprise System Providers Addons
          */
+        App\Addons\Accounting\Illuminate\AccountingServiceProvider::class,
+        App\Addons\Contact\Illuminate\PartnerServiceProvider::class,
+        App\Addons\Purchase\Illuminate\PurchaseServiceProvider::class,
         App\Addons\Sales\Illuminate\SalesServiceProvider::class,
+
 
         /*
          * Application Service Providers...
@@ -265,12 +269,15 @@ return [
         /*
          * Function Enterprise System Aliases
          */
-        'Encrypt' => App\Helpers\Encrypt::class,
+        'Encrypt' => App\Functions\Encrypt::class,
 
         /*
          * Addons Enterprise System Aliases
          */
-        'Sales' => App\Addons\Sales\Helpers\Sales::class,
+        'Sale' => App\Addons\Sales\Helpers\Sales::class,
+        'Purchase'=>App\Addons\Purchase\Helpers\Purchase::class,
+        'Partner' =>App\Addons\Contact\Helpers\Contact::class,
+        'Accounting' =>App\Addons\Accounting\Helpers\Accounting::class,
     ],
 
 ];

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\access_right;
 use App\User;
 use PDF;
-use Sales;
+use Sale;
 
 class InvoiceController extends Controller
 {
@@ -310,10 +310,9 @@ class InvoiceController extends Controller
 
     public function wizard_create($id)
     {
-        Sales::installed();
         $invoice_no = $this->calculate_code();
-        $orders = Sales::getSales($id);
-        $orders_line = Sales::getSalesLine($id);
+        $orders = Sale::getSales($id);
+        $orders_line = Sale::getSalesLine($id);
         $partner = res_customer::findOrFail($orders->customer);
         $address = "$partner->street,$partner->zip,$partner->city";
         $due_date = $this->payment_date($partner->payment_terms);

@@ -2,10 +2,10 @@
 
 namespace App\Addons\Purchase\Controllers;
 
+use App\Http\Controllers\controller as Controller;
 use App\Models\Product\Product;
-use App\Models\Partner\res_partner;
-use App\Models\Merchandises\purchases_order;
-use App\Models\Merchandises\purchases_order_products;
+use App\Addons\Purchase\Models\purchases_order;
+use App\Addons\Purchase\Models\purchases_order_products;
 use App\Models\Merchandises\Purchase;
 use App\Models\Merchandises\receipt_product;
 use App\Models\Merchandises\PurchaseProduct;
@@ -16,27 +16,35 @@ use App\Http\Requests;
 use App\access_right;
 use App\User;
 use PDF;
+use Partner;
 
 class PurchasesOrdersController extends Controller
 {
-    public function index()
-    {
+    public function calculate_code(){
+        $year=date("Y");
+        $prefixcode = "PO/$year/";
+        $count = purchases_order::where('order_no','like',"%".$prefixcode."%")->count();
+        if ($count==0){
+            return "$prefixcode"."000001";
+        }else {
+            return $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
+        } 
+    }
+
+    public function index(){
         $orders = purchases_order::with('partner','sales')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
-                    // dd($orders);
         return view('purchases.index', compact('orders'));
     }
 
-    public function create()
-    {
-        $partner = res_partner::orderBy('partner_name', 'asc')->get();
+    public function create(){
+        $partner = Partner::vendor();
         $product = Product::orderBy('name', 'asc')->where('can_be_purchase','1')->get();
         return view('purchases.create', compact('product','partner'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $this->validate($request, [
             'vendor' => 'required|max:255',
             'order_date' => 'required|date_format:Y-m-d',
@@ -46,14 +54,8 @@ class PurchasesOrdersController extends Controller
             'products.*.qty' => 'required|integer|min:1'
         ]);
  
-        $year=date("Y");
-        $prefixcode = "PO/$year/";
-        $count = purchases_order::where('order_no','like',"%".$prefixcode."%")->count();
-        if ($count==0){
-            $Order_no= "$prefixcode"."000001";
-        }else {
-            $Order_no = $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
-        } 
+        
+        $Order_no = $this->calculate_code();
 
         $products = collect($request->products)->transform(function($product) {
             $product['total'] = $product['qty'] * $product['price'];

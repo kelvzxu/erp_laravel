@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldsInResPartners extends Migration
+class AddFieldsInResPartnersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,8 @@ class AddFieldsInResPartners extends Migration
     public function up()
     {
         Schema::table('res_partners', function (Blueprint $table) {
-            $table->integer('mcd')->nullable()->index();
-            $table->integer('payment_terms')->nullable();
             $table->integer('receivable_account')->nullable()->index();
-            $table->string('note')->nullable();
+            $table->integer('journal')->nullable()->index();
         });
     }
 
@@ -29,7 +27,7 @@ class AddFieldsInResPartners extends Migration
     public function down()
     {
         Schema::table('res_partners', function (Blueprint $table) {
-            //
+            $table->dropColumn(['receivable_account','journal']);
         });
     }
 }
