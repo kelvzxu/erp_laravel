@@ -316,9 +316,13 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script src="{{asset('js/admin.js')}}"></script>
+
     <!-- toastr message -->
+    {{--toastr message--}}
+    {{--<script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>--}}
     <script src="https://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    {!! Toastr::message() !!}
 
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.28.8/dist/sweetalert2.all.min.js"></script>
