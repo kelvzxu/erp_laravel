@@ -11,7 +11,7 @@
 
 ERP Kltech is a suite of web based open source business apps.
 
-The main Odoo Apps include an:
+The main Apps include an:
 - Open Source eCommerce.
 - Warehouse Management. 
 - Billing & Accounting.
