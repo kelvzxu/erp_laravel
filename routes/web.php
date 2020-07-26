@@ -239,14 +239,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::put('product/update', 'ProductController@update')->name('product.update');
     Route::get('product/Report/productlist', 'ProductController@product_report')->name('report.productlist');
     Route::get('product/Report/Stock', 'ProductController@stock_report')->name('report.productstock');
-
-    // ==== Product Categories ==== 
-    Route::get('/product-categories', 'CategoryController@index')->name('product-categories');
-    Route::post('/product-categories/destroy', 'CategoryController@destroy')->name('product-categories.destroy');
-    Route::post('/product-categories/store', 'CategoryController@store')->name('product-categories.store');
-    Route::get('/product-categories/edit', 'CategoryController@edit')->name('product-categories.edit');
-    Route::get('/product-categories/edit{id}', 'CategoryController@edit')->name('product-categories.edit');
-    Route::put('/product-categories/update', 'CategoryController@update')->name('product-categories.update');
     
     // ==== Point Of Sale ====
     Route::get('PointOfSale', 'OrderController@index')->name('pos');
@@ -257,6 +249,7 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/checkout', 'OrderController@checkout')->name('order.checkout');
     Route::post('/checkout', 'OrderController@storeOrder')->name('order.storeOrder');
 
+    // ==== Sales ====
     Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
     {
         Route::get('Sales', 'SalesOrdersController@index')->name('sales_orders');
@@ -272,6 +265,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('Sales/Report/print', 'SalesOrdersController@print_report')->name('sales_orders.print');
     });
 
+    // ==== Purchase ====
     Route::group(['namespace' => '\App\Addons\Purchase\Controllers'], function()
     {
         Route::get('purchases', 'PurchasesOrdersController@index')->name('purchase_orders');
@@ -286,6 +280,7 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('purchases/Report/Print', 'PurchasesOrdersController@print_report')->name('purchase_orders.print');
     });
 
+    // ==== Contact ====
     Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
     {
         // ==== Customer ====
@@ -306,7 +301,18 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
         Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
     });
-    // ==== Sales Order ====
+
+    // ==== Inventory ==== 
+    Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
+    {
+        // ==== Product Category ====
+        Route::get('product-categories', 'CategoryController@index')->name('product-categories');
+        Route::post('product-categories/destroy', 'CategoryController@destroy')->name('product-categories.destroy');
+        Route::post('product-categories/store', 'CategoryController@store')->name('product-categories.store');
+        Route::get('product-categories/edit', 'CategoryController@edit')->name('product-categories.edit');
+        Route::get('product-categories/edit{id}', 'CategoryController@edit')->name('product-categories.edit');
+        Route::put('product-categories/update', 'CategoryController@update')->name('product-categories.update');
+    });
 });  
 Auth::routes(['verify' => true]);
 

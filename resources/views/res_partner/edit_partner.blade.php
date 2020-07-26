@@ -341,8 +341,10 @@
                     </div>
                     <div class="o_notebook">
                         <ul class="nav nav-tabs">
+                            @if (Addons::cek_install_modules("Purchase") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
                                     class="nav-link active" role="tab" aria-selected="true">Sales &amp; Purchase</a></li>
+                            @endif
                             @if (Addons::cek_install_modules("Accounting") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_591"
                                     class="nav-link" role="tab">Accounting</a></li>
@@ -353,113 +355,115 @@
                                     class="nav-link" role="tab">Internal Notes</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="notebook_page_581">
-                                <div class="o_group">
-                                    <table class="o_group o_inner_group o_group_col_6">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2" style="width: 100%;">
-                                                    <div class="o_horizontal_separator">Merchandises</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="sales" class="col-form-label"><b>Merchandise Person</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input-required">
-                                                        <select id="mcd" name="mcd" class="input200" required style="border:none;">
-                                                            <option value=""></option>
-                                                            @foreach (HumanResource::employee() as $row)
-                                                                <option value="{{ $row->id }}"{{ $row->id == $res_partner -> mcd ? 'selected':'' }}>{{ ucfirst($row->employee_name) }} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="payment" class="col-form-label"><b>Payment Terms</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input200">
-                                                        <select id="payment_terms" name="payment_terms" class="input200" style="border:none;">
-                                                            <option value=""></option>
-                                                            <option value="1" @if($res_partner->payment_terms == "1" ) selected="selected" @endif>Immediate Payment</option>
-                                                            <option value="2" @if($res_partner->payment_terms == "2" ) selected="selected" @endif>15 Days</option>
-                                                            <option value="3" @if($res_partner->payment_terms == "3" ) selected="selected" @endif>21 Days</option>
-                                                            <option value="4" @if($res_partner->payment_terms == "4" ) selected="selected" @endif>30 Days</option>
-                                                            <option value="5" @if($res_partner->payment_terms == "5" ) selected="selected" @endif>45 Days</option>
-                                                            <option value="6" @if($res_partner->payment_terms == "6" ) selected="selected" @endif>2 Months</option>
-                                                            <option value="7" @if($res_partner->payment_terms == "7" ) selected="selected" @endif>End of Following Month</option>
-                                                            <option value="8" @if($res_partner->payment_terms == "8" ) selected="selected" @endif>30% Now, Balance 60 Days</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            @if (Addons::cek_install_modules("Purchase") == True)
+                                <div class="tab-pane active" id="notebook_page_581">
+                                    <div class="o_group">
+                                        <table class="o_group o_inner_group o_group_col_6">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Merchandises</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="sales" class="col-form-label"><b>Merchandise Person</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input-required">
+                                                            <select id="mcd" name="mcd" class="input200" required style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach (HumanResource::employee() as $row)
+                                                                    <option value="{{ $row->id }}"{{ $row->id == $res_partner -> mcd ? 'selected':'' }}>{{ ucfirst($row->employee_name) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="payment" class="col-form-label"><b>Payment Terms</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select id="payment_terms" name="payment_terms" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                <option value="1" @if($res_partner->payment_terms == "1" ) selected="selected" @endif>Immediate Payment</option>
+                                                                <option value="2" @if($res_partner->payment_terms == "2" ) selected="selected" @endif>15 Days</option>
+                                                                <option value="3" @if($res_partner->payment_terms == "3" ) selected="selected" @endif>21 Days</option>
+                                                                <option value="4" @if($res_partner->payment_terms == "4" ) selected="selected" @endif>30 Days</option>
+                                                                <option value="5" @if($res_partner->payment_terms == "5" ) selected="selected" @endif>45 Days</option>
+                                                                <option value="6" @if($res_partner->payment_terms == "6" ) selected="selected" @endif>2 Months</option>
+                                                                <option value="7" @if($res_partner->payment_terms == "7" ) selected="selected" @endif>End of Following Month</option>
+                                                                <option value="8" @if($res_partner->payment_terms == "8" ) selected="selected" @endif>30% Now, Balance 60 Days</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             @if (Addons::cek_install_modules("Accounting") == True)
-                            <div class="tab-pane" id="notebook_page_591">
-                                <div class="o_group">
-                                    <table class="o_group o_inner_group o_group_col_6">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2" style="width: 100%;">
-                                                    <div class="o_horizontal_separator">Accounting Entries</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input-required">
-                                                        <select id="journal" required name="journal" class="input200" style="border:none;">
-                                                            <option value=""></option>
-                                                            @foreach (Accounting::account_journal() as $row)
-                                                                <option value="{{ $row->id }}" {{ $row->id == $res_partner -> journal ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input-required">
-                                                        <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
-                                                            <option value=""></option>
-                                                            @foreach (Accounting::account_account() as $row)
-                                                                <option value="{{ $row->id }}"{{ $row->id == $res_partner -> receivable_account ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" style="width: 100%;">
-                                                    <div class="o_horizontal_separator">Bank Accounts</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="bank_account" class="col-form-label"><b>Bank Account</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input200">
-                                                        <input class="input200" name="bank_account" value="{{ $res_partner->bank_account }}" type="text" id="bank_account" >
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <div class="tab-pane" id="notebook_page_591">
+                                    <div class="o_group">
+                                        <table class="o_group o_inner_group o_group_col_6">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Accounting Entries</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="journal" class="col-form-label"><b>Invoice Journal </b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input-required">
+                                                            <select id="journal" required name="journal" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach (Accounting::account_journal() as $row)
+                                                                    <option value="{{ $row->id }}" {{ $row->id == $res_partner -> journal ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="receivable_account" class="col-form-label"><b>Account Payable</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input-required">
+                                                            <select id="receivable_account" required name="receivable_account" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach (Accounting::account_account() as $row)
+                                                                    <option value="{{ $row->id }}"{{ $row->id == $res_partner -> receivable_account ? 'selected':'' }}>{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Bank Accounts</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="bank_account" class="col-form-label"><b>Bank Account</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <input class="input200" name="bank_account" value="{{ $res_partner->bank_account }}" type="text" id="bank_account" >
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
                             @endif
                             <div class="tab-pane" id="notebook_page_596">
                                 <div class="wrap-input200">

@@ -1,42 +1,42 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Inventory\Controllers;
 
-use App\access_right;
-use App\User;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Models\Product\Product;
-use App\Models\Product\stock_move;
-use App\Models\Product\stock_valuation;
+use App\Addons\Inventory\Models\delivere_product;
+use App\Addons\Inventory\Models\stock_move;
+use App\Addons\Inventory\Models\stock_valuation;
 use App\Models\Sales\Invoice;
-use App\Models\Sales\delivere_product;
 use App\Models\Sales\return_invoice;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Encrypt;
+use Inventory;
 
 class DelivereProductController extends Controller
 {
+    public function calculate_code()
+    {
+        $year=date("Y");
+        $month=date("m");
+        $prefixcode = "WH/OUT/$year/$month/";
+        $count = delivere_product::where('delivery_no','like',"%".$prefixcode."%")->count();
+        if ($count==0){
+            return "$prefixcode"."000001";
+        }else {
+            return $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
+        }
+    }
+
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $delivery = delivere_product::orderBy('created_at','DESC')->paginate(25);
-        return view('delivery.index', compact('access','group','delivery'));
+        return view('delivery.index', compact('delivery'));
     }
 
     public function store($id)
     {
         try {
-            $year=date("Y");
-            $prefixcode = "WH-OUT-$year-";
-            $count = delivere_product::all()->count();
-            if ($count==0){
-                $delivery_no= "$prefixcode"."000001";
-            }else {
-                $latestInv = delivere_product::orderBy('id','DESC')->first();
-                $delivery_no = $prefixcode.str_pad($latestInv->id + 1, 6, "0", STR_PAD_LEFT);
-            }
+            $delivery_no = $this->calculate_code();
             $invoice = invoice::findOrFail($id);
             delivere_product::insert([
                 'delivery_no'=>$delivery_no,
@@ -49,7 +49,7 @@ class DelivereProductController extends Controller
             // insert  Stock Move
             $delivere_product = delivere_product::where('delivery_no',$delivery_no)->first();
             foreach ($delivere_product->inv->products as $data){
-                $product = Product::find($data->name);
+                $product = Inventory::getProduct($data->name);
                 stock_move::insert([
                     'product_id'=>$data->name,
                     'quantity'=>$data->qty,
@@ -85,11 +85,9 @@ class DelivereProductController extends Controller
     public function show($id)
     {
         $id=Encrypt::Decryption($id);
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $delivery = delivere_product::with('inv')->where('invoice_no',$id)->first();
+        $delivery = Inventory::getDeliveryByInvoice($id);
         $return_inv= return_invoice::where('invoice_no',$id)->count();
-        return view('delivery.show', compact('access','group','delivery','return_inv'));
+        return view('delivery.show', compact('delivery','return_inv'));
     }
 
     /**
@@ -148,11 +146,9 @@ class DelivereProductController extends Controller
 
     public function return($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $invoice = Invoice::where('invoice_no', $id)->with('products','customer', 'products.product')->first();
         $delivery = delivere_product::where('invoice_no', $id)->first();
         // dump($invoice);
-        return view('return-inv.return', compact('access','group','invoice','delivery'));
+        return view('return-inv.return', compact('invoice','delivery'));
     }
 }

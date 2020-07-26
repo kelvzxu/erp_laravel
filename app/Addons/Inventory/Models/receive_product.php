@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Merchandises;
+namespace App\Addons\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class receipt_product extends Model
+class receive_product extends Model
 {
     protected $fillable = [
         'validate'

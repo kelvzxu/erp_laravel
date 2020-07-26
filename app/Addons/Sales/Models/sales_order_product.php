@@ -16,6 +16,6 @@ class sales_order_product extends Model
     }
     public function product()
     {
-        return $this->hasOne('App\Models\Product\Product','id','name');
+        return $this->hasOne('App\Addons\Inventory\Models\product','id','name');
     }
 }

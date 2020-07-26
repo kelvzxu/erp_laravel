@@ -1,69 +1,51 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Inventory\Controllers;
 
-use App\access_right;
-use App\User;
 use App\Models\Merchandises\Purchase;
-use App\Models\Merchandises\receipt_product;
 use App\Models\Merchandises\return_purchase;
-use App\Models\Product\Product;
-use App\Models\Product\stock_move;
-use App\Models\Product\stock_valuation;
+use App\Addons\Inventory\Models\receive_product;
+use App\Addons\Inventory\Models\stock_move;
+use App\Addons\Inventory\Models\stock_valuation;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Encrypt;
+use Inventory;
 
-class ReceiptProductController extends Controller
+class ReceiveProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function calculate_code()
+    {
+        $year=date("Y");
+        $month=date("m");
+        $prefixcode = "WH/IN/$year/$month/";
+        $count = receive_product::where('delivery_no','like',"%".$prefixcode."%")->count();
+        if ($count==0){
+            return "$prefixcode"."000001";
+        }else {
+            return $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
+        }
+    }
+
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $receipt = receipt_product::orderBy('created_at','DESC')->paginate(25);
-        return view('receipt.index', compact('access','group','receipt'));
+        $receipt = receive_product::orderBy('created_at','DESC')->paginate(25);
+        return view('receipt.index', compact('receipt'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function return($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $purchase = purchase::where('purchase_no', $id)->with('products','vendor', 'products.product')->first();
-        $receipt = receipt_product::where('purchase_no', $id)->first();
-        // dump($purchase);
-        return view('return-po.return', compact('access','group','purchase','receipt'));
+        $receipt = receive_product::where('purchase_no', $id)->first();
+        return view('return-po.return', compact('purchase','receipt'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store($id)
     {
         try {
-            $year=date("Y");
-            $prefixcode = "WH-IN-$year-";
-            $count = receipt_product::all()->count();
-            if ($count==0){
-                $receipt_no= "$prefixcode"."000001";
-            }else {
-                $latestPo = receipt_product::orderBy('id','DESC')->first();
-                $receipt_no = $prefixcode.str_pad($latestPo->id + 1, 6, "0", STR_PAD_LEFT);
-            }
+            $receipt_no = $this->calculate_code(); 
             $purchase = purchase::findOrFail($id);
-            receipt_product::insert([
+            receive_product::insert([
                 'receipt_no'=>$receipt_no,
                 'purchase_no'=>$purchase->purchase_no, 
                 'receipt_date'=>date('Y-m-d H:i:s'),
@@ -72,7 +54,7 @@ class ReceiptProductController extends Controller
             ]);
 
             // insert  Stock Move
-            $receipt_product = receipt_product::where('receipt_no',$receipt_no)->first();
+            $receipt_product = receive_product::where('receipt_no',$receipt_no)->first();
             foreach ($receipt_product->po->products as $data){
                 $product = Product::find($data->name);
                 stock_move::insert([
@@ -93,7 +75,7 @@ class ReceiptProductController extends Controller
             $purchase->update([
                 'receipt'=> True,
             ]);
-            return redirect(route('receipt.show',$purchase->purchase_no));
+            return redirect(route('receipt.show',Encrypt::Encryption($purchase->purchase_no)));
         } catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
@@ -101,31 +83,18 @@ class ReceiptProductController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\receipt_product  $receipt_product
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $receipt = receipt_product::with('po')->where('purchase_no',$id)->first();
+        $id=Encrypt::Decryption($id);
+        $receipt = Inventory::getReceiveByBill($id);
         $return_po= return_purchase::where('purchase_no',$id)->count();
-        return view('receipt.show', compact('access','group','receipt','return_po'));
+        return view('receipt.show', compact('receipt','return_po'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\receipt_product  $receipt_product
-     * @return \Illuminate\Http\Response
-     */
     public function validation($id)
     {
         try {
-            $receipt_product = receipt_product::findOrFail($id);
+            $receipt_product = receive_product::findOrFail($id);
             $receipt_product->update([
                 'validate'=> True,
             ]);

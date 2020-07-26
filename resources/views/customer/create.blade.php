@@ -264,8 +264,10 @@
                     </div>
                     <div class="o_notebook">
                         <ul class="nav nav-tabs">
+                            @if (Addons::cek_install_modules("Sale") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
                                     class="nav-link active" role="tab" aria-selected="true">Sales &amp; Purchase</a></li>
+                            @endif
                             @if (Addons::cek_install_modules("Accounting") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_591"
                                     class="nav-link" role="tab">Accounting</a></li>
@@ -276,54 +278,56 @@
                                     class="nav-link" role="tab">Internal Notes</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="tab-pane active" id="notebook_page_581">
-                                <div class="o_group">
-                                    <table class="o_group o_inner_group o_group_col_6">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2" style="width: 100%;">
-                                                    <div class="o_horizontal_separator">Sales</div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="sales" class="col-form-label"><b>Sales Person</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input-required">
-                                                        <select id="sales" name="sales" class="input200" required style="border:none;">
-                                                            <option value=""></option>
-                                                            @foreach (HumanResource::employee() as $row)
-                                                                <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }} </option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="o_td_label">
-                                                    <label for="" name="payment" class="col-form-label"><b>Payment Terms</b></label>
-                                                </td>
-                                                <td style="width: 100%;">
-                                                    <div class="wrap-input200">
-                                                        <select id="payment_terms" name="payment_terms" class="input200" style="border:none;">
-                                                            <option value=""></option>
-                                                            <option value="1" style="">Immediate Payment</option>
-                                                            <option value="2" style="">15 Days</option>
-                                                            <option value="3" style="">21 Days</option>
-                                                            <option value="4" style="">30 Days</option>
-                                                            <option value="5" style="">45 Days</option>
-                                                            <option value="6" style="">2 Months</option>
-                                                            <option value="7" style="">End of Following Month</option>
-                                                            <option value="8" style="">30% Now, Balance 60 Days</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                            @if (Addons::cek_install_modules("Sale") == True)
+                                <div class="tab-pane active" id="notebook_page_581">
+                                    <div class="o_group">
+                                        <table class="o_group o_inner_group o_group_col_6">
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" style="width: 100%;">
+                                                        <div class="o_horizontal_separator">Sales</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="sales" class="col-form-label"><b>Sales Person</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input-required">
+                                                            <select id="sales" name="sales" class="input200" required style="border:none;">
+                                                                <option value=""></option>
+                                                                @foreach (HumanResource::employee() as $row)
+                                                                    <option value="{{ $row->id }}">{{ ucfirst($row->employee_name) }} </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label for="" name="payment" class="col-form-label"><b>Payment Terms</b></label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <div class="wrap-input200">
+                                                            <select id="payment_terms" name="payment_terms" class="input200" style="border:none;">
+                                                                <option value=""></option>
+                                                                <option value="1" style="">Immediate Payment</option>
+                                                                <option value="2" style="">15 Days</option>
+                                                                <option value="3" style="">21 Days</option>
+                                                                <option value="4" style="">30 Days</option>
+                                                                <option value="5" style="">45 Days</option>
+                                                                <option value="6" style="">2 Months</option>
+                                                                <option value="7" style="">End of Following Month</option>
+                                                                <option value="8" style="">30% Now, Balance 60 Days</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             @if (Addons::cek_install_modules("Accounting") == True)
                                 <div class="tab-pane" id="notebook_page_591">
                                     <div class="o_group">

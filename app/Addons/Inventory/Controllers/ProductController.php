@@ -1,57 +1,48 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Inventory\Controllers;
 
-use App\access_right;
-use App\User;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_journal;
-use App\Models\Currency\res_currency;
-use App\Models\Product\Category;
-use App\Models\Product\Product;
+use App\Http\Controllers\controller as Controller;
+use App\Addons\Inventory\Models\product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Image;
 use File;
 use PDF;
+use Accounting;
+use Inventory;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $products = Product::with('category')->orderBy('name', 'ASC')->paginate(30);
-        return view('products.index', compact('access','group','products'));
+        $products = product::with('category')->orderBy('name', 'ASC')->paginate(30);
+        return view('products.index', compact('products'));
     }
 
     public function search(Request $request)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
         if ($key!=""){
-            $products = Product::with('category')
+            $products = product::with('category')
                     ->where($key,'like',"%".$value."%")
                     ->orderBy('name', 'ASC')
                     ->paginate(10);
             $products ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
         }else{
-            $products = Product::with('category')->orderBy('name', 'ASC')->paginate(30);
+            $products = product::with('category')->orderBy('name', 'ASC')->paginate(30);
         }
-        return view('products.index',compact('access','group','products'));
+        return view('products.index',compact('products'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $categories = Category::orderBy('name', 'ASC')->get();
-        $account = account_account::orderBy('code','asc')->get();
-        $journal = account_journal::orderBy('code','asc')->get();
-        return view('products.create', compact('access','group','categories','journal','account'));
+        $categories = Inventory::categories();
+        $account = Accounting::account_account();
+        $journal = Accounting::account_journal();
+        return view('products.create', compact('categories','journal','account'));
     }
 
     public function store(Request $request)
@@ -74,7 +65,7 @@ class ProductController extends Controller
                 $request->file('photo')->move($destination, $nama_file);
             }
 
-            $product = Product::create([
+            $product = product::create([
                 'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
@@ -116,7 +107,7 @@ class ProductController extends Controller
  
     public function destroy($id)
     {
-        $products = Product::find($id);
+        $products = product::find($id);
         if (!empty($products->photo)) {
             File::delete(public_path('uploads/product/' . $products->photo));
         }
@@ -127,14 +118,11 @@ class ProductController extends Controller
 
     public function edit(Request $request)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $product = Product::findOrFail($request->id);
-        $categories = Category::orderBy('name', 'ASC')->get();
-        $account = account_account::orderBy('code','asc')->get();
-        $journal = account_journal::orderBy('code','asc')->get();
-        $currency = res_currency::orderBy('currency_name', 'ASC')->get();
-        return view('products.edit', compact('access','group','product', 'categories','journal','account'));
+        $product = Inventory::getProduct($request->id);
+        $categories = Inventory::categories();
+        $account = Accounting::account_account();
+        $journal = Accounting::account_journal();
+        return view('products.edit', compact('product', 'categories','journal','account'));
     }
 
     public function update(Request $request)
@@ -149,7 +137,7 @@ class ProductController extends Controller
         ]);
 
         try {
-            $product = Product::where('code',$request->code)->first();
+            $product = product::where('code',$request->code)->first();
             $nama_file = $product->photo;
 
             if ($request->hasFile('photo')) {
@@ -191,7 +179,7 @@ class ProductController extends Controller
             'id' => 'required'
         ]);
 
-        $product = Product::where('id', $request->id)->first();
+        $product = product::where('id', $request->id)->first();
         if ($product) {
             return response()->json([
                 'status' => 'success',
@@ -209,7 +197,7 @@ class ProductController extends Controller
             's' => 'required'
         ]);
 
-        $product = Product::where('barcode', $request->s)->first();
+        $product = product::where('barcode', $request->s)->first();
         if ($product) {
             return response()->json([
                 'status' => 'success',
@@ -224,7 +212,7 @@ class ProductController extends Controller
 
     public function product_report()
     {
-        $products = Product::with('category')->orderBy('name', 'ASC')->get();
+        $products = Inventory::products();
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.product.product_list', compact('products'));
     	return $pdf->stream();
@@ -232,7 +220,7 @@ class ProductController extends Controller
 
     public function stock_report()
     {
-        $products = Product::with('category')->orderBy('name', 'ASC')->get();
+        $products = Inventory::products();
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.product.product_stock', compact('products'));
     	return $pdf->stream();
@@ -241,7 +229,7 @@ class ProductController extends Controller
     public function Products()
     {
         try {
-            $product = Product::with('category')->orderBy('name', 'ASC')->get();
+            $products = Inventory::products();
             return response()->json([
                 'status' => 'success',
                 'data' => $product

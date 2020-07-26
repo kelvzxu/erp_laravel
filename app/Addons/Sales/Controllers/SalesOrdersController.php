@@ -11,8 +11,6 @@ use App\Addons\Sales\Models\sales_order_product;
 use App\Models\Product\Product;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
 use PDF;
 use Partner;
 
@@ -184,8 +182,6 @@ class SalesOrdersController extends Controller
             $month = date('m');
             $year = date('Y');
             $monthName = date("F", mktime(0, 0, 0, $month, 10));
-            $access=access_right::where('user_id',Auth::id())->first();
-            $group=user::find(Auth::id());
             $data = sales_order::with('partner','sales_person')
                         ->orderBy('created_at', 'desc')
                         ->paginate(30);
