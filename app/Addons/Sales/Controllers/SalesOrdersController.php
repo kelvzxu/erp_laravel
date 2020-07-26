@@ -33,14 +33,13 @@ class SalesOrdersController extends Controller
         $orders = sales_order::with('partner','sales_person')
                     ->orderBy('created_at', 'desc')
                     ->paginate(30);
-                    // dd($orders);
         return view('sales.index', compact('orders'));
     }
 
     public function create()
     {
         $partner = Partner::customer();
-        $product = Product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
+        $product = Inventory::can_be_sold();
         return view('sales.create', compact('product','partner'));
     }
 
