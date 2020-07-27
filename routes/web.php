@@ -92,21 +92,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::post('employee/update','HrEmployeesController@update')->name('employee.update');
     Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
     Route::get('employee/filter','HrEmployeesController@search')->name('employee.filter');
-    
-    // ==== Invoices ====
-    Route::get('invoices', 'InvoiceController@index')->name('invoices');
-    Route::get('invoices/create', 'InvoiceController@create')->name('invoices.create');
-    Route::get('invoices/create/{id}', 'InvoiceController@wizard_create')->name('invoices.wizard_create');
-    Route::post('invoices', 'InvoiceController@store')->name('invoices.store');
-    Route::get('invoices/show/{id}', 'InvoiceController@show')->name('invoices.show');
-    Route::get('invoices/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
-    Route::put('invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
-    Route::get('invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
-    Route::get('invoices/filter', 'InvoiceController@search')->name('invoices.filter');
-    Route::get('invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
-    Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
-    Route::get('Reports/invoices', 'InvoiceController@report')->name('invoices.report');
-    Route::get('Reports/invoices/print', 'InvoiceController@print_report')->name('invoices_report.print');
    
     // ==== inventory report ====
     Route::get('Inventory/report/valuation','InventoryReportController@valuation')->name('inventory.valuation');
@@ -158,21 +143,6 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Portal User ====
     Route::get('User/Portal','AccessRightsController@portal')->name('portal.index');
 
-    // ==== Bills ====
-    Route::get('VendorBills', 'BillsController@index')->name('purchases');
-    Route::get('VendorBills/create', 'BillsController@create')->name('purchases.create');
-    Route::get('VendorBills/create/{id}', 'BillsController@wizard_create')->name('purchases.wizard_create');
-    Route::post('VendorBills', 'BillsController@store')->name('purchases.store');
-    Route::get('VendorBills/show/{id}', 'BillsController@show')->name('purchases.show');
-    Route::get('VendorBills/edit/{id}', 'BillsController@edit')->name('purchases.edit');
-    Route::put('VendorBills/update/{id}', 'BillsController@update')->name('purchases.update');
-    Route::get('VendorBills/destroy', 'BillsController@destroy')->name('purchases.destroy');
-    Route::get('VendorBills/filter', 'BillsController@search')->name('purchases.filter');
-    Route::get('VendorBills/approved/{id}', 'BillsController@approved')->name('purchases.approved');
-    Route::get('VendorBills/print/{id}', 'BillsController@print_pdf')->name('purchases.print');
-    Route::get('Reports/VendorBills', 'BillsController@report')->name('purchases.report');
-    Route::get('Reports/VendorBills/print', 'BillsController@report_print')->name('purchases_report.print');
-    
     // ==== Paymeny Invoice ====
     Route::get('Payments/Invoices', 'AccountPaymentsController@index')->name('payment_invoices.index');
     Route::get('Payments/Invoices/Register', 'AccountPaymentsController@create')->name('payment_invoices.create');
@@ -227,18 +197,6 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Profile ====
     Route::get('profile','ProfileController@index')->name('profile');
     Route::post('profile.update','ProfileController@update')->name('profile.update');
-
-    // ==== Product =====
-    Route::get('product', 'ProductController@index')->name('product');
-    Route::get('product/create', 'ProductController@create')->name('product.create');
-    Route::post('product/store', 'ProductController@store')->name('product.store');
-    Route::get('product/edit', 'ProductController@edit')->name('product.edit');
-    Route::get('product/edit/{id}', 'ProductController@edit')->name('product.edit');
-    Route::get('product/filter', 'ProductController@search')->name('product.filter');
-    Route::get('product/destroy{id}', 'ProductController@destroy')->name('product.destroy');
-    Route::put('product/update', 'ProductController@update')->name('product.update');
-    Route::get('product/Report/productlist', 'ProductController@product_report')->name('report.productlist');
-    Route::get('product/Report/Stock', 'ProductController@stock_report')->name('report.productstock');
     
     // ==== Point Of Sale ====
     Route::get('PointOfSale', 'OrderController@index')->name('pos');
@@ -312,6 +270,53 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('product-categories/edit', 'CategoryController@edit')->name('product-categories.edit');
         Route::get('product-categories/edit{id}', 'CategoryController@edit')->name('product-categories.edit');
         Route::put('product-categories/update', 'CategoryController@update')->name('product-categories.update');
+
+        // ==== Product ====
+        Route::get('product', 'ProductController@index')->name('product');
+        Route::get('product/create', 'ProductController@create')->name('product.create');
+        Route::post('product/store', 'ProductController@store')->name('product.store');
+        Route::get('product/edit', 'ProductController@edit')->name('product.edit');
+        Route::get('product/edit/{id}', 'ProductController@edit')->name('product.edit');
+        Route::get('product/filter', 'ProductController@search')->name('product.filter');
+        Route::get('product/destroy{id}', 'ProductController@destroy')->name('product.destroy');
+        Route::put('product/update', 'ProductController@update')->name('product.update');
+        Route::get('product/Report/productlist', 'ProductController@product_report')->name('report.productlist');
+        Route::get('product/Report/Stock', 'ProductController@stock_report')->name('report.productstock');
+    });
+
+    // ==== Invoicing ====
+    Route::group(['namespace' => '\App\Addons\Invoicing\Controllers'], function()
+    {
+        // ==== Invoices ====
+        Route::get('invoices', 'InvoiceController@index')->name('invoices');
+        Route::get('invoices/create', 'InvoiceController@create')->name('invoices.create');
+        Route::get('invoices/create/{id}', 'InvoiceController@wizard_create')->name('invoices.wizard_create');
+        Route::post('invoices', 'InvoiceController@store')->name('invoices.store');
+        Route::get('invoices/show/{id}', 'InvoiceController@show')->name('invoices.show');
+        Route::get('invoices/edit/{id}', 'InvoiceController@edit')->name('invoices.edit');
+        Route::put('invoices/update/{id}', 'InvoiceController@update')->name('invoices.update');
+        Route::get('invoices/destroy', 'InvoiceController@destroy')->name('invoices.destroy');
+        Route::get('invoices/filter', 'InvoiceController@search')->name('invoices.filter');
+        Route::get('invoices/print{id}', 'InvoiceController@print_pdf')->name('invoices.print');
+        Route::get('invoices/approved/{id}', 'InvoiceController@approved')->name('invoices.approved');
+        Route::get('Reports/invoices', 'InvoiceController@report')->name('invoices.report');
+        Route::get('Reports/invoices/print', 'InvoiceController@print_report')->name('invoices_report.print');
+
+        // ==== Bills ====
+        Route::get('VendorBills', 'BillsController@index')->name('purchases');
+        Route::get('VendorBills/create', 'BillsController@create')->name('purchases.create');
+        Route::get('VendorBills/create/{id}', 'BillsController@wizard_create')->name('purchases.wizard_create');
+        Route::post('VendorBills', 'BillsController@store')->name('purchases.store');
+        Route::get('VendorBills/show/{id}', 'BillsController@show')->name('purchases.show');
+        Route::get('VendorBills/edit/{id}', 'BillsController@edit')->name('purchases.edit');
+        Route::put('VendorBills/update/{id}', 'BillsController@update')->name('purchases.update');
+        Route::get('VendorBills/destroy', 'BillsController@destroy')->name('purchases.destroy');
+        Route::get('VendorBills/filter', 'BillsController@search')->name('purchases.filter');
+        Route::get('VendorBills/approved/{id}', 'BillsController@approved')->name('purchases.approved');
+        Route::get('VendorBills/print/{id}', 'BillsController@print_pdf')->name('purchases.print');
+        Route::get('Reports/VendorBills', 'BillsController@report')->name('purchases.report');
+        Route::get('Reports/VendorBills/print', 'BillsController@report_print')->name('purchases_report.print');
+    
     });
 });  
 Auth::routes(['verify' => true]);

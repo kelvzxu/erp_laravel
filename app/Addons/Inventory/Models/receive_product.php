@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class receive_product extends Model
 {
+    protected $table = 'receipt_products';
     protected $fillable = [
         'validate'
     ];

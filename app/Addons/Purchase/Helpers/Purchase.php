@@ -35,7 +35,7 @@ class Purchase {
         return $purchase;
     }
     public static function getPurchaseLine($id){
-        $purchase = purchases_order_products::where('sales_order_id','=',$id)->get();
+        $purchase = purchases_order_products::where('purchases_order_id','=',$id)->get();
         return $purchase;
     }
 }

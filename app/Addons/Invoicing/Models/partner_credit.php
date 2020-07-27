@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Partner;
+namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

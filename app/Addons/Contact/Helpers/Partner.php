@@ -27,22 +27,22 @@ class Partner {
     }
 
     public static function vendor() {
-        $vendor = res_partner::orderBy('partner_name', 'ASC');
+        $vendor = res_partner::orderBy('partner_name', 'ASC')->get();
         return $vendor ; 
     }
 
     public static function customer() {
-        $customer = res_customer::orderBy('name', 'ASC');
+        $customer = res_customer::orderBy('name', 'ASC')->get();
         return $customer ;
     }
 
     public static function getVendor($id) {
-        $vendor = res_partner::orderBy('name', 'ASC')->findOrFail($id);
+        $vendor = res_partner::findOrFail($id);
         return $vendor ; 
     }
 
     public static function getCustomer($id) {
-        $customer = res_customer::orderBy('name', 'ASC')->findOrFail($id);
+        $customer = res_customer::findOrFail($id);
         return $customer ;
     }
 }

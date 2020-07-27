@@ -93,10 +93,10 @@ class AppsSeeder extends Seeder
         $depends=[
             [
                 'name' => 'Sale',
-                'depends'=> 'Inventory'
+                'relation'=> 'Inventory'
             ]
         ];
-        DB::table('ir_models')->insert($depends);
+        DB::table('ir_model_relation')->insert($depends);
         DB::table('ir_models')->insert($apps);
     }
 }

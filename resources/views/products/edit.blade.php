@@ -138,9 +138,11 @@
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_581"
                                     class="nav-link active" role="tab" aria-selected="true">General Information</a>
                             </li>
+                            @if (Addons::cek_install_modules("Accounting") == True)
                             <li class="nav-item"><a data-toggle="tab" disable_anchor="true" href="#notebook_page_582"
                                     class="nav-link" role="tab" aria-selected="true">Accounting</a>
                             </li>
+                            @endif
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="notebook_page_581">
@@ -208,7 +210,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div> 
+                            @if (Addons::cek_install_modules("Accounting") == True) 
                             <div class="tab-pane" id="notebook_page_582">
                                 <div class="o_group">
                                     <div class="row">
@@ -290,7 +293,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>  
+                            </div> 
+                            @endif 
                         </div>
                     </div>
                 </div>

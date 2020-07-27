@@ -4,15 +4,16 @@ namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InvoiceProduct extends Model
+class BillProduct extends Model
 {
+    protected $table = 'purchase_products';
     protected $fillable = [
-        'invoice_id','name', 'price', 'qty', 'total'
+        'purchase_id','name', 'price', 'qty', 'total'
     ];
 
-    public function invoice()
+    public function purchase()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(Bill::class);
     }
     public function product()
     {

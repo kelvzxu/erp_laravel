@@ -19,11 +19,11 @@ class Invoice extends Model
     }
     public function partner()
     {
-        return $this->hasOne('App\Models\Customer\res_customer','id','client');
+        return $this->hasOne('App\Addons\Contact\Models\res_customer','id','client');
     }
     public function payment()
     {
-        return $this->hasOne('App\Models\Customer\customer_dept','invoice_no','invoice_no');
+        return $this->hasOne(customer_dept::class,'invoice_no','invoice_no');
     }
     public function sales()
     {

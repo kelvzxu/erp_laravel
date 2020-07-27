@@ -2,8 +2,11 @@
 namespace App\Addons\Invoicing\Helpers;
 
 use Artisan;
+use App\Addons\Invoicing\Models\Invoice;
+use App\Addons\Invoicing\Models\InvoiceProduct;
+use App\Addons\Invoicing\Models\Bill;
+use App\Addons\Invoicing\Models\BillProduct;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class Invoicing {
     public static function installed(){
@@ -23,4 +26,31 @@ class Invoicing {
             return false;
         }
     }
+
+    public static function getInvoice($id){
+        $invoice = Invoice::with('products','partner','products.product')->findOrFail($id);
+        return $invoice;
+    }
+
+    public static function getBill($id){
+        $bill = Bill::with('products','vendor','products.product')->findOrFail($id);
+        return $bill ;
+    }
+
+    public static function getInvoiceByInvoiceNo($id){
+        $invoice = Invoice::where('invoice_no', $id)->with('products','partner', 'products.product')->first();
+        return $invoice;
+    }
+
+    public static function getInvoiceLine($id){
+        $invoice =  InvoiceProduct::where('invoice_id', $id)->get();
+        return $invoice;
+    }
+    
+    public static function getBillLine($id){
+        $bill = BillProduct::where('purchase_id', $id)->get();
+    }
+
+
+
 }

@@ -95,9 +95,7 @@ class ResPartnersController extends Controller
                 'commercial_company_name'=>$request->name,
                 'mcd'=> $request->mcd,
                 'payment_terms'=>$request->payment_terms,
-                'journal'=> $request->journal,
                 'note'=>$request->note,
-                'receivable_account'=>$request->receivable_account,
                 'logo'=> $nama_file,
             ]);
             Toastr::success('Vendors ' .$request->name. ' created successfully','Success');
@@ -167,8 +165,6 @@ class ResPartnersController extends Controller
                 'mcd'=> $request->mcd,
                 'payment_terms'=>$request->payment_terms,
                 'note'=>$request->note,
-                'receivable_account'=>$request->receivable_account,
-                'journal'=> $request->journal,
                 'logo'=> $nama_file,
             ]);
             Toastr::success('Vendors ' .$request->name. ' created successfully','Success');

@@ -13,6 +13,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use Partner;
+use Inventory;
 
 class SalesOrdersController extends Controller
 {

@@ -28,8 +28,6 @@ Route::get('/product/{id}', 'OrderController@getProduct');
 Route::post('/cart', 'OrderController@addToCart');
 Route::get('/cart', 'OrderController@getCart');
 Route::delete('/cart/{id}', 'OrderController@removeCart');
-Route::post('/customer/search', 'ResCustomersController@searchapi');
-Route::post('/partner/search', 'ResPartnersController@searchapi');
 Route::post('/product/search', 'ProductController@searchapi');
 Route::post('/employee/search', 'HrEmployeesController@searchapi');
 Route::get('/attendance', 'HrAttendanceController@checkatd');
@@ -41,6 +39,12 @@ Route::get('getProduct','ProductController@getProduct');
 
 Route::get('/chart', 'HomeController@getChart');
 
+// ==== Contact ====
+Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
+{
+    Route::post('/customer/search', 'ResCustomersController@searchapi');
+    Route::post('/partner/search', 'ResPartnersController@searchapi');
+});
 // get Access Rights
 Route::get('/user/Access/{id}','UserController@getAccessRight');
 Route::get('/user/Group/{id}','UserController@getGroup');

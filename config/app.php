@@ -187,6 +187,7 @@ return [
         App\Addons\Accounting\Illuminate\AccountingServiceProvider::class,
         App\Addons\Contact\Illuminate\PartnerServiceProvider::class,
         App\Addons\Inventory\Illuminate\InventoryServiceProvider::class,
+        App\Addons\Invoicing\Illuminate\InvoicingServiceProvider::class,
         App\Addons\Purchase\Illuminate\PurchaseServiceProvider::class,
         App\Addons\Sales\Illuminate\SalesServiceProvider::class,
 
@@ -277,6 +278,7 @@ return [
          */
         'Accounting' =>App\Addons\Accounting\Helpers\Accounting::class,
         'Inventory' => App\Addons\Inventory\Helpers\Inventory::class,
+        'Invoicing' => App\Addons\Invoicing\Helpers\Invoicing::class,
         'Partner' =>App\Addons\Contact\Helpers\Partner::class,
         'Purchase'=>App\Addons\Purchase\Helpers\Purchase::class,
         'Sale' => App\Addons\Sales\Helpers\Sales::class,

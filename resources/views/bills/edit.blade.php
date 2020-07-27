@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title',"Vendor Bill | $purchases->purchase_no")
+@section('title',"Vendor Bill | $purchase->purchase_no")
 @section('css')
 <link href="{{asset('css/web.assets_common.css')}}" rel="stylesheet">
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">

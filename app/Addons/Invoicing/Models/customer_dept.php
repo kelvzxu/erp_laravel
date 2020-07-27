@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Customer;
+namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,6 +18,6 @@ class customer_dept extends Model
     }
     public function customer()
     {
-        return $this->hasOne('App\Models\Customer\res_customer','id','customer_id');
+        return $this->hasOne('App\Addons\Contact\Models\res_customer','id','customer_id');
     }
 }

@@ -6,11 +6,13 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Addons\Inventory\Models\delivere_product;
 use App\Addons\Inventory\Models\stock_move;
 use App\Addons\Inventory\Models\stock_valuation;
+use App\Http\Controllers\controller as Controller;
 use App\Models\Sales\Invoice;
 use App\Models\Sales\return_invoice;
 use Illuminate\Http\Request;
 use Encrypt;
 use Inventory;
+use Invoicing;
 
 class DelivereProductController extends Controller
 {
@@ -37,7 +39,7 @@ class DelivereProductController extends Controller
     {
         try {
             $delivery_no = $this->calculate_code();
-            $invoice = invoice::findOrFail($id);
+            $invoice = Invoicing::getInvoice($id);
             delivere_product::insert([
                 'delivery_no'=>$delivery_no,
                 'invoice_no'=>$invoice->invoice_no,
@@ -103,7 +105,7 @@ class DelivereProductController extends Controller
             $delivery->update([
                 'validate'=> True,
             ]);
-            $invoice = invoice::where('invoice_no',$delivery->invoice_no)->first();
+            $invoice = Invoicing::getInvoiceByInvoiceNo($id);
             $invoice->update([
                 'deliver_validate'=> True,
             ]);
@@ -146,7 +148,7 @@ class DelivereProductController extends Controller
 
     public function return($id)
     {
-        $invoice = Invoice::where('invoice_no', $id)->with('products','customer', 'products.product')->first();
+        $invoice = Invoicing::getInvoiceByInvoiceNo($id);
         $delivery = delivere_product::where('invoice_no', $id)->first();
         // dump($invoice);
         return view('return-inv.return', compact('invoice','delivery'));

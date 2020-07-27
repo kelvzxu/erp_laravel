@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Inventory\Controllers;
 
-use App\stock_valuation;
+use App\Http\Controllers\controller as Controller;
+use App\Addons\Inventory\Models\stock_valuation;
 use Illuminate\Http\Request;
 
 class StockValuationController extends Controller

@@ -50,9 +50,9 @@
             </div>
         </div>
     </div>
-    <div class="container o_content mb-4">
+    <div class="o_content">
         <div class="o_form_view o_form_editable">
-            <div class="container-fluid mt-5">
+            <div class="o_form_sheet_bg">
                 <div class="clearfix o_form_sheet">
                     <div class="row">
                         <div class="col-12 col-md-10 mt-3">

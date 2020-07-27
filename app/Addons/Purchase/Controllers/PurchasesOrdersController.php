@@ -3,12 +3,8 @@
 namespace App\Addons\Purchase\Controllers;
 
 use App\Http\Controllers\controller as Controller;
-use App\Models\Product\Product;
 use App\Addons\Purchase\Models\purchases_order;
 use App\Addons\Purchase\Models\purchases_order_products;
-use App\Models\Merchandises\Purchase;
-use App\Models\Merchandises\receipt_product;
-use App\Models\Merchandises\PurchaseProduct;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -17,6 +13,7 @@ use App\access_right;
 use App\User;
 use PDF;
 use Partner;
+use Inventory;
 
 class PurchasesOrdersController extends Controller
 {
@@ -40,7 +37,7 @@ class PurchasesOrdersController extends Controller
 
     public function create(){
         $partner = Partner::vendor();
-        $product = Product::orderBy('name', 'asc')->where('can_be_purchase','1')->get();
+        $product = Inventory::can_be_purchase();
         return view('purchases.create', compact('product','partner'));
     }
 
@@ -89,14 +86,14 @@ class PurchasesOrdersController extends Controller
     public function show($id)
     {
         $orders = purchases_order::with('partner','sales','products')->findOrFail($id);
-        $receipt = receipt_product::where('purchase_no',$orders->order_no)->first();
+        $receipt = Inventory::getReceiveByBill($id);
         return view('purchases.show', compact('orders','receipt'));
     }
 
     public function edit($id)
     {
         $orders = purchases_order::with('partner','sales','products','products.product')->findOrFail($id);
-        $receipt = receipt_product::where('purchase_no',$orders->order_no)->first();
+        $receipt = Inventory::getReceiveByBill($id);
         return view('purchases.edit', compact('orders','receipt'));
     }
 

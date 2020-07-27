@@ -1,21 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Invoicing\Controllers;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use App\Models\Customer\customer_dept;
-use App\Models\Customer\res_customer;
-use App\Models\Sales\Invoice;
-use App\Models\Sales\InvoiceProduct;
-use App\Addons\Sales\Models\sales_order_product;
-use App\Models\Product\Product;
+use App\Http\Controllers\controller as Controller;
+use App\Addons\Invoicing\Models\customer_dept;
+use App\Addons\Invoicing\Models\Invoice;
+use App\Addons\Invoicing\Models\InvoiceProduct;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
+use Illuminate\Http\Request;
+use Auth;
 use PDF;
 use Sale;
+use Partner;
+use Invoicing;
+use Addons;
 
 class InvoiceController extends Controller
 {
@@ -64,8 +62,9 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        $customer = res_customer::orderBy('name', 'asc')->get();
-        $product = Product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
+
+        $customer = Partner::customer();
+        $product = Inventory::can_be_sold();
         return view('invoices.create', compact('product','customer'));
     }
 
@@ -113,16 +112,15 @@ class InvoiceController extends Controller
 
     public function show($id)
     {
-        $invoice = Invoice::with('products')->findOrFail($id);
-        $customer = res_customer::orderBy('name', 'asc')->get();
+        $invoice = Invoicing::getInvoice($id);
+        $customer = Partner::customer();
         return view('invoices.show', compact('invoice','customer'));
     }
 
     public function edit($id)
     {
-        $invoice = Invoice::where('id', $id)->with('products', 'products.product')->first();
-        $invoices = InvoiceProduct::where('invoice_id', $id)->get();
-        // dump($invoice);
+        $invoice = Invoicing::getInvoice($id);
+        $invoices = Invoicing::getInvoiceLine($id);
         return view('invoices.edit', compact('invoice','invoices'));
     }
 
@@ -139,7 +137,7 @@ class InvoiceController extends Controller
             'products.*.qty' => 'required|integer|min:1'
         ]);
 
-        $invoice = Invoice::findOrFail($id);
+        $invoice = Invoicing::getInvoice($id);
         $old_total = $invoice->grand_total;
 
         $products = collect($request->products)->transform(function($product) {
@@ -168,7 +166,7 @@ class InvoiceController extends Controller
             'total'=>$data['grand_total'],
         ]);
 
-        $partner = res_customer::findOrFail($request->client);
+        $partner = Partner::getCustomer($request->client);
         $oldbalance = $partner->debit_limit;
         $total = $oldbalance - $old_total;
         $new_balance = $data['grand_total'] + $total; 
@@ -185,7 +183,7 @@ class InvoiceController extends Controller
 
     public function destroy($id)
     {
-        $invoice = Invoice::findOrFail($id);
+        $invoice = Invoicing::getInvoice($id);
 
         InvoiceProduct::where('invoice_id', $invoice->id)
             ->delete();
@@ -199,14 +197,13 @@ class InvoiceController extends Controller
     public function approved($id)
     {
         try{
-            $invoice = invoice::findOrFail($id);
-            $customer = res_customer::findOrFail($invoice->client);
+            $invoice = Invoicing::getInvoice($id);
+            $customer = Partner::getCustomer($invoice->client);
             $journal = $customer->receivable_account;
             $balance = $customer->debit_limit;
             $new_balance = intval($balance) + intval($invoice->grand_total);
             customer_dept::insert([
                 'invoice_no'=>$invoice->invoice_no,
-                'journal'=>$journal,
                 'customer_id'=>$invoice->client,
                 'invoice_date'=>$invoice->invoice_date,
                 'due_date'=>$invoice->due_date,
@@ -219,7 +216,11 @@ class InvoiceController extends Controller
                 'approved'=> True,
                 'status'=>"Complete",
             ]);
-            return redirect(route('accountmove.invoice',$id));
+            if (Addons::cek_install_modules("Accounting") == True)
+                return redirect(route('accountmove.invoice',$id));
+            else 
+                Toastr::success('Invoice '.$invoice->invoice_no .' Posted Success','Success');
+                return redirect(route('invoices'));
         }catch (\Exception $e) {
             Toastr::error($e->getMessage(),'Something Wrong');
             // Toastr::error('Check In Error!','Something Wrong');
@@ -247,7 +248,7 @@ class InvoiceController extends Controller
 
     public function print_pdf($id)
     {
-        $invoice = Invoice::with('products','customer')->findOrFail($id);
+        $invoice = Invoicing::getInvoice($id);
         // dd($invoice);
     	$pdf = PDF::setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif'])
             ->loadview('reports.sales.invoice_pdf', compact('invoice'));
@@ -313,7 +314,7 @@ class InvoiceController extends Controller
         $invoice_no = $this->calculate_code();
         $orders = Sale::getSales($id);
         $orders_line = Sale::getSalesLine($id);
-        $partner = res_customer::findOrFail($orders->customer);
+        $partner = Partner::getCustomer($orders->customer);
         $address = "$partner->street,$partner->zip,$partner->city";
         $due_date = $this->payment_date($partner->payment_terms);
         $inv = Invoice::insertGetId([   

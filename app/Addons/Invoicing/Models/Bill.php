@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Models\Merchandises;
+namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Purchase extends Model
+class Bill extends Model
 {
+    protected $table = 'purchases';
     protected $fillable = [
         'purchase_no', 'purchase_date', 'due_date',
         'title', 'sub_total', 'discount',
@@ -15,10 +16,10 @@ class Purchase extends Model
 
     public function products()
     {
-        return $this->hasMany(PurchaseProduct::class);
+        return $this->hasMany(BillProduct::class,'purchase_id');
     }
     public function vendor()
     {
-        return $this->hasOne('App\Models\Partner\res_partner','id','client');
+        return $this->hasOne('App\Addons\Contact\Models\res_partner','id','client');
     }
 }

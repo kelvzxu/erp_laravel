@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Inventory\Controllers;
 
+use App\Http\Controllers\controller as Controller;
 use App\Addons\Inventory\Models\Product;
 use App\Addons\Inventory\Models\stock_valuation;
 use Brian2694\Toastr\Facades\Toastr;
