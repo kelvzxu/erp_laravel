@@ -13,6 +13,7 @@ use PDF;
 use Sale;
 use Partner;
 use Invoicing;
+use Inventory;
 use Addons;
 
 class InvoiceController extends Controller
