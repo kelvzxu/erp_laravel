@@ -1,28 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Accounting\Controllers;
 
-use App\access_right;
-use App\User;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_move;
-use App\Models\Accounting\account_payment;
-use App\Models\Customer\customer_dept;
-use App\Models\Customer\res_customer;
-use App\Models\Merchandises\Purchase;
-use App\Models\Sales\Invoice;
-use App\Models\Partner\res_partner;
-use App\Models\Partner\partner_credit;
+use App\Addons\Accounting\Models\account_account;
+use App\Addons\Accounting\Models\account_move;
+use App\Addons\Accounting\Models\account_payment;
+use App\Addons\Contact\Models\res_customer;
+use App\Addons\Contact\Models\res_partner;
+use App\Addons\Invoicing\Models\customer_dept;
+use App\Addons\Invoicing\Models\Invoice;
+use App\Addons\Invoicing\Models\partner_credit;
+use App\Addons\Invoicing\Models\Purchase;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\controller as Controller;
 
 class PaymentMatchingController extends Controller
 {
     public function invoice($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $partner=res_customer::find($id);   
         $account=account_account::find($partner->receivable_account);
         $data=account_move::where([['type','out_invoice'],['partner_id',$id],['invoice_payment_state','Not_Paid']])->get();
@@ -30,8 +27,6 @@ class PaymentMatchingController extends Controller
     }
     public function bill($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $partner=res_partner::find($id);   
         $account=account_account::find($partner->receivable_account);
         $data=account_move::where([['type','in_invoice'],['partner_id',$id],['invoice_payment_state','Not_Paid']])->get();
@@ -43,11 +38,11 @@ class PaymentMatchingController extends Controller
         try{
             $partner=res_customer::find($request->id);
             $line = $request->name;
-            $payment = $partner->credit_limit - $request->amount_total;
-            $debit = $partner->debit_limit - $payment;
+            $payment = $partner->credit - $request->amount_total;
+            $debit = $partner->debit - $payment;
             $partner->update([
-                'credit_limit' =>$request->amount_total,
-                'debit_limit' => $debit,
+                'credit' =>$request->amount_total,
+                'debit' => $debit,
             ]);
             foreach($line as $e => $data){
                 customer_dept::where('invoice_no',$data)->update([
@@ -75,11 +70,11 @@ class PaymentMatchingController extends Controller
         try{
             $partner=res_partner::find($request->id);
             $line = $request->name;
-            $payment = $partner->credit_limit - $request->amount_total;
-            $debit = $partner->debit_limit - $payment;
+            $payment = $partner->credit - $request->amount_total;
+            $debit = $partner->debit - $payment;
             $partner->update([
-                'credit_limit' =>$request->amount_total,
-                'debit_limit' => $debit,
+                'credit' =>$request->amount_total,
+                'debit' => $debit,
             ]);
             foreach($line as $e => $data){
                 partner_credit::where('purchase_no',$data)->update([

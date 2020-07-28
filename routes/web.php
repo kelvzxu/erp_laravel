@@ -22,60 +22,15 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Apps','AppsController@index')->name('Apps.index');
     Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');
     
-    // ==== Account Account ====
-    Route::get('Account','AccountAccountController@index')->name('account.index');
-    Route::get('Account/create','AccountAccountController@create')->name('account.create');
-    Route::post('Account/store','AccountAccountController@store')->name('account.store');
-    Route::get('Account/edit/{id}','AccountAccountController@edit')->name('account.edit');
-    Route::put('Account/update','AccountAccountController@update')->name('account.update');
-    Route::get('Account/destroy/{id}','AccountAccountController@destroy')->name('account.destroy');
-    Route::get('Account/filter','AccountAccountController@search')->name('account.filter');
-
-    // ==== Account Journal ====
-    Route::get('Account/Journal','AccountJournalController@index')->name('journal.index');
-    Route::get('Account/Journal/create','AccountJournalController@create')->name('journal.create');
-    Route::post('Account/Journal/store','AccountJournalController@store')->name('journal.store');
-    Route::get('Account/Journal/edit/{id}','AccountJournalController@edit')->name('journal.edit');
-    Route::put('Account/Journal/update/{id}','AccountJournalController@update')->name('journal.update');
-    Route::get('Account/Journal/destroy/{id}','AccountJournalController@destroy')->name('journal.destroy');
-    Route::get('Account/Journal/filter','AccountJournalController@search')->name('journal.filter');
-    
-    // ==== Account Move ====
-    Route::get('AccountMove','AccountMovesController@index')->name('accountmove.index');
-    Route::get('AccountMove/invoice/{id}','AccountMovesController@invoice')->name('accountmove.invoice');
-    Route::get('AccountMove/purchase/{id}','AccountMovesController@purchase')->name('accountmove.purchase');
-    Route::get('AccountMove/payment/{id}','AccountMovesController@payment')->name('accountmove.payment');
-
-    // Accounting Report ====
-    Route::get('Accounting/Report/General_Ledger','AccountReportController@generalledger')->name('accounting.general_ledger');
-    Route::get('Accounting/Report/Partner_Ledger','AccountReportController@partnerledger')->name('accounting.partner_ledger');
-    Route::get('Accounting/Report/General_Ledger/Print','AccountReportController@print_gl')->name('accounting.general_ledger_print');
-    Route::get('Accounting/Report/Partner_Ledger/Print/{type}','AccountReportController@print_pl')->name('accounting.partner_ledger_print');
-    
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
     Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');
     Route::get('/attendance', 'HrAttendanceController@index')->name('attendance');
     Route::get('/attendance/filter', 'HrAttendanceController@search')->name('attendance.filter');
-    
-    // ==== Customer Payment ====
-    Route::get('CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
-    Route::get('CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
-    Route::get('CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
-    Route::post('CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
-    Route::get('CustomerDebt/report','CustomerDeptController@report')->name('CustomerDebt.report');
-    Route::get('CustomerDebt/report/print','CustomerDeptController@report_print')->name('CustomerDebt_report.print');
 
     Route::post('chat', 'ChatController@store')->name('chat.store');
     Route::post('chat/join', 'ChatController@join')->name('chat.join');
 
-    // ==== Delivery ====
-    Route::get('Delivere', 'DelivereProductController@index')->name('Delivere.index');
-    Route::get('Delivere/store/{id}', 'DelivereProductController@store')->name('Delivere.store');
-    Route::get('Delivere/show/{id}', 'DelivereProductController@show')->name('Delivere.show');
-    Route::get('Delivere/validate/{id}', 'DelivereProductController@validation')->name('Delivere.validate');
-    Route::get('Delivere/return/{id}', 'DelivereProductController@return')->name('Delivere.return');
-    
     // ==== HR Department ====
     Route::get('department','HrDepartmentController@index')->name('department');
     Route::get('department/create','HrDepartmentController@create')->name('department.create');
@@ -93,12 +48,6 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('employee/delete/{id}','HrEmployeesController@destroy')->name('employee.delete');
     Route::get('employee/filter','HrEmployeesController@search')->name('employee.filter');
    
-    // ==== inventory report ====
-    Route::get('Inventory/report/valuation','InventoryReportController@valuation')->name('inventory.valuation');
-    Route::get('Inventory/report/Move','InventoryReportController@move')->name('inventory.move');
-    Route::get('Inventory/report/valuation/Print','InventoryReportController@print_valuation')->name('inventory.print_valuation');
-    Route::get('Inventory/report/Move/Print','InventoryReportController@print_move')->name('inventory.print_move');
-
     // ==== HR Department ====
     Route::get('jobs','HrJobsController@index')->name('jobs');
     Route::get('jobs/create','HrJobsController@create')->name('jobs.create');
@@ -134,65 +83,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('Companies/edit/{id}', 'ResCompaniesController@edit')->name('companies.edit');
     Route::post('Companies/update', 'ResCompaniesController@update')->name('companies.update');
 
-    // ==== PartnerCredit=
-    Route::get('PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
-    Route::get('PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');
-    Route::get('PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
-    Route::post('PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
-    
     // ==== Portal User ====
     Route::get('User/Portal','AccessRightsController@portal')->name('portal.index');
 
-    // ==== Paymeny Invoice ====
-    Route::get('Payments/Invoices', 'AccountPaymentsController@index')->name('payment_invoices.index');
-    Route::get('Payments/Invoices/Register', 'AccountPaymentsController@create')->name('payment_invoices.create');
-    Route::get('Payments/Invoices/Reconcile/{id}', 'PaymentMatchingController@invoice')->name('reconcile.invoice');
-    Route::post('Payments/Invoices/Reconcile/store', 'PaymentMatchingController@invoice_store')->name('reconcile.invoice_store');
-    
-    // ==== Paymeny Bills ====
-    Route::get('Payments/Bills', 'AccountPaymentsController@vendor_index')->name('payment_bills.index');
-    Route::get('Payments/Bills/Register', 'AccountPaymentsController@vendor_create')->name('payment_bills.create');
-    Route::get('Payments/Bill/Reconcile/{id}', 'PaymentMatchingController@bill')->name('reconcile.bill');
-    Route::post('Payments/Bill/Reconcile/store', 'PaymentMatchingController@bill_store')->name('reconcile.bill_store');
-
-    // save &Update Payments ==== 
-    Route::post('Payments/store', 'AccountPaymentsController@store')->name('payment.store');
-    Route::post('Payments/update', 'AccountPaymentsController@update')->name('payment.update');
-    Route::get('Payments/View/{id}', 'AccountPaymentsController@view')->name('payment.view');
-    Route::get('Payments/edit/{id}', 'AccountPaymentsController@edit')->name('payment.edit');
-    Route::get('Payments/Confirm/{id}', 'AccountPaymentsController@posted')->name('payment.posted');
-
-    // ==== Receipt ====
-    Route::get('receipt', 'ReceiptProductController@index')->name('receipt.index');
-    Route::get('receipt/store/{id}', 'ReceiptProductController@store')->name('receipt.store');
-    Route::get('receipt/show/{id}', 'ReceiptProductController@show')->name('receipt.show');
-    Route::get('receipt/validate/{id}', 'ReceiptProductController@validation')->name('receipt.validate');
-    Route::get('receipt/return/{id}', 'ReceiptProductController@return')->name('receipt.return');
-
-    // ==== Receivable Account ====
-    Route::get('ReceivableAccount','ReceivableAccountController@index')->name('ReceivableAccount.index');
-    Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
-
-    // ==== Retur Invoice ====
-    Route::get('Report/Return/SalesOrder','ReturnInvoiceController@index')->name('return-invoice.index');
-    Route::post('Return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
-    Route::get('Report/Return/SalesOrder/{id}','ReturnInvoiceController@view')->name('return-invoice.view');
-    Route::get('Report/Return/SalesOrder/Edit/{id}','ReturnInvoiceController@edit')->name('return-invoice.edit');
-    Route::post('Return/SalesOrder/update', 'ReturnInvoiceController@update')->name('return-invoice.update');
-
-    // ==== Retur Purchase ====
-    Route::get('Report/Return/Purchase/','ReturnPurchaseController@index')->name('return-po.index');
-    Route::post('Return/Purchase/', 'ReturnPurchaseController@store')->name('return-po.store');
-    Route::get('Report/Return/Purchase/{id}','ReturnPurchaseController@view')->name('return-po.view');
-    Route::get('Report/Return/Purchase/Edit/{id}','ReturnPurchaseController@edit')->name('return-po.edit');
-    Route::post('Return/Purchase/Update', 'ReturnPurchaseController@update')->name('return-po.update');
-
     // ==== Recruitment ====
     Route::get('recruitment','HrRecruitmentController@index')->name('recruitment');
-
-    // ==== Payable Account ====
-    Route::get('PayableAccount','PayableController@index')->name('PayableAccount.index');
-    Route::get('PayableAccount/print','PayableController@print')->name('PayableAccount.Print');
 
     // ==== Profile ====
     Route::get('profile','ProfileController@index')->name('profile');
@@ -282,6 +177,27 @@ Route::group(['middleware' => 'auth'], function (){
         Route::put('product/update', 'ProductController@update')->name('product.update');
         Route::get('product/Report/productlist', 'ProductController@product_report')->name('report.productlist');
         Route::get('product/Report/Stock', 'ProductController@stock_report')->name('report.productstock');
+
+        // ==== Delivery ====
+        Route::get('Delivere', 'DelivereProductController@index')->name('Delivere.index');
+        Route::get('Delivere/store/{id}', 'DelivereProductController@store')->name('Delivere.store');
+        Route::get('Delivere/show/{id}', 'DelivereProductController@show')->name('Delivere.show');
+        Route::get('Delivere/validate/{id}', 'DelivereProductController@validation')->name('Delivere.validate');
+        Route::get('Delivere/return/{id}', 'DelivereProductController@return')->name('Delivere.return');
+    
+        // ==== inventory report ====
+        Route::get('Inventory/report/valuation','InventoryReportController@valuation')->name('inventory.valuation');
+        Route::get('Inventory/report/Move','InventoryReportController@move')->name('inventory.move');
+        Route::get('Inventory/report/valuation/Print','InventoryReportController@print_valuation')->name('inventory.print_valuation');
+        Route::get('Inventory/report/Move/Print','InventoryReportController@print_move')->name('inventory.print_move');
+
+         // ==== Receive ====
+        Route::get('receive', 'ReceiveProductController@index')->name('receipt.index');
+        Route::get('receive/store/{id}', 'ReceiveProductController@store')->name('receipt.store');
+        Route::get('receive/show/{id}', 'ReceiveProductController@show')->name('receipt.show');
+        Route::get('receive/validate/{id}', 'ReceiveProductController@validation')->name('receipt.validate');
+        Route::get('receive/return/{id}', 'ReceiveProductController@return')->name('receipt.return');
+
     });
 
     // ==== Invoicing ====
@@ -317,8 +233,100 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('Reports/VendorBills', 'BillsController@report')->name('purchases.report');
         Route::get('Reports/VendorBills/print', 'BillsController@report_print')->name('purchases_report.print');
     
+        // ==== Customer Payment ====
+        Route::get('CustomerDebt','CustomerDeptController@index')->name('CustomerDebt');
+        Route::get('CustomerDebt/show/{id}','CustomerDeptController@show')->name('CustomerDebt.show');
+        Route::get('CustomerDebt/edit/{id}','CustomerDeptController@edit')->name('CustomerDebt.edit');
+        Route::post('CustomerDebt/update','CustomerDeptController@update')->name('CustomerDebt.update');
+        Route::get('CustomerDebt/report','CustomerDeptController@report')->name('CustomerDebt.report');
+        Route::get('CustomerDebt/report/print','CustomerDeptController@report_print')->name('CustomerDebt_report.print');
+
+        // ==== PartnerCredit=
+        Route::get('PartnerDebt','PartnerCreditController@index')->name('PartnerDebt');
+        Route::get('PartnerDebt/show/{id}','PartnerCreditController@show')->name('PartnerDebt.show');
+        Route::get('PartnerDebt/edit/{id}','PartnerCreditController@edit')->name('PartnerDebt.edit');
+        Route::post('PartnerDebt/update','PartnerCreditController@update')->name('PartnerDebt.update');
+        
+        // ==== Payable Account ====
+        Route::get('PayableAccount','PayableController@index')->name('PayableAccount.index');
+        Route::get('PayableAccount/print','PayableController@print')->name('PayableAccount.Print');
+
+        // ==== Receivable Account ====
+        Route::get('ReceivableAccount','ReceivableAccountController@index')->name('ReceivableAccount.index');
+        Route::get('ReceivableAccount/print','ReceivableAccountController@print')->name('ReceivableAccount.Print');
+
+        // ==== Retur Invoice ====
+        Route::get('Report/Return/SalesOrder','ReturnInvoiceController@index')->name('return-invoice.index');
+        Route::post('Return/SalesOrder/', 'ReturnInvoiceController@store')->name('return-invoice.store');
+        Route::get('Report/Return/SalesOrder/{id}','ReturnInvoiceController@view')->name('return-invoice.view');
+        Route::get('Report/Return/SalesOrder/Edit/{id}','ReturnInvoiceController@edit')->name('return-invoice.edit');
+        Route::post('Return/SalesOrder/update', 'ReturnInvoiceController@update')->name('return-invoice.update');
+
+        // ==== Retur Purchase ====
+        Route::get('Report/Return/Purchase/','ReturnPurchaseController@index')->name('return-po.index');
+        Route::post('Return/Purchase/', 'ReturnPurchaseController@store')->name('return-po.store');
+        Route::get('Report/Return/Purchase/{id}','ReturnPurchaseController@view')->name('return-po.view');
+        Route::get('Report/Return/Purchase/Edit/{id}','ReturnPurchaseController@edit')->name('return-po.edit');
+        Route::post('Return/Purchase/Update', 'ReturnPurchaseController@update')->name('return-po.update');
+
     });
+
+    // ==== Accounting ====
+    Route::group(['namespace' => '\App\Addons\Accounting\Controllers'] , function() 
+    {
+        // ==== Account Account ====
+        Route::get('Account','AccountAccountController@index')->name('account.index');
+        Route::get('Account/create','AccountAccountController@create')->name('account.create');
+        Route::post('Account/store','AccountAccountController@store')->name('account.store');
+        Route::get('Account/edit/{id}','AccountAccountController@edit')->name('account.edit');
+        Route::put('Account/update','AccountAccountController@update')->name('account.update');
+        Route::get('Account/destroy/{id}','AccountAccountController@destroy')->name('account.destroy');
+        Route::get('Account/filter','AccountAccountController@search')->name('account.filter');
+
+        // ==== Account Journal ====
+        Route::get('Account/Journal','AccountJournalController@index')->name('journal.index');
+        Route::get('Account/Journal/create','AccountJournalController@create')->name('journal.create');
+        Route::post('Account/Journal/store','AccountJournalController@store')->name('journal.store');
+        Route::get('Account/Journal/edit/{id}','AccountJournalController@edit')->name('journal.edit');
+        Route::put('Account/Journal/update/{id}','AccountJournalController@update')->name('journal.update');
+        Route::get('Account/Journal/destroy/{id}','AccountJournalController@destroy')->name('journal.destroy');
+        Route::get('Account/Journal/filter','AccountJournalController@search')->name('journal.filter');
+        
+        // ==== Account Move ====
+        Route::get('AccountMove','AccountMovesController@index')->name('accountmove.index');
+        Route::get('AccountMove/invoice/{id}','AccountMovesController@invoice')->name('accountmove.invoice');
+        Route::get('AccountMove/purchase/{id}','AccountMovesController@purchase')->name('accountmove.purchase');
+        Route::get('AccountMove/payment/{id}','AccountMovesController@payment')->name('accountmove.payment');
+
+        // ==== Accounting Report ====
+        Route::get('Accounting/Report/General_Ledger','AccountReportController@generalledger')->name('accounting.general_ledger');
+        Route::get('Accounting/Report/Partner_Ledger','AccountReportController@partnerledger')->name('accounting.partner_ledger');
+        Route::get('Accounting/Report/General_Ledger/Print','AccountReportController@print_gl')->name('accounting.general_ledger_print');
+        Route::get('Accounting/Report/Partner_Ledger/Print/{type}','AccountReportController@print_pl')->name('accounting.partner_ledger_print');
+    
+        // ==== Paymeny Invoice ====
+        Route::get('Payments/Invoices', 'AccountPaymentsController@index')->name('payment_invoices.index');
+        Route::get('Payments/Invoices/Register', 'AccountPaymentsController@create')->name('payment_invoices.create');
+        Route::get('Payments/Invoices/Reconcile/{id}', 'PaymentMatchingController@invoice')->name('reconcile.invoice');
+        Route::post('Payments/Invoices/Reconcile/store', 'PaymentMatchingController@invoice_store')->name('reconcile.invoice_store');
+        
+        // ==== Paymeny Bills ====
+        Route::get('Payments/Bills', 'AccountPaymentsController@vendor_index')->name('payment_bills.index');
+        Route::get('Payments/Bills/Register', 'AccountPaymentsController@vendor_create')->name('payment_bills.create');
+        Route::get('Payments/Bill/Reconcile/{id}', 'PaymentMatchingController@bill')->name('reconcile.bill');
+        Route::post('Payments/Bill/Reconcile/store', 'PaymentMatchingController@bill_store')->name('reconcile.bill_store');
+
+        // save &Update Payments ==== 
+        Route::post('Payments/store', 'AccountPaymentsController@store')->name('payment.store');
+        Route::post('Payments/update', 'AccountPaymentsController@update')->name('payment.update');
+        Route::get('Payments/View/{id}', 'AccountPaymentsController@view')->name('payment.view');
+        Route::get('Payments/edit/{id}', 'AccountPaymentsController@edit')->name('payment.edit');
+        Route::get('Payments/Confirm/{id}', 'AccountPaymentsController@posted')->name('payment.posted');
+
+    });
+
 });  
 Auth::routes(['verify' => true]);
+
 
 

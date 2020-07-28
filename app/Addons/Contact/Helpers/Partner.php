@@ -45,4 +45,13 @@ class Partner {
         $customer = res_customer::findOrFail($id);
         return $customer ;
     }
+
+    public static function getCustomerDebt($id) {
+        $customer = res_customer::orderBy('name', 'asc')->where('debit','>',0)->paginate(30);
+        return $customer;
+    }
+
+    public static function getCustomerDebit() {
+        
+    }
 }

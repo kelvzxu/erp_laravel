@@ -75,8 +75,8 @@
                                                         
                                                     </td>
                                                     <td class="cell_right" id="payment-credit">
-                                                    <input type="hidden" name="payment-credit" value="{{$partner->credit_limit}}">
-                                                    Rp. {{ number_format($partner->credit_limit)}}
+                                                    <input type="hidden" name="payment-credit" value="{{$partner->credit}}">
+                                                    Rp. {{ number_format($partner->credit)}}
                                                     </td>
                                                     <td class="cell_info_popover"></td>
                                                 </tr>
@@ -87,8 +87,8 @@
                                                     <td class="cell_due_date"></td>
                                                     <td class="cell_label">Open balance</td>
                                                     <td class="cell_left">
-                                                        <input type="hidden" name="amount_total" value="{{$partner->credit_limit}}">
-                                                        <div id="total" class="grand_total"> Rp. {{ number_format($partner->credit_limit)}}</div>
+                                                        <input type="hidden" name="amount_total" value="{{$partner->credit}}">
+                                                        <div id="total" class="grand_total"> Rp. {{ number_format($partner->credit)}}</div>
                                                     </td>
                                                     <td class="cell_right"></td>
                                                     <td class="cell_info_popover"></td>

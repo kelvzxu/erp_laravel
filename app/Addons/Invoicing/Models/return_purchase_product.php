@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Merchandises;
+namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,6 @@ class return_purchase_product extends Model
     }
     public function product()
     {
-        return $this->hasOne('App\Models\Product\Product','id','name');
+        return $this->hasOne('App\Addons\Inventory\Models\product','id','name');
     }
 }

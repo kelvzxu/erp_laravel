@@ -166,11 +166,11 @@ class BillsController extends Controller
         ]);
 
         $partner = Partner::getVendor($request->client);
-        $oldbalance = $partner->debit_limit;
+        $oldbalance = $partner->debit;
         $total = $oldbalance - $old_total;
         $new_balance = $data['grand_total'] + $total; 
         $partner->update([
-            'debit_limit' => $new_balance,
+            'debit' => $new_balance,
         ]);
 
         return response()
@@ -206,11 +206,11 @@ class BillsController extends Controller
                 'total'=>$purchase->grand_total,
             ]);
             $partner = Partner::getVendor($purchase->client);
-            $balance = $partner->debit_limit;
+            $balance = $partner->debit;
             $new_balance = $balance + $purchase->grand_total;
             
             $partner->update([
-                'debit_limit' => $new_balance,
+                'debit' => $new_balance,
             ]);
             $purchase->update([
                 'approved'=> True,

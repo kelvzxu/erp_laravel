@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Accounting\Controllers;
 
-use App\access_right;
-use App\User;
-use App\Models\Accounting\account_payment;
-use App\Models\Accounting\account_journal;
+use App\Addons\Accounting\Models\account_payment;
+use App\Addons\Accounting\Models\account_journal;
 use App\Models\Company\res_company;
-use App\Models\Customer\res_customer;
-use App\Models\Partner\res_partner;
+use App\Addons\Contact\Models\res_customer;
+use App\Addons\Contact\Models\res_partner;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\controller as Controller;
 
 class AccountPaymentsController extends Controller
 {
@@ -22,38 +21,30 @@ class AccountPaymentsController extends Controller
 
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $data= account_payment::with('company','partner','journal')->where('partner_type','customer')->orderBy('name', 'DESC')->paginate(25);
-        return view ('accounting.payments.invoice.index',compact('data','access','group'));
+        return view ('accounting.payments.invoice.index',compact('data'));
     }
 
     public function vendor_index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $data= account_payment::with('company','vendor','journal')->where('partner_type','vendor')->orderBy('name', 'DESC')->paginate(25);
-        return view ('accounting.payments.bill.index',compact('data','access','group'));
+        return view ('accounting.payments.bill.index',compact('data'));
     }
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $journal = account_journal::where('type','Cash')->orWhere('type','Bank')->orderBy('name','asc')->get();
         $company = res_company::find(1);
         $partner = res_customer::orderBy('name','ASC')->get();
-        return view ('accounting.payments.invoice.create',compact('company','journal','partner','access','group'));
+        return view ('accounting.payments.invoice.create',compact('company','journal','partner'));
     }
 
     public function vendor_create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $journal = account_journal::where('type','Cash')->orWhere('type','Bank')->orderBy('name','asc')->get();
         $company = res_company::find(1);
         $partner = res_partner::orderBy('partner_name','ASC')->get();
-        return view ('accounting.payments.bill.create',compact('company','journal','partner','access','group'));
+        return view ('accounting.payments.bill.create',compact('company','journal','partner'));
     }
 
     public function store(Request $request)
@@ -114,23 +105,19 @@ class AccountPaymentsController extends Controller
 
     public function view($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $payment = account_payment::find($id);
         if ($payment->partner_type =="customer")
         {
             $data= account_payment::with('company','partner','journal')->findOrFail($id);
-            return view ('accounting.payments.invoice.view',compact('data','access','group'));
+            return view ('accounting.payments.invoice.view',compact('data'));
         } else {
             $data= account_payment::with('company','vendor','journal')->findOrFail($id);
-            return view ('accounting.payments.bill.view',compact('data','access','group'));
+            return view ('accounting.payments.bill.view',compact('data'));
         }
     }
     
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $journal = account_journal::where('type','Cash')->orWhere('type','Bank')->orderBy('name','asc')->get();
         $payment = account_payment::find($id);
         $company = res_company::find(1);
@@ -138,11 +125,11 @@ class AccountPaymentsController extends Controller
         {
             $partner = res_customer::orderBy('name','ASC')->get();
             $data= account_payment::with('company','partner','journal')->findOrFail($id);
-            return view ('accounting.payments.invoice.edit',compact('company','data','journal','partner','access','group'));
+            return view ('accounting.payments.invoice.edit',compact('company','data','journal','partner'));
         } else{
             $partner = res_partner::orderBy('partner_name','ASC')->get();
             $data= account_payment::with('company','vendor','journal')->findOrFail($id);
-            return view ('accounting.payments.bill.edit',compact('company','data','journal','partner','access','group'));
+            return view ('accounting.payments.bill.edit',compact('company','data','journal','partner'));
         }
     }
 
@@ -196,18 +183,18 @@ class AccountPaymentsController extends Controller
             if ($payment->partner_type =="customer")
             {
                 $partner = res_customer::find($payment->partner_id);
-                $credit = $partner->credit_limit + $payment->amount;
+                $credit = $partner->credit + $payment->amount;
                 $partner->update([
-                    'credit_limit'=> $credit,
+                    'credit'=> $credit,
                 ]);
                 $payment->update([
                     'state'=>"posted"
                 ]);
             } else {
                 $partner = res_partner::find($payment->partner_id);
-                $credit = $partner->credit_limit + $payment->amount;
+                $credit = $partner->credit + $payment->amount;
                 $partner->update([
-                    'credit_limit'=> $credit,
+                    'credit'=> $credit,
                 ]);
                 $payment->update([
                     'state'=>"posted"

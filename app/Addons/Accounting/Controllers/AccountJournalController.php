@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Accounting\Controllers;
 
 use App\Models\Currency\res_currency;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_journal;
-use App\Models\Accounting\account_account_type;
+use App\Addons\Accounting\Models\account_account;
+use App\Addons\Accounting\Models\account_journal;
+use App\Addons\Accounting\Models\account_account_type;
 use App\Models\Company\res_company;
 use App\Models\Company\res_bank;
 use App\Models\Company\res_Company_bank;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\access_right;
-use App\User;
+use App\Http\Controllers\controller as Controller;
+
 
 class AccountJournalController extends Controller
 {
@@ -24,16 +24,12 @@ class AccountJournalController extends Controller
      */
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $journal = account_journal::with('company')->orderBy('name', 'ASC')->paginate(25);
-        return view ('accounting.journal.index',compact('journal','access','group'));
+        return view ('accounting.journal.index',compact('journal'));
     }
 
     public function search(Request $request)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $key=$request->filter;
         $value=$request->value;
         try {
@@ -46,7 +42,7 @@ class AccountJournalController extends Controller
                 $journal = account_journal::orderBy('code', 'ASC')
                         ->paginate(25);
             }
-            return view('accounting.journal.index',compact('journal','access','group'));
+            return view('accounting.journal.index',compact('journal'));
         }catch (\Exception $e) {
             // Toastr::error($e->getMessage(),'Something Wrong');
             Toastr::error('Check In Error!','Something Wrong');
@@ -56,8 +52,6 @@ class AccountJournalController extends Controller
 
     public function create()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $company = res_company::orderBy('id','asc')->get();
         $account = account_account::orderBy('code','asc')->get();
         $bank_account = res_Company_bank::orderBy('company_bank_name','asc')->get();
@@ -65,7 +59,7 @@ class AccountJournalController extends Controller
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
         $account_type = account_account_type::orderBy('id', 'ASC')->get();
         return view ('accounting.journal.create',
-        compact('company','currency','account','account_type','bank_account','bank','access','group'));
+        compact('company','currency','account','account_type','bank_account','bank'));
     }
 
     /**
@@ -129,8 +123,6 @@ class AccountJournalController extends Controller
      */
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $bank_account = res_Company_bank::orderBy('company_bank_name','asc')->get();
         $bank = res_bank::orderBy('bank_name','asc')->get();
         $journal = account_journal::findOrFail($id);
@@ -139,7 +131,7 @@ class AccountJournalController extends Controller
         $currency = res_currency::orderBy('currency_name', 'ASC')->get();
         $account_type = account_account_type::orderBy('id', 'ASC')->get();
         return view ('accounting.journal.edit',
-        compact('journal','company','currency','account','account_type','bank_account','bank','access','group'));
+        compact('journal','company','currency','account','account_type','bank_account','bank'));
     }
 
     /**

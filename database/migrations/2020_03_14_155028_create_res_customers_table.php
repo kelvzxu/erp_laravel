@@ -29,8 +29,8 @@ class CreateResCustomersTable extends Migration
             $table->string('bank_account')->nullable();
             $table->string('website')->nullable();
             $table->string('comment')->nullable();
-            $table->bigInteger('credit_limit')->nullable();
-            $table->bigInteger('debit_limit')->nullable();
+            $table->bigInteger('credit')->nullable();
+            $table->bigInteger('debit')->nullable();
             $table->boolean('active')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();

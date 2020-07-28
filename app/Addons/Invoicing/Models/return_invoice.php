@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Sales;
+namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +20,6 @@ class return_invoice extends Model
     }
     public function customer()
     {
-        return $this->hasOne('App\Models\Customer\res_customer','id','client');
+        return $this->hasOne('App\Addons\Inventory\Models\res_customer','id','client');
     }
 }

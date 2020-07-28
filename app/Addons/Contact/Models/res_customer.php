@@ -11,7 +11,7 @@ class res_customer extends Model
     protected $table = 'res_customers';
     protected $fillable = [
         'name','display_name','parent_id','ref','lag','tz','currency_id','bank_account',
-        'website','credit_limit','debit_limit','active','address','street','street2','zip','city','state_id','country_id','email','phone','mobile','industry_id','sales','payment_terms','note','user_id','receivable_account','logo','journal',
+        'website','credit','debit','active','address','street','street2','zip','city','state_id','country_id','email','phone','mobile','industry_id','sales','payment_terms','note','user_id','receivable_account','logo','journal',
     ];
     public function state()
     {

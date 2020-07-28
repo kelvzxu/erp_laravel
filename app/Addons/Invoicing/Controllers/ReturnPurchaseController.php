@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Invoicing\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
-use App\Models\Product\Product;
-use App\Models\Merchandises\Purchase;
-use App\Models\Partner\res_partner;
+use App\Addons\Contact\Models\res_partner;
+use App\Addons\Invoicing\Models\Bill;
+use App\Addons\Invoicing\Models\return_purchase;
+use App\Addons\Invoicing\Models\return_purchase_product;
+use App\Addons\Inventory\Models\Product;
+use App\Addons\Inventory\Models\stock_move;
+use App\Addons\Inventory\Models\stock_valuation;
+use App\Http\Controllers\controller as Controller;
 use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Merchandises\return_purchase;
-use App\Models\Merchandises\return_purchase_product;
-use App\Models\Product\stock_move;
-use App\Models\Product\stock_valuation;
-use App\access_right;
-use App\User;
 
 class ReturnPurchaseController extends Controller
 {
@@ -24,10 +23,8 @@ class ReturnPurchaseController extends Controller
 
     public function index()
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $return_po = return_purchase::with('user')->orderBy('created_at','DESC')->paginate(25);
-        return view('return-po.index', compact('access','group','return_po'));
+        return view('return-po.index', compact('return_po'));
     }
 
     public function store(Request $request)
@@ -43,7 +40,7 @@ class ReturnPurchaseController extends Controller
                 $return_no = $prefixcode.str_pad($latestInv->id + 1, 6, "0", STR_PAD_LEFT);
             }
             $products= $request->product;
-            $purchase = Purchase::where('purchase_no',$request->purchase_no)->first();
+            $purchase = Bill::where('purchase_no',$request->purchase_no)->first();
             $return = return_purchase::insertGetId([   
                 'return_no'=>$return_no,
                 'purchase_no'=>$request->purchase_no,
@@ -64,11 +61,11 @@ class ReturnPurchaseController extends Controller
                     'total'=>$request->price[$e] * $request->return_qty[$e],
                 ]);
                 echo $total=$request->price[$e] * $request->return_qty[$e];
-                $product = Product::find($data);
+                $product = product::find($data);
                 $oldstock = $product->stock;
                 $newstock = $oldstock - $request->return_qty[$e];
     
-                Product::where('id',$data)->update([
+                product::where('id',$data)->update([
                     'stock' => $newstock,
                 ]);
 
@@ -103,10 +100,10 @@ class ReturnPurchaseController extends Controller
             }
             $grandTotal = return_purchase_product:: where('return_purchase_id',$return)->sum('total');
             $partner = res_partner::findOrFail($request->client);
-            $oldbalance = $partner->credit_limit;
+            $oldbalance = $partner->credit;
             $new_balance = $grandTotal + $oldbalance; 
             $partner->update([
-                'credit_limit' => $new_balance,
+                'credit' => $new_balance,
             ]);
             Toastr::success('Return po:'.$request->purchase_no.' with receive_no '.$request->receipt_no.' Success','Success');
             // return redirect(route('return-po.index'));
@@ -120,18 +117,14 @@ class ReturnPurchaseController extends Controller
 
     public function view($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $data = return_purchase::with('products','partner', 'products.product')->findorFail($id);
-        return view('return-po.show', compact('access','group','data'));
+        return view('return-po.show', compact('data'));
     }
 
     public function edit($id)
     {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
         $data = return_purchase::with('products','partner', 'products.product')->findorFail($id);
-        return view('return-po.edit', compact('access','group','data'));
+        return view('return-po.edit', compact('data'));
     }
 
     public function update (Request $request)
@@ -139,7 +132,7 @@ class ReturnPurchaseController extends Controller
         // try{
             $return_inv = return_purchase::with('products')->findOrFail($request->id);
             $oldgrandTotal = return_purchase_product:: where('return_purchase_id',$request->id)->sum('total');
-            $invoice = Purchase::where('purchase_no',$return_inv->purchase_no)->first();
+            $invoice = Bill::where('purchase_no',$return_inv->purchase_no)->first();
             $products= $request->line;
             foreach($products as $e => $data){
                 $line = return_purchase_product::where([['id',$data],['name',$request->product[$e]]])->first();
@@ -147,11 +140,11 @@ class ReturnPurchaseController extends Controller
                     'return_qty'=>$line->return_qty + $request->return_qty[$e],
                     'total'=>$line->price * ($line->return_qty + $request->return_qty[$e]),
                 ]);
-                $product = Product::find($request->product[$e]);
+                $product = product::find($request->product[$e]);
                 $oldstock = $product->stock;
                 $newstock = $oldstock - $request->return_qty[$e];
             
-                Product::where('id',$request->product[$e])->update([
+                product::where('id',$request->product[$e])->update([
                     'stock' => $newstock,
                 ]);
     
@@ -183,10 +176,10 @@ class ReturnPurchaseController extends Controller
             }
             $grandTotal = return_purchase_product:: where('return_purchase_id',$request->id)->sum('total');
             $partner = res_partner::findOrFail($return_inv->client);
-            $oldbalance = $partner->credit_limit;
+            $oldbalance = $partner->credit;
             $new_balance = ($grandTotal - $oldgrandTotal) + $oldbalance; 
             $partner->update([
-                'credit_limit' => $new_balance,
+                'credit' => $new_balance,
             ]);
         //     Toastr::success('Return inv:'.$return_inv->return_no.' with delivery_no '.$return_inv->delivery_no.' updated successfully','Success');
         //     return redirect(route('return-invoice.index'));

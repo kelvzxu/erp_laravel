@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Merchandises;
+namespace App\Addons\Invoicing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class return_purchase extends Model
     }
     public function invoice()
     {
-        return $this->hasOne(Purchase::class);
+        return $this->hasOne(Bill::class);
     }
     public function user()
     {
@@ -20,6 +20,6 @@ class return_purchase extends Model
     }
     public function partner()
     {
-        return $this->hasOne('App\Models\Partner\res_partner','id','client');
+        return $this->hasOne('App\Addons\Contact\Models\res_partner','id','client');
     }
 }

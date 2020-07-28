@@ -27,8 +27,8 @@ h3 {text-align: center;}
                     <th scope="row">{{$loop->iteration}}
                     <th >{{$cust->display_name}}</th>
                     <th >{{$cust->parent_id}}</th>
-                    <th >Rp. {{ number_format($cust->credit_limit)}}</th>
-                    <th >Rp. {{ number_format($cust->debit_limit)}}</th>
+                    <th >Rp. {{ number_format($cust->credit)}}</th>
+                    <th >Rp. {{ number_format($cust->debit)}}</th>
                 </tr>
             </tbody>
             @endforeach

@@ -78,9 +78,9 @@
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 @if ($res_partner->currency->position == "before")
-                                    <span class="o_stat_value">{{$res_partner->currency->symbol}}. {{ number_format($res_partner->credit_limit)}}</span>
+                                    <span class="o_stat_value">{{$res_partner->currency->symbol}}. {{ number_format($res_partner->credit)}}</span>
                                 @else
-                                    <span class="o_stat_value">{{ number_format($res_partner->credit_limit)}} {{$res_partner->currency->symbol}}</span>
+                                    <span class="o_stat_value">{{ number_format($res_partner->credit)}} {{$res_partner->currency->symbol}}</span>
                                 @endif
                                 <span class="o_stat_text">Credit Note</span>
                             </div>
@@ -90,9 +90,9 @@
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 @if ($res_partner->currency->position == "before")
-                                    <span class="o_stat_value">{{$res_partner->currency->symbol}}. {{ number_format($res_partner->debit_limit)}}</span>
+                                    <span class="o_stat_value">{{$res_partner->currency->symbol}}. {{ number_format($res_partner->debit)}}</span>
                                 @else
-                                    <span class="o_stat_value">{{ number_format($res_partner->debit_limit)}} {{$res_partner->currency->symbol}}</span>
+                                    <span class="o_stat_value">{{ number_format($res_partner->debit)}} {{$res_partner->currency->symbol}}</span>
                                 @endif
                                 <span class="o_stat_text">Purchases</span>
                             </div>

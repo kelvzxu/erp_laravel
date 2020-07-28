@@ -78,9 +78,9 @@
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 @if ($res_customer->currency->position == "before")
-                                <span class="o_stat_value">{{$res_customer->currency->symbol}}. {{ number_format($res_customer->credit_limit)}}</span>
+                                <span class="o_stat_value">{{$res_customer->currency->symbol}}. {{ number_format($res_customer->credit)}}</span>
                                 @else
-                                <span class="o_stat_value">{{ number_format($res_customer->credit_limit)}} {{$res_customer->currency->symbol}}</span>
+                                <span class="o_stat_value">{{ number_format($res_customer->credit)}} {{$res_customer->currency->symbol}}</span>
                                 @endif
                                 <span class="o_stat_text">Saldo</span>
                             </div>
@@ -90,9 +90,9 @@
                             <div name="sale_order_count" class="o_field_widget o_stat_info o_readonly_modifier"
                                 data-original-title="" title="">
                                 @if ($res_customer->currency->position == "before")
-                                    <span class="o_stat_value">{{$res_customer->currency->symbol}}. {{ number_format($res_customer->debit_limit)}}</span>
+                                    <span class="o_stat_value">{{$res_customer->currency->symbol}}. {{ number_format($res_customer->debit)}}</span>
                                 @else
-                                    <span class="o_stat_value">{{ number_format($res_customer->debit_limit)}} {{$res_customer->currency->symbol}}</span>
+                                    <span class="o_stat_value">{{ number_format($res_customer->debit)}} {{$res_customer->currency->symbol}}</span>
                                 @endif
                                 <span class="o_stat_text">Sales</span>
                             </div>

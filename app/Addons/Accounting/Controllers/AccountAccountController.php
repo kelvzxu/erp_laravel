@@ -1,16 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Accounting\Controllers;
 
 use App\Models\Company\res_company;
 use App\Models\Currency\res_currency;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_account_type;
+use AApp\Addons\Accounting\Models\account_account;
+use AApp\Addons\Accounting\Models\account_account_type;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\access_right;
-use App\User;
+use App\Http\Controllers\controller as Controller;
 
 class AccountAccountController extends Controller
 {
@@ -22,7 +21,6 @@ class AccountAccountController extends Controller
     public function index()
     {
         $account = account_account::with('company','account_type')->orderBy('code', 'ASC')->paginate(25);
-        // dump($account);
         return view ('accounting.account.index',compact('account'));
     }
 
@@ -59,7 +57,7 @@ class AccountAccountController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'code' => 'required',
+            'code' => 'required|unique:account_accounts',
             'name' => 'required|string|max:50',
             'type' => 'required',
             'currency_id' => 'required',
@@ -122,7 +120,7 @@ class AccountAccountController extends Controller
     public function update(Request $request, account_account $account_account)
     {
         $this->validate($request, [
-            'code' => 'required',
+            'code' => 'required|unique:account_accounts',
             'name' => 'required|string|max:50',
             'type' => 'required',
             'currency_id' => 'required',
@@ -158,7 +156,7 @@ class AccountAccountController extends Controller
     {
         $account = account_account::find($id);
         $account -> delete();
-        Toastr::success('Chart Of Account Deleted Successfully','Success');
+        Toastr::success('Chart Of Account ' .$account->name. ' |  ' .$account->code. ' Deleted Successfully','Success');
             return redirect(route('account.index'));
     }
 }

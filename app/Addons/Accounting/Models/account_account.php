@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Accounting;
+namespace App\Addons\Accounting\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,7 +27,7 @@ class account_account extends Model
     }
     public function account_type()
     {
-        return $this->hasOne('App\Models\Accounting\account_account_type','id','type');
+        return $this->hasOne(account_account_type::class,'id','type');
     }
     public function move_lines()
     {

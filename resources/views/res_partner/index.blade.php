@@ -119,7 +119,7 @@
                                 <span class="badge badge-pill" modifiers="{}"><i class="fa fa-fw fa-star" aria-label="Favorites" role="img"
                                         title="Favorites" modifiers="{}"></i>3</span>
                                 <span class="badge badge-pill" modifiers="{}"><i class="fa fa-fw fa-usd" role="img" aria-label="Sale orders"
-                                        title="Sales orders" modifiers="{}"></i>{{ number_format($row->debit_limit)}}</span>
+                                        title="Sales orders" modifiers="{}"></i>{{ number_format($row->debit)}}</span>
                             </div>
                         </div>
                     </a>

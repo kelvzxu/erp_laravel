@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Addons\Accounting\Controllers;
 
-use App\User;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_journal;
-use App\Models\Accounting\account_account_type;
-use App\Models\Accounting\account_move;
-use App\Models\Accounting\account_move_line;
-use App\Models\Accounting\account_payment;
+use App\Addons\Accounting\Models\account_account;
+use App\Addons\Accounting\Models\account_journal;
+use App\Addons\Accounting\Models\account_account_type;
+use App\Addons\Accounting\Models\account_move;
+use App\Addons\Accounting\Models\account_move_line;
+use App\Addons\Accounting\Models\account_payment;
 use App\Models\Customer\res_customer;
 use App\Models\Merchandises\Purchase;
 use App\Models\Partner\res_partner;
@@ -17,6 +16,7 @@ use App\Models\Sales\Invoice;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\controller as Controller;
 
 class AccountMovesController extends Controller
 {

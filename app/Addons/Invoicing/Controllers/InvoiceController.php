@@ -167,11 +167,11 @@ class InvoiceController extends Controller
         ]);
 
         $partner = Partner::getCustomer($request->client);
-        $oldbalance = $partner->debit_limit;
+        $oldbalance = $partner->debit;
         $total = $oldbalance - $old_total;
         $new_balance = $data['grand_total'] + $total; 
         $partner->update([
-            'debit_limit' => $new_balance,
+            'debit' => $new_balance,
         ]);
 
         return response()
@@ -200,7 +200,7 @@ class InvoiceController extends Controller
             $invoice = Invoicing::getInvoice($id);
             $customer = Partner::getCustomer($invoice->client);
             $journal = $customer->receivable_account;
-            $balance = $customer->debit_limit;
+            $balance = $customer->debit;
             $new_balance = intval($balance) + intval($invoice->grand_total);
             customer_dept::insert([
                 'invoice_no'=>$invoice->invoice_no,
@@ -210,7 +210,7 @@ class InvoiceController extends Controller
                 'total'=>$invoice->grand_total,
             ]);
             $customer->update([
-                'debit_limit' => $new_balance,
+                'debit' => $new_balance,
             ]);
             $invoice->update([
                 'approved'=> True,

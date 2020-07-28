@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Accounting;
+namespace App\Addons\Accounting\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,10 +19,10 @@ class account_payment extends Model
     }
     public function partner()
     {
-        return $this->hasOne('App\Models\Customer\res_customer','id','partner_id');
+        return $this->hasOne('App\Addons\Contact\Models\res_customer','id','partner_id');
     }
     public function vendor()
     {
-        return $this->hasOne('App\Models\Partner\res_partner','id','partner_id');
+        return $this->hasOne('App\Addons\Contact\Models\res_partner','id','partner_id');
     }
 }

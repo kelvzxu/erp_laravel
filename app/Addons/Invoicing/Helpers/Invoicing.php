@@ -46,6 +46,12 @@ class Invoicing {
         $invoice =  InvoiceProduct::where('invoice_id', $id)->get();
         return $invoice;
     }
+
+    public static function getBillByPurchaseNo($id) {
+        $purchase = Bill::where('purchase_no',$request->purchase_no)->first();
+        return $purchase;
+
+    }
     
     public static function getBillLine($id){
         $bill = BillProduct::where('purchase_id', $id)->get();

@@ -2,8 +2,8 @@
 namespace App\Addons\Accounting\Helpers;
 
 use Artisan;
-use App\Models\Accounting\account_account;
-use App\Models\Accounting\account_journal;
+use App\Addons\Accounting\Models\account_account;
+use App\Addons\Accounting\Models\account_journal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

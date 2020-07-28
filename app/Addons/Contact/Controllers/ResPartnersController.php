@@ -128,8 +128,8 @@ class ResPartnersController extends Controller
         try {
             $res_partner = res_partner::where('id',$request->id)->first();
             $nama_file=$res_partner->logo;
-            $debit_limit=$res_partner->debit_limit;
-            $credit_limit=$res_partner->credit_limit;
+            $debit=$res_partner->debit;
+            $credit=$res_partner->credit;
             if ($request->hasFile('photo')) {
                 $photo = $request->file('photo')->getClientOriginalName();
                 $nama_file = time()."_".$photo;
