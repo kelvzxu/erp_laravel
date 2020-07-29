@@ -34,8 +34,13 @@ Route::get('/attendance', 'HrAttendanceController@checkatd');
 Route::post('/atd-count', 'HrAttendanceController@getcount');
 Route::post('/leave', 'ManageSalaryController@getcount');
 
-Route::get('Products','ProductController@Products');
-Route::get('getProduct','ProductController@getProduct');
+// ==== Inventory ==== 
+Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
+{
+    Route::get('Products','ProductController@Products');
+    Route::get('getProduct','ProductController@getProduct');
+    Route::get('getProducts','ProductController@getProductById');
+});
 
 Route::get('/chart', 'HomeController@getChart');
 
@@ -45,6 +50,7 @@ Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
     Route::post('/customer/search', 'ResCustomersController@searchapi');
     Route::post('/partner/search', 'ResPartnersController@searchapi');
 });
+
 // get Access Rights
 Route::get('/user/Access/{id}','UserController@getAccessRight');
 Route::get('/user/Group/{id}','UserController@getGroup');

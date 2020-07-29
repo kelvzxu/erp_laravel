@@ -514,5 +514,5 @@ class App extends React.Component {
     }
 }
 
-const domContainer = document.querySelector('#sidebar_menu');
-ReactDOM.render(e(App), domContainer);
+// const domContainer = document.querySelector('#sidebar_menu');
+// ReactDOM.render(e(App), domContainer);

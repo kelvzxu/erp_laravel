@@ -232,7 +232,7 @@ class ProductController extends Controller
             $products = Inventory::products();
             return response()->json([
                 'status' => 'success',
-                'data' => $product
+                'data' => $products
             ], 200);
         } catch (\Exception $e){
             return response()->json([
@@ -240,5 +240,24 @@ class ProductController extends Controller
                 'data' => []
             ]);
         }
+    }
+
+    public function getProductById(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+
+        $product = product::where('id', $request->id)->first();
+        if ($product) {
+            return response()->json([
+                'status' => 'success',
+                'data' => $product
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'data' => []
+        ]);
     }
 }

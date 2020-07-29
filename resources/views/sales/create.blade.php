@@ -131,7 +131,7 @@
                                 <tbody>
                                     <tr v-for="product in form.products">
                                         <td class="table-name" :class="{'table-error': errors['products.' + $index + '.name']}">
-                                            <select id="product" class="form-control" v-model="product.name">
+                                            <select @change="onChange(product)" id="product" class="form-control" v-model="product.name">
                                                 <option value="">Select product</option>
                                                 @foreach ($product as $row)
                                                     <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
@@ -139,7 +139,7 @@
                                             </select>
                                         </td>
                                         <td class="table-price" :class="{'table-error': errors['products.' + $index + '.price']}">
-                                            <input type="text" id="price" class="form-control"  v-model="product.price">
+                                            <input type="text" ref="price" id="price" class="form-control"  v-model="product.price">
                                         </td>
                                         <td class="table-qty" :class="{'table-error': errors['products.' + $index + '.qty']}">
                                             <input type="text" class="form-control" v-model="product.qty">
@@ -206,6 +206,21 @@
             qty: 1
         }]
     };
+
+    $("#product").change(function() {
+        $.ajax  ({
+          url: "/api/getProducts",
+          type: 'get',
+          dataType: 'json',
+          data :{
+              'id': $(this).closest('tr').find('#product').val()
+          },
+          success: function (result) {
+            $(this).closest('tr').find('#price').val(result.data.price)
+            console.log('aa',$(this).closest('tr').find('#price').val(result.data.price))
+          }
+        });
+      });
 </script>
 <script src="{{asset('/js/transaksi/sales_order.js')}}"></script>
 <script src="{{asset('js/asset_common/sales.js')}}"></script>
