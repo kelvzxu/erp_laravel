@@ -1,21 +1,40 @@
+var value = 0
 var app = new Vue({
   el: '#sales',
   data: {
     isProcessing: false,
     form: {},
-    errors: {}
+    productlist: [],
+    errors: {},
   },
   created: function () {
-    Vue.set(this.$data, 'form', _form);
+    Vue.set(this.$data, 'form', _form,'productlist',this.fetchproducts());
   },
   methods: {
     addLine: function() {
-      this.form.products.push({name: '', price: 0, qty: 1});
+      value += 1
+      this.form.products.push({index: value,name: '', price: 0, qty: 1});
+      console.log(value)
+    },
+    fetchproducts(){
+      axios.get('/api/Products/sale').then(response => {
+        this.productlist = response.data.data;
+        return this.productlist;
+      }).catch(error => console.error(error));
     },
     onChange(product) {
-      // console.log(product.name)
-      this.form.products.$remove(product);
-      this.form.products.push({name: product.name, price: 5000, qty: 1});
+      const params ={id : product.name};
+      axios.get('/api/getProduct/id',{params}).then(response => {
+        this.result = response.data.data;
+        console.log(this.result.price);
+        this.form.products.splice(product.index,1,{
+          index:product.index,
+          name: product.name, 
+          price: this.result.price, 
+          qty: 1
+        });
+      }).catch(error => console.error(error));
+      console.log(product)
     },
     remove: function(product) {
       this.form.products.$remove(product);

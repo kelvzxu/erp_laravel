@@ -133,9 +133,7 @@
                                         <td class="table-name" :class="{'table-error': errors['products.' + $index + '.name']}">
                                             <select @change="onChange(product)" id="product" class="form-control" v-model="product.name">
                                                 <option value="">Select product</option>
-                                                @foreach ($product as $row)
-                                                    <option value="{{ $row->id }}">{{ ucfirst($row->name) }}</option>
-                                                @endforeach
+                                                <option v-for="row in productlist" v-bind:value="row.id" v-text="row.name">
                                             </select>
                                         </td>
                                         <td class="table-price" :class="{'table-error': errors['products.' + $index + '.price']}">
@@ -201,6 +199,7 @@
         due_date: '',
         discount: 0,
         products: [{
+            index: 0,
             name: '',
             price: 0,
             qty: 1

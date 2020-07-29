@@ -242,6 +242,22 @@ class ProductController extends Controller
         }
     }
 
+    public function ProductSale()
+    {
+        try {
+            $products = Inventory::can_be_sold();
+            return response()->json([
+                'status' => 'success',
+                'data' => $products
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
+    }
+
     public function getProductById(Request $request)
     {
         $this->validate($request, [

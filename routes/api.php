@@ -38,8 +38,9 @@ Route::post('/leave', 'ManageSalaryController@getcount');
 Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
 {
     Route::get('Products','ProductController@Products');
+    Route::get('Products/sale','ProductController@ProductSale');
     Route::get('getProduct','ProductController@getProduct');
-    Route::get('getProducts','ProductController@getProductById');
+    Route::get('getProduct/id','ProductController@getProductById');
 });
 
 Route::get('/chart', 'HomeController@getChart');
