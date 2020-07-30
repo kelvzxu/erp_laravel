@@ -72,6 +72,7 @@
 
     window._form = {!! $orders->toJson() !!};
     var data  = {!! $orders->toJson() !!};
+    console.log(data);
 </script> 
 <script src="{{asset('/js/transaksi/sales_order.js')}}"></script>
 <script src="{{asset('js/asset_common/sales.js')}}"></script>

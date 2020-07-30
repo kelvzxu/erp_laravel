@@ -316,6 +316,10 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="{{ asset('vendor/jquery/jquery-3.2.1.min.js') }}"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{asset('js/library/vue.min.js')}}"></script>
+    <script src="{{asset('js/library/numeral.min.js')}}"></script>
+    <script src="{{asset('js/library/moment.min.js')}}"></script>
+    <script src="{{asset('js/library/vue-resource.min.js')}}"></script>
     <script src="{{asset('js/admin.js')}}"></script>
 
     <!-- toastr message -->

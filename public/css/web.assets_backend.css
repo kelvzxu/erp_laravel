@@ -15645,7 +15645,6 @@ select.o_field_widget.o_input {
 
 .o_form_view .o_form_sheet_bg {
     border-bottom: 1px solid #ddd;
-    background: url(/web/static/src/img/form_sheetbg.png);
 }
 
 .o_form_view .o_form_sheet_bg>.o_form_sheet {

@@ -194,4 +194,21 @@ class SalesOrdersController extends Controller
             return redirect()->back();
         }
     }
+
+    public function fetchSalesOrder(){
+        try {
+            $response = sales_order::with('partner','sales_person','partner.currency')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
+    }
 }

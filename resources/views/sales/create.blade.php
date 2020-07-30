@@ -185,8 +185,6 @@
 @endsection
 
 @section('js')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
-<script src="{{asset('/js/transaksi/vue-resource.min.js')}}"></script>
 <script type="text/javascript">
     Vue.http.headers.common['X-CSRF-TOKEN'] = '{{csrf_token()}}';
 
@@ -205,21 +203,6 @@
             qty: 1
         }]
     };
-
-    $("#product").change(function() {
-        $.ajax  ({
-          url: "/api/getProducts",
-          type: 'get',
-          dataType: 'json',
-          data :{
-              'id': $(this).closest('tr').find('#product').val()
-          },
-          success: function (result) {
-            $(this).closest('tr').find('#price').val(result.data.price)
-            console.log('aa',$(this).closest('tr').find('#price').val(result.data.price))
-          }
-        });
-      });
 </script>
 <script src="{{asset('/js/transaksi/sales_order.js')}}"></script>
 <script src="{{asset('js/asset_common/sales.js')}}"></script>

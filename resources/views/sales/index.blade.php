@@ -5,7 +5,7 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="app-page-title bg-white">
+<div id="sales" class="app-page-title bg-white">
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
@@ -13,18 +13,18 @@
             </ol>
             <div class="o_cp_searchview" role="search">
                 <div class="o_searchview" role="search" aria-autocomplete="list">
-                    <form action="{{ route('sales_orders.filter') }}" method="get" >
+                    <!-- <form action="{{ route('sales_orders.filter') }}" method="get" > -->
                         <button class="o_searchview_more fa fa-search-minus" title="Advanced Search..." role="img"
                             aria-label="Advanced Search..." type="submit"></button>
 
                         <div class="o_searchview_input_container">
-                            <input type="text" class="o_searchview_input" accesskey="Q" placeholder="Search..."
-                                role="searchbox" aria-haspopup="true" name="value">
+                            <input type="text" class="o_searchview_input" placeholder="Search..."
+                                v-model="search" name="value">
                             <input type="hidden" class="o_searchview_input" accesskey="Q" placeholder="key"
                             role="searchbox" aria-haspopup="true" name="filter">
                             <div class="dropdown-menu o_searchview_autocomplete" role="menu"></div>
                         </div>
-                    </form>
+                    <!-- </form> -->
                 </div>
             </div>
         </div>
@@ -62,7 +62,18 @@
                 <nav class="o_cp_pager" role="search" aria-label="Pager">
                     <div class="o_pager o_hidden">
                         <span class="o_pager_counter">
-                            <span class="o_pager_value">{{$orders->total()}}</span> / <span class="o_pager_limit">{{$orders->perPage()}}</span>
+                            <span class="o_pager_value">@{{pagination.from}} - @{{pagination.to}}</span> / <span class="o_pager_limit">@{{pagination.total}}</span>
+                        </span>
+
+                        <span class="btn-group" aria-atomic="true">   
+                            <a type="button" v-if="pagination.prevPage" @click="--pagination.currentPage"
+                            class="fa fa-chevron-left btn o_pager_previous"></a>
+                            <a type="button" v-else disabled
+                            class="fa fa-chevron-left btn o_pager_previous"></a>
+                            <a type="button" v-if="pagination.nextPage" @click="++pagination.currentPage"
+                            class="fa fa-chevron-right btn o_pager_next"></a>
+                            <a type="button" v-else disabled
+                            class="fa fa-chevron-right btn o_pager_next"></a>
                         </span>
                         <span class="btn-group d-none" aria-atomic="true">
                             <button type="button" class="fa fa-chevron-left btn btn-secondary o_pager_previous"
@@ -89,40 +100,26 @@
                     <table class="table table-striped">
                         <thead class="table table-sm">
                             <tr>
-                                <th scope="col">Reference</th>
-                                <th scope="col">Customer</th>
-                                <th scope="col">Order Date</th>
-                                <th scope="col">Sales Representative</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">status</th>
-                                <th scope="col" colspan="2">Created At</th>
+                                <th v-for="column in columns" :key="column.name" scope="col" @click="sortBy(column.name)"
+                                :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'sorting_asc' : 'sorting_desc') : 'sorting'" style="cursor:pointer;">
+                                @{{column.label}}
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($orders as $data)
-                                <tr class="table-row" data-href="{{route('sales_orders.show', $data)}}">
-                                    <td>{{$data->order_no}}</td>
-                                    <td>{{$data->partner->name}}</td>
-                                    <td>{{$data->order_date}}</td>
-                                    <td>{{$data->sales_person->employee_name}}</td>
-                                    @if ($data->partner->currency->position == "before")
-                                        <td>{{$data->partner->currency->symbol}} {{ number_format($data->grand_total)}}</td>
-                                    @else
-                                        <td>{{ number_format($data->grand_total)}} {{$data->partner->currency->symbol}}</td>
-                                    @endif
-                                    <td>
-                                        @if($data->status == "Quotation" ) 
-                                            <div class="mb-2 mr-2 badge badge-pill badge-warning text-white">Quotation</div>
-                                            <!-- <a class="btn btn-warning btn-sm text-white">Pending...</a> -->
-                                        @endif
-                                        @if($data->status == "SO" ) 
-                                            <div class="mb-2 mr-2 badge badge-pill badge-success">Sales Order</div>
-                                            <!-- <a class="btn btn-success btn-sm text-white">Complete</a> -->
-                                        @endif
-                                    </td>
-                                    <td>{{$data->created_at->diffForHumans()}}</td>
-                                </tr>
-                            @endforeach
+                            <tr v-for="row in  paginatedSales" class="table-row" @click="show(row)">
+                                <td>@{{row.order_no}}</td>
+                                <td>@{{row.partner.name}}</td>
+                                <td>@{{row.order_date}}</td>
+                                <td>@{{row.sales_person.employee_name}}</td>
+                                <td v-if="row.partner.currency.position == 'before'">@{{row.partner.currency.symbol}}&nbsp;@{{row.grand_total | formatNumber}}</td>
+                                <td v-if="row.partner.currency.position == 'after'">@{{row.grand_total | formatNumber}}&nbsp;@{{row.partner.currency.symbol}}</td>
+                                <td>
+                                    <div v-if="row.status == 'Quotation'" class="mb-2 mr-2 badge badge-pill badge-warning text-white">Quotation</div>
+                                    <div v-if="row.status == 'SO'" class="mb-2 mr-2 badge badge-pill badge-success">Sales Order</div>
+                                </td>
+                                <td>@{{row.created_at | moment }}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -205,4 +202,5 @@
 @endsection
 @section('js')
 <script src="{{asset('js/asset_common/sales.js')}}"></script>
+
 @endsection

@@ -346,6 +346,9 @@
                                                         <div class="wrap-input-required">
                                                             <select id="journal" required name="journal" class="input200" style="border:none;">
                                                                 <option value=""></option>
+                                                                @foreach (Accounting::account_journal() as $row)
+                                                                    <option value="{{ $row->id }}">{{ ucfirst($row->name) }} | {{ ucfirst($row->code) }} </option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </td>
