@@ -8,6 +8,8 @@ var app = new Vue({
         search: '',
         SalesOrder: [],
         errors: {},
+        sortOrders : {},
+        sortKey: '',
         columns: [{
                 label: 'Reference',
                 name: 'order_no'
@@ -45,8 +47,13 @@ var app = new Vue({
             from: '0',
             to: '0'
         },
+
     },
     created: function () {
+        for (var index in this.columns) {
+            key = this.columns[index].name;
+            this.sortOrders[key] = -1;
+        }
         Vue.filter(
             "formatNumber",
             function (value) {
@@ -59,8 +66,8 @@ var app = new Vue({
             'columns', this.$data.columns,
             'pagination', this.$data.pagination,
             'length', this.$data, length,
+            'sortOrders',this.$data.sortOrders,
         );
-        console.log(this.$data.pagination.nextPage)
     },
     methods: {
         moment: function (date) {
@@ -73,13 +80,6 @@ var app = new Vue({
             window.location = url;
         },
 
-        sortBy: function (key) {
-            // this.sortKey = key;
-            // this.sortOrders[key] = this.sortOrders[key] * -1;
-            console.log(this.SalesOrder);
-            console.log(key);
-        },
-
         paginate(array, length, pageNumber) {
             this.pagination.from = array.length ? ((pageNumber - 1) * length) + 1 : ' ';
             this.pagination.to = pageNumber * length > array.length ? array.length : pageNumber * length;
@@ -88,12 +88,28 @@ var app = new Vue({
             return array.slice((pageNumber - 1) * length, pageNumber * length);
         },
 
+        resetPagination() {
+            this.pagination.currentPage = 1;
+            this.pagination.prevPage = '';
+            this.pagination.nextPage = '';
+        },
+
+        sortBy: function(key) {
+            this.resetPagination();
+            this.sortKey = key;
+            this.sortOrders[key] = this.sortOrders[key] * -1;
+        },
+
+        getIndex(array, key, value) {
+            return array.findIndex(i => i[key] == value)
+        },
+
         fetchSalesOrder() {
             axios.get('/api/sale/list').then(response => {
                 this.SalesOrder = response.data.data;
                 this.pagination.total = this.SalesOrder.length;
             }).catch(error => console.error(error));
-        }
+        },
     },
     filters: {
         moment: function (date) {
@@ -108,6 +124,18 @@ var app = new Vue({
                     return Object.keys(row).some((key) => {
                         return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
                     })
+                });
+            }
+            let sortKey = this.sortKey 
+            let order = this.sortOrders[sortKey] || 1;
+            console.log("ok")
+            if (sortKey) {
+                sale = sale.slice().sort(function(a, b) {
+                    a = String(a[sortKey]).toLowerCase();
+                    console.log(a)
+                    b = String(b[sortKey]).toLowerCase();
+                    console.log(b)
+                    return (a === b ? 0 : a > b ? 1 : -1) * order;
                 });
             }
             return sale

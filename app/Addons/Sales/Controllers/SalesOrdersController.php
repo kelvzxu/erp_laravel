@@ -20,7 +20,7 @@ class SalesOrdersController extends Controller
     function calculate_code()
     {
         $year=date("Y");
-        $prefixcode = "SO/$year/"; 
+        $prefixcode = "SL/$year/"; 
         $count = sales_order::where('order_no','like',"%".$prefixcode."%")->count();
         if ($count==0){
             return "$prefixcode"."000001";
@@ -198,7 +198,10 @@ class SalesOrdersController extends Controller
     public function fetchSalesOrder(){
         try {
             $response = sales_order::with('partner','sales_person','partner.currency')
+                    ->join('res_customers', 'sales_orders.customer', '=', 'res_customers.id')
+                    ->join('hr_employees', 'sales_orders.sales', '=', 'hr_employees.id')
                     ->orderBy('created_at', 'desc')
+                    ->select('sales_orders.*', 'res_customers.name','hr_employees.employee_name')
                     ->get();
             return response()->json([
                 'status' => 'success',

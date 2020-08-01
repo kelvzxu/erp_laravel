@@ -26685,3 +26685,15 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
     height: 64px;
     object-fit: contain;
 }
+
+.o_sorting_asc {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid #fff;
+}
+.o_sorting_desc {
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid #fff;
+}
+

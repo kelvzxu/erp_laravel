@@ -43,22 +43,7 @@
                 </div>
             </div>
             <div class="o_cp_right">
-                <div class="btn-group o_search_options position-static" role="search">
-                    <div>
-                        <div class="btn-group o_dropdown">
-                            <select
-                                class=" o_filters_menu_button o_dropdown_toggler_btn btn btn-secondary dropdown-toggle "
-                                data-toggle="dropdown" aria-expanded="false" tabindex="-1" data-flip="false"
-                                data-boundary="viewport" name="key" id="key">
-                                <option value="" data-icon="fa fa-filter">Filters</option>
-                                <option value="order_no">Order No</option>
-                                <option value="vendor">Name</option>
-                                <option value="order_date">Order Date</option>
-                                <!-- <span class="fa fa-filter"></span> Filters -->
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                
                 <nav class="o_cp_pager" role="search" aria-label="Pager">
                     <div class="o_pager o_hidden">
                         <span class="o_pager_counter">
@@ -95,13 +80,13 @@
     <div class="tab-content">
         <div class="tab-pane active" id="notebook_page_511">
             <div class="panel-body ml-2">
-                @if($orders->count())
-                <div class="table-responsive-lg mb-4">
+
+                <div v-if="pagination.total != 0 " class="table-responsive-lg mb-4">
                     <table class="table table-striped">
                         <thead class="table table-sm">
                             <tr>
                                 <th v-for="column in columns" :key="column.name" scope="col" @click="sortBy(column.name)"
-                                :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'sorting_asc' : 'sorting_desc') : 'sorting'" style="cursor:pointer;">
+                                :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'o_sorting_asc' : 'o_sorting_desc') : 'sorting'" style="cursor:pointer;">
                                 @{{column.label}}
                                 </th>
                             </tr>
@@ -109,9 +94,9 @@
                         <tbody>
                             <tr v-for="row in  paginatedSales" class="table-row" @click="show(row)">
                                 <td>@{{row.order_no}}</td>
-                                <td>@{{row.partner.name}}</td>
+                                <td>@{{row.name}}</td>
                                 <td>@{{row.order_date}}</td>
-                                <td>@{{row.sales_person.employee_name}}</td>
+                                <td>@{{row.employee_name}}</td>
                                 <td v-if="row.partner.currency.position == 'before'">@{{row.partner.currency.symbol}}&nbsp;@{{row.grand_total | formatNumber}}</td>
                                 <td v-if="row.partner.currency.position == 'after'">@{{row.grand_total | formatNumber}}&nbsp;@{{row.partner.currency.symbol}}</td>
                                 <td>
@@ -123,8 +108,7 @@
                         </tbody>
                     </table>
                 </div>
-                @else
-                <div class="o_nocontent_help">
+                <div v-else class="o_nocontent_help">
                     <p class="o_view_nocontent_smiling_face">
                         <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
                         Create a new quotation, the first step of a new sale!
@@ -134,69 +118,57 @@
                         You will be able to create an invoice and collect the payment.
                     </p>
                 </div>
-                @endif
             </div>
         </div>
         <div class="tab-pane" id="notebook_page_521">
-            @if($orders->count())
-                <div class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
-                @foreach($orders as $data)
-                    <div class="oe_kanban_card oe_kanban_global_click o_kanban_record" modifiers="{}" tabindex="0" role="article">
-                        <div class="o_kanban_record_top mb16" modifiers="{}">
-                            <div class="o_kanban_record_headings mt4" modifiers="{}">
-                                <strong class="o_kanban_record_title" modifiers="{}"><span modifiers="{}">{{$data->partner->name}}</span></strong>
-                            </div>
-                            @if ($data->partner->currency->position == "before")
-                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                                    name="amount_total">{{$data->partner->currency->symbol}}&nbsp;{{ number_format($data->grand_total)}}</span></strong>
-                            @else
-                                <strong modifiers="{}"><span class="o_field_monetary o_field_number o_field_widget"
-                                    name="amount_total">{{ number_format($data->grand_total)}}&nbsp;{{$data->partner->currency->symbol}}</span></strong>
-                            @endif
+            <div v-if="pagination.total != 0 " class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
+                <div v-for="row in  paginatedSales" class="oe_kanban_card oe_kanban_global_click o_kanban_record" @click="show(row)">
+                    <div class="o_kanban_record_top mb16">
+                        <div class="o_kanban_record_headings mt4">
+                            <strong class="o_kanban_record_title"><span>@{{row.partner.name}}</span></strong>
                         </div>
-                        <a class="o_kanban_record_bottom" modifiers="{}" href="{{route('purchase_orders.show', $data)}}">
-                            <div class="oe_kanban_bottom_left text-muted" modifiers="{}">
-                                <span modifiers="{}">{{$data->purchase_no}}<br>{{$data->created_at}}</span>
-                                <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
-                                    name="activity_ids">
-                                </div>
-                            </div>
-                            <div class="oe_kanban_bottom_right" modifiers="{}">
-                                <div name="state" class="o_field_widget badge badge-default">
-                                    @if($data->status == "Quotation" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-warning text-white"><span style="font-size:10px;">Quotation></div>
-                                    @endif
-                                    @if($data->status == "SO" ) 
-                                        <div class="mb-2 mr-2 badge badge-pill badge-success"><span style="font-size:10px;">Sales Order</span></div>
-                                    @endif
-                                </div>
-                            </div>
-                        </a>
+                            <strong>
+                                <span v-if="row.partner.currency.position == 'before'" class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">@{{row.partner.currency.symbol}}&nbsp;@{{row.grand_total | formatNumber}}</span>
+                            </strong>
+                            <strong>
+                                <span v-if="row.partner.currency.position == 'after'" class="o_field_monetary o_field_number o_field_widget"
+                                    name="amount_total">@{{row.grand_total | formatNumber}}&nbsp;@{{row.partner.currency.symbol}}</span>
+                            </strong>
                     </div>
-                @endforeach
+                    <a class="o_kanban_record_bottom">
+                        <div class="oe_kanban_bottom_left text-muted">
+                            <span>@{{row.purchase_no}}<br>@{{row.created_at}}</span>
+                            <div class="o_kanban_inline_block dropdown o_kanban_selection o_mail_activity o_field_widget"
+                                name="activity_ids">
+                            </div>
+                        </div>
+                        <div class="oe_kanban_bottom_right">
+                            <div name="state" class="o_field_widget badge badge-default">
+                                <div v-if="row.status == 'Quotation'" class="mb-2 mr-2 badge badge-pill badge-warning text-white"><span style="font-size:10px;">Quotation></div>
+                                <div v-if="row.status == 'SO'" class="mb-2 mr-2 badge badge-pill badge-success"><span style="font-size:10px;">Sales Order</span></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
                 <?php 
                     $ghost=30-count($orders);
                     for ($x = 0; $x < $ghost; $x++){
                         echo"<div class='o_kanban_record o_kanban_ghost'></div>";
                     }
                 ?>
-                </div>
-            @else
-                <div class="o_nocontent_help">
-                    <p class="o_view_nocontent_smiling_face">
-                        <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
-                        Create a new quotation, the first step of a new sale!
-                    </p>
-                    <p>
-                        Once the quotation is confirmed by the customer, it becomes a sales order.
-                        You will be able to create an invoice and collect the payment.
-                    </p>
-                </div>
-            @endif
+            </div>
+            <div v-else class="o_nocontent_help">
+                <p class="o_view_nocontent_smiling_face">
+                    <img src="{{asset('images/icons/smiling_face.svg')}}" alt=""><br>
+                    Create a new quotation, the first step of a new sale!
+                </p>
+                <p>
+                    Once the quotation is confirmed by the customer, it becomes a sales order.
+                    You will be able to create an invoice and collect the payment.
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="row mx-4">
-        {!! $orders->render() !!}
     </div>
 </div>
 @endsection
