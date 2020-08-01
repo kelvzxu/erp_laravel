@@ -95,6 +95,7 @@ var app = new Vue({
         },
 
         sortBy: function(key) {
+            
             this.resetPagination();
             this.sortKey = key;
             this.sortOrders[key] = this.sortOrders[key] * -1;
@@ -120,6 +121,7 @@ var app = new Vue({
         filteredSales() {
             let sale = this.SalesOrder;
             if (this.search) {
+                console.log('search');
                 sale = sale.filter((row) => {
                     return Object.keys(row).some((key) => {
                         return String(row[key]).toLowerCase().indexOf(this.search.toLowerCase()) > -1;
@@ -128,7 +130,6 @@ var app = new Vue({
             }
             let sortKey = this.sortKey 
             let order = this.sortOrders[sortKey] || 1;
-            console.log("ok")
             if (sortKey) {
                 sale = sale.slice().sort(function(a, b) {
                     a = String(a[sortKey]).toLowerCase();

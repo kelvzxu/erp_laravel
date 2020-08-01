@@ -201,6 +201,21 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#" id="account-config">
+                            <i class="metismenu-icon fa fa-cogs"></i>
+                            Configuration
+                            <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="/uom/tree-view">
+                                    <i class="metismenu-icon"></i> 
+                                    Unit of Measure
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     @endif
                 @endif
                 @if (AccessRight::access()->accounting == True ) 

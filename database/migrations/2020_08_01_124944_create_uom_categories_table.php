@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFieldBarcodeInProduct extends Migration
+class CreateUomCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class AddFieldBarcodeInProduct extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->string('barcode')->nullable()->after('id');
+        Schema::create('uom_categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('measure_type');
+            $table->integer('create_uid');
+            $table->timestamps();
         });
     }
 
@@ -25,5 +29,6 @@ class AddFieldBarcodeInProduct extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('uom_categories');
     }
 }

@@ -57,6 +57,12 @@ Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
     Route::post('/partner/search', 'ResPartnersController@searchapi');
 });
 
+// ==== UOM ====
+Route::group(['namespace' => '\App\Addons\Uom\Controllers'], function()
+{
+    Route::get('/uom/list', 'UomController@fetchUom');
+});
+
 // get Access Rights
 Route::get('/user/Access/{id}','UserController@getAccessRight');
 Route::get('/user/Group/{id}','UserController@getGroup');

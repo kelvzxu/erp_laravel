@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNewFieldsInProductsTable extends Migration
+class CreateUomTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class AddNewFieldsInProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->integer('cost')->nullable();
-            $table->boolean('can_be_sold')->nullable();
-            $table->boolean('can_be_purchase')->nullable();
+        Schema::create('uom_type', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('code',200)->unique();
+            $table->string('name');
+            $table->timestamps();
         });
     }
 
@@ -27,8 +28,6 @@ class AddNewFieldsInProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('uom_type');
     }
 }

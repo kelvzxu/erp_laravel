@@ -18,6 +18,10 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('ECommerce', 'ECommerceController@index')->name('ECommerce.index');  
 
+    Route::get('/uom/{any}', function () {
+        return view('uom.vue');
+    })->where('any', '.*');
+
     // ==== Apps ====
     Route::get('Apps','AppsController@index')->name('Apps.index');
     Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');
