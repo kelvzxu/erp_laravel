@@ -15152,7 +15152,7 @@ select.o_field_widget.o_input {
     vertical-align: top;
 }
 
-.o_form_view .o_group .o_group_col_6 {
+.o_group .o_group_col_6 {
     display: inline-block;
     width: 50%;
     vertical-align: top;

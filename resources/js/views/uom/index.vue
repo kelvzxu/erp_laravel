@@ -4,7 +4,7 @@
       <div>
         <ol class="breadcrumb" role="navigation">
           <li class="breadcrumb-item" accesskey="b">
-            <a href>Unit Of Measure</a>
+            <router-link class="text-primary" :to="{ name:'uom_index' }">Units of Measure</router-link>
           </li>
         </ol>
         <div class="o_cp_searchview" role="search">
@@ -18,7 +18,13 @@
             ></button>
 
             <div class="o_searchview_input_container">
-              <input type="text" class="o_searchview_input" v-model="search" placeholder="Search..." name="value" />
+              <input
+                type="text"
+                class="o_searchview_input"
+                v-model="search"
+                placeholder="Search..."
+                name="value"
+              />
               <div class="dropdown-menu o_searchview_autocomplete" role="menu"></div>
             </div>
           </div>
@@ -28,12 +34,11 @@
         <div class="o_cp_left">
           <div class="o_cp_buttons" role="toolbar" aria-label="Control panel toolbar">
             <div>
-              <a
+              <router-link
                 type="button"
                 class="btn btn-primary text-white o-kanban-button-new"
-                accesskey="c"
-              >Create</a>
-
+                :to="{ name:'uom_create' }"
+              >Create</router-link>
               <button type="button" class="btn btn-secondary o_button_import">Import</button>
             </div>
           </div>
@@ -42,14 +47,26 @@
           <nav class="o_cp_pager" role="search" aria-label="Pager">
             <div class="o_pager o_hidden">
               <span class="o_pager_counter">
-                  <span class="o_pager_value"></span>{{pagination.from}}-{{pagination.to}}
-                  <span class="o_pager_limit"></span>{{pagination.total}}
+                <span class="o_pager_value"></span>
+                {{pagination.from}}-{{pagination.to}}
+                <span class="o_pager_limit"></span>
+                {{pagination.total}}
               </span>
 
               <span class="btn-group" aria-atomic="true">
-                <a v-if="pagination.prevPage" @click="--pagination.currentPage" type="button" class="fa fa-chevron-left btn o_pager_previous"></a>
+                <a
+                  v-if="pagination.prevPage"
+                  @click="--pagination.currentPage"
+                  type="button"
+                  class="fa fa-chevron-left btn o_pager_previous"
+                ></a>
                 <a v-else type="button" class="fa fa-chevron-left btn o_pager_previous"></a>
-                <a v-if="pagination.nextPage" @click="++pagination.currentPage" type="button" class="fa fa-chevron-right btn o_pager_next"></a>
+                <a
+                  v-if="pagination.nextPage"
+                  @click="++pagination.currentPage"
+                  type="button"
+                  class="fa fa-chevron-right btn o_pager_next"
+                ></a>
                 <a v-else type="button" disabled class="fa fa-chevron-right btn o_pager_next"></a>
               </span>
               <span class="btn-group d-none" aria-atomic="true">
@@ -106,7 +123,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="row in paginatedata" :key="row.id" class="table-row">
+                <tr v-for="row in paginatedata" :key="row.id" class="table-row" @click="show(row)">
                   <td>{{row.name}}</td>
                   <td>{{row.category.name}}</td>
                   <td>{{row.type.name}}</td>
@@ -186,6 +203,9 @@ export default {
     getIndex(array, key, value) {
       return array.findIndex((i) => i[key] == value);
     },
+    show(row){
+      this.$router.push({name: 'uom_edit', params:{id : btoa(row.id)}});
+    }
   },
   computed: {
     filterdata() {

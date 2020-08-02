@@ -27,20 +27,17 @@ class UserController extends Controller
             
     }
 
-    public function getGroup($id){
-        $user = User::where('email',$id)->first();
-        echo  $user;
-        // if($user->id !=""){
-        //     return response()->json([
-        //         'status' => 'success',
-        //         'data' => $user
-        //     ], 200);
-        // } else{
-        //     return response()->json([
-        //         'status' => 'Error',
-        //         'data' => 'User not found'
-        //     ], 200);
-        // }
-            
+    public function getUser($id){
+        $response = User::where('email',$id)->first();
+        if ($response) {
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'result' => []
+        ]);
     }
 }

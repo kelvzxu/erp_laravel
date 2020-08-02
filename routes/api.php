@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('country','ResCountryController@index');
 Route::get('country','ResCountryController@index');
 Route::get('state','ResCountryStatesController@index');
 Route::get('state/search','ResCountryStatesController@search');
@@ -24,10 +26,6 @@ Route::get('industry','ResPartnerIndustryController@index');
 Route::get('lang','ResLangController@index');
 Route::get('tz','ResTimeZoneController@index');
 
-Route::get('/product/{id}', 'OrderController@getProduct');
-Route::post('/cart', 'OrderController@addToCart');
-Route::get('/cart', 'OrderController@getCart');
-Route::delete('/cart/{id}', 'OrderController@removeCart');
 Route::post('/product/search', 'ProductController@searchapi');
 Route::post('/employee/search', 'HrEmployeesController@searchapi');
 Route::get('/attendance', 'HrAttendanceController@checkatd');
@@ -61,8 +59,14 @@ Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
 Route::group(['namespace' => '\App\Addons\Uom\Controllers'], function()
 {
     Route::get('/uom/list', 'UomController@fetchUom');
+    Route::get('/uom/category/list','UomController@fetchUomCategory');
+    Route::get('/uom/type/list','UomController@fetchUomType');
+    Route::get('/uom/get_uom/{id}','UomController@getUom');
+    Route::Post('/uom/store','UomController@store');
+    Route::Post('/uom/update','UomController@update');
 });
 
 // get Access Rights
 Route::get('/user/Access/{id}','UserController@getAccessRight');
-Route::get('/user/Group/{id}','UserController@getGroup');
+Route::get('/user/{id}','UserController@getUser');
+
