@@ -7,7 +7,7 @@
             <div>
               <ol class="breadcrumb" role="navigation">
                 <li class="breadcrumb-item" accesskey="b">
-                  <a href="#">Units of Measure</a>
+                  <router-link class="text-primary" :to="{ name:'uom_index' }">Units of Measure</router-link>
                 </li>
                 <li class="breadcrumb-item active">New</li>
               </ol>
@@ -29,11 +29,11 @@
                         class="btn btn-primary o_form_button_save"
                         accesskey="s"
                       >Save</button>
-                      <button
+                      <router-link
                         type="button"
                         class="btn btn-secondary o_form_button_cancel"
-                        accesskey="j"
-                      >Discard</button>
+                        :to="{ name:'uom_index' }"
+                      >Discard</router-link>
                     </div>
                   </div>
                 </div>

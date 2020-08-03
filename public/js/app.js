@@ -41792,7 +41792,105 @@ var render = function() {
     [
       _c("div", { staticClass: "o_action_manager" }, [
         _c("div", { staticClass: "o_action o_view_controller" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "o_cp_controller" }, [
+            _c("div", { staticClass: "o_control_panel" }, [
+              _c("div", [
+                _c(
+                  "ol",
+                  { staticClass: "breadcrumb", attrs: { role: "navigation" } },
+                  [
+                    _c(
+                      "li",
+                      {
+                        staticClass: "breadcrumb-item",
+                        attrs: { accesskey: "b" }
+                      },
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "text-primary",
+                            attrs: { to: { name: "uom_index" } }
+                          },
+                          [_vm._v("Units of Measure")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "breadcrumb-item active" }, [
+                      _vm._v("New")
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", {
+                  staticClass: "o_cp_searchview",
+                  attrs: { role: "search" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", [
+                _c("div", { staticClass: "o_cp_left" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "o_cp_buttons",
+                      attrs: {
+                        role: "toolbar",
+                        "aria-label": "Control panel toolbar"
+                      }
+                    },
+                    [
+                      _c("div", [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "o_form_buttons_edit",
+                            attrs: {
+                              role: "toolbar",
+                              "aria-label": "Main actions",
+                              "data-original-title": "",
+                              title: ""
+                            }
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-primary o_form_button_save",
+                                attrs: { type: "submit", accesskey: "s" }
+                              },
+                              [_vm._v("Save")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass:
+                                  "btn btn-secondary o_form_button_cancel",
+                                attrs: {
+                                  type: "button",
+                                  to: { name: "uom_index" }
+                                }
+                              },
+                              [_vm._v("Discard")]
+                            )
+                          ],
+                          1
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("aside", { staticClass: "o_cp_sidebar" })
+                ]),
+                _vm._v(" "),
+                _vm._m(0)
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "o_content" }, [
             _c("div", { staticClass: "o_form_view o_form_editable" }, [
@@ -42289,104 +42387,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "o_cp_controller" }, [
-      _c("div", { staticClass: "o_control_panel" }, [
-        _c("div", [
-          _c(
-            "ol",
-            { staticClass: "breadcrumb", attrs: { role: "navigation" } },
-            [
-              _c(
-                "li",
-                { staticClass: "breadcrumb-item", attrs: { accesskey: "b" } },
-                [
-                  _c("a", { attrs: { href: "#" } }, [
-                    _vm._v("Units of Measure")
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("li", { staticClass: "breadcrumb-item active" }, [
-                _vm._v("New")
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "o_cp_searchview",
-            attrs: { role: "search" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", [
-          _c("div", { staticClass: "o_cp_left" }, [
-            _c(
-              "div",
-              {
-                staticClass: "o_cp_buttons",
-                attrs: {
-                  role: "toolbar",
-                  "aria-label": "Control panel toolbar"
-                }
-              },
-              [
-                _c("div", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "o_form_buttons_edit",
-                      attrs: {
-                        role: "toolbar",
-                        "aria-label": "Main actions",
-                        "data-original-title": "",
-                        title: ""
-                      }
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary o_form_button_save",
-                          attrs: { type: "submit", accesskey: "s" }
-                        },
-                        [_vm._v("Save")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-secondary o_form_button_cancel",
-                          attrs: { type: "button", accesskey: "j" }
-                        },
-                        [_vm._v("Discard")]
-                      )
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("aside", { staticClass: "o_cp_sidebar" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "o_cp_right" }, [
-            _c("div", {
-              staticClass: "btn-group o_search_options position-static",
-              attrs: { role: "search" }
-            }),
-            _vm._v(" "),
-            _c("nav", {
-              staticClass: "o_cp_pager",
-              attrs: { role: "search", "aria-label": "Pager" }
-            }),
-            _vm._v(" "),
-            _c("nav", {
-              staticClass: "btn-group o_cp_switch_buttons",
-              attrs: { role: "toolbar", "aria-label": "View switcher" }
-            })
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "o_cp_right" }, [
+      _c("div", {
+        staticClass: "btn-group o_search_options position-static",
+        attrs: { role: "search" }
+      }),
+      _vm._v(" "),
+      _c("nav", {
+        staticClass: "o_cp_pager",
+        attrs: { role: "search", "aria-label": "Pager" }
+      }),
+      _vm._v(" "),
+      _c("nav", {
+        staticClass: "btn-group o_cp_switch_buttons",
+        attrs: { role: "toolbar", "aria-label": "View switcher" }
+      })
     ])
   },
   function() {
@@ -59011,15 +59026,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 /*!*******************************************!*\
   !*** ./resources/js/views/uom/create.vue ***!
   \*******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _create_vue_vue_type_template_id_15a63092___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./create.vue?vue&type=template&id=15a63092& */ "./resources/js/views/uom/create.vue?vue&type=template&id=15a63092&");
 /* harmony import */ var _create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create.vue?vue&type=script&lang=js& */ "./resources/js/views/uom/create.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _create_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -59049,7 +59063,7 @@ component.options.__file = "resources/js/views/uom/create.vue"
 /*!********************************************************************!*\
   !*** ./resources/js/views/uom/create.vue?vue&type=script&lang=js& ***!
   \********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59233,8 +59247,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/kelvinzxu/Project/Laravel/erp_laravel/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/kelvinzxu/Project/Laravel/erp_laravel/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/witech05/project/erp_laravel/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/witech05/project/erp_laravel/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
