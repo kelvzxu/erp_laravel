@@ -14898,7 +14898,7 @@ select.o_field_widget.o_input {
 
     .o_form_view .oe_button_box>.btn.oe_stat_button,
     .o_form_view .oe_button_box>.o_dropdown_more {
-        width: 20%;
+        width: 15%;
     }
 }
 
@@ -14906,7 +14906,7 @@ select.o_field_widget.o_input {
 
     .o_form_view .oe_button_box>.btn.oe_stat_button,
     .o_form_view .oe_button_box>.o_dropdown_more {
-        width: 20%;
+        width: 15%;
     }
 }
 

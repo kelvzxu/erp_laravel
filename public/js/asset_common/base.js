@@ -108,7 +108,7 @@ $(".remove-preview").on("click", function () {
     boxZone.empty();
     previewZone.addClass("hidden");
     reset(dropzone);
-});
+}); 
 
 $(document).ready(function () {
     $(document).on('change', '.btn-file :file', function () {
@@ -133,7 +133,7 @@ $(document).ready(function () {
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
+            $('#filename').val(input.files[0].name);
             reader.onload = function (e) {
                 $('#img-upload').attr('src', e.target.result);
             }
