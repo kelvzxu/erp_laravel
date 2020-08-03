@@ -3399,153 +3399,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3554,7 +3407,16 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         can_be_sold: "",
         can_be_purchase: "",
-        type: "consum"
+        type: "consum",
+        category: 1,
+        code: "",
+        barcode: "",
+        price: "0",
+        tax_id: "",
+        cost: "0",
+        uom_id: "1",
+        uom_po_id: "1",
+        description: ""
       },
       type: [{
         label: "Consumable",
@@ -3565,13 +3427,37 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         label: "Storable Product",
         value: "product"
-      }]
+      }],
+      category: [],
+      uom: []
     };
+  },
+  mounted: function mounted() {
+    this.fetchCategory();
+    this.fetchUom();
   },
   methods: {
     readfile: function readfile(e) {
       var filename = document.getElementById("filename").value;
       this.state.photo = filename;
+    },
+    fetchCategory: function fetchCategory() {
+      var _this = this;
+
+      axios.get("/api/Products/category").then(function (response) {
+        _this.category = response.data.result;
+      })["catch"](function (error) {
+        return console.error(error);
+      });
+    },
+    fetchUom: function fetchUom() {
+      var _this2 = this;
+
+      axios.get("/api/uom/list").then(function (response) {
+        _this2.uom = response.data.data;
+      })["catch"](function (error) {
+        return console.error(error);
+      });
     }
   }
 });
@@ -43886,8 +43772,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.name,
-                          expression: "name"
+                          value: _vm.state.name,
+                          expression: "state.name"
                         }
                       ],
                       staticClass:
@@ -43897,13 +43783,13 @@ var render = function() {
                         placeholder: "Product Name",
                         type: "text"
                       },
-                      domProps: { value: _vm.name },
+                      domProps: { value: _vm.state.name },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.name = $event.target.value
+                          _vm.$set(_vm.state, "name", $event.target.value)
                         }
                       }
                     })
@@ -44090,7 +43976,7 @@ var render = function() {
                             _c("div", { staticClass: "col-6" }, [
                               _c(
                                 "table",
-                                { staticClass: "o_group o_inner_group " },
+                                { staticClass: "o_group o_inner_group" },
                                 [
                                   _c("tbody", [
                                     _c("tr", [
@@ -44161,34 +44047,582 @@ var render = function() {
                                       )
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(8),
+                                    _c("tr", [
+                                      _vm._m(8),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.state.category,
+                                                  expression: "state.category"
+                                                }
+                                              ],
+                                              staticClass:
+                                                "o_input o_field_widget o_required_modifier",
+                                              attrs: { name: "type" },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.state,
+                                                    "category",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._l(_vm.category, function(
+                                                row
+                                              ) {
+                                                return _c(
+                                                  "option",
+                                                  {
+                                                    key: row.id,
+                                                    attrs: {
+                                                      select:
+                                                        row.value ==
+                                                        _vm.state.category
+                                                    },
+                                                    domProps: { value: row.id }
+                                                  },
+                                                  [_vm._v(_vm._s(row.name))]
+                                                )
+                                              }),
+                                              _vm._v(" "),
+                                              _c("button", {
+                                                staticClass:
+                                                  "fa fa-external-link btn btn-secondary o_external_button",
+                                                attrs: {
+                                                  type: "button",
+                                                  tabindex: "-1",
+                                                  draggable: "false",
+                                                  "aria-label": "External link",
+                                                  title: "External link"
+                                                }
+                                              })
+                                            ],
+                                            2
+                                          )
+                                        ]
+                                      )
+                                    ]),
                                     _vm._v(" "),
-                                    _vm._m(9),
+                                    _c("tr", [
+                                      _vm._m(9),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.state.code,
+                                                expression: "state.code"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "o_field_char o_field_widget o_input",
+                                            attrs: {
+                                              name: "default_code",
+                                              placeholder: "",
+                                              type: "text"
+                                            },
+                                            domProps: { value: _vm.state.code },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.$set(
+                                                  _vm.state,
+                                                  "code",
+                                                  $event.target.value
+                                                )
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]),
                                     _vm._v(" "),
-                                    _vm._m(10)
+                                    _c("tr", [
+                                      _vm._m(10),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.state.barcode,
+                                                expression: "state.barcode"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "o_field_char o_field_widget o_input",
+                                            attrs: {
+                                              name: "barcode",
+                                              placeholder: "",
+                                              type: "text"
+                                            },
+                                            domProps: {
+                                              value: _vm.state.barcode
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.$set(
+                                                  _vm.state,
+                                                  "barcode",
+                                                  $event.target.value
+                                                )
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ])
                                   ])
                                 ]
                               )
                             ]),
                             _vm._v(" "),
-                            _vm._m(11)
+                            _c("div", { staticClass: "col-6" }, [
+                              _c(
+                                "table",
+                                { staticClass: "o_group o_inner_group" },
+                                [
+                                  _c("tbody", [
+                                    _c("tr", [
+                                      _vm._m(11),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c(
+                                            "div",
+                                            { attrs: { name: "pricing" } },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "o_field_monetary o_field_number o_input o_field_widget oe_inline",
+                                                  attrs: { name: "list_price" }
+                                                },
+                                                [
+                                                  _c("span", [_vm._v("Rp ")]),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.state.price,
+                                                        expression:
+                                                          "state.price"
+                                                      }
+                                                    ],
+                                                    staticClass: "o_input",
+                                                    attrs: {
+                                                      placeholder: "",
+                                                      type: "text"
+                                                    },
+                                                    domProps: {
+                                                      value: _vm.state.price
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.state,
+                                                          "price",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _vm._m(12),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c("input", {
+                                            directives: [
+                                              {
+                                                name: "model",
+                                                rawName: "v-model",
+                                                value: _vm.state.tax_id,
+                                                expression: "state.tax_id"
+                                              }
+                                            ],
+                                            staticClass:
+                                              "o_field_char o_field_widget o_input",
+                                            attrs: {
+                                              type: "text",
+                                              autocomplete: "off"
+                                            },
+                                            domProps: {
+                                              value: _vm.state.tax_id
+                                            },
+                                            on: {
+                                              input: function($event) {
+                                                if ($event.target.composing) {
+                                                  return
+                                                }
+                                                _vm.$set(
+                                                  _vm.state,
+                                                  "tax_id",
+                                                  $event.target.value
+                                                )
+                                              }
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _vm._m(13),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c(
+                                            "div",
+                                            { attrs: { name: "pricing" } },
+                                            [
+                                              _c(
+                                                "div",
+                                                {
+                                                  staticClass:
+                                                    "o_field_monetary o_field_number o_input o_field_widget oe_inline",
+                                                  attrs: { name: "list_price" }
+                                                },
+                                                [
+                                                  _c("span", [_vm._v("Rp ")]),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.state.cost,
+                                                        expression: "state.cost"
+                                                      }
+                                                    ],
+                                                    staticClass: "o_input",
+                                                    attrs: {
+                                                      placeholder: "",
+                                                      type: "text"
+                                                    },
+                                                    domProps: {
+                                                      value: _vm.state.cost
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.state,
+                                                          "cost",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._m(14),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _vm._m(15),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.state.uom_id,
+                                                  expression: "state.uom_id"
+                                                }
+                                              ],
+                                              staticClass:
+                                                "o_input o_field_widget o_required_modifier",
+                                              attrs: { name: "type" },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.state,
+                                                    "uom_id",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._l(_vm.uom, function(row) {
+                                                return _c(
+                                                  "option",
+                                                  {
+                                                    key: row.id,
+                                                    attrs: {
+                                                      select:
+                                                        row.id ==
+                                                        _vm.state.uom_id
+                                                    },
+                                                    domProps: { value: row.id }
+                                                  },
+                                                  [_vm._v(_vm._s(row.name))]
+                                                )
+                                              }),
+                                              _vm._v(" "),
+                                              _c("button", {
+                                                staticClass:
+                                                  "fa fa-external-link btn btn-secondary o_external_button",
+                                                attrs: {
+                                                  type: "button",
+                                                  tabindex: "-1",
+                                                  draggable: "false",
+                                                  "aria-label": "External link",
+                                                  title: "External link"
+                                                }
+                                              })
+                                            ],
+                                            2
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _vm._m(16),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticStyle: { width: "100%" } },
+                                        [
+                                          _c(
+                                            "select",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.state.uom_po_id,
+                                                  expression: "state.uom_po_id"
+                                                }
+                                              ],
+                                              staticClass:
+                                                "o_input o_field_widget o_required_modifier",
+                                              attrs: { name: "type" },
+                                              on: {
+                                                change: function($event) {
+                                                  var $$selectedVal = Array.prototype.filter
+                                                    .call(
+                                                      $event.target.options,
+                                                      function(o) {
+                                                        return o.selected
+                                                      }
+                                                    )
+                                                    .map(function(o) {
+                                                      var val =
+                                                        "_value" in o
+                                                          ? o._value
+                                                          : o.value
+                                                      return val
+                                                    })
+                                                  _vm.$set(
+                                                    _vm.state,
+                                                    "uom_po_id",
+                                                    $event.target.multiple
+                                                      ? $$selectedVal
+                                                      : $$selectedVal[0]
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _vm._l(_vm.uom, function(row) {
+                                                return _c(
+                                                  "option",
+                                                  {
+                                                    key: row.id,
+                                                    attrs: {
+                                                      select:
+                                                        row.id ==
+                                                        _vm.state.uom_po_id
+                                                    },
+                                                    domProps: { value: row.id }
+                                                  },
+                                                  [_vm._v(_vm._s(row.name))]
+                                                )
+                                              }),
+                                              _vm._v(" "),
+                                              _c("button", {
+                                                staticClass:
+                                                  "fa fa-external-link btn btn-secondary o_external_button",
+                                                attrs: {
+                                                  type: "button",
+                                                  tabindex: "-1",
+                                                  draggable: "false",
+                                                  "aria-label": "External link",
+                                                  title: "External link"
+                                                }
+                                              })
+                                            ],
+                                            2
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              )
+                            ])
                           ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(12)
+                        _c("table", { staticClass: "o_group o_inner_group" }, [
+                          _c("tbody", [
+                            _vm._m(17),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _c("td", { staticStyle: { width: "50%" } }, [
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.state.description,
+                                      expression: "state.description"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "o_field_text o_field_translate o_field_widget o_input",
+                                  staticStyle: {
+                                    "overflow-y": "hidden",
+                                    height: "50px",
+                                    resize: "none"
+                                  },
+                                  attrs: {
+                                    name: "description",
+                                    placeholder:
+                                      "This note is only for internal purposes.",
+                                    type: "text"
+                                  },
+                                  domProps: { value: _vm.state.description },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.state,
+                                        "description",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          ])
+                        ])
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(13),
+                    _vm._m(18),
                     _vm._v(" "),
-                    _vm._m(14)
+                    _vm._m(19)
                   ])
                 ])
               ]
             )
           ]),
           _vm._v(" "),
-          _vm._m(15)
+          _vm._m(20)
         ])
       ])
     ])
@@ -44726,19 +45160,119 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label o_required_modifier",
+          attrs: {
+            for: "o_field_input_207",
+            "data-original-title": "",
+            title: ""
+          }
+        },
+        [_vm._v("Product Category")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        { staticClass: "o_form_label", attrs: { for: "o_field_input_208" } },
+        [_vm._v("Internal Reference")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label",
+          attrs: {
+            for: "o_field_input_209",
+            "data-original-title": "",
+            title: ""
+          }
+        },
+        [_vm._v("Barcode")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label",
+          attrs: {
+            for: "o_field_input_210",
+            "data-original-title": "",
+            title: ""
+          }
+        },
+        [_vm._v("Sales Price")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label",
+          attrs: {
+            for: "o_field_input_211",
+            "data-original-title": "",
+            title: ""
+          }
+        },
+        [_vm._v("Customer Taxes")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label",
+          attrs: {
+            for: "o_field_input_210",
+            "data-original-title": "",
+            title: ""
+          }
+        },
+        [_vm._v("Cost")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { staticClass: "o_td_label" }, [
         _c(
           "label",
-          {
-            staticClass: "o_form_label o_required_modifier",
-            attrs: {
-              for: "o_field_input_207",
-              "data-original-title": "",
-              title: ""
-            }
-          },
-          [_vm._v("Product Category")]
+          { staticClass: "o_form_label", attrs: { for: "o_field_input_213" } },
+          [_vm._v("Company")]
         )
       ]),
       _vm._v(" "),
@@ -44746,9 +45280,8 @@ var staticRenderFns = [
         _c(
           "div",
           {
-            staticClass:
-              "o_field_widget o_field_many2one o_with_button o_required_modifier",
-            attrs: { "aria-atomic": "true", name: "categ_id" }
+            staticClass: "o_field_widget o_field_many2one",
+            attrs: { "aria-atomic": "true", name: "company_id" }
           },
           [
             _c("div", { staticClass: "o_input_dropdown" }, [
@@ -44757,7 +45290,7 @@ var staticRenderFns = [
                 attrs: {
                   type: "text",
                   autocomplete: "off",
-                  id: "o_field_input_207"
+                  id: "o_field_input_213"
                 }
               }),
               _vm._v(" "),
@@ -44770,6 +45303,7 @@ var staticRenderFns = [
             _c("button", {
               staticClass:
                 "fa fa-external-link btn btn-secondary o_external_button",
+              staticStyle: { display: "none" },
               attrs: {
                 type: "button",
                 tabindex: "-1",
@@ -44787,26 +45321,38 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "o_td_label" }, [
-        _c(
-          "label",
-          { staticClass: "o_form_label", attrs: { for: "o_field_input_208" } },
-          [_vm._v("Internal Reference")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("td", { staticStyle: { width: "100%" } }, [
-        _c("input", {
-          staticClass: "o_field_char o_field_widget o_input",
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label o_required_modifier",
           attrs: {
-            name: "default_code",
-            placeholder: "",
-            type: "text",
-            id: "o_field_input_208"
+            for: "o_field_input_214",
+            "data-original-title": "",
+            title: ""
           }
-        })
-      ])
+        },
+        [_vm._v("Unit of Measure")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "o_td_label" }, [
+      _c(
+        "label",
+        {
+          staticClass: "o_form_label o_required_modifier",
+          attrs: {
+            for: "o_field_input_215",
+            "data-original-title": "",
+            title: ""
+          }
+        },
+        [_vm._v("Purchase Unit of Measure")]
+      )
     ])
   },
   function() {
@@ -44814,666 +45360,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { staticClass: "o_td_label" }, [
-        _c(
-          "label",
-          {
-            staticClass: "o_form_label",
-            attrs: {
-              for: "o_field_input_209",
-              "data-original-title": "",
-              title: ""
-            }
-          },
-          [_vm._v("Barcode")]
-        )
-      ]),
-      _vm._v(" "),
-      _c("td", { staticStyle: { width: "100%" } }, [
-        _c("input", {
-          staticClass: "o_field_char o_field_widget o_input",
-          attrs: {
-            name: "barcode",
-            placeholder: "",
-            type: "text",
-            id: "o_field_input_209"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6" }, [
-      _c("table", { staticClass: "o_group o_inner_group" }, [
-        _c("tbody", [
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "o_form_label",
-                  attrs: {
-                    for: "o_field_input_210",
-                    "data-original-title": "",
-                    title: ""
-                  }
-                },
-                [_vm._v("Sales Price")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c("div", { attrs: { name: "pricing" } }, [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "o_field_monetary o_field_number o_input o_field_widget oe_inline",
-                    attrs: { name: "list_price" }
-                  },
-                  [
-                    _c("span", [_vm._v("Rp")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "o_input",
-                      attrs: {
-                        placeholder: "",
-                        type: "text",
-                        id: "o_field_input_210"
-                      }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "o_field_widget o_invisible_modifier o_readonly_modifier",
-                    attrs: {
-                      name: "valuation",
-                      "data-original-title": "",
-                      title: ""
-                    }
-                  },
-                  [_vm._v("Manual")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "o_field_widget o_invisible_modifier o_readonly_modifier",
-                    attrs: {
-                      name: "cost_method",
-                      "data-original-title": "",
-                      title: ""
-                    }
-                  },
-                  [_vm._v("Standard Price")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn oe_inline o_invisible_modifier",
-                    attrs: {
-                      type: "button",
-                      name: "open_pricelist_rules",
-                      invisible: "1"
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-fw o_button_icon fa-arrow-right"
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "o_field_integer o_field_number o_field_widget o_invisible_modifier o_readonly_modifier",
-                        attrs: { name: "pricelist_item_count" }
-                      },
-                      [_vm._v("0")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        attrs: {
-                          attrs:
-                            "{'invisible': [('pricelist_item_count', '=', 1)]}"
-                        }
-                      },
-                      [_vm._v("Extra Prices")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass: "o_invisible_modifier",
-                        attrs: {
-                          attrs:
-                            "{'invisible': [('pricelist_item_count', '!=', 1)]}"
-                        }
-                      },
-                      [_vm._v("Extra Price")]
-                    )
-                  ]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "o_form_label",
-                  attrs: {
-                    for: "o_field_input_211",
-                    "data-original-title": "",
-                    title: ""
-                  }
-                },
-                [_vm._v("Customer Taxes")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "div",
-                {
-                  staticClass: "o_field_many2manytags o_input o_field_widget",
-                  attrs: { name: "taxes_id" }
-                },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "badge badge-pill o_tag_color_0",
-                      attrs: {
-                        "data-color": "0",
-                        "data-index": "0",
-                        "data-id": "1",
-                        title: "Tag color: No color"
-                      }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          staticClass: "o_badge_text",
-                          attrs: { title: "10%" }
-                        },
-                        [
-                          _c("span", {
-                            attrs: {
-                              role: "img",
-                              "aria-label": "Tag color: No color"
-                            }
-                          }),
-                          _vm._v("10%\n                                ")
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("a", {
-                        staticClass: "fa fa-times o_delete",
-                        attrs: {
-                          href: "#",
-                          title: "Delete",
-                          "aria-label": "Delete"
-                        }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "o_field_widget o_field_many2one",
-                      attrs: { "aria-atomic": "true", name: "taxes_id" }
-                    },
-                    [
-                      _c("div", { staticClass: "o_input_dropdown" }, [
-                        _c("input", {
-                          staticClass: "o_input ui-autocomplete-input",
-                          attrs: {
-                            type: "text",
-                            autocomplete: "off",
-                            id: "o_field_input_211"
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("a", {
-                          staticClass: "o_dropdown_button",
-                          attrs: { role: "button", draggable: "false" }
-                        })
-                      ])
-                    ]
-                  )
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "o_form_label",
-                  attrs: {
-                    for: "o_field_input_212",
-                    "data-original-title": "",
-                    title: ""
-                  }
-                },
-                [_vm._v("Cost")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "div",
-                {
-                  staticClass: "o_row",
-                  attrs: {
-                    name: "standard_price_uom",
-                    attrs:
-                      "{'invisible': [('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
-                  }
-                },
-                [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "o_field_monetary o_field_number o_field_widget o_readonly_modifier oe_inline",
-                      attrs: { name: "standard_price" }
-                    },
-                    [_vm._v("0.00")]
-                  ),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "oe_read_only" }, [
-                    _vm._v(
-                      "\n                                per\n                                "
-                    ),
-                    _c(
-                      "span",
-                      {
-                        staticClass:
-                          "o_field_char o_field_widget o_readonly_modifier",
-                        attrs: { name: "uom_name" }
-                      },
-                      [_vm._v("Units")]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("span", { attrs: { name: "update_cost_price" } }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-link pt-0 oe_inline",
-                        attrs: { type: "button", name: "652" }
-                      },
-                      [_c("span", [_vm._v("Update Cost")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-link oe_read_only pt-0 o_invisible_modifier",
-                        attrs: {
-                          type: "button",
-                          name: "button_bom_cost",
-                          help:
-                            "Compute the price of the product using products and operations of related bill of materials, for manufactured products only.",
-                          "data-original-title": "",
-                          title: ""
-                        }
-                      },
-                      [_c("span", [_vm._v("Compute Price from BoM")])]
-                    )
-                  ])
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "o_form_label",
-                  attrs: { for: "o_field_input_213" }
-                },
-                [_vm._v("Company")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "div",
-                {
-                  staticClass: "o_field_widget o_field_many2one",
-                  attrs: { "aria-atomic": "true", name: "company_id" }
-                },
-                [
-                  _c("div", { staticClass: "o_input_dropdown" }, [
-                    _c("input", {
-                      staticClass: "o_input ui-autocomplete-input",
-                      attrs: {
-                        type: "text",
-                        autocomplete: "off",
-                        id: "o_field_input_213"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("a", {
-                      staticClass: "o_dropdown_button",
-                      attrs: { role: "button", draggable: "false" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("button", {
-                    staticClass:
-                      "fa fa-external-link btn btn-secondary o_external_button",
-                    staticStyle: { display: "none" },
-                    attrs: {
-                      type: "button",
-                      tabindex: "-1",
-                      draggable: "false",
-                      "aria-label": "External link",
-                      title: "External link"
-                    }
-                  })
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "o_form_label o_required_modifier",
-                  attrs: {
-                    for: "o_field_input_214",
-                    "data-original-title": "",
-                    title: ""
-                  }
-                },
-                [_vm._v("Unit of Measure")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "o_field_widget o_field_many2one o_with_button o_required_modifier",
-                  attrs: { "aria-atomic": "true", name: "uom_id" }
-                },
-                [
-                  _c("div", { staticClass: "o_input_dropdown" }, [
-                    _c("input", {
-                      staticClass: "o_input ui-autocomplete-input",
-                      attrs: {
-                        type: "text",
-                        autocomplete: "off",
-                        id: "o_field_input_214"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("a", {
-                      staticClass: "o_dropdown_button",
-                      attrs: { role: "button", draggable: "false" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("button", {
-                    staticClass:
-                      "fa fa-external-link btn btn-secondary o_external_button",
-                    attrs: {
-                      type: "button",
-                      tabindex: "-1",
-                      draggable: "false",
-                      "aria-label": "External link",
-                      title: "External link"
-                    }
-                  })
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "o_form_label o_required_modifier",
-                  attrs: {
-                    for: "o_field_input_215",
-                    "data-original-title": "",
-                    title: ""
-                  }
-                },
-                [_vm._v("Purchase Unit of Measure")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "o_field_widget o_field_many2one o_with_button o_required_modifier",
-                  attrs: { "aria-atomic": "true", name: "uom_po_id" }
-                },
-                [
-                  _c("div", { staticClass: "o_input_dropdown" }, [
-                    _c("input", {
-                      staticClass: "o_input ui-autocomplete-input",
-                      attrs: {
-                        type: "text",
-                        autocomplete: "off",
-                        id: "o_field_input_215"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("a", {
-                      staticClass: "o_dropdown_button",
-                      attrs: { role: "button", draggable: "false" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("button", {
-                    staticClass:
-                      "fa fa-external-link btn btn-secondary o_external_button",
-                    attrs: {
-                      type: "button",
-                      tabindex: "-1",
-                      draggable: "false",
-                      "aria-label": "External link",
-                      title: "External link"
-                    }
-                  })
-                ]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass:
-                    "o_form_label o_invisible_modifier o_readonly_modifier",
-                  attrs: { for: "o_field_input_216" }
-                },
-                [_vm._v("Currency")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier",
-                  attrs: {
-                    href: "#id=12&model=res.currency",
-                    name: "currency_id",
-                    id: "o_field_input_216"
-                  }
-                },
-                [_c("span", [_vm._v("IDR")])]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass:
-                    "o_form_label o_invisible_modifier o_readonly_modifier",
-                  attrs: { for: "o_field_input_217" }
-                },
-                [_vm._v("Cost Currency")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier",
-                  attrs: {
-                    href: "#",
-                    name: "cost_currency_id",
-                    id: "o_field_input_217"
-                  }
-                },
-                [_c("span")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "o_td_label" }, [
-              _c(
-                "label",
-                {
-                  staticClass:
-                    "o_form_label o_invisible_modifier o_readonly_modifier",
-                  attrs: { for: "o_field_input_218" }
-                },
-                [_vm._v("Product")]
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", { staticStyle: { width: "100%" } }, [
-              _c(
-                "a",
-                {
-                  staticClass:
-                    "o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier",
-                  attrs: {
-                    href: "#",
-                    name: "product_variant_id",
-                    id: "o_field_input_218"
-                  }
-                },
-                [_c("span")]
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("table", { staticClass: "o_group o_inner_group" }, [
-      _c("tbody", [
-        _c("tr", [
-          _c(
-            "td",
-            { staticStyle: { width: "100%" }, attrs: { colspan: "2" } },
-            [
-              _c("div", { staticClass: "o_horizontal_separator" }, [
-                _vm._v("Internal Notes")
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("tr", [
-          _c("td", { staticStyle: { width: "50%" } }, [
-            _c("textarea", {
-              staticClass:
-                "o_field_text o_field_translate o_field_widget o_input",
-              staticStyle: {
-                "overflow-y": "hidden",
-                height: "50px",
-                resize: "none"
-              },
-              attrs: {
-                name: "description",
-                placeholder: "This note is only for internal purposes.",
-                type: "text",
-                id: "o_field_input_289"
-              }
-            }),
-            _vm._v(" "),
-            _c("textarea", {
-              staticStyle: {
-                position: "absolute",
-                opacity: "0",
-                height: "10px",
-                "border-top-width": "0px",
-                "border-bottom-width": "0px",
-                padding: "0px",
-                overflow: "hidden",
-                top: "-10000px",
-                left: "-10000px",
-                width: "1043px"
-              },
-              attrs: { disabled: "" }
-            }),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass:
-                  "o_field_translate btn btn-link o_field_widget o_input",
-                attrs: {
-                  name: "description",
-                  placeholder: "This note is only for internal purposes.",
-                  type: "text",
-                  id: "o_field_input_289"
-                }
-              },
-              [_vm._v("EN")]
-            )
-          ])
+      _c("td", { staticStyle: { width: "100%" }, attrs: { colspan: "2" } }, [
+        _c("div", { staticClass: "o_horizontal_separator" }, [
+          _vm._v("Internal Notes")
         ])
       ])
     ])

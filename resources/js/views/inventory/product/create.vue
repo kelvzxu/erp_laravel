@@ -229,8 +229,8 @@
                   <span class="input-group-btn">
                     <span class="btn btn-default btn-file bg-primary text-white">
                       Browse…
-                      <input type="file" id="imgInp" name="photo" @change="readfile"/>
-                      <input type="hidden" id="filename" v-model="state.photo"/>
+                      <input type="file" id="imgInp" name="photo" @change="readfile" />
+                      <input type="hidden" id="filename" v-model="state.photo" />
                     </span>
                   </span>
                 </div>
@@ -243,7 +243,7 @@
                     name="name"
                     placeholder="Product Name"
                     type="text"
-                    v-model="name"
+                    v-model="state.name"
                   />
                 </h1>
                 <div name="options">
@@ -252,7 +252,12 @@
                       class="o_field_boolean o_field_widget custom-control custom-checkbox"
                       name="sale_ok"
                     >
-                      <input type="checkbox" id="o_field_input_201" class="custom-control-input" v-model="state.can_be_sold"/>
+                      <input
+                        type="checkbox"
+                        id="o_field_input_201"
+                        class="custom-control-input"
+                        v-model="state.can_be_sold"
+                      />
                       <label for="o_field_input_201" class="custom-control-label">&#8203;</label>
                     </div>
                     <label class="o_form_label" for="o_field_input_201">Can be Sold</label>
@@ -262,7 +267,12 @@
                       class="o_field_boolean o_field_widget custom-control custom-checkbox"
                       name="purchase_ok"
                     >
-                      <input type="checkbox" id="o_field_input_202" class="custom-control-input" v-model="state.can_be_purchase"/>
+                      <input
+                        type="checkbox"
+                        id="o_field_input_202"
+                        class="custom-control-input"
+                        v-model="state.can_be_purchase"
+                      />
                       <label for="o_field_input_202" class="custom-control-label">&#8203;</label>
                     </div>
                     <label class="o_form_label" for="o_field_input_202">Can be Purchased</label>
@@ -308,419 +318,273 @@
                     <div class="o_group">
                       <div class="row">
                         <div class="col-6">
-                      <table class="o_group o_inner_group ">
-                        <tbody>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_required_modifier"
-                                for="o_field_input_206"
-                                data-original-title
-                                title
-                              >Product Type</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <select
-                                class="o_input o_field_widget o_required_modifier"
-                                name="type"
-                                v-model="state.type"
-                              >
-                                <option
-                                  v-for="row in type"
-                                  :select="row.value == state.type"
-                                  :key="row.value"
-                                  :value="row.value"
-                                >{{ row.label }}</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_required_modifier"
-                                for="o_field_input_207"
-                                data-original-title
-                                title
-                              >Product Category</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button o_required_modifier"
-                                aria-atomic="true"
-                                name="categ_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_207"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label class="o_form_label" for="o_field_input_208">Internal Reference</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <input
-                                class="o_field_char o_field_widget o_input"
-                                name="default_code"
-                                placeholder
-                                type="text"
-                                id="o_field_input_208"
-                              />
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_209"
-                                data-original-title
-                                title
-                              >Barcode</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <input
-                                class="o_field_char o_field_widget o_input"
-                                name="barcode"
-                                placeholder
-                                type="text"
-                                id="o_field_input_209"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                        </div>
-                        <div class="col-6">
-                      <table class="o_group o_inner_group">
-                        <tbody>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_210"
-                                data-original-title
-                                title
-                              >Sales Price</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div name="pricing">
-                                <div
-                                  class="o_field_monetary o_field_number o_input o_field_widget oe_inline"
-                                  name="list_price"
-                                >
-                                  <span>Rp</span>
-                                  <input
-                                    class="o_input"
-                                    placeholder
-                                    type="text"
-                                    id="o_field_input_210"
-                                  />
-                                </div>
-                                <span
-                                  name="valuation"
-                                  class="o_field_widget o_invisible_modifier o_readonly_modifier"
-                                  data-original-title
-                                  title
-                                >Manual</span>
-                                <span
-                                  name="cost_method"
-                                  class="o_field_widget o_invisible_modifier o_readonly_modifier"
-                                  data-original-title
-                                  title
-                                >Standard Price</span>
-                                <button
-                                  type="button"
-                                  name="open_pricelist_rules"
-                                  class="btn oe_inline o_invisible_modifier"
-                                  invisible="1"
-                                >
-                                  <i class="fa fa-fw o_button_icon fa-arrow-right"></i>
-                                  <span
-                                    class="o_field_integer o_field_number o_field_widget o_invisible_modifier o_readonly_modifier"
-                                    name="pricelist_item_count"
-                                  >0</span>
-                                  <span
-                                    attrs="{'invisible': [('pricelist_item_count', '=', 1)]}"
-                                  >Extra Prices</span>
-                                  <span
-                                    attrs="{'invisible': [('pricelist_item_count', '!=', 1)]}"
-                                    class="o_invisible_modifier"
-                                  >Extra Price</span>
-                                </button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_211"
-                                data-original-title
-                                title
-                              >Customer Taxes</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_many2manytags o_input o_field_widget"
-                                name="taxes_id"
-                              >
-                                <div
-                                  class="badge badge-pill o_tag_color_0"
-                                  data-color="0"
-                                  data-index="0"
-                                  data-id="1"
-                                  title="Tag color: No color"
-                                >
-                                  <span class="o_badge_text" title="10%">
-                                    <span role="img" aria-label="Tag color: No color"></span>10%
-                                  </span>
-
-                                  <a
-                                    href="#"
-                                    class="fa fa-times o_delete"
-                                    title="Delete"
-                                    aria-label="Delete"
-                                  ></a>
-                                </div>
-
-                                <div
-                                  class="o_field_widget o_field_many2one"
-                                  aria-atomic="true"
-                                  name="taxes_id"
-                                >
-                                  <div class="o_input_dropdown">
-                                    <input
-                                      type="text"
-                                      class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_211"
-                                    />
-                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_212"
-                                data-original-title
-                                title
-                              >Cost</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                name="standard_price_uom"
-                                attrs="{'invisible': [('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
-                                class="o_row"
-                              >
-                                <span
-                                  class="o_field_monetary o_field_number o_field_widget o_readonly_modifier oe_inline"
-                                  name="standard_price"
-                                >0.00</span>
-                                <span class="oe_read_only">
-                                  per
-                                  <span
-                                    class="o_field_char o_field_widget o_readonly_modifier"
-                                    name="uom_name"
-                                  >Units</span>
-                                </span>
-                                <span name="update_cost_price">
-                                  <button
-                                    type="button"
-                                    name="652"
-                                    class="btn btn-link pt-0 oe_inline"
-                                  >
-                                    <span>Update Cost</span>
-                                  </button>
-                                  <button
-                                    type="button"
-                                    name="button_bom_cost"
-                                    help="Compute the price of the product using products and operations of related bill of materials, for manufactured products only."
-                                    class="btn btn-link oe_read_only pt-0 o_invisible_modifier"
+                          <table class="o_group o_inner_group">
+                            <tbody>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_206"
                                     data-original-title
                                     title
+                                  >Product Type</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <select
+                                    class="o_input o_field_widget o_required_modifier"
+                                    name="type"
+                                    v-model="state.type"
                                   >
-                                    <span>Compute Price from BoM</span>
-                                  </button>
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label class="o_form_label" for="o_field_input_213">Company</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one"
-                                aria-atomic="true"
-                                name="company_id"
-                              >
-                                <div class="o_input_dropdown">
+                                    <option
+                                      v-for="row in type"
+                                      :select="row.value == state.type"
+                                      :key="row.value"
+                                      :value="row.value"
+                                    >{{ row.label }}</option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_207"
+                                    data-original-title
+                                    title
+                                  >Product Category</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <select
+                                    class="o_input o_field_widget o_required_modifier"
+                                    name="type"
+                                    v-model="state.category"
+                                  >
+                                    <option
+                                      v-for="row in category"
+                                      :select="row.value == state.category"
+                                      :key="row.id"
+                                      :value="row.id"
+                                    >{{ row.name }}</option>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                    ></button>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label"
+                                    for="o_field_input_208"
+                                  >Internal Reference</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <input
+                                    class="o_field_char o_field_widget o_input"
+                                    name="default_code"
+                                    placeholder
+                                    type="text"
+                                    v-model="state.code"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label"
+                                    for="o_field_input_209"
+                                    data-original-title
+                                    title
+                                  >Barcode</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <input
+                                    class="o_field_char o_field_widget o_input"
+                                    name="barcode"
+                                    placeholder
+                                    type="text"
+                                    v-model="state.barcode"
+                                  />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-6">
+                          <table class="o_group o_inner_group">
+                            <tbody>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label"
+                                    for="o_field_input_210"
+                                    data-original-title
+                                    title
+                                  >Sales Price</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div name="pricing">
+                                    <div
+                                      class="o_field_monetary o_field_number o_input o_field_widget oe_inline"
+                                      name="list_price"
+                                    >
+                                      <span>Rp&nbsp;</span>
+                                      <input
+                                        class="o_input"
+                                        placeholder
+                                        type="text"
+                                        v-model="state.price"
+                                      />
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label"
+                                    for="o_field_input_211"
+                                    data-original-title
+                                    title
+                                  >Customer Taxes</label>
+                                </td>
+                                <td style="width: 100%;">
                                   <input
                                     type="text"
-                                    class="o_input ui-autocomplete-input"
+                                    class="o_field_char o_field_widget o_input"
                                     autocomplete="off"
-                                    id="o_field_input_213"
+                                    v-model="state.tax_id"
                                   />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                  style="display: none;"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_required_modifier"
-                                for="o_field_input_214"
-                                data-original-title
-                                title
-                              >Unit of Measure</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button o_required_modifier"
-                                aria-atomic="true"
-                                name="uom_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_214"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_required_modifier"
-                                for="o_field_input_215"
-                                data-original-title
-                                title
-                              >Purchase Unit of Measure</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button o_required_modifier"
-                                aria-atomic="true"
-                                name="uom_po_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_215"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_216"
-                              >Currency</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <a
-                                class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier"
-                                href="#id=12&amp;model=res.currency"
-                                name="currency_id"
-                                id="o_field_input_216"
-                              >
-                                <span>IDR</span>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_217"
-                              >Cost Currency</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <a
-                                class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier"
-                                href="#"
-                                name="cost_currency_id"
-                                id="o_field_input_217"
-                              >
-                                <span></span>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_218"
-                              >Product</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <a
-                                class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier"
-                                href="#"
-                                name="product_variant_id"
-                                id="o_field_input_218"
-                              >
-                                <span></span>
-                              </a>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label"
+                                    for="o_field_input_210"
+                                    data-original-title
+                                    title
+                                  >Cost</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div name="pricing">
+                                    <div
+                                      class="o_field_monetary o_field_number o_input o_field_widget oe_inline"
+                                      name="list_price"
+                                    >
+                                      <span>Rp&nbsp;</span>
+                                      <input
+                                        class="o_input"
+                                        placeholder
+                                        type="text"
+                                        v-model="state.cost"
+                                      />
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label class="o_form_label" for="o_field_input_213">Company</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div
+                                    class="o_field_widget o_field_many2one"
+                                    aria-atomic="true"
+                                    name="company_id"
+                                  >
+                                    <div class="o_input_dropdown">
+                                      <input
+                                        type="text"
+                                        class="o_input ui-autocomplete-input"
+                                        autocomplete="off"
+                                        id="o_field_input_213"
+                                      />
+                                      <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                      style="display: none;"
+                                    ></button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_214"
+                                    data-original-title
+                                    title
+                                  >Unit of Measure</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <select
+                                    class="o_input o_field_widget o_required_modifier"
+                                    name="type"
+                                    v-model="state.uom_id"
+                                  >
+                                    <option
+                                      v-for="row in uom"
+                                      :select="row.id == state.uom_id"
+                                      :key="row.id"
+                                      :value="row.id"
+                                    >{{ row.name }}</option>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                    ></button>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_215"
+                                    data-original-title
+                                    title
+                                  >Purchase Unit of Measure</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <select
+                                    class="o_input o_field_widget o_required_modifier"
+                                    name="type"
+                                    v-model="state.uom_po_id"
+                                  >
+                                    <option
+                                      v-for="row in uom"
+                                      :select="row.id == state.uom_po_id"
+                                      :key="row.id"
+                                      :value="row.id"
+                                    >{{ row.name }}</option>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                    ></button>
+                                  </select>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
@@ -738,20 +602,9 @@
                               name="description"
                               placeholder="This note is only for internal purposes."
                               type="text"
-                              id="o_field_input_289"
+                              v-model="state.description"
                               style="overflow-y: hidden; height: 50px; resize: none;"
                             ></textarea>
-                            <textarea
-                              disabled
-                              style="position: absolute; opacity: 0; height: 10px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px; overflow: hidden; top: -10000px; left: -10000px; width: 1043px;"
-                            ></textarea>
-                            <span
-                              class="o_field_translate btn btn-link o_field_widget o_input"
-                              name="description"
-                              placeholder="This note is only for internal purposes."
-                              type="text"
-                              id="o_field_input_289"
-                            >EN</span>
                           </td>
                         </tr>
                       </tbody>
@@ -1642,23 +1495,52 @@ export default {
     return {
       state: {
         photo: "",
-        name:"",
+        name: "",
         can_be_sold: "",
-        can_be_purchase:"",
-        type:"consum",
+        can_be_purchase: "",
+        type: "consum",
+        category: 1,
+        code:"",
+        barcode:"",
+        price:"0",
+        tax_id: "",
+        cost: "0",
+        uom_id: "1",
+        uom_po_id: "1",
+        description:"",
       },
-      type:[
-        { label:"Consumable", value:"consum"},
-        { label:"Service", value:"service"},
-        { label:"Storable Product", value:"product"}
+      type: [
+        { label: "Consumable", value: "consum" },
+        { label: "Service", value: "service" },
+        { label: "Storable Product", value: "product" },
       ],
+      category: [],
+      uom : [],
     };
+  },
+  mounted() {
+    this.fetchCategory();
+    this.fetchUom();
   },
   methods: {
     readfile(e) {
       var filename = document.getElementById("filename").value;
-      this.state.photo=filename;
+      this.state.photo = filename;
     },
+    fetchCategory() {
+      axios
+        .get("/api/Products/category")
+        .then((response) => {
+          this.category = response.data.result;
+        })
+        .catch((error) => console.error(error));
+    },
+    fetchUom(){
+      axios.get("/api/uom/list").then((response) => {
+        this.uom = response.data.data;
+      })
+      .catch((error) => console.error(error));
+    }
   },
 };
 </script>

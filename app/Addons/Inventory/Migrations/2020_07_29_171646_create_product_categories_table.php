@@ -17,7 +17,7 @@ class CreateProductCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('complete_name');
-            $table->integer('parent_id');
+            $table->integer('parent_id')->nullable();
             $table->string('description')->nullable();
             $table->integer('create_uid');
             $table->timestamps();

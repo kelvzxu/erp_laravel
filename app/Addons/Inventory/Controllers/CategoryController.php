@@ -5,6 +5,7 @@ namespace App\Addons\Inventory\Controllers;
 use App\Http\Controllers\controller as Controller;
 use App\Addons\Inventory\Models\category;
 use Illuminate\Http\Request;
+use Inventory;
 
 class CategoryController extends Controller
 {
@@ -63,6 +64,20 @@ class CategoryController extends Controller
             return redirect(route('product-categories'))->with(['success' => 'Kategori: '.$request->name.' Ditambahkan']);
         } catch (\Exception $e) {
             return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+    }
+    public function fetchCategory(){
+        try {
+            $products = Inventory::categories();
+            return response()->json([
+                'status' => 'success',
+                'result' => $products
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
         }
     }
 }
