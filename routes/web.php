@@ -19,7 +19,11 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('ECommerce', 'ECommerceController@index')->name('ECommerce.index');  
 
     Route::get('/uom/{any}', function () {
-        return view('uom.vue');
+        return view('inventory.uom.vue');
+    })->where('any', '.*');
+
+    Route::get('/inventory/product/{any}', function () {
+        return view('inventory.product.vue');
     })->where('any', '.*');
 
     // ==== Apps ====

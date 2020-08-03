@@ -33,12 +33,12 @@ class Inventory {
     }
 
     public static function products() {
-        $product = product::with('category')->orderBy('name', 'ASC')->get();
+        $product = product::with('stock','uom','category')->orderBy('name', 'ASC')->get();
         return $product;
     }
 
     public static function can_be_sold() {
-        $product = product::orderBy('name', 'asc')->where('can_be_sold','1')->get();
+        $product = product::with('stock','uom','category')->orderBy('name', 'asc')->where('can_be_sold','1')->get();
         return $product;
     }
 

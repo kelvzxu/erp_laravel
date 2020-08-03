@@ -12,6 +12,6 @@ class delivere_product extends Model
     ];
     public function inv()
     {
-        return $this->belongsTo('App\Models\Sales\Invoice','invoice_no','invoice_no');
+        return $this->belongsTo(' App\Addons\Invoicing\Models\Invoice','invoice_no','invoice_no');
     }
 }

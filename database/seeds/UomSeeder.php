@@ -24,7 +24,7 @@ class UomSeeder extends Seeder
             ['name'=>'volume','measure_type'=>'volume','create_uid'=>1,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')],
         ];
         $uom_uom = [
-            ['name'=>'Unit','category_id'=>1,'factor'=>1,'rounding'=>0.001,'active'=>true,'uom_type'=>'reference','measure_type'=>'unit','create_uid'=>1,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')],
+            ['name'=>'Units','category_id'=>1,'factor'=>1,'rounding'=>0.001,'active'=>true,'uom_type'=>'reference','measure_type'=>'unit','create_uid'=>1,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')],
             ['name'=>'Dozens','category_id'=>1,'factor'=>0.08333333333333333,'rounding'=>0.01,'active'=>true,'uom_type'=>'bigger','measure_type'=>'unit','create_uid'=>1,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')],
             ['name'=>'Kg','category_id'=>2,'factor'=>1,'rounding'=>0.001,'active'=>true,'uom_type'=>'reference','measure_type'=>'weight','create_uid'=>1,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')],
             ['name'=>'g','category_id'=>2,'factor'=>1000,'rounding'=>0.01,'active'=>true,'uom_type'=>'smaller','measure_type'=>'weight','create_uid'=>1,'created_at'=>date('Y-m-d H:i:s'),'updated_at'=>date('Y-m-d H:i:s')],

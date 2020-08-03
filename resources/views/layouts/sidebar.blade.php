@@ -126,7 +126,7 @@
                 @if (AccessRight::access()->inventory == True ) 
                 <li class="app-sidebar__heading">Inventory</li>
                     <li>
-                        <a href="{{route('product')}}" id="product">
+                        <a href="/inventory/product/tree-view" id="product">
                             <i class="metismenu-icon fa fa-cubes">
                             </i>Product
                         </a>
