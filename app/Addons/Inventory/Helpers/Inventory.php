@@ -7,6 +7,7 @@ use App\Addons\Inventory\Models\product;
 use App\Addons\Inventory\Models\delivere_product;
 use App\Addons\Inventory\Models\receive_product;
 use Illuminate\Http\Request;
+use File;
 
 class Inventory {
     public static function installed(){

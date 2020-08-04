@@ -47,50 +47,67 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'code' => 'required|string|max:10|unique:products',
-            'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:100',
-            'price' => 'required|integer',
-            'category_id' => 'required|exists:categories,id',
-            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
-        ]);
-
-        try {
-            $nama_file = null;
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo')->getClientOriginalName();
-                $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/product';
-                $request->file('photo')->move($destination, $nama_file);
-            }
-
-            $product = product::create([
-                'code' => $request->code,
-                'name' => $request->name,
-                'description' => $request->description,
-                'stock' => "0",
-                'price' => $request->price,
-                'category_id' => $request->category_id,
-                'barcode' => $request->barcode,
-                'photo' => $nama_file,
-                'cost'=>$request->cost,
-                'can_be_sold'=>$request->can_be_sold,
-                'can_be_purchase'=>$request->can_be_purchase,
-                'income_account'=>$request->income_account,
-                'expense_account'=>$request->expense_account,
-                'stock_input_account'=>$request->stock_input_account,
-                'stock_output_account'=>$request->stock_output_account,
-                'stock_valuation_account'=>$request->stock_valuation_account,
-                'stock_journal'=>$request->stock_journal,
-                'location'=>1,
-            ]);
-            return redirect(route('product'))
-                ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
-        } catch (\Exception $e) {
-            return redirect()->back()
-                ->with(['error' => $e->getMessage()]);
+        $image_64 = $request->photo;
+        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
+        $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
+        $image = str_replace($replace, '', $image_64); 
+        $image = str_replace(' ', '+', $image); 
+        $imageName = time() . '.'.$extension;
+        $path = public_path('uploads/Products');
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
         }
+        // $image = $request->get('photo');
+        // $imageName = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
+        file_put_contents(public_path('uploads/Products/').$imageName,base64_decode($image));
+        echo $extension;
+ 
+        
+            //     $photo = $request->file('photo')->getClientOriginalName();
+            //     $nama_file = time()."_".$photo;
+            //     $destination = base_path() . '/public/uploads/product';
+            //     $request->file('photo')->move($destination, $nama_file);
+            // }
+            // echo "hasil: ";
+            // echo $request->file('photo')->getClientOriginalName();
+
+        // $this->validate($request, [
+        //     'code' => 'required|string|max:10|unique:products',
+        //     'name' => 'required|string|max:100',
+        //     'description' => 'nullable|string|max:100',
+        //     'price' => 'required|integer',
+        //     'category_id' => 'required|exists:categories,id',
+        //     'photo' => 'nullable|image|mimes:jpg,png,jpeg'
+        // ]);
+
+        // try {
+
+        //     $product = product::create([
+        //         'code' => $request->code,
+        //         'name' => $request->name,
+        //         'description' => $request->description,
+        //         'stock' => "0",
+        //         'price' => $request->price,
+        //         'category_id' => $request->category_id,
+        //         'barcode' => $request->barcode,
+        //         'photo' => $nama_file,
+        //         'cost'=>$request->cost,
+        //         'can_be_sold'=>$request->can_be_sold,
+        //         'can_be_purchase'=>$request->can_be_purchase,
+        //         'income_account'=>$request->income_account,
+        //         'expense_account'=>$request->expense_account,
+        //         'stock_input_account'=>$request->stock_input_account,
+        //         'stock_output_account'=>$request->stock_output_account,
+        //         'stock_valuation_account'=>$request->stock_valuation_account,
+        //         'stock_journal'=>$request->stock_journal,
+        //         'location'=>1,
+        //     ]);
+        //     return redirect(route('product'))
+        //         ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
+        // } catch (\Exception $e) {
+        //     return redirect()->back()
+        //         ->with(['error' => $e->getMessage()]);
+        // }
     }
 
     private function saveFile($name, $photo)

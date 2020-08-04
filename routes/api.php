@@ -36,10 +36,11 @@ Route::post('/leave', 'ManageSalaryController@getcount');
 Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
 {
     Route::get('Products','ProductController@Products');
+    Route::post('Product/store','ProductController@store');
     Route::get('Products/sale','ProductController@ProductSale');
-    Route::get('Products/category','CategoryController@fetchCategory');
     Route::get('getProduct','ProductController@getProduct');
     Route::get('getProduct/id','ProductController@getProductById');
+    Route::get('Products/category','CategoryController@fetchCategory');
 });
 
 Route::get('/chart', 'HomeController@getChart');

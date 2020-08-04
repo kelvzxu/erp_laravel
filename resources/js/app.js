@@ -1,9 +1,14 @@
 import './bootstrap'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vue from 'vue'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
 import router from './router'
 import Swal from 'sweetalert2'
 window.Swal = Swal;
 
+Vue.use (BootstrapVue)
+Vue.use (IconsPlugin)
 
 const Toast = Swal.mixin({
     toast: true,
