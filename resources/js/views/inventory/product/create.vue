@@ -7,7 +7,7 @@
             <div>
               <ol class="breadcrumb" role="navigation">
                 <li class="breadcrumb-item" accesskey="b">
-                  <a href="#">Products</a>
+                  <router-link class="text-primary" :to="{ name:'product_index' }">Products</router-link>
                 </li>
                 <li class="breadcrumb-item active">New</li>
               </ol>
@@ -230,7 +230,13 @@
                     <span class="input-group-btn">
                       <span class="btn btn-default btn-file bg-primary text-white">
                         Browse…
-                        <input type="file" id="imgInp" ref="file" name="photo" v-on:change="handleFileUpload()"/>
+                        <input
+                          type="file"
+                          id="imgInp"
+                          ref="file"
+                          name="photo"
+                          v-on:change="handleFileUpload()"
+                        />
                       </span>
                     </span>
                   </div>
@@ -304,6 +310,7 @@
                       </li>
                       <li class="nav-item">
                         <a
+                          v-if="accounts == true" 
                           data-toggle="tab"
                           disable_anchor="true"
                           href="#notebook_page_252"
@@ -357,7 +364,7 @@
                                     <select
                                       class="o_input o_field_widget o_required_modifier"
                                       name="type"
-                                      v-model="state.category"
+                                      v-model="state.category_id"
                                     >
                                       <option
                                         v-for="row in category"
@@ -493,20 +500,17 @@
                                     <label class="o_form_label" for="o_field_input_213">Company</label>
                                   </td>
                                   <td style="width: 100%;">
-                                    <div
-                                      class="o_field_widget o_field_many2one"
-                                      aria-atomic="true"
-                                      name="company_id"
+                                    <select
+                                      class="o_input o_field_widget"
+                                      name="type"
+                                      v-model="state.company_id"
                                     >
-                                      <div class="o_input_dropdown">
-                                        <input
-                                          type="text"
-                                          class="o_input ui-autocomplete-input"
-                                          autocomplete="off"
-                                          id="o_field_input_213"
-                                        />
-                                        <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                      </div>
+                                      <option
+                                        v-for="row in company"
+                                        :select="row.id == state.company_id"
+                                        :key="row.id"
+                                        :value="row.id"
+                                      >{{ row.company_name }}</option>
                                       <button
                                         type="button"
                                         class="fa fa-external-link btn btn-secondary o_external_button"
@@ -514,9 +518,8 @@
                                         draggable="false"
                                         aria-label="External link"
                                         title="External link"
-                                        style="display: none;"
                                       ></button>
-                                    </div>
+                                    </select>
                                   </td>
                                 </tr>
                                 <tr>
@@ -612,131 +615,111 @@
                     </div>
                     <div class="tab-pane" id="notebook_page_240">
                       <div class="o_group">
-                        <table class="o_group o_inner_group o_group_col_6">
-                          <tbody>
-                            <tr>
-                              <td colspan="2" style="width: 100%;">
-                                <div class="o_horizontal_separator">Operations</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_241"
-                                  data-original-title
-                                  title
-                                >Routes</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div aria-atomic="true" name="route_ids" class="o_field_widget">
-                                  <div aria-atomic="true">
-                                    <div>
-                                      <div class="custom-control custom-checkbox">
-                                        <input
-                                          type="checkbox"
-                                          id="o_many2many_checkbox_268"
-                                          class="custom-control-input"
-                                          data-record-id="1"
-                                        />
-                                        <label
-                                          for="o_many2many_checkbox_268"
-                                          class="custom-control-label o_form_label"
-                                        >Replenish on Order (MTO)</label>
-                                      </div>
+                        <div class="row">
+                          <div class="col-6">
+                            <table class="o_group o_inner_group">
+                              <tbody>
+                                <tr>
+                                  <td colspan="2" style="width: 100%;">
+                                    <div class="o_horizontal_separator">Logistics</div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="o_td_label">
+                                    <label class="o_form_label" for="o_field_input_249">Weight</label>
+                                  </td>
+                                  <td style="width: 100%;">
+                                    <div
+                                      class="o_row"
+                                      name="weight"
+                                      attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
+                                    >
+                                      <input
+                                        class="o_field_float o_field_number o_field_widget o_input"
+                                        name="weight"
+                                        placeholder
+                                        type="text"
+                                        v-model="state.weight"
+                                      />
+                                      <span>
+                                        <span
+                                          class="o_field_char o_field_widget o_readonly_modifier"
+                                          name="weight_uom_name"
+                                        >kg</span>
+                                      </span>
                                     </div>
-                                    <div>
-                                      <div class="custom-control custom-checkbox">
-                                        <input
-                                          type="checkbox"
-                                          id="o_many2many_checkbox_269"
-                                          class="custom-control-input"
-                                          data-record-id="5"
-                                        />
-                                        <label
-                                          for="o_many2many_checkbox_269"
-                                          class="custom-control-label o_form_label"
-                                        >Manufacture</label>
-                                      </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="o_td_label">
+                                    <label class="o_form_label" for="o_field_input_250">Volume</label>
+                                  </td>
+                                  <td style="width: 100%;">
+                                    <div
+                                      class="o_row"
+                                      name="volume"
+                                      attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
+                                    >
+                                      <input
+                                        class="o_field_float o_field_number o_field_widget o_input"
+                                        name="volume"
+                                        placeholder
+                                        type="text"
+                                        v-model="state.volume"
+                                      />
+                                      <span>
+                                        <span
+                                          class="o_field_char o_field_widget o_readonly_modifier"
+                                          name="volume_uom_name"
+                                        >m³</span>
+                                      </span>
                                     </div>
-                                    <div>
-                                      <div class="custom-control custom-checkbox">
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td class="o_td_label o_invisible_modifier">
+                                    <label
+                                      class="o_form_label"
+                                      for="o_field_input_251"
+                                      data-original-title
+                                      title
+                                    >Responsible</label>
+                                  </td>
+                                  <td class="o_invisible_modifier" style="width: 100%;">
+                                    <div
+                                      class="o_field_widget o_field_many2one o_with_button"
+                                      aria-atomic="true"
+                                      name="responsible_id"
+                                    >
+                                      <div class="o_input_dropdown">
                                         <input
-                                          type="checkbox"
-                                          id="o_many2many_checkbox_270"
-                                          class="custom-control-input"
-                                          data-record-id="15"
+                                          type="text"
+                                          class="o_input ui-autocomplete-input"
+                                          autocomplete="off"
+                                          id="o_field_input_251"
                                         />
-                                        <label
-                                          for="o_many2many_checkbox_270"
-                                          class="custom-control-label o_form_label"
-                                        >Buy</label>
+                                        <a
+                                          role="button"
+                                          class="o_dropdown_button"
+                                          draggable="false"
+                                        ></a>
                                       </div>
+                                      <button
+                                        type="button"
+                                        class="fa fa-external-link btn btn-secondary o_external_button"
+                                        tabindex="-1"
+                                        draggable="false"
+                                        aria-label="External link"
+                                        title="External link"
+                                      ></button>
                                     </div>
-                                  </div>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_242"
-                                  data-original-title
-                                  title
-                                >Manufacturing Lead Time</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div attrs="{'invisible':[('type','=','service')]}">
-                                  <input
-                                    class="o_field_float o_field_number o_field_widget o_input oe_inline"
-                                    name="produce_delay"
-                                    placeholder
-                                    type="text"
-                                    id="o_field_input_242"
-                                  /> days
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                  for="o_field_input_243"
-                                >Category Routes</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_field_many2manytags o_field_widget o_invisible_modifier o_readonly_modifier"
-                                  name="route_from_categ_ids"
-                                ></div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_244"
-                                  data-original-title
-                                  title
-                                >Customer Lead Time</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div attrs="{'invisible': [('sale_ok', '=', False)]}">
-                                  <input
-                                    class="o_field_float o_field_number o_field_widget o_input oe_inline"
-                                    name="sale_delay"
-                                    placeholder
-                                    type="text"
-                                    style="vertical-align:baseline"
-                                    id="o_field_input_244"
-                                  /> days
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <table class="o_group o_inner_group o_group_col_6">
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                        <table class="o_group o_inner_group o_invisible_modifier o_group_col_6">
                           <tbody>
                             <tr>
                               <td colspan="2" style="width: 100%;">
@@ -892,316 +875,9 @@
                             </tr>
                           </tbody>
                         </table>
-                        <table class="o_group o_inner_group o_group_col_6">
-                          <tbody>
-                            <tr>
-                              <td colspan="2" style="width: 100%;">
-                                <div class="o_horizontal_separator">Logistics</div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label class="o_form_label" for="o_field_input_249">Weight</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_row"
-                                  name="weight"
-                                  attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
-                                >
-                                  <input
-                                    class="o_field_float o_field_number o_field_widget o_input"
-                                    name="weight"
-                                    placeholder
-                                    type="text"
-                                    id="o_field_input_249"
-                                  />
-                                  <span>
-                                    <span
-                                      class="o_field_char o_field_widget o_readonly_modifier"
-                                      name="weight_uom_name"
-                                    >kg</span>
-                                  </span>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label class="o_form_label" for="o_field_input_250">Volume</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_row"
-                                  name="volume"
-                                  attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
-                                >
-                                  <input
-                                    class="o_field_float o_field_number o_field_widget o_input"
-                                    name="volume"
-                                    placeholder
-                                    type="text"
-                                    id="o_field_input_250"
-                                  />
-                                  <span>
-                                    <span
-                                      class="o_field_char o_field_widget o_readonly_modifier"
-                                      name="volume_uom_name"
-                                    >m³</span>
-                                  </span>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_251"
-                                  data-original-title
-                                  title
-                                >Responsible</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_field_widget o_field_many2one o_with_button"
-                                  aria-atomic="true"
-                                  name="responsible_id"
-                                >
-                                  <div class="o_input_dropdown">
-                                    <input
-                                      type="text"
-                                      class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_251"
-                                    />
-                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                  </div>
-                                  <button
-                                    type="button"
-                                    class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
-                                  ></button>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
                       </div>
-                      <table class="o_group o_inner_group o_invisible_modifier">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Packaging</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <div
-                                class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list"
-                                name="packaging_ids"
-                                id="o_field_input_310"
-                                data-original-title
-                                title
-                              >
-                                <div class="o_cp_controller">
-                                  <div class="o_x2m_control_panel">
-                                    <nav
-                                      class="o_cp_buttons"
-                                      aria-label="Control panel toolbar"
-                                      role="toolbar"
-                                    ></nav>
-                                    <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                                      <div class="o_pager o_hidden">
-                                        <span class="o_pager_counter">
-                                          <span class="o_pager_value"></span> /
-                                          <span class="o_pager_limit"></span>
-                                        </span>
-                                        <span class="btn-group" aria-atomic="true">
-                                          <button
-                                            type="button"
-                                            class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                            aria-label="Previous"
-                                            title="Previous"
-                                            tabindex="-1"
-                                          ></button>
-                                          <button
-                                            type="button"
-                                            class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                            aria-label="Next"
-                                            title="Next"
-                                            tabindex="-1"
-                                          ></button>
-                                        </span>
-                                      </div>
-                                    </nav>
-                                  </div>
-                                </div>
-                                <div class="o_list_view">
-                                  <div class="table-responsive">
-                                    <table
-                                      class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped o_empty_list"
-                                    >
-                                      <thead>
-                                        <tr>
-                                          <th
-                                            data-name="name"
-                                            tabindex="-1"
-                                            class="o_column_sortable"
-                                            title="Packaging"
-                                          >Packaging</th>
-                                          <th
-                                            data-name="qty"
-                                            tabindex="-1"
-                                            class="o_column_sortable o_list_number_th"
-                                            title="Contained Quantity"
-                                          >Contained Quantity</th>
-                                          <th
-                                            data-name="product_uom_id"
-                                            tabindex="-1"
-                                            title="Unit of Measure"
-                                          >Unit of Measure</th>
-                                          <th
-                                            data-name="company_id"
-                                            tabindex="-1"
-                                            class="o_column_sortable"
-                                            title="Company"
-                                          >Company</th>
-                                          <th class="o_list_record_remove_header"></th>
-                                        </tr>
-                                      </thead>
-                                      <tbody class="ui-sortable">
-                                        <tr>
-                                          <td colspan="5" class="o_field_x2many_list_row_add">
-                                            <a href="#" role="button">Add a line</a>
-                                          </td>
-                                        </tr>
-                                        <tr>
-                                          <td colspan="5">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                          <td colspan="5">&nbsp;</td>
-                                        </tr>
-                                        <tr>
-                                          <td colspan="5">&nbsp;</td>
-                                        </tr>
-                                      </tbody>
-                                      <tfoot>
-                                        <tr>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                          <td></td>
-                                        </tr>
-                                      </tfoot>
-                                    </table>
-                                  </div>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Description for Delivery Orders</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <textarea
-                                class="o_field_text o_field_translate o_field_widget o_input"
-                                name="description_pickingout"
-                                placeholder="This note is added to delivery orders."
-                                type="text"
-                                id="o_field_input_298"
-                                style="overflow-y: hidden; height: 50px; resize: none;"
-                              ></textarea>
-                              <textarea
-                                disabled
-                                style="position: absolute; opacity: 0; height: 10px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px; overflow: hidden; top: -10000px; left: -10000px; width: 0px;"
-                              ></textarea>
-                              <span
-                                class="o_field_translate btn btn-link o_field_widget o_input"
-                                name="description_pickingout"
-                                placeholder="This note is added to delivery orders."
-                                type="text"
-                                id="o_field_input_298"
-                              >EN</span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Description for Receipts</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <textarea
-                                class="o_field_text o_field_translate o_field_widget o_input"
-                                name="description_pickingin"
-                                placeholder="This note is added to receipt orders (e.g. where to store the product in the warehouse)."
-                                type="text"
-                                id="o_field_input_299"
-                                style="overflow-y: hidden; height: 50px; resize: none;"
-                              ></textarea>
-                              <textarea
-                                disabled
-                                style="position: absolute; opacity: 0; height: 10px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px; overflow: hidden; top: -10000px; left: -10000px; width: 0px;"
-                              ></textarea>
-                              <span
-                                class="o_field_translate btn btn-link o_field_widget o_input"
-                                name="description_pickingin"
-                                placeholder="This note is added to receipt orders (e.g. where to store the product in the warehouse)."
-                                type="text"
-                                id="o_field_input_299"
-                              >EN</span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group o_invisible_modifier">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Description for Internal Transfers</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <textarea
-                                class="o_field_text o_field_translate o_field_widget o_input"
-                                name="description_picking"
-                                placeholder="This note is added to internal transfer orders (e.g. where to pick the product in the warehouse)."
-                                type="text"
-                                id="o_field_input_300"
-                                style="overflow-y: hidden; height: 50px; resize: none;"
-                              ></textarea>
-                              <textarea
-                                disabled
-                                style="position: absolute; opacity: 0; height: 10px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px; overflow: hidden; top: -10000px; left: -10000px; width: 0px;"
-                              ></textarea>
-                              <span
-                                class="o_field_translate btn btn-link o_field_widget o_input"
-                                name="description_picking"
-                                placeholder="This note is added to internal transfer orders (e.g. where to pick the product in the warehouse)."
-                                type="text"
-                                id="o_field_input_300"
-                              >EN</span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
-                    <div class="tab-pane" id="notebook_page_252">
+                    <div v-if="accounts == true" class="tab-pane" id="notebook_page_252">
                       <div class="o_group">
                         <table class="o_group o_inner_group o_group_col_6">
                           <tbody>
@@ -1406,7 +1082,11 @@
                         <span class="o_followers_count">0</span>
                       </button>
                       <div class="dropdown-menu dropdown-menu-right o_followers_list" role="menu">
-                        <a href="#" role="menuitem" class="dropdown-item o_add_follower">Add Followers</a>
+                        <a
+                          href="#"
+                          role="menuitem"
+                          class="dropdown-item o_add_follower"
+                        >Add Followers</a>
                         <a
                           href="#"
                           role="menuitem"
@@ -1500,15 +1180,19 @@ export default {
         can_be_sold: "",
         can_be_purchase: "",
         type: "consum",
-        category: 1,
-        code:"",
-        barcode:"",
-        price:"0",
+        category_id: 1,
+        code: "",
+        company_id: "",
+        barcode: "",
+        price: "0",
         tax_id: "",
         cost: "0",
         uom_id: "1",
         uom_po_id: "1",
-        description:"",
+        description: "",
+        create_uid: "",
+        volume: "0",
+        weight: "0",
       },
       type: [
         { label: "Consumable", value: "consum" },
@@ -1516,33 +1200,30 @@ export default {
         { label: "Storable Product", value: "product" },
       ],
       category: [],
-      uom : [],
+      uom: [],
+      company: [],
+      accounts: false,
     };
   },
   mounted() {
     this.fetchCategory();
     this.fetchUom();
+    this.fetchCompany();
+    this.fetchUserId();
+    this.checkAccounting();
   },
   methods: {
-    handleFileUpload(){
-      // let files = this.$refs.file.files[0];
-      // if (!files.length)
-      //     return;
-      this.createImage(this.$refs.file.files[0]);
-      // this.state.photo = this.$refs.file.files[0];
-      // console.log(this.state.photo)
-    },
-    createImage(file) {
-        let reader = new FileReader();
-        let vm = this;
-        reader.onload = (e) => {
-            vm.state.photo = e.target.result;
-            this.set_image(vm.state.photo)
-        };
-        reader.readAsDataURL(file);
-    },
-    set_image(file){
-      document.getElementById("picture").src = file;
+    // Prepare Product relation Component
+    fetchUserId() {
+      this.user = document.getElementById("current_email").value;
+      const url = "/api/user/" + this.user;
+      axios
+        .get(url)
+        .then((response) => {
+          this.user = response.data.result;
+          this.state.create_uid = this.user.id;
+        })
+        .catch((error) => console.error(error));
     },
     fetchCategory() {
       axios
@@ -1552,36 +1233,76 @@ export default {
         })
         .catch((error) => console.error(error));
     },
-    fetchUom(){
-      axios.get("/api/uom/list").then((response) => {
-        this.uom = response.data.data;
-      })
-      .catch((error) => console.error(error));
+    fetchUom() {
+      axios
+        .get("/api/uom/list")
+        .then((response) => {
+          this.uom = response.data.data;
+        })
+        .catch((error) => console.error(error));
+    },
+    fetchCompany() {
+      axios
+        .get("/api/company")
+        .then((response) => {
+          this.company = response.data.data;
+        })
+        .catch((error) => console.error(error));
+    },
+    // validate Addons
+    CheckAccounting() {
+       axios
+        .get("/api/company")
+        .then((response) => {
+          this.accounts = response.data.result;
+        })
+        .catch((error) => console.error(error));
+    },
+    // handle Upload File
+    handleFileUpload() {
+      this.createImage(this.$refs.file.files[0]);
+    },
+    createImage(file) {
+      let reader = new FileReader();
+      let vm = this;
+      reader.onload = (e) => {
+        vm.state.photo = e.target.result;
+        this.set_image(vm.state.photo);
+      };
+      reader.readAsDataURL(file);
+    },
+    set_image(file) {
+      document.getElementById("picture").src = file;
     },
     submit($e) {
-      console.log(this.state.photo)
+      console.log(this.state.photo);
       axios
         .post("/api/Product/store", this.state)
         .then((response) => {
-          // if (response.data.status == "success") {
-          //   Toast.fire({
-          //     icon: 'success',
-          //     title: response.data.message,
-          //   })
-          //   this.$router.push({name: 'uom_index'})
-          // }
-          // else{
-          //   Swal.fire({
-          //     type: 'warning',
-          //     title: 'Something went wrong!',
-          //     text: response.data.message,
-          //   })
-          // }
+          if (response.data.status == "success") {
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$router.push({ name: "product_index" });
+          } else {
+            Swal.fire({
+              type: "warning",
+              title: "Something went wrong!",
+              text: response.data.message,
+            });
+          }
         })
         .catch((error) => {
           if (error) {
             if (error.response.status == 422) {
-              console.log(error.response.data);
+              var error = error.response.data.errors;
+              error = error[Object.keys(error)[0]];
+              Swal.fire({
+                type: "warning",
+                title: "Something went wrong!",
+                text: error[0],
+              });
             }
           }
         });

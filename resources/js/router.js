@@ -9,6 +9,7 @@ import uom_edit from './views/uom/edit.vue'
 // === Inventory ===
 import product_index from './views/inventory/product/index.vue'
 import product_create from './views/inventory/product/create.vue'
+import product_edit from './views/inventory/product/edit.vue'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const router = new VueRouter({
             path: '/inventory/product/create',
             name: 'product_create',
             component: product_create
+        },
+        {
+            path: '/inventory/product/edit/:id',
+            name: 'product_edit',
+            component: product_edit
         },
     ]
 })

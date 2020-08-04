@@ -7,6 +7,7 @@ use App\Models\Apps\ir_model;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Addons;
 
 class AppsController extends Controller
 {
@@ -44,59 +45,13 @@ class AppsController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function check_installed($request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\ir_model  $ir_model
-     * @return \Illuminate\Http\Response
-     */
-    public function show(ir_model $ir_model)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\ir_model  $ir_model
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ir_model $ir_model)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ir_model  $ir_model
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, ir_model $ir_model)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\ir_model  $ir_model
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(ir_model $ir_model)
-    {
-        //
+        $response = Addons::cek_install_modules($request);
+        
+        return response()->json([
+            'status' => 'success',
+            'result' => $response,
+        ], 200);
     }
 }

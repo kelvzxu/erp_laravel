@@ -15,6 +15,21 @@ use Inventory;
 
 class ProductController extends Controller
 {
+    function UploadFile($name, $photo)
+    {
+        $extension = explode('/', explode(':', substr($photo, 0, strpos($photo, ';')))[1])[1];
+        $replace = substr($photo, 0, strpos($photo, ',')+1); 
+        $image = str_replace($replace, '', $photo); 
+        $image = str_replace(' ', '+', $image); 
+        $imageName = time() .'_'.str_replace(' ','_',$name).'.'.$extension;
+        $path = public_path('uploads/Products');
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+        }
+        file_put_contents(public_path('uploads/Products/').$imageName,base64_decode($image));
+        return $imageName;
+    }
+
     public function index()
     {
         $products = product::with('category')->orderBy('name', 'ASC')->paginate(30);
@@ -47,80 +62,50 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'code' => 'required|string|max:10|unique:products',
+            'name' => 'required|string|max:100',
+            'barcode' => 'required|string|max:10|unique:products',
+            'price' => 'required|integer',
+            'category' => 'required|exists:product_categories,id',
+        ]);
         $image_64 = $request->photo;
-        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];
-        $replace = substr($image_64, 0, strpos($image_64, ',')+1); 
-        $image = str_replace($replace, '', $image_64); 
-        $image = str_replace(' ', '+', $image); 
-        $imageName = time() . '.'.$extension;
-        $path = public_path('uploads/Products');
-        if(!File::isDirectory($path)){
-            File::makeDirectory($path, 0777, true, true);
+        $imageName = "";
+        if ($image_64 != ""){
+            $imageName = $this->UploadFile($request->name,$image_64);
         }
-        // $image = $request->get('photo');
-        // $imageName = time().'.' . explode('/', explode(':', substr($image, 0, strpos($image, ';')))[1])[1];
-        file_put_contents(public_path('uploads/Products/').$imageName,base64_decode($image));
-        echo $extension;
- 
-        
-            //     $photo = $request->file('photo')->getClientOriginalName();
-            //     $nama_file = time()."_".$photo;
-            //     $destination = base_path() . '/public/uploads/product';
-            //     $request->file('photo')->move($destination, $nama_file);
-            // }
-            // echo "hasil: ";
-            // echo $request->file('photo')->getClientOriginalName();
-
-        // $this->validate($request, [
-        //     'code' => 'required|string|max:10|unique:products',
-        //     'name' => 'required|string|max:100',
-        //     'description' => 'nullable|string|max:100',
-        //     'price' => 'required|integer',
-        //     'category_id' => 'required|exists:categories,id',
-        //     'photo' => 'nullable|image|mimes:jpg,png,jpeg'
-        // ]);
-
-        // try {
-
-        //     $product = product::create([
-        //         'code' => $request->code,
-        //         'name' => $request->name,
-        //         'description' => $request->description,
-        //         'stock' => "0",
-        //         'price' => $request->price,
-        //         'category_id' => $request->category_id,
-        //         'barcode' => $request->barcode,
-        //         'photo' => $nama_file,
-        //         'cost'=>$request->cost,
-        //         'can_be_sold'=>$request->can_be_sold,
-        //         'can_be_purchase'=>$request->can_be_purchase,
-        //         'income_account'=>$request->income_account,
-        //         'expense_account'=>$request->expense_account,
-        //         'stock_input_account'=>$request->stock_input_account,
-        //         'stock_output_account'=>$request->stock_output_account,
-        //         'stock_valuation_account'=>$request->stock_valuation_account,
-        //         'stock_journal'=>$request->stock_journal,
-        //         'location'=>1,
-        //     ]);
-        //     return redirect(route('product'))
-        //         ->with(['success' => '<strong>' . $product->name . '</strong> Ditambahkan']);
-        // } catch (\Exception $e) {
-        //     return redirect()->back()
-        //         ->with(['error' => $e->getMessage()]);
-        // }
+        try {
+            $product = product::create([
+                'code' => $request->code,
+                'name' => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'cost' =>$request->cost,
+                'tax_id' =>$request->tax_id,
+                'category_id' => $request->category_id,
+                'company_id' => $request->company_id,
+                'barcode' => $request->barcode,
+                'photo' => $imageName,
+                'type' => $request->type,
+                'uom_id' =>$request->uom_id,
+                'uom_po_id' =>$request->uom_po_id,
+                'can_be_sold'=>$request->can_be_sold,
+                'can_be_purchase'=>$request->can_be_purchase,
+                'create_uid' =>$request->create_uid,
+                'quantity'=>0,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Product $request->name Updated Successfully"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
-    private function saveFile($name, $photo)
-    {
-        $images = str_slug($name) . time() . '.' . $photo->getClientOriginalExtension();
-        $path = public_path('uploads/product');
-
-        if (!File::isDirectory($path)) {
-            File::makeDirectory($path, 0777, true, true);
-        } 
-        Image::make($photo)->save($path . '/' . $images);
-        return $images;
-    }
  
     public function destroy($id)
     {
@@ -208,6 +193,7 @@ class ProductController extends Controller
             'data' => []
         ]);
     }
+    
     public function getProduct(Request $request)
     {
         $this->validate($request, [

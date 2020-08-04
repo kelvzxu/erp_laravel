@@ -3,7 +3,7 @@
       <div class="o_control_panel">
           <div>
               <ol class="breadcrumb" role="navigation">
-                  <li class="breadcrumb-item" accesskey="b"><a href="">Products</a></li>
+                  <router-link class="text-primary" :to="{ name:'product_index' }">Products</router-link>
               </ol>
               <div class="o_cp_searchview" role="search">
                   <div class="o_searchview" role="search" aria-autocomplete="list">
@@ -90,10 +90,10 @@
       <div class="tab-content">
           <div class="tab-pane active" id="notebook_page_511">
               <div v-if="pagination.total != 0" class="o_kanban_view o_kanban_ungrouped">
-                  <div v-for="row in paginatedata" class="oe_kanban_global_click o_kanban_record" v-bind:key="row.id">
+                  <div v-for="row in paginatedata" class="oe_kanban_global_click o_kanban_record" v-bind:key="row.id" @click="show(row)">
                       <div class="o_kanban_image">
                           <img v-if="row.photo == null" v-bind:src="'/images/icons/camera.png'" alt="Product" class="o_image_64_contain">
-                          <img v-else v-bind:src="'/uploads/product/'+row.photo" alt="Product" class="o_image_64_contain">
+                          <img v-else v-bind:src="'/uploads/Products/'+row.photo" alt="Product" class="o_image_64_contain ">
                       </div>
                       <div class="oe_kanban_details">
                           <strong class="o_kanban_record_title">
@@ -246,7 +246,7 @@ export default {
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
     show(row){
-      this.$router.push({name: 'uom_edit', params:{id : btoa(row.id)}});
+      this.$router.push({name: 'product_edit', params:{id : btoa(row.id)}});
     }
   },
   computed: {

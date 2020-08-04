@@ -177,14 +177,19 @@ class ResCompaniesController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\res_company  $res_company
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(res_company $res_company)
+    public function Companies()
     {
-        //
+        try {
+            $products = res_company::with('currency')->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $products
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
     }
 }

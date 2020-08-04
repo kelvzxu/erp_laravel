@@ -327,7 +327,13 @@ export default {
         .catch((error) => {
           if (error) {
             if (error.response.status == 422) {
-              console.log(error.response.data);
+              var error = error.response.data.errors;
+              error = error[Object.keys(error)[0]];
+              Swal.fire({
+                type: "warning",
+                title: "Something went wrong!",
+                text: error[0],
+              });
             }
           }
         });

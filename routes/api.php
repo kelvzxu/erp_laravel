@@ -25,11 +25,7 @@ Route::get('currency','ResCurrencyController@index');
 Route::get('industry','ResPartnerIndustryController@index');
 Route::get('lang','ResLangController@index');
 Route::get('tz','ResTimeZoneController@index');
-
-Route::post('/product/search', 'ProductController@searchapi');
-Route::post('/employee/search', 'HrEmployeesController@searchapi');
-Route::get('/attendance', 'HrAttendanceController@checkatd');
-Route::post('/atd-count', 'HrAttendanceController@getcount');
+Route::get('company','ResCompaniesController@companies');
 Route::post('/leave', 'ManageSalaryController@getcount');
 
 // ==== Inventory ==== 
@@ -71,4 +67,7 @@ Route::group(['namespace' => '\App\Addons\Uom\Controllers'], function()
 // get Access Rights
 Route::get('/user/Access/{id}','UserController@getAccessRight');
 Route::get('/user/{id}','UserController@getUser');
+
+// Addons
+Route::get('/Addons/Check/{id}','AppsController@check_installed');
 

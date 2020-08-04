@@ -128,12 +128,15 @@ class UomController extends Controller
             'uom_type'=>'required',
         ]);
         $validator=0;
-        // check uom_type
-        if ($request->uom_type == 'reference'){
-            $uom =uom_uom::where('category_id',$request->category_id)
-                        ->where('uom_type',$request->uom_type)
-                        ->count();
-            $validator = $uom;
+        $uom= uom_uom::findorFail($request->id);
+        if ($uom->uom_type != 'reference'){
+            // check uom_type
+            if ($request->uom_type == 'reference'){
+                $uom =uom_uom::where('category_id',$request->category_id)
+                            ->where('uom_type',$request->uom_type)
+                            ->count();
+                $validator = $uom;
+            }
         }
         if ($validator == 0){
             $category = uom_category::findOrFail($request->category_id);
