@@ -36,7 +36,13 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
     Route::get('Products/sale','ProductController@ProductSale');
     Route::get('getProduct','ProductController@getProduct');
     Route::get('getProduct/id','ProductController@getProductById');
+
     Route::get('Products/category','CategoryController@fetchCategory');
+    Route::post('Product/category/store','CategoryController@store');
+    Route::get('Product/Category/{id}','CategoryController@getCategory');
+
+    Route::get('Removal/Strategy','ProductRemovalController@fetchRemovalStrategy');
+    
 });
 
 Route::get('/chart', 'HomeController@getChart');

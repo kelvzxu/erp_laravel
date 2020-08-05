@@ -67,7 +67,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:100',
             'barcode' => 'required|string|max:10|unique:products',
             'price' => 'required|integer',
-            'category' => 'required|exists:product_categories,id',
+            'category_id' => 'required|exists:product_categories,id',
         ]);
         $image_64 = $request->photo;
         $imageName = "";
@@ -279,4 +279,5 @@ class ProductController extends Controller
             'data' => []
         ]);
     }
+
 }

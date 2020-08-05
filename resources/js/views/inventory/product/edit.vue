@@ -29,11 +29,11 @@
                         class="btn btn-primary o_form_button_save"
                         accesskey="s"
                       >Save</button>
-                      <button
+                      <router-link
                         type="button"
                         class="btn btn-secondary o_form_button_cancel"
-                        accesskey="j"
-                      >Discard</button>
+                        :to="{ name:'uom_index' }"
+                      >Discard</router-link>
                     </div>
                   </div>
                 </div>
@@ -370,7 +370,7 @@
                                     >
                                       <option
                                         v-for="row in category"
-                                        :select="row.value == state.category"
+                                        :select="row.value == state.category_id"
                                         :key="row.id"
                                         :value="row.id"
                                       >{{ row.name }}</option>
@@ -1191,12 +1191,6 @@ export default {
         this.state = response.data.data;
         console.log(this.state);
       }).catch(error => console.error(error));
-    // axios
-    //   .get(`/api/uom/get_uom/${atob(this.$route.params.id)}`)
-    //   .then((response) => {
-    //     console.log("ok");
-    //     this.state = response.data.result;
-    //   });
   },
   mounted() {
     this.fetchCategory();

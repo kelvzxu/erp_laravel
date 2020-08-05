@@ -26,6 +26,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('inventory.product.vue');
     })->where('any', '.*');
 
+    Route::get('/inventory/category/{any}', function () {
+        return view('inventory.category.vue');
+    })->where('any', '.*');
+
     // ==== Apps ====
     Route::get('Apps','AppsController@index')->name('Apps.index');
     Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');

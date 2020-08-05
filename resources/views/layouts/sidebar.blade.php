@@ -132,7 +132,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{route('product-categories')}}">
+                        <a href="/inventory/category/tree-view">
                             <i class="metismenu-icon fa fa-cube">
                             </i>Product Categories
                         </a>

@@ -19,6 +19,8 @@ class CreateProductCategoriesTable extends Migration
             $table->string('complete_name');
             $table->integer('parent_id')->nullable();
             $table->string('description')->nullable();
+            $table->integer('removal_strategy_id')->nullable();
+            $table->string('costing_method')->nullable();
             $table->integer('create_uid');
             $table->timestamps();
         });

@@ -222,16 +222,12 @@ export default {
       this.pagination.nextPage =
         array.length > this.pagination.to ? pageNumber + 1 : "";
       this.ghost = this.length - this.pagination.to;
-      console.log(this.ghost)
       return array.slice((pageNumber - 1) * length, pageNumber * length);
     },
     resetPagination() {
       this.pagination.currentPage = 1;
       this.pagination.prevPage = "";
       this.pagination.nextPage = "";
-    },
-    countghost() {
-
     },
     sortBy(key) {
       this.resetPagination();

@@ -6,17 +6,22 @@ use App\Addons\Inventory\Models\category;
 use App\Addons\Inventory\Models\product;
 use App\Addons\Inventory\Models\delivere_product;
 use App\Addons\Inventory\Models\receive_product;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use File;
 
 class Inventory {
     public static function installed(){
-        try{
             Artisan::call('migrate', array('--path' => 'app/Addons/Inventory/Migrations', '--force' => true));
-        }
-        catch (\Exception $e){
-            echo $e;
-        }
+            $removal = [
+                ['name'=>'First In First Out (FIFO)','method'=>'FIFO','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
+                ['name'=>'Last In First Out (LIFO)','method'=>'LIFO','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
+            ];
+            $category = [
+                ['name'=>'All','complete_name'=>'All','removal_strategy_id'=>1,'costing_method'=>'standard','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')]
+            ];
+            DB::table('product_removal')->insert($removal);
+            DB::table('product_categories')->insert($category);
     }
 
     public static function uninstalled(){

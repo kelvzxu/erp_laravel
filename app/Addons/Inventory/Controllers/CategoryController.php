@@ -17,21 +17,36 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        //validasi form
         $this->validate($request, [
             'name' => 'required|string|max:50',
-            'description' => 'nullable|string'
         ]);
 
+        $complete_name = $request->name;
+        if ($request->parent_id != "")
+        {
+            $parent = category::findOrFail($request->parent_id);
+            $complete_name = "$parent->complete_name / $request->name";
+        }
+
         try {
-            $categories = category::firstOrCreate([
-                'name' => $request->name
-            ], [
-                'description' => $request->description
+            category::create([
+                'name' =>$request->name,
+                'complete_name' =>$complete_name,
+                'parent_id'=> $request->parent_id,
+                'description' =>$request->description,
+                'removal_strategy_id' =>$request->removal_strategy_id,
+                'costing_method' =>$request->costing_method,
+                'create_uid'=>$request->create_uid,
             ]);
-            return redirect()->back()->with(['success' => 'Category: ' . $categories->name . ' created success']);
-        } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Category $request->name Updated Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
@@ -80,4 +95,18 @@ class CategoryController extends Controller
             ]);
         }
     }
+    public function getCategory($id){
+        try {
+            $response = category::findOrFail($id);
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+   }
 }

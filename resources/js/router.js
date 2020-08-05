@@ -6,10 +6,16 @@ import uom_index from './views/uom/index.vue'
 import uom_create from './views/uom/create.vue'
 import uom_edit from './views/uom/edit.vue'
 
-// === Inventory ===
+// === Inventory Products ===
 import product_index from './views/inventory/product/index.vue'
 import product_create from './views/inventory/product/create.vue'
 import product_edit from './views/inventory/product/edit.vue'
+
+// === Inventory Categories ===
+import category_index from './views/inventory/category/index.vue'
+import category_create from './views/inventory/category/create.vue'
+import category_edit from './views/inventory/category/edit.vue'
+
 
 Vue.use(VueRouter)
 
@@ -45,6 +51,21 @@ const router = new VueRouter({
             path: '/inventory/product/edit/:id',
             name: 'product_edit',
             component: product_edit
+        },
+        {
+            path: '/inventory/category/tree-view',
+            name: 'category_index',
+            component: category_index
+        },
+        {
+            path: '/inventory/category/create',
+            name: 'category_create',
+            component: category_create
+        },
+        {
+            path: '/inventory/category/edit/:id',
+            name: 'category_edit',
+            component: category_edit
         },
     ]
 })
