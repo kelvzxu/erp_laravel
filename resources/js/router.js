@@ -16,6 +16,11 @@ import category_index from './views/inventory/category/index.vue'
 import category_create from './views/inventory/category/create.vue'
 import category_edit from './views/inventory/category/edit.vue'
 
+// === Inventory Categories ===
+import warehouse_index from './views/inventory/warehouse/index.vue'
+import warehouse_create from './views/inventory/warehouse/create.vue'
+// import category_edit from './views/inventory/category/edit.vue'
+
 
 Vue.use(VueRouter)
 
@@ -66,6 +71,16 @@ const router = new VueRouter({
             path: '/inventory/category/edit/:id',
             name: 'category_edit',
             component: category_edit
+        },
+        {
+            path: '/inventory/warehouse/tree-view',
+            name: 'warehouse_index',
+            component: warehouse_index
+        },
+        {
+            path: '/inventory/warehouse/create',
+            name: 'warehouse_create',
+            component: warehouse_create
         },
     ]
 })

@@ -50,35 +50,38 @@ class CategoryController extends Controller
         }
     }
 
-    public function destroy(Request $request)
-    {
-        $categories = category::findOrFail($request->id);
-        $categories->delete();
-        return redirect(route('product-categories'))->with(['success' => 'data berhasil Telah Dihapus']);
-    }
-
-    public function edit($id)
-    {
-        $categories = category::findOrFail($id);
-        return view('categories.edit', compact('categories'));
-    }
-
     public function update(Request $request)
     {
-        //validasi form
         $this->validate($request, [
             'name' => 'required|string|max:50',
-            'description' => 'nullable|string'
         ]);
 
+        $complete_name = $request->name;
+        if ($request->parent_id != "")
+        {
+            $parent = category::findOrFail($request->parent_id);
+            $complete_name = "$parent->complete_name / $request->name";
+        }
+
         try {
-            $categories = category::where('id',$request->id)->update([
-                'name' => $request->name,
-                'description' => $request->description
+            category::findorFail($request->id)->update([
+                'name' =>$request->name,
+                'complete_name' =>$complete_name,
+                'parent_id'=> $request->parent_id,
+                'description' =>$request->description,
+                'removal_strategy_id' =>$request->removal_strategy_id,
+                'costing_method' =>$request->costing_method,
+                'create_uid'=>$request->create_uid,
             ]);
-            return redirect(route('product-categories'))->with(['success' => 'Kategori: '.$request->name.' Ditambahkan']);
-        } catch (\Exception $e) {
-            return redirect()->back()->with(['error' => $e->getMessage()]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Category $request->name Updated Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
         }
     }
     public function fetchCategory(){

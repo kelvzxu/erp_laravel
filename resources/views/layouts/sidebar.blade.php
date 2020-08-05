@@ -215,6 +215,14 @@
                                 </a>
                             </li>
                         </ul>
+                        <ul>
+                            <li>
+                                <a href="/inventory/warehouse/tree-view">
+                                    <i class="metismenu-icon"></i> 
+                                    Warehouse
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     @endif
                 @endif

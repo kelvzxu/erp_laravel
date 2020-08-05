@@ -5,7 +5,7 @@
                 <div class="o_control_panel">
                     <div>
                         <ol class="breadcrumb" role="navigation">
-                            <router-link class="text-primary" :to="{ name:'warehouse_index' }">Warehouses</li>
+                            <li class="breadcrumb-item"><router-link class="text-primary" :to="{ name:'warehouse_index' }">Warehouses</router-link></li>
                             <li class="breadcrumb-item active">New</li>
                         </ol>
                         <div class="o_cp_searchview" role="search"></div>
@@ -18,13 +18,13 @@
                                         data-original-title="" title="">
                                         <button
                                             type="submit"
-                                            class="btn btn-primary o_form_button_save"
+                                            class="btn btn-primary o_form_button_save text-white"
                                             accesskey="s"
                                         >Save</button>
                                         <router-link
                                             type="button"
                                             class="btn btn-secondary o_form_button_cancel"
-                                            :to="{ name:'uom_index' }"
+                                            :to="{ name:'warehouse_index' }"
                                         >Discard</router-link>
                                     </div>
                                 </div>
@@ -51,44 +51,50 @@
                             <div class="ribbon ribbon-top-right o_invisible_modifier o_widget">
                                 <span class="bg-danger">Archived</span>
                             </div>
-                            <label class="o_form_label oe_edit_only" for="o_field_input_657" data-original-title=""
-                                title="">Warehouse</label>
-                            <h1><input class="o_field_char o_field_widget o_input o_required_modifier" v-model="state.name"></h1>
+                            <label class="o_form_label oe_edit_only">Warehouse</label>
+                            <h1><input class="o_field_char o_field_widget o_input o_required_modifier" v-model="state.name"
+                                            placeholder="e.g. Lamps" type="text"></h1></h1>
                             <div class="o_group">
-                                <table class="o_group o_inner_group o_group_col_6">
-                                    <tbody>
-                                        <tr>
-                                            <td class="o_td_label">
-                                                <label class="o_form_label o_required_modifier">Short Name</label>
-                                            </td>
-                                            <td style="width: 100%;">
-                                                <input class="o_field_char o_field_widget o_input o_required_modifier"
-                                                    v-model="state.code">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <table class="o_group o_inner_group o_group_col_6">
-                                    <tbody>
-                                        <tr>
-                                            <td class="o_td_label">
-                                                <label
-                                                    class="o_form_label o_readonly_modifier o_required_modifier">Company</label>
-                                            </td>
-                                            <td style="width: 100%;">
-                                                <select class="o_input o_field_widget" name="type"
-                                                    v-model="state.company_id">
-                                                    <option v-for="row in company" :select="row.id == state.company_id"
-                                                        :key="row.id" :value="row.id">{{ row.company_name }}</option>
-                                                    <button type="button"
-                                                        class="fa fa-external-link btn btn-secondary o_external_button"
-                                                        tabindex="-1" draggable="false" aria-label="External link"
-                                                        title="External link"></button>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <table class="o_group o_inner_group">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label class="o_form_label o_required_modifier">Short Name</label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <input class=" o_input o_required_modifier"
+                                                            v-model="state.code">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <di class="col-6">
+                                        <table class="o_group o_inner_group">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="o_td_label">
+                                                        <label
+                                                            class="o_form_label o_readonly_modifier o_required_modifier">Company</label>
+                                                    </td>
+                                                    <td style="width: 100%;">
+                                                        <select class="o_input o_field_widget" name="type"
+                                                            v-model="state.company_id">
+                                                            <option v-for="row in company" :select="row.id == state.company_id"
+                                                                :key="row.id" :value="row.id">{{ row.company_name }}</option>
+                                                            <button type="button"
+                                                                class="fa fa-external-link btn btn-secondary o_external_button"
+                                                                tabindex="-1" draggable="false" aria-label="External link"
+                                                                title="External link"></button>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </di>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,3 +103,34 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            state: {
+                name:"",
+                complete_name: "",
+                parent_id: "",
+                description: "",
+                removal_strategy_id: "1",
+                costing_method:"standard",
+                create_uid:"",
+            },
+            company:[],
+        }
+    },
+    mounted() {
+        this.fetchCompany();
+    },
+    methods: {
+        fetchCompany() {
+        axios
+            .get("/api/company")
+            .then((response) => {
+            this.company = response.data.data;
+            })
+            .catch((error) => console.error(error));
+        },
+    },
+}
+</script>

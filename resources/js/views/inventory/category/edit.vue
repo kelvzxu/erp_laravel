@@ -6,7 +6,9 @@
                     <div class="o_control_panel">
                         <div>
                             <ol class="breadcrumb" role="navigation">
-                                <li class="breadcrumb-item" accesskey="b"><a href="#">Product Categories</a></li>
+                                <li class="breadcrumb-item" accesskey="b">
+                                    <router-link class="text-primary" :to="{ name:'category_index' }">Product Categories</router-link>
+                                </li>
                                 <li class="breadcrumb-item active">{{state.name}}</li>
                             </ol>
                             <div class="o_cp_searchview" role="search"></div>
@@ -25,7 +27,7 @@
                                             <router-link
                                                 type="button"
                                                 class="btn btn-secondary o_form_button_cancel"
-                                                :to="{ name:'uom_index' }"
+                                                :to="{ name:'category_index' }"
                                             >Discard</router-link>
                                         </div>
                                     </div>
@@ -217,7 +219,7 @@ export default {
     submit($e) {
       console.log(this.state.photo);
       axios
-        .post("/api/Product/category/store", this.state)
+        .post("/api/Product/category/update", this.state)
         .then((response) => {
           if (response.data.status == "success") {
             Toast.fire({

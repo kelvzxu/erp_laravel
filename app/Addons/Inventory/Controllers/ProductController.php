@@ -96,7 +96,7 @@ class ProductController extends Controller
             ]);
             return response()->json([
                 'status' => 'success',
-                'message' => "Product $request->name Updated Successfully"
+                'message' => "Product $request->name Created Successfully"
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -132,47 +132,45 @@ class ProductController extends Controller
         $this->validate($request, [
             'code' => 'required|string|max:10|exists:products,code',
             'name' => 'required|string|max:100',
-            'description' => 'nullable|string|max:100',
+            'barcode' => 'required|string|max:10|exists:products,barcode',
             'price' => 'required|integer',
-            'category_id' => 'required|exists:categories,id',
-            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
+            'category_id' => 'required|exists:product_categories,id',
         ]);
-
+        $product = product::findorFail($request->id);
+        $image_64 = $request->photo;
+        $imageName = $product->photo;
+        if ($image_64 != ""){
+            $imageName = $this->UploadFile($request->name,$image_64);
+        }
         try {
-            $product = product::where('code',$request->code)->first();
-            $nama_file = $product->photo;
-
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo')->getClientOriginalName();
-                $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/product';
-                $request->file('photo')->move($destination, $nama_file);
-            }
-
-
             $product->update([
+                'code' => $request->code,
                 'name' => $request->name,
                 'description' => $request->description,
-                'price' => $request->price, 
+                'price' => $request->price,
+                'cost' =>$request->cost,
+                'tax_id' =>$request->tax_id,
                 'category_id' => $request->category_id,
-                'barcode'=> $request->barcode,
-                'cost'=>$request->cost,
-                'photo' => $nama_file,
+                'company_id' => $request->company_id,
+                'barcode' => $request->barcode,
+                'photo' => $imageName,
+                'type' => $request->type,
+                'uom_id' =>$request->uom_id,
+                'uom_po_id' =>$request->uom_po_id,
                 'can_be_sold'=>$request->can_be_sold,
                 'can_be_purchase'=>$request->can_be_purchase,
-                'income_account'=>$request->income_account,
-                'expense_account'=>$request->expense_account,
-                'stock_input_account'=>$request->stock_input_account,
-                'stock_output_account'=>$request->stock_output_account,
-                'stock_valuation_account'=>$request->stock_valuation_account,
-                'stock_journal'=>$request->stock_journal,
+                'create_uid' =>$request->create_uid,
+                'quantity'=>0,
             ]);
-
-            return redirect(route('product'))
-                ->with(['success' => '<strong>' . $product->name . '</strong> Diperbaharui']);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Product $request->name Updated Successfully"
+            ]);
         } catch (\Exception $e) {
-            return redirect()->back()
-                ->with(['error' => $e->getMessage()]);
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
         }
     }
     public function searchapi(Request $request)

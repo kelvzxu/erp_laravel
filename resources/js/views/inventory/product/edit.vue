@@ -32,7 +32,7 @@
                       <router-link
                         type="button"
                         class="btn btn-secondary o_form_button_cancel"
-                        :to="{ name:'uom_index' }"
+                        :to="{ name:'product_index' }"
                       >Discard</router-link>
                     </div>
                   </div>
@@ -1248,7 +1248,7 @@ export default {
     submit($e) {
       this.state.photo = this.newphoto;
       axios
-        .post("/api/Product/store", this.state)
+        .post("/api/Product/update", this.state)
         .then((response) => {
           if (response.data.status == "success") {
             Toast.fire({

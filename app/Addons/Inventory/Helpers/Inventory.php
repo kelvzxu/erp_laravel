@@ -12,16 +12,20 @@ use File;
 
 class Inventory {
     public static function installed(){
-            Artisan::call('migrate', array('--path' => 'app/Addons/Inventory/Migrations', '--force' => true));
-            $removal = [
-                ['name'=>'First In First Out (FIFO)','method'=>'FIFO','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
-                ['name'=>'Last In First Out (LIFO)','method'=>'LIFO','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
-            ];
-            $category = [
-                ['name'=>'All','complete_name'=>'All','removal_strategy_id'=>1,'costing_method'=>'standard','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')]
-            ];
-            DB::table('product_removal')->insert($removal);
-            DB::table('product_categories')->insert($category);
+        Artisan::call('migrate', array('--path' => 'app/Addons/Inventory/Migrations', '--force' => true));
+        $removal = [
+            ['name'=>'First In First Out (FIFO)','method'=>'FIFO','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
+            ['name'=>'Last In First Out (LIFO)','method'=>'LIFO','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
+        ];
+        $category = [
+            ['name'=>'All','complete_name'=>'All','removal_strategy_id'=>1,'costing_method'=>'standard','create_uid'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')]
+        ];
+        $warehouse = [
+            ['name'=>'My Company Warehouse', 'code'=>'WH','company_id'=>1,'created_at' =>date('Y-m-d H:i:s'),'updated_at' =>date('Y-m-d H:i:s')],
+        ];
+        DB::table('product_removal')->insert($removal);
+        DB::table('product_categories')->insert($category);
+        DB::table('product_warehouses')->insert($warehouse);
     }
 
     public static function uninstalled(){
