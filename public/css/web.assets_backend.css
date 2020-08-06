@@ -11280,7 +11280,7 @@ a.text-primary:focus {
     color: #FFFFFF !important;
 }
 
-.text-gray{
+.text-gray {
     color: #6c757d !important;
 }
 
@@ -26691,9 +26691,29 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
     border-right: 4px solid transparent;
     border-bottom: 4px solid #fff;
 }
+
 .o_sorting_desc {
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
     border-top: 4px solid #fff;
 }
 
+.o_field_widget.o_field_many2one_avatar>img.o_m2o_avatar {
+    border-radius: 50%;
+    width: 19px;
+    height: 19px;
+    object-fit: cover;
+    margin-right: 4px;
+}
+
+.o_field_widget.o_field_badge {
+    border: 0;
+    font-size: 12px;
+    user-select: none;
+    background-color: rgba(211, 211, 211, 0.5);
+    font-weight: 500;
+}
+
+.o_list_view .o_list_table .o_data_row.o_selected_row>.o_data_cell:not(.o_readonly_modifier):not(.o_invisible_modifier)>.o_field_badge {
+    width: auto;
+}

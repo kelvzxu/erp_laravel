@@ -12,7 +12,7 @@
     "devDependencies": {
         "@nuxtjs/vuetify": "^1.11.2",
         "axios": "^0.19",
-        "bootstrap": "^4.5.0",
+        "bootstrap": "^4.5.1",
         "cross-env": "^7.0.2",
         "deepmerge": "^4.2.2",
         "fibers": "^5.0.0",
@@ -31,6 +31,6 @@
         "laravel-echo": "^1.8.1",
         "pusher-js": "^5.1.1",
         "sweetalert2": "^9.17.1",
-        "vue-router": "^3.3.4"
+        "vue-router": "^3.4.0"
     }
 }

@@ -21,7 +21,7 @@
                                             data-original-title="" title="">
                                             <button
                                                 type="submit"
-                                                class="btn btn-primary o_form_button_save"
+                                                class="btn btn-primary o_form_button_save text-white"
                                                 accesskey="s"
                                             >Save</button>
                                             <router-link

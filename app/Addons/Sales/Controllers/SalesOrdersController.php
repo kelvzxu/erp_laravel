@@ -197,11 +197,8 @@ class SalesOrdersController extends Controller
 
     public function fetchSalesOrder(){
         try {
-            $response = sales_order::with('partner','sales_person','partner.currency')
-                    ->join('res_customers', 'sales_orders.customer', '=', 'res_customers.id')
-                    ->join('hr_employees', 'sales_orders.sales', '=', 'hr_employees.id')
+            $response = sales_order::with('partner','sales_person','partner.currency','company')
                     ->orderBy('created_at', 'desc')
-                    ->select('sales_orders.*', 'res_customers.name','hr_employees.employee_name')
                     ->get();
             return response()->json([
                 'status' => 'success',

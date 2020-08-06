@@ -36,5 +36,53 @@ class ProductWarehouseController extends Controller
             ]);
         }
     }
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:50',
+            'code' => 'required|string|max:5|unique:product_warehouses',
+        ]);
 
+        try {
+            product_warehouse::create([
+                'name' =>ucwords($request->name),
+                'code' =>strtoupper($request->code),
+                'company_id' =>$request->company_id,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Warehouse $request->name Updated Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string|max:50',
+            'code' => 'required|string|max:5|exists:product_warehouses,code',
+        ]);
+
+        try {
+            product_warehouse::findorFail($request->id)->update([
+                'name' =>ucwords($request->name),
+                'code' =>strtoupper($request->code),
+                'company_id' =>$request->company_id,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Warehouse $request->name Updated Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
 }

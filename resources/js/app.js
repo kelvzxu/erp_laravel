@@ -1,8 +1,6 @@
 import './bootstrap'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Vue from 'vue'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
 import router from './router'
@@ -11,11 +9,6 @@ window.Swal = Swal;
 
 Vue.use (BootstrapVue)
 Vue.use (IconsPlugin)
-Vue.use(Vuetify)
-
-const opts = {}
-
-export default new Vuetify(opts)
 
 const Toast = Swal.mixin({
     toast: true,

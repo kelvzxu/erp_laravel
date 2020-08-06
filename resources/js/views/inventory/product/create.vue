@@ -26,7 +26,7 @@
                     >
                       <button
                         type="submit"
-                        class="btn btn-primary o_form_button_save"
+                        class="btn btn-primary text-white o_form_button_save"
                         accesskey="s"
                       >Save</button>
                       <router-link

@@ -12,7 +12,10 @@ class sales_order extends Model
         'grand_total','receipt','receipt_validate',
         'status','sales','invoice','confirm_date'
     ];
-
+    public function company()
+    {
+        return $this->hasOne('App\Models\Company\res_company','id','company_id');
+    }
     public function products()
     {
         return $this->hasMany(sales_order_product::class);

@@ -11,10 +11,7 @@
                           aria-label="Advanced Search..." type="submit"></button>
 
                       <div class="o_searchview_input_container">
-                          <input type="text" class="o_searchview_input" accesskey="Q" placeholder="Search..."
-                              role="searchbox" aria-haspopup="true" name="value">
-                          <input type="hidden" class="o_searchview_input" accesskey="Q" placeholder="key"
-                          role="searchbox" aria-haspopup="true" name="filter">
+                          <input type="text" class="o_searchview_input" placeholder="Search..." v-model="search">
                           <div class="dropdown-menu o_searchview_autocomplete" role="menu"></div>
                       </div>
                   </div>

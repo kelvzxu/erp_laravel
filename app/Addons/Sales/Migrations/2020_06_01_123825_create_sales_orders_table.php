@@ -26,10 +26,12 @@ class CreateSalesOrdersTable extends Migration
             $table->bigInteger('taxes')->nullable();
             $table->bigInteger('grand_total')->nullable();
             $table->boolean('invoice')->default(False);
-            $table->string('status')->default("Quotation");
+            $table->string('state')->default("Quotation");
             $table->boolean('receipt')->default(False);
             $table->boolean('receipt_validate')->default(False);
             $table->integer('sales')->nullable();
+            $table->integer('product_warehouse_id')->nullable();
+            $table->integer('company_id')->nullable();
             $table->timestamps();
         });
     }

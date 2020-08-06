@@ -34,6 +34,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('inventory.warehouse.vue');
     })->where('any', '.*');
 
+    Route::get('/sales/{any}', function () {
+        return view('sales.vue');
+    })->where('any', '.*');
+
     // ==== Apps ====
     Route::get('Apps','AppsController@index')->name('Apps.index');
     Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');
@@ -101,7 +105,6 @@ Route::group(['middleware' => 'auth'], function (){
 
     // ==== Portal User ====
     Route::get('User/Portal','AccessRightsController@portal')->name('portal.index');
-
     // ==== Recruitment ====
     Route::get('recruitment','HrRecruitmentController@index')->name('recruitment');
 

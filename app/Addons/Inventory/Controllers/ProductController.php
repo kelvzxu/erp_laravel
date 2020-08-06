@@ -70,7 +70,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:product_categories,id',
         ]);
         $image_64 = $request->photo;
-        $imageName = "";
+        $imageName = null;
         if ($image_64 != ""){
             $imageName = $this->UploadFile($request->name,$image_64);
         }

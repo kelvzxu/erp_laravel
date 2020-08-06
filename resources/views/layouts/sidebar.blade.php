@@ -44,7 +44,7 @@
                 @if (AccessRight::access()->sales == true)
                 <li class="app-sidebar__heading">Sales</li>
                     <li>
-                        <a href="{{ route ('sales_orders')}}" id="sales_orders" class="menu-item">
+                        <a href="/sales/tree-view" id="sales_orders" class="menu-item">
                             <i class="metismenu-icon fa fa-shopping-bag"></i>
                             Sales Order
                         </a>

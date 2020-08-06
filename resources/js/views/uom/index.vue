@@ -117,7 +117,7 @@
                     v-for="column in columns"
                     :key="column.name"
                     @click="sortBy(column.name)"
-                    :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'o_sorting_asc' : 'o_sorting_desc') : 'sorting'"
+                    :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'o-sort-down o_column_sortable' : 'o-sort-up o_column_sortable') : 'sorting'"
                     style="cursor:pointer;"
                   >{{column.label}}</th>
                 </tr>

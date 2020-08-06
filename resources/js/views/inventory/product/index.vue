@@ -11,10 +11,7 @@
                           aria-label="Advanced Search..." type="submit"></button>
 
                       <div class="o_searchview_input_container">
-                          <input type="text" class="o_searchview_input" accesskey="Q" placeholder="Search..."
-                              role="searchbox" aria-haspopup="true" name="value">
-                          <input type="hidden" class="o_searchview_input" accesskey="Q" placeholder="key"
-                          role="searchbox" aria-haspopup="true" name="filter">
+                          <input type="text" class="o_searchview_input" placeholder="Search..." v-model="search">
                           <div class="dropdown-menu o_searchview_autocomplete" role="menu"></div>
                       </div>
                   </div>
@@ -124,31 +121,36 @@
               </div>
           </div>
           <div class="tab-pane" id="notebook_page_521">
-              <div class="panel-body ml-2">
-                  <div v-if="pagination.total != 0" class="table-responsive mb-3">
-                      <table class="table table-hover">
-                          <thead class="table table-sm">
-                              <tr>
-                                <th
-                                  v-for="column in columns"
-                                  :key="column.name"
-                                  @click="sortBy(column.name)"
-                                  :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'o_sorting_asc' : 'o_sorting_desc') : 'sorting'"
-                                  style="cursor:pointer;"
-                                >{{column.label}}</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="row in paginatedata" :key="row.id" class="table-row" @click="show(row)">
-                              <td>{{row.code}}</td>
-                              <td>{{row.name}}</td>
-                              <td>{{formatPrice(row.price)}}</td>
-                              <td>{{formatPrice(row.cost)}}</td>
-                              <td>{{row.quantity}}</td>
-                              <td>{{row.uom.name}}</td>
-                            </tr>
-                          </tbody>
-                      </table>
+              <div class="panel-body">
+                  <div v-if="pagination.total != 0" class="o_content">
+                    <div class="o_list_view o_sale_order o_list_optional_columns">
+                      <div class="table-responsive mb-3">
+                          <table class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped"
+                            style="table-layout: fixed;">
+                              <thead>
+                                  <tr>
+                                    <th
+                                      v-for="column in columns"
+                                      :key="column.name"
+                                      @click="sortBy(column.name)"
+                                      :class="sortKey === column.name ? (sortOrders[column.name] > 0 ? 'o-sort-down o_column_sortable' : 'o-sort-up o_column_sortable') : 'sorting'"
+                                      style="cursor:pointer;"
+                                    >{{column.label}}</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                <tr v-for="row in paginatedata" :key="row.id" class="table-row" @click="show(row)">
+                                  <td>{{row.code}}</td>
+                                  <td>{{row.name}}</td>
+                                  <td>{{formatPrice(row.price)}}</td>
+                                  <td>{{formatPrice(row.cost)}}</td>
+                                  <td>{{row.quantity}}</td>
+                                  <td>{{row.uom.name}}</td>
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                    </div>
                   </div>
                   <div v-else class="o_nocontent_help">
                       <p class="o_view_nocontent_smiling_face">
