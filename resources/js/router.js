@@ -23,6 +23,7 @@ import warehouse_edit from './views/inventory/warehouse/edit.vue'
 
 // === Sales ===
 import sales_index from './views/sales/index.vue'
+import sales_create from './views/sales/create.vue'
 
 
 Vue.use(VueRouter)
@@ -95,6 +96,12 @@ const router = new VueRouter({
             name: 'sales_index',
             component: sales_index
         },
+        {
+            path: '/sales/create',
+            name: 'sales_create',
+            component: sales_create
+        },
+        
     ]
 })
 

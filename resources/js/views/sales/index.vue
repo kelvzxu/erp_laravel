@@ -37,7 +37,7 @@
                     <router-link
                         type="button"
                         class="btn btn-primary text-white o-kanban-button-new"
-                        :to="{ name:'uom_create' }"
+                        :to="{ name:'sales_create' }"
                     >Create</router-link>
                     <button type="button" class="btn btn-secondary o_button_import">Import</button>
                     </div>
@@ -91,7 +91,7 @@
                 </nav>
                 <nav class="btn-group o_cp_switch_buttonsnav nav" role="toolbar" aria-label="View switcher">
                     <a data-toggle="tab" disable_anchor="true" href="#notebook_page_511"
-                                class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active" role="tab" aria-selected="true"></a></li>
+                                class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active" role="tab" aria-selected="true"></a>
                     <a data-toggle="tab" disable_anchor="true" href="#notebook_page_521"
                                 class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban" role="tab"></a>
                 </nav>
