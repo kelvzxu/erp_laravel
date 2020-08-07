@@ -17,8 +17,14 @@ class CreateSalesOrderProductsTable extends Migration
             $table->increments('id');
             $table->integer('sales_order_id')->unsigned();
             $table->integer('name');
+            $table->integer('description');
+            $table->integer('product_uom');
+            $table->integer('product_uom_desc');
             $table->integer('qty');
             $table->bigInteger('price');
+            $table->bigInteger('price_subtotal');
+            $table->bigInteger('taxes');
+            $table->bigInteger('price_tax');
             $table->bigInteger('total');
             $table->timestamps();
         });

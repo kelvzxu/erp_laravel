@@ -1154,7 +1154,7 @@ export default {
         company_id: "",
         barcode: "",
         price: "0",
-        tax_id: "",
+        tax_id: "0",
         cost: "0",
         uom_id: "1",
         uom_po_id: "1",

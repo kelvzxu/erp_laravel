@@ -62,7 +62,8 @@ Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
 // ==== Contact ====
 Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
 {
-    Route::post('/customer/search', 'ResCustomersController@searchapi');
+    Route::post('/customer/list', 'ResCustomersController@fetchCustomer');
+    Route::post('/customer/search/{id}', 'ResCustomersController@searchapi');
     Route::post('/partner/search', 'ResPartnersController@searchapi');
 });
 

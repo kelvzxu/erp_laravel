@@ -54,7 +54,7 @@
                                 </div>
                                 <label class="o_form_label oe_edit_only">Warehouse</label>
                                 <h1><input class="o_field_char o_field_widget o_input o_required_modifier" v-model="state.name"
-                                                placeholder="e.g. My Warehouse" type="text"></h1></h1>
+                                                placeholder="e.g. My Warehouse" type="text"></h1>
                                 <div class="o_group">
                                     <div class="row">
                                         <div class="col-6">

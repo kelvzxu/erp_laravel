@@ -265,7 +265,7 @@ class ProductController extends Controller
             'id' => 'required'
         ]);
 
-        $product = product::where('id', $request->id)->first();
+        $product = product::with('stock','uom','category')->where('id', $request->id)->first();
         if ($product) {
             return response()->json([
                 'status' => 'success',

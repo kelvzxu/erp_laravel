@@ -114,34 +114,21 @@
                           <td class="o_td_label">
                             <label
                               class="o_form_label o_required_modifier"
-                              for="o_field_input_6346"
                             >Customer</label>
                           </td>
                           <td style="width: 100%;">
-                            <div
-                              class="o_field_widget o_field_many2one o_required_modifier"
-                              aria-atomic="true"
-                              name="partner_id"
+                            <select
+                              class="o_input o_field_widget o_required_modifier"
+                              @change="onChangePartner(state)"
+                              v-model="state.customer"
                             >
-                              <div class="o_input_dropdown">
-                                <input
-                                  type="text"
-                                  readonly
-                                  class="o_input ui-autocomplete-input"
-                                  autocomplete="off"
-                                  id="o_field_input_6346"
-                                />
-                              </div>
-                              <button
-                                type="button"
-                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                tabindex="-1"
-                                draggable="false"
-                                aria-label="External link"
-                                title="External link"
-                                style="display: none;"
-                              ></button>
-                            </div>
+                              <option
+                                v-for="row in customer"
+                                :select="row.id == state.customer"
+                                :key="row.id"
+                                :value="row.id"
+                              >{{ row.name }}</option>
+                            </select>
                           </td>
                         </tr>
                         <tr>
@@ -165,7 +152,7 @@
                           <td style="width: 100%;">
                             <div class="o_field_widget o_field_many2one">
                               <div class="o_input_dropdown">
-                                <input type="text" class="o_input ui-autocomplete-input" />
+                                <input type="text" class="o_input ui-autocomplete-input" v-model="state.customer_reference" />
                               </div>
                             </div>
                           </td>
@@ -189,12 +176,9 @@
                               name="validity_date"
                             >
                               <input
-                                type="text"
-                                class="o_datepicker_input o_input datetimepicker-input"
-                                name="validity_date"
-                                data-target="#datepicker6390"
-                                placeholder
-                                id="o_field_input_6350"
+                                type="date"
+                                class="o_field_text o_input datetimepicker-input"
+                                v-model="state.expiration"
                               />
                               <span class="o_datepicker_button"></span>
                             </div>
@@ -222,14 +206,10 @@
                               data-target-input="nearest"
                               name="date_order"
                             >
-                              <input
+                              <span
                                 type="text"
                                 class="o_datepicker_input o_input datetimepicker-input"
-                                name="date_order"
-                                data-target="#datepicker6391"
-                                placeholder
-                                id="o_field_input_6351"
-                              />
+                              >{{state.order_date}}</span>
                               <span class="o_datepicker_button"></span>
                             </div>
                           </td>
@@ -292,13 +272,26 @@
                                   style="width: 32.2581%;"
                                 >Product</th>
                                 <th
+                                  data-name="product_id"
+                                  class="o_product_configurator_cell o_column_sortable"
+                                  tabindex="-1"
+                                  title="Product"
+                                  style="width: 32.2581%;"
+                                >Description</th>
+                                <th
                                   data-name="product_uom_qty"
                                   tabindex="-1"
                                   class="o_column_sortable o_list_number_th"
                                   title="Quantity"
                                   style="width: 92px;"
                                 >Quantity</th>
-                                <th data-name="qty_at_date_widget" style="width: 3.22581%;"></th>
+                                <th
+                                  data-name="product_uom_qty"
+                                  tabindex="-1"
+                                  class="o_column_sortable o_list_number_th"
+                                  title="Quantity"
+                                  style="width: 92px;"
+                                >UoM</th>
                                 <th
                                   data-name="price_unit"
                                   tabindex="-1"
@@ -349,27 +342,36 @@
                                   </select>
                                 </td>
                                 <td
-                                  class="o_data_cell o_field_cell o_list_number"
+                                  class="o_data_cell o_field_cell o_list_text o_section_and_note_text_cell"
                                   tabindex="-1"
-                                  title="0.000"
+                                  title="Product Description"
                                 >
                                   <input
-                                    class="o_field_float o_field_number o_field_widget o_input"
-                                    name="product_uom_qty" @change="count_total(product)"
-                                    v-model="product.qty"
+                                    class="o_field_text o_field_widget o_input"
+                                    v-model="product.description"
                                   />
-                                </td>
-                                <td class="o_data_cell" tabindex="-1">
-                                  <div class="o_widget">
-                                    <div class="d-none">
-                                      <a tabindex="0" class="fa fa-info-circle text-primary"></a>
-                                    </div>
-                                  </div>
                                 </td>
                                 <td
                                   class="o_data_cell o_field_cell o_list_number"
                                   tabindex="-1"
-                                  title="0.00"
+                                >
+                                  <input
+                                    class="o_field_float o_field_number o_field_widget o_input"
+                                    @change="count_total(product)"
+                                    v-model="product.qty"
+                                  />
+                                </td>
+                                <td
+                                  class="o_data_cell o_field_cell o_list_number o_readonly_modifier"
+                                  tabindex="-1"
+                                >
+                                  <span
+                                    class="o_field_widget o_readonly_modifier"
+                                  >{{product.product_uom_desc}}</span>
+                                </td>
+                                <td
+                                  class="o_data_cell o_field_cell o_list_number"
+                                  tabindex="-1"
                                 >
                                   <input
                                     class="o_field_float o_field_number o_field_widget o_input"
@@ -387,16 +389,7 @@
                                     v-model="product.taxes"
                                   />
                                 </td>
-                                <td
-                                  class="o_data_cell o_field_cell o_list_number"
-                                  tabindex="-1"
-                                >
-                                  <input
-                                    type="text" readonly
-                                    class="o_field_float o_field_number o_field_widget o_input"
-                                    v-model="product.total"
-                                  />
-                                </td>
+                                <td class="o_data_cell o_field_cell o_list_number o_monetary_cell o_readonly_modifier" tabindex="-1"><span class="o_field_monetary o_field_number o_field_widget o_readonly_modifier">{{formatPrice(product.price_subtotal)}}</span></td>
                                 <td class="o_list_record_remove">
                                   <span
                                     class="fa fa-trash-o"
@@ -413,14 +406,7 @@
                                 </td>
                               </tr>
                               <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td colspan="8"></td>
                               </tr>
                             </tfoot>
                             <i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
@@ -1094,6 +1080,7 @@ export default {
       value:0,
       payment_terms:"Immediate Payment",
       productlist: [],
+      customer :[],
       state: {
         customer: "",
         customer_reference: "",
@@ -1111,16 +1098,22 @@ export default {
       products: [{
         index: 0,
         name: '',
+        description:'',
         price: 0,
         qty: 1,
         taxes: 0,
-        taxes_value: 0,
-        total: 0,
+        product_uom: 0,
+        product_uom_desc:'Units',
+        price_tax: 0,
+        price_subtotal: 0,
+        total:0,
       }]
     };
   },
   mounted() {
     this.fetchproducts();
+    this.fetchPartner();
+    this.getCurrentDate();
   },
   methods: {
     fetchproducts(){
@@ -1128,17 +1121,25 @@ export default {
         this.productlist = response.data.data;
       }).catch(error => console.error(error));
     },
+    fetchPartner(){
+      axios.post('/api/customer/list').then(response => {
+        this.customer = response.data.result;
+      }).catch(error => console.error(error));
+    },
     addLine: function() {
       this.value += 1
       this.products.push({
         index: this.value,
         name: '',
+        description:'',
         price: 0,
         qty: 1,
         taxes: 0,
-        taxes_value: 0,
-        total: 0,
-        taxes:0,
+        product_uom: 0,
+        product_uom_desc:'Units',
+        price_tax: 0,
+        price_subtotal: 0,
+        total:0,
       });
     },
     remove: function(product) {
@@ -1150,24 +1151,56 @@ export default {
         this.result = response.data.data;
         this.products.splice(product.index,1,{
           index:product.index,
-          name: product.name, 
+          name: product.name,
+          description: `[${this.result.code}] ${this.result.name}`,
           price: this.result.price, 
           qty: 1,
+          product_uom :this.result.uom.id,
+          product_uom_desc :this.result.uom.name,
           taxes : this.result.tax_id,
-          total : this.result.price,
-          taxes_value : this.result.price * (this.result.tax_id / 100)
-
+          price_subtotal : this.result.price,
+          price_tax : this.result.price * (this.result.tax_id / 100)
         });
         this.count_total(product);
       }).catch(error => console.error(error));
     },
+    onChangePartner(state) {
+       const params =state.customer;
+      axios.post(`/api/customer/search/${params}`).then(response => {
+        this.result = response.data.data;
+        this.payment_code = this.result.payment_terms;
+        if (this.payment_code == '2')
+          this.payment_terms = '15 Days';
+        if (this.payment_code == '3')
+          this.payment_terms = '21 Days';
+        if (this.payment_code == '4')
+          this.payment_terms = '30 Days';
+        if (this.payment_code == '5')
+          this.payment_terms = '45 Days';
+        if (this.payment_code == '6')
+          this.payment_terms = '2 Months';
+        if (this.payment_code == '7')
+          this.payment_terms = 'End of Following Month';
+        if (this.payment_code == '8')
+          this.payment_terms = '30% Now, Balance 60 Days';
+      }).catch(error => console.error(error));
+    },
     count_total(product) {
-      product.total = product.qty * product.price
-      product.taxes_value = product.total * (product.taxes / 100)
+      product.price_subtotal = product.qty * product.price
+      product.price_tax = product.total * (product.taxes / 100)
+      product.total = product.price_subtotal + product.price_tax
       this.state.sub_total = this.subTotal();
       this.state.taxes = this.subTaxes();
       this.state.grand_total = this.grandTotal();
       console.log(this.state.grand_total)
+    },
+    getCurrentDate(){
+      var today = new Date();
+      var dd = String(today.getDate()).padStart(2, '0');
+      var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+      var yyyy = today.getFullYear();
+
+      this.state.order_date = dd + '/' + mm + '/' + yyyy;
     },
     subTotal: function() {
       return this.products.reduce(function(carry, product) {
@@ -1176,7 +1209,7 @@ export default {
     },
     subTaxes: function() {
       return this.products.reduce(function(carry, product) {
-        return carry + (parseFloat(product.taxes_value));
+        return carry + (parseFloat(product.price_tax));
       }, 0);
     },
     grandTotal: function() {

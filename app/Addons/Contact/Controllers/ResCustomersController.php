@@ -242,10 +242,6 @@ class ResCustomersController extends Controller
 
     public function searchapi(Request $request)
     {
-        $this->validate($request, [
-            'id' => 'required'
-        ]);
-
         $customer = res_customer::where('id', $request->id)->first();
         if ($customer) {
             return response()->json([
@@ -256,6 +252,21 @@ class ResCustomersController extends Controller
         return response()->json([
             'status' => 'failed',
             'data' => []
+        ]);
+    }
+
+    public function fetchCustomer()
+    {
+        $customer = res_customer::with('currency')->orderBy('name', 'ASC')->get();
+        if ($customer) {
+            return response()->json([
+                'status' => 'success',
+                'result' => $customer
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'result' => []
         ]);
     }
 }
