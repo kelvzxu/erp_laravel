@@ -490,583 +490,224 @@
                   </div>
                   <div class="tab-pane" id="notebook_page_6366">
                     <div class="o_group">
-                      <table class="o_group o_inner_group o_group_col_6">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Sales</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label class="o_form_label" for="o_field_input_6367">Salesperson</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button"
-                                aria-atomic="true"
-                                name="user_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_6367"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label class="o_form_label" for="o_field_input_6368">Sales Team</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button"
-                                aria-atomic="true"
-                                name="team_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_6368"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_required_modifier"
-                                for="o_field_input_6369"
-                              >Company</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button o_required_modifier"
-                                aria-atomic="true"
-                                name="company_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_6369"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier"
-                                for="o_field_input_6370"
-                                data-original-title
-                                title
-                              >Online Signature</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_boolean o_field_widget custom-control custom-checkbox o_invisible_modifier"
-                                name="require_signature"
-                              >
-                                <input
-                                  type="checkbox"
-                                  id="o_field_input_6370"
-                                  class="custom-control-input"
-                                />
-                                <label for="o_field_input_6370" class="custom-control-label">&#8203;</label>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier"
-                                for="o_field_input_6371"
-                                data-original-title
-                                title
-                              >Online Payment</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_boolean o_field_widget custom-control custom-checkbox o_invisible_modifier"
-                                name="require_payment"
-                              >
-                                <input
-                                  type="checkbox"
-                                  id="o_field_input_6371"
-                                  class="custom-control-input"
-                                />
-                                <label for="o_field_input_6371" class="custom-control-label">&#8203;</label>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_6372"
-                                data-original-title
-                                title
-                              >Payment Ref.</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <span
-                                class="o_field_char o_field_widget o_invisible_modifier o_readonly_modifier"
-                                name="reference"
-                              ></span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_6373"
-                              >Customer Reference</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <input
-                                class="o_field_char o_field_widget o_input"
-                                name="client_order_ref"
-                                placeholder
-                                type="text"
-                                id="o_field_input_6373"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group o_group_col_6">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Invoicing</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_6374"
-                                data-original-title
-                                title
-                              >Fiscal Position</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one"
-                                aria-atomic="true"
-                                name="fiscal_position_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_6374"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                  style="display: none;"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier"
-                                for="o_field_input_6375"
-                                data-original-title
-                                title
-                              >Analytic Account</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_invisible_modifier"
-                                aria-atomic="true"
-                                name="analytic_account_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_6375"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                  style="display: none;"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_6376"
-                              >Invoice Status</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <span
-                                name="invoice_status"
-                                class="o_field_widget o_invisible_modifier o_readonly_modifier"
-                              >
-                                Nothing
-                                to Invoice
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="o_group">
-                      <table class="o_group o_inner_group o_group_col_6">
-                        <tbody>
-                          <tr>
-                            <td colspan="2" style="width: 100%;">
-                              <div class="o_horizontal_separator">Delivery</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_required_modifier"
-                                for="o_field_input_6377"
-                              >Warehouse</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one o_with_button o_invisible_modifier o_required_modifier"
-                                aria-atomic="true"
-                                name="warehouse_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_6377"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                ></button>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier"
-                                for="o_field_input_6378"
-                                data-original-title
-                                title
-                              >Incoterm</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <select
-                                class="o_input o_field_widget o_invisible_modifier"
-                                name="incoterm"
-                                id="o_field_input_6378"
-                              >
-                                <option value="false" style></option>
-                                <option value="1" style>EX WORKS</option>
-                                <option value="2" style>FREE CARRIER</option>
-                                <option value="3" style>FREE ALONGSIDE SHIP</option>
-                                <option value="4" style>FREE ON BOARD</option>
-                                <option value="5" style>COST AND FREIGHT</option>
-                                <option value="6" style>COST, INSURANCE AND FREIGHT</option>
-                                <option value="7" style>CARRIAGE PAID TO</option>
-                                <option value="8" style>CARRIAGE AND INSURANCE PAID TO</option>
-                                <option value="9" style>DELIVERED AT FRONTIER</option>
-                                <option value="10" style>DELIVERED EX SHIP</option>
-                                <option value="11" style>DELIVERED EX QUAY</option>
-                                <option value="12" style>DELIVERED DUTY UNPAID</option>
-                                <option value="13" style>DELIVERED AT TERMINAL</option>
-                                <option value="14" style>DELIVERED AT PLACE</option>
-                                <option value="15" style>DELIVERED DUTY PAID</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_required_modifier"
-                                for="o_field_input_6379"
-                                data-original-title
-                                title
-                              >Shipping Policy</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <select
-                                class="o_input o_field_widget o_required_modifier"
-                                name="picking_policy"
-                                id="o_field_input_6379"
-                              >
-                                <option value="false" style="display: none"></option>
-                                <option value="&quot;direct&quot;" style>
-                                  As soon as
-                                  possible
-                                </option>
-                                <option value="&quot;one&quot;" style>
-                                  When all products
-                                  are ready
-                                </option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_6380"
-                                data-original-title
-                                title
-                              >Delivery Date</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div class="o_row">
-                                <div
-                                  class="o_datepicker o_field_date o_field_widget"
-                                  aria-atomic="true"
-                                  id="datepicker6395"
-                                  data-target-input="nearest"
-                                  name="commitment_date"
-                                >
-                                  <input
-                                    type="text"
-                                    class="o_datepicker_input o_input datetimepicker-input"
-                                    name="commitment_date"
-                                    data-target="#datepicker6395"
-                                    placeholder
-                                    id="o_field_input_6380"
-                                  />
-                                  <span class="o_datepicker_button"></span>
-                                </div>
-                                <span class="text-muted">
-                                  Expected:
-                                  <span
-                                    class="o_field_date o_field_widget o_readonly_modifier"
-                                    name="expected_date"
+                      <div class="row">
+                        <div class="col-6">
+                          <table class="o_group o_inner_group">
+                            <tbody>
+                              <tr>
+                                <td colspan="2" style="width: 100%;">
+                                  <div class="o_horizontal_separator">Sales</div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label class="o_form_label" for="o_field_input_6367">Salesperson</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div
+                                    class="o_field_widget o_field_many2one o_with_button"
+                                    aria-atomic="true"
+                                    name="user_id"
+                                  >
+                                    <div class="o_input_dropdown">
+                                      <input
+                                        type="text"
+                                        class="o_input ui-autocomplete-input"
+                                        autocomplete="off"
+                                        id="o_field_input_6367"
+                                      />
+                                      <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                    ></button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_6369"
+                                  >Company</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div
+                                    class="o_field_widget o_field_many2one o_with_button o_required_modifier"
+                                    aria-atomic="true"
+                                    name="company_id"
+                                  >
+                                    <select class="o_input o_field_widget ui-autocomplete-input" name="type"
+                                        v-model="state.company_id">
+                                        <option v-for="row in company" :select="row.id == state.company_id"
+                                            :key="row.id" :value="row.id">{{ row.company_name }}</option>
+                                    </select>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                    ></button>
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_invisible_modifier o_readonly_modifier"
+                                    for="o_field_input_6372"
                                     data-original-title
                                     title
+                                  >Payment Ref.</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <span
+                                    class="o_field_char o_field_widget o_invisible_modifier o_readonly_modifier"
+                                    name="reference"
                                   ></span>
-                                </span>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_6381"
-                                data-original-title
-                                title
-                              >Effective Date</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <span
-                                class="o_field_date o_field_widget o_invisible_modifier o_readonly_modifier"
-                                name="effective_date"
-                              ></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <div class="o_group o_invisible_modifier o_group_col_6">
-                        <div class="o_horizontal_separator">Reporting</div>
-                        <table class="o_group o_inner_group mb-0 o_group_col_12">
-                          <tbody>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_6382"
-                                  data-original-title
-                                  title
-                                >Source Document</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <input
-                                  class="o_field_char o_field_widget o_input"
-                                  name="origin"
-                                  placeholder
-                                  type="text"
-                                  id="o_field_input_6382"
-                                />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <table class="o_group o_inner_group mt-0 o_group_col_12">
-                          <tbody>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_6383"
-                                  data-original-title
-                                  title
-                                >Campaign</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_field_widget o_field_many2one"
-                                  aria-atomic="true"
-                                  name="campaign_id"
-                                >
-                                  <div class="o_input_dropdown">
-                                    <input
-                                      type="text"
-                                      class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_6383"
-                                    />
-                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="col-6">
+                          <table class="o_group o_inner_group">
+                            <tbody>
+                              <tr>
+                                <td colspan="2" style="width: 100%;">
+                                  <div class="o_horizontal_separator">Delivery</div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_6377"
+                                  >Warehouse</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div
+                                    class="o_field_widget o_field_many2one o_with_button o_required_modifier"
+                                    aria-atomic="true"
+                                    name="warehouse_id"
+                                  >
+                                    <select class="o_input o_field_widget  ui-autocomplete-input" name="type"
+                                        v-model="state.product_warehouse_id">
+                                        <option v-for="row in warehouse" :select="row.id == state.product_warehouse_id"
+                                            :key="row.id" :value="row.id">{{ row.name }}</option>
+                                    </select>
+                                    <button
+                                      type="button"
+                                      class="fa fa-external-link btn btn-secondary o_external_button"
+                                      tabindex="-1"
+                                      draggable="false"
+                                      aria-label="External link"
+                                      title="External link"
+                                    ></button>
                                   </div>
-                                  <button
-                                    type="button"
-                                    class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
-                                    style="display: none;"
-                                  ></button>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_6384"
-                                  data-original-title
-                                  title
-                                >Medium</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_field_widget o_field_many2one"
-                                  aria-atomic="true"
-                                  name="medium_id"
-                                >
-                                  <div class="o_input_dropdown">
-                                    <input
-                                      type="text"
-                                      class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_6384"
-                                    />
-                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_invisible_modifier"
+                                    for="o_field_input_6378"
+                                    data-original-title
+                                    title
+                                  >Incoterm</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <select
+                                    class="o_input o_field_widget o_invisible_modifier"
+                                    name="incoterm"
+                                    id="o_field_input_6378"
+                                  >
+                                    <option value="false" style></option>
+                                    <option value="1" style>EX WORKS</option>
+                                    <option value="2" style>FREE CARRIER</option>
+                                    <option value="3" style>FREE ALONGSIDE SHIP</option>
+                                    <option value="4" style>FREE ON BOARD</option>
+                                    <option value="5" style>COST AND FREIGHT</option>
+                                    <option value="6" style>COST, INSURANCE AND FREIGHT</option>
+                                    <option value="7" style>CARRIAGE PAID TO</option>
+                                    <option value="8" style>CARRIAGE AND INSURANCE PAID TO</option>
+                                    <option value="9" style>DELIVERED AT FRONTIER</option>
+                                    <option value="10" style>DELIVERED EX SHIP</option>
+                                    <option value="11" style>DELIVERED EX QUAY</option>
+                                    <option value="12" style>DELIVERED DUTY UNPAID</option>
+                                    <option value="13" style>DELIVERED AT TERMINAL</option>
+                                    <option value="14" style>DELIVERED AT PLACE</option>
+                                    <option value="15" style>DELIVERED DUTY PAID</option>
+                                  </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label o_required_modifier"
+                                    for="o_field_input_6379"
+                                    data-original-title
+                                    title
+                                  >Shipping Policy</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <select class="o_input o_field_widget  ui-autocomplete-input" name="type"
+                                        v-model="state.shipping_policy">
+                                        <option v-for="row in shipping_policy" :select="row.value == state.shipping_policy"
+                                            :key="row.value" :value="row.value">{{ row.label }}</option>
+                                    </select>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td class="o_td_label">
+                                  <label
+                                    class="o_form_label"
+                                    for="o_field_input_6380"
+                                    data-original-title
+                                    title
+                                  >Delivery Date</label>
+                                </td>
+                                <td style="width: 100%;">
+                                  <div class="o_row">
+                                    <div
+                                      class="o_datepicker o_field_date o_field_widget"
+                                      aria-atomic="true"
+                                      id="datepicker6395"
+                                      data-target-input="nearest"
+                                      name="commitment_date"
+                                    >
+                                      <input
+                                        type="text"
+                                        class="o_datepicker_input o_input datetimepicker-input"
+                                        name="commitment_date"
+                                        data-target="#datepicker6395"
+                                        placeholder
+                                        id="o_field_input_6380"
+                                      />
+                                      <span class="o_datepicker_button"></span>
+                                    </div>
+                                    <span class="text-muted">
+                                      Expected:
+                                      <span
+                                        class="o_field_date o_field_widget o_readonly_modifier"
+                                        name="expected_date"
+                                        data-original-title
+                                        title
+                                      ></span>
+                                    </span>
                                   </div>
-                                  <button
-                                    type="button"
-                                    class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
-                                    style="display: none;"
-                                  ></button>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td class="o_td_label">
-                                <label
-                                  class="o_form_label"
-                                  for="o_field_input_6385"
-                                  data-original-title
-                                  title
-                                >Source</label>
-                              </td>
-                              <td style="width: 100%;">
-                                <div
-                                  class="o_field_widget o_field_many2one"
-                                  aria-atomic="true"
-                                  name="source_id"
-                                >
-                                  <div class="o_input_dropdown">
-                                    <input
-                                      type="text"
-                                      class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_6385"
-                                    />
-                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                  </div>
-                                  <button
-                                    type="button"
-                                    class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
-                                    style="display: none;"
-                                  ></button>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1097,8 +738,9 @@ export default {
         taxes: "",
         grand_total: 0,
         sales: "",
-        product_warehouse_id: "",
-        company_id: "",
+        product_warehouse_id: 1,
+        company_id: 1,
+        shipping_policy: "direct",
         sub_total: 0,
       },
       products: [{
@@ -1114,7 +756,13 @@ export default {
         price_subtotal: 0,
         total:0,
       }],
+      shipping_policy: [
+        { label: "As soon as possible", value: "direct" },
+        { label: "When all products are ready", value: "one" },
+      ],
       uom: [],
+      warehouse : [],
+      company: [],
     };
   },
   mounted() {
@@ -1122,6 +770,8 @@ export default {
     this.fetchPartner();
     this.getCurrentDate();
     this.get_ProductUom();
+    this.FetchWarehouse();
+    this.fetchCompany();
   },
   methods: {
     addLine: function() {
@@ -1143,10 +793,26 @@ export default {
     remove: function(product) {
       this.products.$remove(product);
     },
+    fetchCompany() {
+      axios
+        .get("/api/company")
+        .then((response) => {
+        this.company = response.data.data;
+        })
+        .catch((error) => console.error(error));
+    },
     fetchproducts(){
       axios.get('/api/Products/sale').then(response => {
         this.productlist = response.data.data;
       }).catch(error => console.error(error));
+    },
+    FetchWarehouse() {
+      axios
+        .get("/api/warehouse")
+        .then((response) => {
+          this.warehouse = response.data.result;
+        })
+        .catch((error) => console.error(error));
     },
     fetchPartner(){
       axios.post('/api/customer/list').then(response => {
@@ -1170,7 +836,6 @@ export default {
           price_tax : this.result.price * (this.result.tax_id / 100),
         });
         this.compute_total(product);
-        this.get_ProductUom();
       }).catch(error => console.error(error));
     },
     onChangePartner(state) {
@@ -1212,13 +877,15 @@ export default {
       });
     },
     onChangeUom(self,$event) {
+      this.new_uom=event.target.value
       axios
-      .get(`/api/uom/get_uom/${event.target.value}`)
+      .get(`/api/uom/get_uom/${this.new_uom}`)
       .then((response) => {
         this.result =  response.data.result
         this.type = this.result.uom_type
         this.factor = this.result.factor
         if (this.result.category_id != self.product_uom_category){
+          console.log("wrong")
           this.onChange(self)
           Swal.fire({
             type: "warning",
@@ -1227,36 +894,36 @@ export default {
           });
         }
         else{
-          this.compute_PriceUom(self, this.type, this.factor)
+          this.compute_PriceUom(self, this.type, this.factor, this.new_uom)
         }
       }).catch(error => console.error(error));
     },
-    compute_PriceUom(self, uom_type, factor) {
-      console.log(factor)
+    compute_PriceUom(self, uom_type, factor, new_uom) {
       const params ={id : self.name};
       axios.get('/api/getProduct/id',{params}).then(response => {
-        this.result = response.data.data;
-        this.factor = this.result.uom.factor;
-        this.type = this.result.uom.uom_type;
-        console.log(this.type)
-        if (this.type == 'reference'){
-          if(uom_type == 'reference'){
-            self.price = this.result.price
+        this.value = response.data.data
+        this.price = this.value.price
+        axios.get(`/api/uom/get_uom/${self.product_uom}`).then(response => {
+          this.result =  response.data.result
+          this.type = this.result.uom_type
+          this.factor = this.result.factor
+          if (this.type == 'reference'){
+            self.price = (self.price / factor).toFixed(0)
+            self.product_uom = new_uom
+            this.compute_total(self)
           }
           else{
-            self.price = (self.price / factor).toFixed(0)
+            this.reference_price = (self.price * this.factor).toFixed(0)
+            self.price = (this.reference_price / factor).toFixed(0)
+            self.product_uom = new_uom
+            this.compute_total(self)
           }
-        }
-        else{
-          this.reference_price = (self.price / this.factor).toFixed(0)
-          self.price = (this.reference_price / factor).toFixed(0)
-        }
+        }).catch(error => console.error(error));
       }).catch(error => console.error(error));
     },
     compute_total(product) {
       product.price_subtotal = product.qty * product.price
       product.price_tax = product.price_subtotal * (product.taxes / 100)
-      console.log(product.price_subtotal)
       product.total = product.price_subtotal + product.price_tax
       this.state.sub_total = this.compute_subTotal();
       this.state.taxes = this.compute_subTaxes();

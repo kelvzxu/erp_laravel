@@ -32,7 +32,8 @@ class CreateSalesOrdersTable extends Migration
             $table->integer('sales')->nullable();
             $table->integer('product_warehouse_id')->nullable();
             $table->integer('company_id')->nullable();
-            $table->integer('note')->nullable();
+            $table->string('note')->nullable();
+            $table->string('shipping_policy')->nullable();
             $table->timestamps();
         });
     }

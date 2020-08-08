@@ -126,7 +126,6 @@ export default {
             .catch((error) => console.error(error));
         },
         submit($e) {
-      console.log(this.state.photo);
       axios
         .post("/api/warehouse/store", this.state)
         .then((response) => {

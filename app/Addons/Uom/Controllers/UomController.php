@@ -116,8 +116,14 @@ class UomController extends Controller
                 'category_id'=>$request->category_id,
                 'factor'=>$request->factor,
                 'rounding'=>$request->rounding,
-                'active
-                // do something herege' => 'UoM category Unit should only have one reference unit of measure.'
+                'active'=>$request->active,
+                'uom_type'=>$request->uom_type,
+                'measure_type'=>$measure_type,
+                'create_uid' =>$request->create_uid,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Uom Created Successfully'
             ]);
         }
    }

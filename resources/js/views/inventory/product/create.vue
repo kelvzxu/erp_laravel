@@ -1179,7 +1179,7 @@ export default {
     this.fetchUom();
     this.fetchCompany();
     this.fetchUserId();
-    this.checkAccounting();
+    this.CheckAccounting();
   },
   methods: {
     // Prepare Product relation Component

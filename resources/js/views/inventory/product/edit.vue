@@ -114,7 +114,7 @@
                         <span
                           class="o_field_char o_field_widget o_readonly_modifier"
                           name="uom_name"
-                        >Units</span>
+                        >{{state.uom.name}}</span>
                       </span>
                       <span class="o_stat_text">On Hand</span>
                     </div>
@@ -138,7 +138,7 @@
                         <span
                           class="o_field_char o_field_widget o_readonly_modifier"
                           name="uom_name"
-                        >Units</span>
+                        >{{state.uom.name}}</span>
                       </span>
                       <span class="o_stat_text">Forecasted</span>
                     </div>
@@ -172,7 +172,7 @@
                         <span
                           class="o_field_char o_field_widget o_readonly_modifier"
                           name="uom_name"
-                        >Units</span>
+                        >{{state.uom.name}}</span>
                       </span>
                       <span class="o_stat_text">Sold</span>
                     </div>
@@ -205,7 +205,7 @@
                         <span
                           class="o_field_char o_field_widget o_readonly_modifier"
                           name="uom_name"
-                        >Units</span>
+                        >{{state.uom.name}}</span>
                       </span>
                       <span class="o_stat_text">Purchased</span>
                     </div>
@@ -1183,6 +1183,7 @@ export default {
       category: [],
       uom : [],
       company: [],
+      accounts: false,
     };
   },
   created() {
@@ -1197,6 +1198,7 @@ export default {
     this.fetchUom();
     this.fetchCompany();
     this.fetchUserId();
+    this.CheckAccounting();
   },
   methods: {
     // Prepare Product relation Component
@@ -1227,6 +1229,14 @@ export default {
         this.company = response.data.data;
       })
       .catch((error) => console.error(error));
+    },
+    CheckAccounting() {
+       axios
+        .get("/api/company")
+        .then((response) => {
+          this.accounts = response.data.result;
+        })
+        .catch((error) => console.error(error));
     },
     // handle Upload File
     handleFileUpload(){
