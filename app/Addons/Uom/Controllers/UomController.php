@@ -26,6 +26,23 @@ class UomController extends Controller
             ]);
         }
    }
+   public function fetchUomByCategory($id){
+        try {
+            $response = uom_uom::with('category','type')
+                    ->where('category_id',$id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
    public function fetchUomCategory(){
         try {
             $response = uom_category::orderBy('id', 'asc')
@@ -99,24 +116,10 @@ class UomController extends Controller
                 'category_id'=>$request->category_id,
                 'factor'=>$request->factor,
                 'rounding'=>$request->rounding,
-                'active'=>$request->active,
-                'uom_type'=>$request->uom_type,
-                'measure_type'=>$measure_type,
-                'create_uid' =>$request->create_uid,
-            ]);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Uom Created Successfully'
+                'active
+                // do something herege' => 'UoM category Unit should only have one reference unit of measure.'
             ]);
         }
-        else{
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'UoM category Unit should only have one reference unit of measure.'
-            ]);
-        }
-        // do something here
-
    }
    
    public function update(Request $request){

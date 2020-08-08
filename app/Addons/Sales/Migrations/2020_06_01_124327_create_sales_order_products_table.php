@@ -19,7 +19,7 @@ class CreateSalesOrderProductsTable extends Migration
             $table->integer('name');
             $table->integer('description');
             $table->integer('product_uom');
-            $table->integer('product_uom_desc');
+            $table->integer('product_uom_category');
             $table->integer('qty');
             $table->bigInteger('price');
             $table->bigInteger('price_subtotal');

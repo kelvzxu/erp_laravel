@@ -357,17 +357,23 @@
                                 >
                                   <input
                                     class="o_field_float o_field_number o_field_widget o_input"
-                                    @change="count_total(product)"
+                                    @change="compute_total(product)"
                                     v-model="product.qty"
                                   />
                                 </td>
-                                <td
-                                  class="o_data_cell o_field_cell o_list_number o_readonly_modifier"
-                                  tabindex="-1"
-                                >
-                                  <span
-                                    class="o_field_widget o_readonly_modifier"
-                                  >{{product.product_uom_desc}}</span>
+                                 <td class="o_data_cell o_field_cell o_list_many2one o_product_configurator_cell">
+                                  <select
+                                    class="o_input o_field_widget"
+                                    @change="onChangeUom(product,$event)"
+                                    :value="product.product_uom"
+                                  >
+                                    <option
+                                      v-for="row in uom"
+                                      :select="row.id == product.product_uom"
+                                      :key="row.id"
+                                      :value="row.id"
+                                    >{{row.name}}</option>
+                                  </select>
                                 </td>
                                 <td
                                   class="o_data_cell o_field_cell o_list_number"
@@ -375,7 +381,7 @@
                                 >
                                   <input
                                     class="o_field_float o_field_number o_field_widget o_input"
-                                    name="price_unit" @change="count_total(product)"
+                                    name="price_unit" @change="compute_total(product)"
                                     v-model="product.price"
                                   />
                                 </td>
@@ -384,7 +390,7 @@
                                   tabindex="-1"
                                 >
                                   <input
-                                    type="text" @change="count_total(product)"
+                                    type="text" @change="compute_total(product)"
                                     class="o_field_float o_field_number o_field_widget o_input"
                                     v-model="product.taxes"
                                   />
@@ -1103,29 +1109,21 @@ export default {
         qty: 1,
         taxes: 0,
         product_uom: 0,
-        product_uom_desc:'Units',
+        product_uom_category:0,
         price_tax: 0,
         price_subtotal: 0,
         total:0,
-      }]
+      }],
+      uom: [],
     };
   },
   mounted() {
     this.fetchproducts();
     this.fetchPartner();
     this.getCurrentDate();
+    this.get_ProductUom();
   },
   methods: {
-    fetchproducts(){
-      axios.get('/api/Products/sale').then(response => {
-        this.productlist = response.data.data;
-      }).catch(error => console.error(error));
-    },
-    fetchPartner(){
-      axios.post('/api/customer/list').then(response => {
-        this.customer = response.data.result;
-      }).catch(error => console.error(error));
-    },
     addLine: function() {
       this.value += 1
       this.products.push({
@@ -1136,7 +1134,7 @@ export default {
         qty: 1,
         taxes: 0,
         product_uom: 0,
-        product_uom_desc:'Units',
+        product_uom_category:0,
         price_tax: 0,
         price_subtotal: 0,
         total:0,
@@ -1144,6 +1142,16 @@ export default {
     },
     remove: function(product) {
       this.products.$remove(product);
+    },
+    fetchproducts(){
+      axios.get('/api/Products/sale').then(response => {
+        this.productlist = response.data.data;
+      }).catch(error => console.error(error));
+    },
+    fetchPartner(){
+      axios.post('/api/customer/list').then(response => {
+        this.customer = response.data.result;
+      }).catch(error => console.error(error));
     },
     onChange(product) {
       const params ={id : product.name};
@@ -1156,43 +1164,37 @@ export default {
           price: this.result.price, 
           qty: 1,
           product_uom :this.result.uom.id,
-          product_uom_desc :this.result.uom.name,
+          product_uom_category :this.result.uom.category_id,
           taxes : this.result.tax_id,
           price_subtotal : this.result.price,
-          price_tax : this.result.price * (this.result.tax_id / 100)
+          price_tax : this.result.price * (this.result.tax_id / 100),
         });
-        this.count_total(product);
+        this.compute_total(product);
+        this.get_ProductUom();
       }).catch(error => console.error(error));
     },
     onChangePartner(state) {
        const params =state.customer;
       axios.post(`/api/customer/search/${params}`).then(response => {
         this.result = response.data.data;
-        this.payment_code = this.result.payment_terms;
-        if (this.payment_code == '2')
-          this.payment_terms = '15 Days';
-        if (this.payment_code == '3')
-          this.payment_terms = '21 Days';
-        if (this.payment_code == '4')
-          this.payment_terms = '30 Days';
-        if (this.payment_code == '5')
-          this.payment_terms = '45 Days';
-        if (this.payment_code == '6')
-          this.payment_terms = '2 Months';
-        if (this.payment_code == '7')
-          this.payment_terms = 'End of Following Month';
-        if (this.payment_code == '8')
-          this.payment_terms = '30% Now, Balance 60 Days';
+        this.payment_terms = this.setPaymentTerms(this.result.payment_terms)
       }).catch(error => console.error(error));
     },
-    count_total(product) {
-      product.price_subtotal = product.qty * product.price
-      product.price_tax = product.total * (product.taxes / 100)
-      product.total = product.price_subtotal + product.price_tax
-      this.state.sub_total = this.subTotal();
-      this.state.taxes = this.subTaxes();
-      this.state.grand_total = this.grandTotal();
-      console.log(this.state.grand_total)
+    setPaymentTerms(self) {
+      if (self == '2')
+        return '15 Days';
+      if (self == '3')
+        return '21 Days';
+      if (self == '4')
+        return '30 Days';
+      if (self == '5')
+        return '45 Days';
+      if (self == '6')
+        return '2 Months';
+      if (self == '7')
+        return 'End of Following Month';
+      if (self == '8')
+        return '30% Now, Balance 60 Days';
     },
     getCurrentDate(){
       var today = new Date();
@@ -1202,17 +1204,75 @@ export default {
 
       this.state.order_date = dd + '/' + mm + '/' + yyyy;
     },
-    subTotal: function() {
+    get_ProductUom() {
+      axios
+      .get(`/api/uom/list`)
+      .then((response) => {
+        this.uom =  response.data.data
+      });
+    },
+    onChangeUom(self,$event) {
+      axios
+      .get(`/api/uom/get_uom/${event.target.value}`)
+      .then((response) => {
+        this.result =  response.data.result
+        this.type = this.result.uom_type
+        this.factor = this.result.factor
+        if (this.result.category_id != self.product_uom_category){
+          this.onChange(self)
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: "The default Unit of Measure and the sale Unit of Measure must be in the same category.",
+          });
+        }
+        else{
+          this.compute_PriceUom(self, this.type, this.factor)
+        }
+      }).catch(error => console.error(error));
+    },
+    compute_PriceUom(self, uom_type, factor) {
+      console.log(factor)
+      const params ={id : self.name};
+      axios.get('/api/getProduct/id',{params}).then(response => {
+        this.result = response.data.data;
+        this.factor = this.result.uom.factor;
+        this.type = this.result.uom.uom_type;
+        console.log(this.type)
+        if (this.type == 'reference'){
+          if(uom_type == 'reference'){
+            self.price = this.result.price
+          }
+          else{
+            self.price = (self.price / factor).toFixed(0)
+          }
+        }
+        else{
+          this.reference_price = (self.price / this.factor).toFixed(0)
+          self.price = (this.reference_price / factor).toFixed(0)
+        }
+      }).catch(error => console.error(error));
+    },
+    compute_total(product) {
+      product.price_subtotal = product.qty * product.price
+      product.price_tax = product.price_subtotal * (product.taxes / 100)
+      console.log(product.price_subtotal)
+      product.total = product.price_subtotal + product.price_tax
+      this.state.sub_total = this.compute_subTotal();
+      this.state.taxes = this.compute_subTaxes();
+      this.state.grand_total = this.compute_grandTotal();
+    },
+    compute_subTotal() {
       return this.products.reduce(function(carry, product) {
         return carry + (parseFloat(product.qty) * parseFloat(product.price));
       }, 0);
     },
-    subTaxes: function() {
+    compute_subTaxes() {
       return this.products.reduce(function(carry, product) {
         return carry + (parseFloat(product.price_tax));
       }, 0);
     },
-    grandTotal: function() {
+    compute_grandTotal() {
       return this.state.sub_total + this.state.taxes;
     },
     formatPrice(value) {

@@ -74,6 +74,7 @@ Route::group(['namespace' => '\App\Addons\Uom\Controllers'], function()
     Route::get('/uom/category/list','UomController@fetchUomCategory');
     Route::get('/uom/type/list','UomController@fetchUomType');
     Route::get('/uom/get_uom/{id}','UomController@getUom');
+    Route::get('/uom/get_uom/category/{id}','UomController@fetchUomByCategory');
     Route::Post('/uom/store','UomController@store');
     Route::Post('/uom/update','UomController@update');
 });
