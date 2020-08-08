@@ -32,6 +32,7 @@ class CreateResCustomersTable extends Migration
             $table->bigInteger('credit')->nullable();
             $table->bigInteger('debit')->nullable();
             $table->boolean('active')->nullable();
+            $table->boolean('id_pkp')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();
             $table->string('street2')->nullable();
@@ -46,6 +47,7 @@ class CreateResCustomersTable extends Migration
             $table->string('mobile')->nullable();
             $table->integer('industry_id')->nullable()->index();
             $table->string('additional_info')->nullable();
+            $table->string('job_title')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
             $table->softDeletes();

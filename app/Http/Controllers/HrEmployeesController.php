@@ -291,7 +291,7 @@ class HrEmployeesController extends Controller
                                 ->join('hr_jobs', 'hr_employees.job_id', '=', 'hr_jobs.id')
                                 ->select('hr_employees.*', 'res_country.country_name','hr_departments.department_name','hr_jobs.jobs_name')
                                 ->where('hr_employees.work_email',$request->email)->first();
-        // $employee = hr_employee::where('work_email', $request->email)->first();
+        $employee = hr_employee::where('work_email', $request->email)->first();
         if ($employee) {
             return response()->json([
                 'status' => 'success',
@@ -302,5 +302,21 @@ class HrEmployeesController extends Controller
             'status' => 'failed',
             'data' => []
         ]);
+    }
+
+    public function fetchEmployees(){
+        try {
+            $response = hr_employee::orderBy('employee_name', 'desc')
+                    ->get();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
     }
 }

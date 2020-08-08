@@ -25,6 +25,9 @@ import warehouse_edit from './views/inventory/warehouse/edit.vue'
 import sales_index from './views/sales/index.vue'
 import sales_create from './views/sales/create.vue'
 
+// === Customer ===
+import customer_index from './views/contact/customer/index.vue'
+import customer_create from './views/contact/customer/create.vue'
 
 Vue.use(VueRouter)
 
@@ -92,14 +95,24 @@ const router = new VueRouter({
             component: warehouse_edit
         },
         {
-            path: '/sales/tree-view',
+            path: '/sales/web/model=sale.order&view_type=list&cids=&menu_id=160',
             name: 'sales_index',
             component: sales_index
         },
         {
-            path: '/sales/create',
+            path: '/sales/web/action=292&model=sale.order&view_type=forms&cids=&menu_id=160',
             name: 'sales_create',
             component: sales_create
+        },
+        {
+            path: '/contact/customer/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170',
+            name: 'customer_index',
+            component: customer_index
+        },
+        {
+            path: '/sales/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
+            name: 'customer_create',
+            component: customer_create
         },
         
     ]

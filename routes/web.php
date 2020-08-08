@@ -38,6 +38,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('sales.vue');
     })->where('any', '.*');
 
+    Route::get('/contact/customer/{any}',function(){
+        return view('contact.customer.vue');
+    })->where('any', '.*');
+
     // ==== Apps ====
     Route::get('Apps','AppsController@index')->name('Apps.index');
     Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');

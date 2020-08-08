@@ -25,4 +25,8 @@ class res_customer extends Model
     {
         return $this->hasOne('App\Models\Currency\res_currency','id','currency_id');
     }
+    public function country()
+    {
+        return $this->hasOne('App\Models\World_database\res_country','id','country_id');
+    }
 }

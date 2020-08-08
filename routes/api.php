@@ -27,6 +27,8 @@ Route::get('lang','ResLangController@index');
 Route::get('tz','ResTimeZoneController@index');
 Route::get('company','ResCompaniesController@companies');
 Route::post('/leave', 'ManageSalaryController@getcount');
+Route::post('employee/search', 'HrEmployeesController@searchapi');
+Route::get('employee/list', 'HrEmployeesController@fetchEmployees');
 
 // ==== Inventory ==== 
 Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
@@ -63,6 +65,7 @@ Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
 Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
 {
     Route::post('/customer/list', 'ResCustomersController@fetchCustomer');
+    Route::post('/customer/company/list', 'ResCustomersController@fetchCompany');
     Route::post('/customer/search/{id}', 'ResCustomersController@searchapi');
     Route::post('/partner/search', 'ResPartnersController@searchapi');
 });

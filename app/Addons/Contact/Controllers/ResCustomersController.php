@@ -257,7 +257,22 @@ class ResCustomersController extends Controller
 
     public function fetchCustomer()
     {
-        $customer = res_customer::with('currency')->orderBy('name', 'ASC')->get();
+        $customer = res_customer::with('currency','country')->orderBy('name', 'ASC')->get();
+        if ($customer) {
+            return response()->json([
+                'status' => 'success',
+                'result' => $customer
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'result' => []
+        ]);
+    }
+
+    public function fetchCompany()
+    {
+        $customer = res_customer::with('currency','country')->where('title','company')->orderBy('name', 'ASC')->get();
         if ($customer) {
             return response()->json([
                 'status' => 'success',

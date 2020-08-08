@@ -509,15 +509,11 @@
                                     aria-atomic="true"
                                     name="user_id"
                                   >
-                                    <div class="o_input_dropdown">
-                                      <input
-                                        type="text"
-                                        class="o_input ui-autocomplete-input"
-                                        autocomplete="off"
-                                        id="o_field_input_6367"
-                                      />
-                                      <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                    </div>
+                                    <select class="o_input o_field_widget ui-autocomplete-input" name="type"
+                                        v-model="state.sales">
+                                        <option v-for="row in sales" :select="row.user_id == state.sales"
+                                            :key="row.id" :value="row.id">{{ row.employee_name }}</option>
+                                    </select>
                                     <button
                                       type="button"
                                       class="fa fa-external-link btn btn-secondary o_external_button"
@@ -763,6 +759,7 @@ export default {
       uom: [],
       warehouse : [],
       company: [],
+      sales: [],
     };
   },
   mounted() {
@@ -770,8 +767,10 @@ export default {
     this.fetchPartner();
     this.getCurrentDate();
     this.get_ProductUom();
-    this.FetchWarehouse();
+    this.fetchWarehouse();
     this.fetchCompany();
+    this.fetchEmployees();
+    this.fetchUser();
   },
   methods: {
     addLine: function() {
@@ -806,7 +805,7 @@ export default {
         this.productlist = response.data.data;
       }).catch(error => console.error(error));
     },
-    FetchWarehouse() {
+    fetchWarehouse() {
       axios
         .get("/api/warehouse")
         .then((response) => {
@@ -818,6 +817,22 @@ export default {
       axios.post('/api/customer/list').then(response => {
         this.customer = response.data.result;
       }).catch(error => console.error(error));
+    },
+    fetchEmployees(){
+      axios.get('/api/employee/list').then(response => {
+        this.sales = response.data.result;
+      }).catch(error => console.error(error));
+    },
+    fetchUser() {
+      this.user = document.getElementById("current_email").value;
+      const url = "/api/employee/search?email=" + this.user;
+      axios
+        .post(url)
+        .then((response) => {
+          this.result = response.data.data;
+          this.state.sales = this.result.id;
+        })
+        .catch((error) => console.error(error));
     },
     onChange(product) {
       const params ={id : product.name};
