@@ -4,8 +4,8 @@ namespace App\Addons\Accounting\Controllers;
 
 use App\Models\Company\res_company;
 use App\Models\Currency\res_currency;
-use AApp\Addons\Accounting\Models\account_account;
-use AApp\Addons\Accounting\Models\account_account_type;
+use App\Addons\Accounting\Models\account_account;
+use App\Addons\Accounting\Models\account_account_type;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -158,5 +158,19 @@ class AccountAccountController extends Controller
         $account -> delete();
         Toastr::success('Chart Of Account ' .$account->name. ' |  ' .$account->code. ' Deleted Successfully','Success');
             return redirect(route('account.index'));
+    }
+
+    public function fetchAccountAccounts(){
+        $response = account_account::orderBy('code', 'ASC')->get();
+        if ($response) {
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'result' => []
+        ]);
     }
 }

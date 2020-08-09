@@ -879,7 +879,7 @@
                     </div>
                     <div v-if="accounts == true" class="tab-pane" id="notebook_page_252">
                       <div class="o_group">
-                        <table class="o_group o_inner_group o_invisible_modifier o_group_col_6">
+                        <table class="o_group o_inner_group o_group_col_6">
                             <tbody>
                                 <tr>
                                     <td colspan="2" style="width: 100%;">
@@ -924,7 +924,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="o_group o_inner_group o_invisible_modifier o_group_col_6">
+                        <table class="o_group o_inner_group o_group_col_6">
                             <tbody>
                                 <tr>
                                     <td colspan="2" style="width: 100%;">
@@ -1221,7 +1221,7 @@ export default {
     // validate Addons
     CheckAccounting() {
        axios
-        .get("/api/company")
+        .get("/api/Addons/Check/Accounting")
         .then((response) => {
           this.accounts = response.data.result;
         })

@@ -24,7 +24,7 @@ class CreateResCustomersTable extends Migration
             $table->string('lag')->nullable();
             $table->string('tz')->nullable();
             $table->string('user_id')->nullable();
-            $table->string('tax_id')->nullable();
+            $table->string('vat')->nullable();
             $table->integer('currency_id')->nullable()->index();
             $table->string('bank_account')->nullable();
             $table->string('website')->nullable();

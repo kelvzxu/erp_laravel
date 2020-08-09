@@ -177,14 +177,17 @@ class AccountJournalController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\account_journal  $account_journal
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(account_journal $account_journal)
-    {
-        //
+    public function fetchAccountJournals(){
+        $response = account_journal::orderBy('name', 'ASC')->get();
+        if ($response) {
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        }
+        return response()->json([
+            'status' => 'failed',
+            'result' => []
+        ]);
     }
 }

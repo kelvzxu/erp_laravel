@@ -57,6 +57,12 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
 Route::get('/chart', 'HomeController@getChart');
 
 // ==== Sales ====
+Route::group(['namespace' => '\App\Addons\Accounting\Controllers'], function()
+{
+    Route::get('/fetchaccount/accounts', 'AccountAccountController@fetchAccountAccounts');
+    Route::get('/fetchaccount/journal', 'AccountJournalController@fetchAccountJournals');
+});
+// ==== Sales ====
 Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
 {
     Route::get('/sale/list', 'SalesOrdersController@fetchSalesOrder');
