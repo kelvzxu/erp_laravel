@@ -29,8 +29,10 @@ class CreateResCustomersTable extends Migration
             $table->string('bank_account')->nullable();
             $table->string('website')->nullable();
             $table->string('comment')->nullable();
-            $table->bigInteger('credit')->nullable();
-            $table->bigInteger('debit')->nullable();
+            $table->bigInteger('credit')->nullable()->default(0);
+            $table->bigInteger('debit')->nullable()->default(0);
+            $table->bigInteger('warning_stage')->nullable();
+            $table->bigInteger('blocking_stage')->nullable();
             $table->boolean('active')->nullable();
             $table->boolean('id_pkp')->nullable();
             $table->string('address')->nullable();

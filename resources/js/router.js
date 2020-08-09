@@ -28,6 +28,7 @@ import sales_create from './views/sales/create.vue'
 // === Customer ===
 import customer_index from './views/contact/customer/index.vue'
 import customer_create from './views/contact/customer/create.vue'
+import customer_edit from './views/contact/customer/edit.vue'
 
 Vue.use(VueRouter)
 
@@ -50,17 +51,17 @@ const router = new VueRouter({
             component: uom_edit
         },
         {
-            path: '/inventory/product/tree-view',
+            path: '/inventory/product/web/model=product.template&view_type=kanban,list&cids=&menu_id=159',
             name: 'product_index',
             component: product_index
         },
         {
-            path: '/inventory/product/create',
+            path: '/inventory/product/web/action=392&model=product.template&view_type=kanban,list&cids=&menu_id=159',
             name: 'product_create',
             component: product_create
         },
         {
-            path: '/inventory/product/edit/:id',
+            path: '/inventory/product/:id/web/action=394&model=product.template&view_type=kanban,list&cids=&menu_id=159',
             name: 'product_edit',
             component: product_edit
         },
@@ -110,9 +111,14 @@ const router = new VueRouter({
             component: customer_index
         },
         {
-            path: '/sales/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
+            path: '/contact/customer/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
             name: 'customer_create',
             component: customer_create
+        },
+        {
+            path: '/contact/customer/:id/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
+            name: 'customer_edit',
+            component: customer_edit
         },
         
     ]

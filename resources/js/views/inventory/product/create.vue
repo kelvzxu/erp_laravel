@@ -310,7 +310,7 @@
                       </li>
                       <li class="nav-item">
                         <a
-                          v-if="accounts == true" 
+                          v-if="accounts == true"
                           data-toggle="tab"
                           disable_anchor="true"
                           href="#notebook_page_252"
@@ -880,130 +880,232 @@
                     <div v-if="accounts == true" class="tab-pane" id="notebook_page_252">
                       <div class="o_group">
                         <table class="o_group o_inner_group o_group_col_6">
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" style="width: 100%;">
-                                        <div class="o_horizontal_separator">Account Properties</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="o_td_label"><label class="o_form_label" for="o_field_input_585"
-                                            data-original-title="" title="">Income Account</label></td>
-                                    <td style="width: 100%;">
-                                        <div class="o_field_widget o_field_many2one o_with_button"
-                                            aria-atomic="true" name="property_account_income_categ_id">
-                                            <div class="o_input_dropdown">
-                                                <input type="text" class="o_input ui-autocomplete-input"
-                                                    autocomplete="off" id="o_field_input_585">
-                                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                            </div>
-                                            <button type="button"
-                                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                                tabindex="-1" draggable="false" aria-label="External link"
-                                                title="External link"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="o_td_label"><label class="o_form_label" for="o_field_input_586"
-                                            data-original-title="" title="">Expense Account</label></td>
-                                    <td style="width: 100%;">
-                                        <div class="o_field_widget o_field_many2one o_with_button"
-                                            aria-atomic="true" name="property_account_expense_categ_id">
-                                            <div class="o_input_dropdown">
-                                                <input type="text" class="o_input ui-autocomplete-input"
-                                                    autocomplete="off" id="o_field_input_586">
-                                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                            </div>
-                                            <button type="button"
-                                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                                tabindex="-1" draggable="false" aria-label="External link"
-                                                title="External link"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
+                          <tbody>
+                            <tr>
+                              <td colspan="2" style="width: 100%;">
+                                <div class="o_horizontal_separator">Account Properties</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="o_td_label">
+                                <label
+                                  class="o_form_label"
+                                  for="o_field_input_585"
+                                  data-original-title
+                                  title
+                                >Income Account</label>
+                              </td>
+                              <td style="width: 100%;">
+                                <div
+                                  class="o_field_widget o_field_many2one o_with_button"
+                                  aria-atomic="true"
+                                  name="property_account_income_categ_id"
+                                >
+                                  <div class="o_input_dropdown">
+                                    <input
+                                      type="text"
+                                      class="o_input ui-autocomplete-input"
+                                      autocomplete="off"
+                                      id="o_field_input_585"
+                                    />
+                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    class="fa fa-external-link btn btn-secondary o_external_button"
+                                    tabindex="-1"
+                                    draggable="false"
+                                    aria-label="External link"
+                                    title="External link"
+                                  ></button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="o_td_label">
+                                <label
+                                  class="o_form_label"
+                                  for="o_field_input_586"
+                                  data-original-title
+                                  title
+                                >Expense Account</label>
+                              </td>
+                              <td style="width: 100%;">
+                                <div
+                                  class="o_field_widget o_field_many2one o_with_button"
+                                  aria-atomic="true"
+                                  name="property_account_expense_categ_id"
+                                >
+                                  <div class="o_input_dropdown">
+                                    <input
+                                      type="text"
+                                      class="o_input ui-autocomplete-input"
+                                      autocomplete="off"
+                                      id="o_field_input_586"
+                                    />
+                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    class="fa fa-external-link btn btn-secondary o_external_button"
+                                    tabindex="-1"
+                                    draggable="false"
+                                    aria-label="External link"
+                                    title="External link"
+                                  ></button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
                         </table>
                         <table class="o_group o_inner_group o_group_col_6">
-                            <tbody>
-                                <tr>
-                                    <td colspan="2" style="width: 100%;">
-                                        <div class="o_horizontal_separator">Account Stock Properties</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="o_td_label"><label class="o_form_label" for="o_field_input_587"
-                                            data-original-title="" title="">Stock Input Account</label></td>
-                                    <td style="width: 100%;">
-                                        <div class="o_field_widget o_field_many2one o_with_button"
-                                            aria-atomic="true" name="property_stock_account_input_categ_id">
-                                            <div class="o_input_dropdown">
-                                                <input type="text" class="o_input ui-autocomplete-input"
-                                                    autocomplete="off" id="o_field_input_587">
-                                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                            </div>
-                                            <button type="button"
-                                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                                tabindex="-1" draggable="false" aria-label="External link"
-                                                title="External link"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="o_td_label"><label class="o_form_label" for="o_field_input_588"
-                                            data-original-title="" title="">Stock Output Account</label></td>
-                                    <td style="width: 100%;">
-                                        <div class="o_field_widget o_field_many2one o_with_button"
-                                            aria-atomic="true" name="property_stock_account_output_categ_id">
-                                            <div class="o_input_dropdown">
-                                                <input type="text" class="o_input ui-autocomplete-input"
-                                                    autocomplete="off" id="o_field_input_588">
-                                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                            </div>
-                                            <button type="button"
-                                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                                tabindex="-1" draggable="false" aria-label="External link"
-                                                title="External link"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="o_td_label"><label class="o_form_label" for="o_field_input_589"
-                                            data-original-title="" title="">Stock Valuation Account</label></td>
-                                    <td style="width: 100%;">
-                                        <div class="o_field_widget o_field_many2one o_with_button"
-                                            aria-atomic="true" name="property_stock_valuation_account_id">
-                                            <div class="o_input_dropdown">
-                                                <input type="text" class="o_input ui-autocomplete-input"
-                                                    autocomplete="off" id="o_field_input_589">
-                                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                            </div>
-                                            <button type="button"
-                                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                                tabindex="-1" draggable="false" aria-label="External link"
-                                                title="External link"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="o_td_label"><label class="o_form_label" for="o_field_input_590"
-                                            data-original-title="" title="">Stock Journal</label></td>
-                                    <td style="width: 100%;">
-                                        <div class="o_field_widget o_field_many2one o_with_button"
-                                            aria-atomic="true" name="property_stock_journal">
-                                            <div class="o_input_dropdown">
-                                                <input type="text" class="o_input ui-autocomplete-input"
-                                                    autocomplete="off" id="o_field_input_590">
-                                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                            </div>
-                                            <button type="button"
-                                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                                tabindex="-1" draggable="false" aria-label="External link"
-                                                title="External link"></button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
+                          <tbody>
+                            <tr>
+                              <td colspan="2" style="width: 100%;">
+                                <div class="o_horizontal_separator">Account Stock Properties</div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="o_td_label">
+                                <label
+                                  class="o_form_label"
+                                  for="o_field_input_587"
+                                  data-original-title
+                                  title
+                                >Stock Input Account</label>
+                              </td>
+                              <td style="width: 100%;">
+                                <div
+                                  class="o_field_widget o_field_many2one o_with_button"
+                                  aria-atomic="true"
+                                  name="property_stock_account_input_categ_id"
+                                >
+                                  <div class="o_input_dropdown">
+                                    <input
+                                      type="text"
+                                      class="o_input ui-autocomplete-input"
+                                      autocomplete="off"
+                                      id="o_field_input_587"
+                                    />
+                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    class="fa fa-external-link btn btn-secondary o_external_button"
+                                    tabindex="-1"
+                                    draggable="false"
+                                    aria-label="External link"
+                                    title="External link"
+                                  ></button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="o_td_label">
+                                <label
+                                  class="o_form_label"
+                                  for="o_field_input_588"
+                                  data-original-title
+                                  title
+                                >Stock Output Account</label>
+                              </td>
+                              <td style="width: 100%;">
+                                <div
+                                  class="o_field_widget o_field_many2one o_with_button"
+                                  aria-atomic="true"
+                                  name="property_stock_account_output_categ_id"
+                                >
+                                  <div class="o_input_dropdown">
+                                    <input
+                                      type="text"
+                                      class="o_input ui-autocomplete-input"
+                                      autocomplete="off"
+                                      id="o_field_input_588"
+                                    />
+                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    class="fa fa-external-link btn btn-secondary o_external_button"
+                                    tabindex="-1"
+                                    draggable="false"
+                                    aria-label="External link"
+                                    title="External link"
+                                  ></button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="o_td_label">
+                                <label
+                                  class="o_form_label"
+                                  for="o_field_input_589"
+                                  data-original-title
+                                  title
+                                >Stock Valuation Account</label>
+                              </td>
+                              <td style="width: 100%;">
+                                <div
+                                  class="o_field_widget o_field_many2one o_with_button"
+                                  aria-atomic="true"
+                                  name="property_stock_valuation_account_id"
+                                >
+                                  <div class="o_input_dropdown">
+                                    <input
+                                      type="text"
+                                      class="o_input ui-autocomplete-input"
+                                      autocomplete="off"
+                                      id="o_field_input_589"
+                                    />
+                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    class="fa fa-external-link btn btn-secondary o_external_button"
+                                    tabindex="-1"
+                                    draggable="false"
+                                    aria-label="External link"
+                                    title="External link"
+                                  ></button>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td class="o_td_label">
+                                <label
+                                  class="o_form_label"
+                                  for="o_field_input_590"
+                                  data-original-title
+                                  title
+                                >Stock Journal</label>
+                              </td>
+                              <td style="width: 100%;">
+                                <div
+                                  class="o_field_widget o_field_many2one o_with_button"
+                                  aria-atomic="true"
+                                  name="property_stock_journal"
+                                >
+                                  <div class="o_input_dropdown">
+                                    <input
+                                      type="text"
+                                      class="o_input ui-autocomplete-input"
+                                      autocomplete="off"
+                                      id="o_field_input_590"
+                                    />
+                                    <a role="button" class="o_dropdown_button" draggable="false"></a>
+                                  </div>
+                                  <button
+                                    type="button"
+                                    class="fa fa-external-link btn btn-secondary o_external_button"
+                                    tabindex="-1"
+                                    draggable="false"
+                                    aria-label="External link"
+                                    title="External link"
+                                  ></button>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
                         </table>
                       </div>
                       <table class="o_group o_inner_group">
@@ -1220,7 +1322,7 @@ export default {
     },
     // validate Addons
     CheckAccounting() {
-       axios
+      axios
         .get("/api/Addons/Check/Accounting")
         .then((response) => {
           this.accounts = response.data.result;

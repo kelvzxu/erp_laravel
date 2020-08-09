@@ -10,85 +10,66 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\controller as Controller;
+use File;
 
 class ResCustomersController extends Controller
 {
-    public function index()
+    function UploadFile($name, $photo)
     {
-        $customer = DB::table('res_customers')
-                    ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
-                    ->select('res_customers.*', 'res_country.country_name')
-                    ->whereNull('res_customers.deleted_at')
-                    ->orderBy('name', 'ASC')
-                    ->paginate(30);
-        return view('customer.index',compact('customer'));
+        $extension = explode('/', explode(':', substr($photo, 0, strpos($photo, ';')))[1])[1];
+        $replace = substr($photo, 0, strpos($photo, ',')+1); 
+        $image = str_replace($replace, '', $photo); 
+        $image = str_replace(' ', '+', $image); 
+        $imageName = time() .'_'.str_replace(' ','_',$name).'.'.$extension;
+        $path = public_path('uploads/Customers');
+        if(!File::isDirectory($path)){
+            File::makeDirectory($path, 0777, true, true);
+        }
+        file_put_contents(public_path('uploads/Customers/').$imageName,base64_decode($image));
+        return $imageName;
     }
 
-    public function search(Request $request)
-    {
-        $key=$request->filter;
-        $value=$request->value;
-        if ($key!=""){
-            $customer = DB::table('res_customers')
-                    ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
-                    ->select('res_customers.*', 'res_country.country_name')
-                    ->whereNull('res_customers.deleted_at')
-                    ->orderBy('name', 'ASC')
-                    ->where($key,'like',"%".$value."%")
-                    ->paginate(30);
-            $customer ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
-        }else{
-            $customer = DB::table('res_customers')
-                    ->join('res_country', 'res_customers.country_id', '=', 'res_country.id')
-                    ->select('res_customers.*', 'res_country.country_name')
-                    ->whereNull('res_customers.deleted_at')
-                    ->orderBy('name', 'ASC')
-                    ->paginate(30);
-        }
-        return view('customer.index',compact('customer'));
-    }
-    
-    public function create()
-    {
-        return view('customer.create');
+    function prepare_display_name($value, $name){
+        $data = res_customer::findorFail($value);
+        $display_name = "$data->display_name , $name";
+        return $display_name;
     }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|string|max:50',
-            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
-        try {
-            $nama_file="";
-            $photo = null;
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo')->getClientOriginalName();
-                $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/customers';
-                $request->file('photo')->move($destination, $nama_file);
-            }
 
-            $res_customer = res_customer::create([
+        $image_64 = $request->photo;
+        $imageName = null;
+        $display_name = $request->name;
+        if ($image_64 != ""){
+            $imageName = $this->UploadFile($request->name,$image_64);
+        }
+
+        if ($request->parent_id != null){
+            $display_name = $this->prepare_display_name($request->parent_id, $display_name);
+        }
+
+        try{
+            res_customer::create([
                 'name'=> $request->name,
-                'display_name'=> $request->name,
-                'parent_id'=> $request->Parent_id,
-                'ref'=> $request->reference,
+                'display_name'=> $display_name,
+                'parent_id'=> $request->parent_id,
+                'ref'=> $request->ref,
                 'lag'=> $request->lag,
                 'tz'=> $request->tz,
                 'currency_id'=> $request->currency_id,
-                'bank_account'=> $request->bank_account,
                 'website'=> $request->website,
-                'credit'=> "0",
-                'debit'=> "0",
                 'active'=> $active=True,
-                'address'=> $request->type,
-                'street'=> $request->street1,
+                'address'=> $request->address,
+                'street'=> $request->street,
                 'street2'=> $request->street2,
                 'zip'=> $request->zip,
                 'city'=> $request->city,
-                'state_id'=> $request->state,
-                'country_id'=> $request->country,
+                'state_id'=> $request->state_id,
+                'country_id'=> $request->country_id,
                 'email'=> $request->email,
                 'phone'=> $request->phone,
                 'mobile'=> $request->mobile,
@@ -96,133 +77,86 @@ class ResCustomersController extends Controller
                 'sales'=> $request->sales,
                 'payment_terms'=>$request->payment_terms,
                 'note'=>$request->note,
-                'logo'=> $nama_file,
+                'logo'=> $imageName,
+                'vat'=>$request->vat,
+                'blocking_stage'=>$request->blocking_stage,
+                'warning_stage'=>$request->warning_stage,
+                'title'=>$request->title,
+                'company_id'=>$request->company_id,
+                'job_title'=>$request->job_title,
             ]);
-
-            Toastr::success('Customers ' .$request->name. ' created successfully','Success');
-            return redirect(route('customer'));
+            return response()->json([
+                'status' => 'success',
+                'message' => "Partner $request->name ($display_name) Created Successfully"
+            ]);
         } catch (\Exception $e) {
-            Toastr::error($e->getMessage(),'Something Wrong');
-            // Toastr::error('Check In Error!','Something Wrong');
-            return redirect()->back();
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\res_customer  $res_customer
-     * @return \Illuminate\Http\Response
-     */
-    public function show(res_customer $res_customer)
-    {
-        $invoice=Invoice::where('client',$res_customer->id)->count();
-        return view('customer.edit_customer',
-            compact('res_customer','invoice'));
-    }
-
-    /**
-     * Show the form for editing the specified resource. 
-     *
-     * @param  \App\res_customer  $res_customer
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $customer = res_customer::findOrFail($id);
-        return view('customer.edit_customer', compact('customer'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\res_customer  $res_customer
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $this->validate($request, [
             'name' => 'required|string|max:50',
-            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
-        try {
-            $nama_file="";
-            $photo = null;
-            if ($request->hasFile('photo')) {
-                $photo = $request->file('photo')->getClientOriginalName();
-                $nama_file = time()."_".$photo;
-                $destination = base_path() . '/public/uploads/customers';
-                $request->file('photo')->move($destination, $nama_file);
 
-                $res_customer = res_customer::where('id',$request->id)->update([
-                    'name'=> $request->name,
-                    'display_name'=> $request->name,
-                    'parent_id'=> $request->Parent_id,
-                    'ref'=> $request->reference,
-                    'lag'=> $request->lag,
-                    'tz'=> $request->tz,
-                    'currency_id'=> $request->currency_id,
-                    'bank_account'=> $request->bank_account,
-                    'website'=> $request->website,
-                    'active'=> $active=True,
-                    'address'=> $request->type,
-                    'street'=> $request->street1,
-                    'street2'=> $request->street2,
-                    'zip'=> $request->zip,
-                    'city'=> $request->city,
-                    'state_id'=> $request->state,
-                    'country_id'=> $request->country,
-                    'email'=> $request->email,
-                    'phone'=> $request->phone,
-                    'mobile'=> $request->mobile,
-                    'industry_id'=> $request->industry_id,
-                    'sales'=> $request->sales,
-                    'payment_terms'=>$request->payment_terms,
-                    'note'=>$request->note,
-                    'receivable_account'=>$request->receivable_account,
-                    'logo'=> $nama_file,
-                    'journal'=> $request->journal,
-                ]);
-                Toastr::success('Customer ' .$request->name. ' update successfully','Success');
-                return redirect(route('customer'));
-            }
-            else{
-                $res_customer = res_customer::where('id',$request->id)->update([
-                    'name'=> $request->name,
-                    'display_name'=> $request->name,
-                    'parent_id'=> $request->Parent_id,
-                    'ref'=> $request->reference,
-                    'lag'=> $request->lag,
-                    'tz'=> $request->tz,
-                    'currency_id'=> $request->currency_id,
-                    'bank_account'=> $request->bank_account,
-                    'website'=> $request->website,
-                    'active'=> $active=True,
-                    'address'=> $request->type,
-                    'street'=> $request->street1,
-                    'street2'=> $request->street2,
-                    'zip'=> $request->zip,
-                    'city'=> $request->city,
-                    'state_id'=> $request->state,
-                    'country_id'=> $request->country,
-                    'email'=> $request->email,
-                    'phone'=> $request->phone,
-                    'mobile'=> $request->mobile,
-                    'industry_id'=> $request->industry_id,
-                    'sales'=> $request->sales,
-                    'payment_terms'=>$request->payment_terms,
-                    'note'=>$request->note,
-                    'receivable_account'=>$request->receivable_account,
-                    'journal'=> $request->journal,
-                ]);
-                Toastr::success('Customer ' .$request->name. ' update successfully','Success');
-                return redirect(route('customer'));
-            }
+        $partner = res_customer::findorFail($request->id);
+        $image_64 = $request->photo;
+        $imageName = $partner->logo;
+        $display_name = $request->name;
+        if ($image_64 != ""){
+            $imageName = $this->UploadFile($request->name,$image_64);
+        }
+
+        if ($request->parent_id != null){
+            $display_name = $this->prepare_display_name($request->parent_id, $display_name);
+        }
+
+        try{
+            res_customer::findOrFail($request->id)->update([
+                'name'=> $request->name,
+                'display_name'=> $display_name,
+                'parent_id'=> $request->parent_id,
+                'ref'=> $request->ref,
+                'lag'=> $request->lag,
+                'tz'=> $request->tz,
+                'currency_id'=> $request->currency_id,
+                'website'=> $request->website,
+                'active'=> $active=True,
+                'address'=> $request->address,
+                'street'=> $request->street,
+                'street2'=> $request->street2,
+                'zip'=> $request->zip,
+                'city'=> $request->city,
+                'state_id'=> $request->state_id,
+                'country_id'=> $request->country_id,
+                'email'=> $request->email,
+                'phone'=> $request->phone,
+                'mobile'=> $request->mobile,
+                'industry_id'=> $request->industry_id,
+                'sales'=> $request->sales,
+                'payment_terms'=>$request->payment_terms,
+                'note'=>$request->note,
+                'logo'=> $imageName,
+                'vat'=>$request->vat,
+                'blocking_stage'=>$request->blocking_stage,
+                'warning_stage'=>$request->warning_stage,
+                'title'=>$request->title,
+                'company_id'=>$request->company_id,
+                'job_title'=>$request->job_title,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Partner $request->name ($display_name) Update Successfully"
+            ]);
         } catch (\Exception $e) {
-            // Toastr::error($e->getMessage(),'Something Wrong');
-            Toastr::error('Check In Error!','Something Wrong');
-            return redirect()->back();
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
         }
     } 
 
@@ -242,7 +176,7 @@ class ResCustomersController extends Controller
 
     public function searchapi(Request $request)
     {
-        $customer = res_customer::where('id', $request->id)->first();
+        $customer = res_customer::with('currency','country','parent')->where('id', $request->id)->first();
         if ($customer) {
             return response()->json([
                 'status' => 'success',
@@ -257,7 +191,7 @@ class ResCustomersController extends Controller
 
     public function fetchCustomer()
     {
-        $customer = res_customer::with('currency','country')->orderBy('name', 'ASC')->get();
+        $customer = res_customer::with('currency','country','parent','industry')->orderBy('name', 'ASC')->get();
         if ($customer) {
             return response()->json([
                 'status' => 'success',
@@ -272,7 +206,7 @@ class ResCustomersController extends Controller
 
     public function fetchCompany()
     {
-        $customer = res_customer::with('currency','country')->where('title','company')->orderBy('name', 'ASC')->get();
+        $customer = res_customer::with('currency','country','parent')->where('title','company')->orderBy('name', 'ASC')->get();
         if ($customer) {
             return response()->json([
                 'status' => 'success',

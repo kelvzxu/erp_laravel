@@ -123,15 +123,21 @@
             @click="show(row)"
           >
             <div
-              v-if="row.photo == null"
-              class="o_kanban_image_fill_left o_kanban_image_full"
+              v-if="row.logo == null"
+              class="o_kanban_image_fill_left"
               v-bind:style="{ 'background-image': 'url(/images/icons/avatar.png)' }"
-            ></div>
+            >
+            <img v-if="row.parent_id != null && row.parent.logo != null" class="o_kanban_image_inner_pic" v-bind:alt="row.parent.display_name" v-bind:src="'/uploads/Customers/'+row.parent.logo">
+            <img v-if="row.parent_id != null && row.parent.logo == null" class="o_kanban_image_inner_pic" v-bind:alt="row.parent.display_name" v-bind:src="'/images/icons/avatar.png'">
+            </div>
             <div
               v-else
-              class="o_kanban_image_fill_left o_kanban_image_full"
-              v-bind:style="{ 'background-image': 'url(/uploads/customers/'+ row.logo+')' }"
-            ></div>
+              class="o_kanban_image_fill_left"
+              v-bind:style="{ 'background-image': 'url(/uploads/Customers/'+ row.logo+')' }"
+            >
+            <img v-if="row.parent_id != null && row.parent.logo != null" class="o_kanban_image_inner_pic" v-bind:alt="row.parent.display_name" v-bind:src="'/uploads/Customers/'+row.parent.logo">
+            <img v-if="row.parent_id != null && row.parent.logo == null" class="o_kanban_image_inner_pic" v-bind:alt="row.parent.display_name" v-bind:src="'/images/icons/avatar.png'">
+            </div>
             <div class="oe_kanban_details">
               <strong class="o_kanban_record_title oe_partner_heading">
                 <span>{{row.display_name}}</span>
@@ -139,17 +145,11 @@
               <div class="o_kanban_tags_section oe_kanban_partner_categories">
                 <span class="oe_kanban_list_many2many">
                   <div
-                    v-if="row.title != ''"
+                    v-if="row.parent_id == null"
                     class="o_field_many2manytags o_field_widget o_kanban_tags"
                   >
-                    <span class="o_tag o_tag_color_7">
-                      <span></span>
-                      {{row.title}}
-                    </span>
-                  </div>
-                  <div v-else class="o_field_many2manytags o_field_widget o_kanban_tags">
-                    <span class="o_tag o_tag_color_7">
-                      <span></span>individual
+                    <span v-if="row.industry_id != null" class="o_tag o_tag_color_7">
+                      <span></span>{{row.industry.industry_name}}
                     </span>
                   </div>
                 </span>
@@ -160,7 +160,7 @@
                 </li>
                 <li>
                   <span>{{row.city}}</span>,
-                  <span>{{row.country.country_name}}</span>
+                  <span v-if="row.country_id != null">{{row.country.country_name}}</span>
                 </li>
                 <li class="o_text_overflow">
                   <span>{{row.email}}</span>
@@ -325,7 +325,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     show(row) {
-      this.$router.push({ name: "product_edit", params: { id: btoa(row.id) } });
+      this.$router.push({ name: "customer_edit", params: { id: btoa(row.id) } });
     },
   },
   computed: {

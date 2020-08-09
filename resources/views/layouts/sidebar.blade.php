@@ -126,7 +126,7 @@
                 @if (AccessRight::access()->inventory == True ) 
                 <li class="app-sidebar__heading">Inventory</li>
                     <li>
-                        <a href="/inventory/product/tree-view" id="product">
+                        <a href="/inventory/product/web/model=product.template&view_type=kanban,list&cids=&menu_id=159" id="product">
                             <i class="metismenu-icon fa fa-cubes">
                             </i>Product
                         </a>
