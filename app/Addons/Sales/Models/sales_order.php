@@ -7,10 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class sales_order extends Model
 {
     protected $fillable = [
-        'order_no', 'order_date','customer','customer_reference',
-        'taxes', 'sub_total', 'discount','expiration',
-        'grand_total','receipt','receipt_validate',
-        'status','sales','invoice','confirm_date'
+        'order_no','order_date','confirm_date','expiration','customer','customer_reference','sub_total','discount',
+        'taxes','grand_total','invoice','state','receipt','receipt_validate','sales','product_warehouse_id',
+        'company_id','note','shipping_policy',
     ];
     public function company()
     {

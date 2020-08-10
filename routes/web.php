@@ -38,8 +38,12 @@ Route::group(['middleware' => 'auth'], function (){
         return view('sales.vue');
     })->where('any', '.*');
 
-    Route::get('/contact/customer/{any}',function(){
-        return view('contact.customer.vue');
+    Route::get('/contact/{any}',function(){
+        return view('contact.partner.vue');
+    })->where('any', '.*');
+
+    Route::get('/setting/company/{any}',function(){
+        return view('setting.company.vue');
     })->where('any', '.*');
 
     // ==== Apps ====
@@ -128,14 +132,6 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Sales ====
     Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
     {
-        Route::get('Sales', 'SalesOrdersController@index')->name('sales_orders');
-        Route::get('Sales/create', 'SalesOrdersController@create')->name('sales_orders.create');
-        Route::post('Sales', 'SalesOrdersController@store')->name('sales_orders.store');
-        Route::get('Sales/show/{id}', 'SalesOrdersController@show')->name('sales_orders.show');
-        Route::get('Sales/edit/{id}', 'SalesOrdersController@edit')->name('sales_orders.edit');
-        Route::get('Sales/confirm/{id}', 'SalesOrdersController@confirm')->name('sales_orders.confirm');
-        Route::put('Sales/update/{id}', 'SalesOrdersController@update')->name('sales_orders.update');
-        Route::get('Sales/filter', 'SalesOrdersController@search')->name('sales_orders.filter');
         Route::get('Sales/Report', 'SalesOrdersController@report')->name('sales_orders.report');
         Route::get('Sales/print/{id}', 'SalesOrdersController@print')->name('sales_orders.print_pdf');
         Route::get('Sales/Report/print', 'SalesOrdersController@print_report')->name('sales_orders.print');

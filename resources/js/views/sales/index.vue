@@ -235,11 +235,11 @@ export default {
       return array.findIndex((i) => i[key] == value);
     },
     show(row){
-      this.$router.push({name: 'uom_edit', params:{id : btoa(row.id)}});
+      this.$router.push({name: 'sales_view', params:{id : btoa(row.id)}});
     },
     formatPrice(value) {
-        let val = (value/1).toFixed(2).replace('.', ',')
-        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+      let val = (value/1).toFixed(2).replace('.', ',')
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
     },
   },
   computed: {

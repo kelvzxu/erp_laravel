@@ -1023,9 +1023,6 @@ export default {
     created() {
       axios.post(`/api/customer/search/${atob(this.$route.params.id)}`).then(response => {
         this.state = response.data.data;
-        console.log('========================')
-        console.log(this.state);
-        console.log('========================')
       }).catch(error => console.error(error));
     },
     mounted() {

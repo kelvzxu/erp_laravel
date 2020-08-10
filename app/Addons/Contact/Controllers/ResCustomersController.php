@@ -39,6 +39,7 @@ class ResCustomersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:50',
+            'currency_id' =>'required'
         ]);
 
         $image_64 = $request->photo;
@@ -101,6 +102,7 @@ class ResCustomersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string|max:50',
+            'currency_id' =>'required'
         ]);
 
         $partner = res_customer::findorFail($request->id);

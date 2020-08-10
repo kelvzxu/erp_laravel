@@ -442,7 +442,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{{ route ('companies.index')}}" id="companies">
+                        <a href="/setting/company/web/model=res.company&view_type=list&cids=&menu_id=294" id="companies">
                             <i class="metismenu-icon fa fa-building">
                             </i>Manage Companies
                         </a>

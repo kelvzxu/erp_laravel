@@ -17,7 +17,7 @@ class CreateSalesOrderProductsTable extends Migration
             $table->increments('id');
             $table->integer('sales_order_id')->unsigned();
             $table->integer('name');
-            $table->integer('description');
+            $table->string('description');
             $table->integer('product_uom');
             $table->integer('product_uom_category');
             $table->integer('qty');

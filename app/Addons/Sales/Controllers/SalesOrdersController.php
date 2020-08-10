@@ -20,7 +20,7 @@ class SalesOrdersController extends Controller
     function calculate_code()
     {
         $year=date("Y");
-        $prefixcode = "SL/$year/"; 
+        $prefixcode = "SO/$year/"; 
         $count = sales_order::where('order_no','like',"%".$prefixcode."%")->count();
         if ($count==0){
             return "$prefixcode"."000001";
@@ -28,119 +28,72 @@ class SalesOrdersController extends Controller
             return $prefixcode.str_pad($count + 1, 6, "0", STR_PAD_LEFT);
         }
     }
-    
-    public function index()
-    {
-        $orders = sales_order::with('partner','sales_person')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(30);
-        return view('sales.index', compact('orders'));
-    }
-
-    public function create()
-    {
-        $partner = Partner::customer();
-        $product = Inventory::can_be_sold();
-        return view('sales.create', compact('product','partner'));
-    }
 
     public function store(Request $request)
     {
         $this->validate($request, [
             'customer' => 'required|max:255',
-            'order_date' => 'required|date_format:Y-m-d',
-            'discount' => 'required|numeric|min:0',
+            'order_date' => 'required',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
-            'products.*.qty' => 'required|integer|min:1'
+            'products.*.qty' => 'required|integer|min:1',
         ]);
  
         $Order_no = $this->calculate_code();
 
         $products = collect($request->products)->transform(function($product) {
-            $product['total'] = $product['qty'] * $product['price'];
+            $product['total'] = $product['price_subtotal'] + $product['price_tax'];
             return new sales_order_product($product);
         });
 
         if($products->isEmpty()) {
             return response()
             ->json([
-                'products_empty' => ['One or more Product is required.']
+                'status' => 'failed',
+                'errors' => ['result' => ['One or more Product is required.']]
             ], 422);
         }
 
         $data = $request->except('products'); 
         $data['order_no'] = $Order_no;
-        $data['sales'] = Auth::id();
-        $data['sub_total'] = $products->sum('total');
-        $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
         $sales = sales_order::create($data);
 
         $sales->products()->saveMany($products);
 
-        return response()
-            ->json([
-                'created' => 'success',
-                'id' => $sales->id
-            ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => "Order $Order_no Created Successfully"
+        ]);
     }
 
-    public function show($id)
-    {
-        $orders = sales_order::with('partner','sales_person','products')->findOrFail($id);
-        return view('sales.show', compact('orders'));
-    }
-
-    public function edit($id)
-    {
-        $orders = sales_order::with('partner','sales_person','products','products.product')->findOrFail($id);
-        return view('sales.edit', compact('orders'));
-    }
-
-    public function confirm($id)
-    {
-        try{
-            $orders = sales_order::where('id',$id)->first()->update([
-                'confirm_date'=>date('Y-m-d'),
-                'status' =>"SO"
-            ]);
-            Toastr::success('Confirm Order Successfully','Success');
-        }catch (\Exception $e) {
-            Toastr::error('Check In Error!','Something Wrong');
-        }
-        return redirect()->back();
-    }
-
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'customer' => 'required|max:255',
-            'order_date' => 'required|date_format:Y-m-d',
-            'discount' => 'required|numeric|min:0',
+            'order_date' => 'required',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1'
         ]);
 
-        $orders = sales_order::findOrFail($id);
+        $orders = sales_order::findOrFail($request->id);
         $old_total = $orders->grand_total;
 
         $products = collect($request->products)->transform(function($product) {
-            $product['total'] = $product['qty'] * $product['price'];
+            $product['total'] = $product['price_subtotal'] + $product['price_tax'];
             return new sales_order_product($product);
         });
 
         if($products->isEmpty()) {
             return response()
             ->json([
-                'products_empty' => ['One or more Product is required.']
+                'status' => 'failed',
+                'errors' => ['result' => ['One or more Product is required.']]
             ], 422);
         }
 
         $data = $request->except('products');
-        $data['sub_total'] = $products->sum('total');
-        $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
         $orders->update($data);
 
@@ -148,12 +101,47 @@ class SalesOrdersController extends Controller
 
         $orders->products()->saveMany($products);
 
-        return response()
-            ->json([
-                'updated' => "success",
-                'id' => $orders->id
-            ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => "Order $request->order_no Updated Successfully"
+        ]);
     }
+
+    public function getSalesOrder($id)
+    {
+        try{
+            $orders = sales_order::with('partner','sales_person','products','products.uom','products.product')->findOrFail($id);
+            return response()->json([
+                'status' => 'success',
+                'result' => $orders
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+
+    public function confirm(Request $request)
+    {
+        try{
+            $orders = sales_order::where('id',$request->id)->first()->update([
+                'confirm_date'=>date('Y-m-d'),
+                'state' =>"sale"
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Confirm Order $request->order_no Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
 
     public function report()
     {

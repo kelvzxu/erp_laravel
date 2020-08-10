@@ -66,6 +66,10 @@ Route::group(['namespace' => '\App\Addons\Accounting\Controllers'], function()
 Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
 {
     Route::get('/sale/list', 'SalesOrdersController@fetchSalesOrder');
+    Route::post('/sale/store', 'SalesOrdersController@store');
+    Route::post('/sale/update', 'SalesOrdersController@update');
+    Route::post('/sale/confirm', 'SalesOrdersController@confirm');
+    Route::get('/sale/search/{id}', 'SalesOrdersController@getSalesOrder');
 });
 // ==== Contact ====
 Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
