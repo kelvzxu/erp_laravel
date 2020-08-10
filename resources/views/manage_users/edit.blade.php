@@ -7,7 +7,7 @@
 @section('content')
 <form action="{{route('user_setting.update', $user_access->user_id)}}" method="post" enctype="multipart/form-data">
     @csrf
-<div class="app-page-title bg-white">
+<div>
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">
@@ -30,8 +30,8 @@
 <div class="o_content">
     <div class="o_form_view o_form_editable">
         <div class="o_form_sheet_bg">
-            <div class="clearfix o_form_sheet">
-                <div class="row">
+            <div class="clearfix position-relative o_form_sheet">
+                <!-- <div class="row">
                     <div class="col-sm-10 mt-5">
                         <div class="row">
                             <div class="col-sm-6 ml-2">
@@ -53,7 +53,26 @@
                     <div class="col-sm-2 text-center d-none d-md-block mt-5 ">
                         <img src="{{asset('uploads/Employees/'.$user_access->employee->photo)}}" width=80px height=100px>
                     </div>
+                </div> -->
+                <div class="o_field_image o_field_widget oe_avatar" aria-atomic="true" name="image_1920" >
+                    @if ($user_access->employee->photo != null)
+                        <img class="img img-fluid" alt="Binary file" src="{{asset('uploads/Employees/'.$user_access->employee->photo)}}">
+                    @else
+                    <img class="img img-fluid" alt="Binary file" src="{{asset('images/icons/avatar.png')}}">
+                    @endif
                 </div>
+                <div class="oe_title">
+                    <label class="o_form_label oe_edit_only">Name</label>
+                    <h1>
+                        <input class="o_field_char o_field_widget o_input o_required_modifier" name="name" placeholder="" type="text" value="{{ $user_access->user->name }}">
+                    </h1>
+                    <label
+                        class="o_form_label oe_edit_only">Email Address</label>
+                    <h2>
+                        <input class="o_field_char o_field_widget o_input o_required_modifier" name="login" placeholder="" type="text" value="{{ $user_access->user->email }}">
+                    </h2>
+                </div>
+
                 <div class="o_group">
                     <div class="o_notebook mt-3">
                         <ul class="nav nav-tabs">

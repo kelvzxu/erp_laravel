@@ -5,7 +5,7 @@
 <link href="{{asset('css/web.assets_backend.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-<div class="app-page-title bg-white">
+<div>
     <div class="o_control_panel">
         <div>
             <ol class="breadcrumb" role="navigation">

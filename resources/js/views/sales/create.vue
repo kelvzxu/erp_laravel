@@ -790,6 +790,7 @@ export default {
       });
     },
     remove: function(product) {
+      this.value -= 1
       this.products.$remove(product);
     },
     fetchCompany() {
@@ -875,6 +876,8 @@ export default {
         return 'End of Following Month';
       if (self == '8')
         return '30% Now, Balance 60 Days';
+      else 
+        return 'Immediate Payment';
     },
     getCurrentDate(){
       var today = new Date();
