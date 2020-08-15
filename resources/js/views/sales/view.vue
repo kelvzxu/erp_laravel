@@ -63,6 +63,9 @@
                   <button v-if="state.state == 'Quotation'" type="button" class="btn btn-primary" @click="Confirm_Order">
                     <span>Confirm</span>
                   </button>
+                  <button v-if="state.state == 'sale' && state.receipt == false" type="button" class="btn btn-primary">
+                    <span>Delivery</span>
+                  </button>
                   <button type="button" class="btn btn-secondary">
                     <span>Cancel</span>
                   </button>
@@ -120,6 +123,10 @@
                       <span class="o_stat_text">Preview</span>
                     </div>
                   </button>
+                  <button v-if="state.receipt == true" type="button" name="action_view_delivery" class="btn oe_stat_button"><i class="fa fa-fw o_button_icon fa-truck"></i><div name="delivery_count" class="o_field_widget o_stat_info o_readonly_modifier" data-original-title="" title="">
+                      <span class="o_stat_value">1</span>
+                      <span class="o_stat_text">Delivery</span>
+                  </div></button>
                 </div>
                 <div class="oe_title">
                   <h1>

@@ -26706,6 +26706,14 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
     margin-right: 4px;
 }
 
+.o_m3o_avatar {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 4px;
+}
+
 .o_field_widget.o_field_badge {
     border: 0;
     font-size: 12px;

@@ -69,7 +69,7 @@
                     <label
                         class="o_form_label oe_edit_only">Email Address</label>
                     <h2>
-                        <input class="o_field_char o_field_widget o_input o_required_modifier" name="login" placeholder="" type="text" value="{{ $user_access->user->email }}">
+                        <input class="o_field_char o_field_widget o_input o_required_modifier" name="email" placeholder="" type="text" value="{{ $user_access->user->email }}">
                     </h2>
                 </div>
 

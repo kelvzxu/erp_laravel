@@ -144,15 +144,9 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('receipt.index')}}" id="receipt">
+                        <a href="/logistic/web/action=109&model=stock.picking.type&view_type=kanban&cids=&menu_id=137" id="receipt">
                             <i class="metismenu-icon fa fa-truck fa-flip-horizontal">
-                            </i>Receipt Product
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('Delivere.index')}}" id="Delivere">
-                            <i class="metismenu-icon fa fa-truck">
-                            </i>Delivere Product
+                            </i>Logistics
                         </a>
                     </li>
                     @if(UserGroup::group() == 2)

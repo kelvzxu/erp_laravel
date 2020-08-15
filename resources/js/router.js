@@ -36,6 +36,12 @@ import customer_edit from './views/contact/customer/edit.vue'
 import company_index from './views/base/company/index.vue'
 import company_create from './views/base/company/create.vue'
 
+// === Logistic ===
+import logistic_dasboard from './views/logistic/dasboard.vue'
+import receipt_index from './views/logistic/receipt/index.vue'
+import receipt_edit from './views/logistic/receipt/form.vue'
+import delivery_index from './views/logistic/delivery/index.vue'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -146,7 +152,27 @@ const router = new VueRouter({
             name: 'company_create',
             component: company_create
         },
-        
+        {
+            path: '/logistic/web/action=109&model=stock.picking.type&view_type=kanban&cids=&menu_id=137',
+            name: 'logistic_dasboard',
+            component: logistic_dasboard
+        },
+        {
+            path: '/logistic/:id/web/action=168&model=stock.picking&type=receipt&view_type=kanban&cids=&menu_id=197',
+            name: 'receipt_index',
+            component: receipt_index
+        },
+        {
+            path: '/logistic/:id/web/action=168&model=stock.picking&type=receipt&view_type=kanban&cids=&menu_id=715',
+            name: 'receipt_edit',
+            component: receipt_edit
+        },
+        {
+            path: '/logistic/:id/web/action=157&model=stock.picking&type=delivery&view_type=kanban&cids=&menu_id=175',
+            name: 'delivery_index',
+            component: delivery_index
+        },
+
     ]
 })
 

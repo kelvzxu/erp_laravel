@@ -25,10 +25,15 @@ Route::get('currency','ResCurrencyController@index');
 Route::get('industry','ResPartnerIndustryController@index');
 Route::get('lang','ResLangController@index');
 Route::get('tz','ResTimeZoneController@index');
-Route::get('company','ResCompaniesController@companies');
 Route::post('/leave', 'ManageSalaryController@getcount');
 Route::post('employee/search', 'HrEmployeesController@searchapi');
 Route::get('employee/list', 'HrEmployeesController@fetchEmployees');
+Route::get('/attendance', 'HrAttendanceController@checkatd');
+Route::post('/atd-count', 'HrAttendanceController@getcount');
+
+// company
+Route::get('company','ResCompaniesController@companies');
+Route::get('company/store','ResCompaniesController@store');
 
 // ==== Inventory ==== 
 Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()

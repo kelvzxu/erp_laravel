@@ -29,11 +29,12 @@ class CreateSalesOrdersTable extends Migration
             $table->string('state')->default("Quotation");
             $table->boolean('receipt')->default(False);
             $table->boolean('receipt_validate')->default(False);
-            $table->integer('sales')->nullable();
             $table->integer('product_warehouse_id')->nullable();
             $table->integer('company_id')->nullable();
             $table->string('note')->nullable();
+            $table->string('is_locked')->default(false);
             $table->string('shipping_policy')->nullable();
+            $table->integer('sales')->nullable();
             $table->timestamps();
         });
     }

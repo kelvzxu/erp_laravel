@@ -34,6 +34,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('inventory.warehouse.vue');
     })->where('any', '.*');
 
+    Route::get('/logistic/{any}', function () {
+        return view('inventory.logistics.vue');
+    })->where('any', '.*');
+
     Route::get('/sales/{any}', function () {
         return view('sales.vue');
     })->where('any', '.*');

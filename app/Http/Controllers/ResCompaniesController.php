@@ -14,26 +14,10 @@ use Illuminate\Support\Facades\Auth;
 
 class ResCompaniesController extends Controller
 {
-    public function index()
-    {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        $companies = res_company::orderBy('company_name', 'desc')
-                    ->paginate(30);
-        return view('companies.index', compact('access','group','companies'));
-    }
-
-    public function create()
-    {
-        $access=access_right::where('user_id',Auth::id())->first();
-        $group=user::find(Auth::id());
-        return view('companies.create', compact('access','group'));
-    }
     public function store(Request $request)
     {
         $this->validate($request, [
             'company_name' => 'required|string|max:50',
-            'photo' => 'nullable|image|mimes:jpg,png,jpeg'
         ]);
         try {
             $nama_file="";
@@ -71,9 +55,6 @@ class ResCompaniesController extends Controller
                 'social_instagram'=> $request->social_instagram,
                 'social_github'=> $request->social_github,
                 'social_linkedin'=> $request->social_linkedin,
-                'tax_id'=> $request->tax_id,
-                'bank_account'=> $request->bank_account,
-                'bank_account2'=> $request->bank_account2,
             ]);
 
             Toastr::success('Company ' .$request->name. ' created successfully','Success');
