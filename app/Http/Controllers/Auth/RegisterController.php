@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Customer\res_customer;
+use App\Addons\Contact\Models\res_customer;
 
 class RegisterController extends Controller
 {
