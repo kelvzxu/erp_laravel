@@ -87,11 +87,18 @@ $.ajax  ({
         'email':$("input[name='current_email']").val()
     },
     success: function (result) {
-        console.log(result);
-        $('div.profile').append(`
-            <img width="42" id="picture_profile" class="rounded-circle" width="50px" height="50px" src="/uploads/Employees/`+result.data.photo+`"
+        if (result.data.photo == null)
+        {
+            $('div.profile').append(`
+            <img width="42" id="picture_profile" class="o_m3o_avatar" height="50px" src="/images/icons/avatar.png"
                 alt="">
                                 `);
+        }else{
+            $('div.profile').append(`
+                <img width="42" id="picture_profile" class="o_m3o_avatar" src="/uploads/Employees/`+result.data.photo+`"
+                    alt="">
+                                    `);
+        }
         $(".widget-subheading").append(`<pre>`+result.data.jobs_name+`</pre>`)
         $("#image").val(result.data.photo);
     }
