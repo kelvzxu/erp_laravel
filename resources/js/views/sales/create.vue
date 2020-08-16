@@ -778,8 +778,9 @@ export default {
         shipping_policy: "direct",
         sub_total: 0,
         note: null,
+        test: null,
         products: [
-          {
+          { 
             index: 0,
             name: "",
             description: "",

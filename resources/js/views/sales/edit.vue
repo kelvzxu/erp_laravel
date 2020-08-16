@@ -897,7 +897,7 @@ export default {
             product_uom_category: this.result.uom.category_id,
             taxes: this.result.tax_id,
             price_subtotal: this.result.price,
-            price_tax: this.result.price * (this.result.tax_id / 100),
+            price_tax: this.result.price * (thisrow.id.result.tax_id / 100),
           });
           this.compute_total(product);
         })

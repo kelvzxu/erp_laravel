@@ -38,7 +38,7 @@ class SalesOrdersController extends Controller
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1',
         ]);
- 
+  
         $Order_no = $this->calculate_code();
 
         $products = collect($request->products)->transform(function($product) {
@@ -133,6 +133,24 @@ class SalesOrdersController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => "Confirm Order $request->order_no Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function delivere(Request $request)
+    {
+        try{
+            $orders = sales_order::where('id',$request->id)->first()->update([
+                'receipt'=>true,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Delivery Orders Created Successfully"
             ]);
         }catch (\Exception $e) {
             return response()->json([

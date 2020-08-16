@@ -60,10 +60,10 @@
                   <button type="button" class="btn btn-secondary o_invisible_modifier">
                     <span>Create Invoice</span>
                   </button>
-                  <button v-if="state.state == 'Quotation'" type="button" class="btn btn-primary" @click="Confirm_Order">
+                  <button v-if="state.state == 'Quotation'" type="button" class="btn btn-primary" @click="confirm_order">
                     <span>Confirm</span>
                   </button>
-                  <button v-if="state.state == 'sale' && state.receipt == false" type="button" class="btn btn-primary">
+                  <button v-if="state.state == 'sale' && state.receipt == false" type="button" class="btn btn-primary" @click="delivere_process">
                     <span>Delivery</span>
                   </button>
                   <button type="button" class="btn btn-secondary">
@@ -385,12 +385,6 @@
                                 </tr>
                               </tbody>
                               <tfoot>
-                                <tr class="bg-white">
-                                  <td></td>
-                                  <td colspan="7" class="o_field_x2many_list_row_add">
-                                    <span @click="addLine" class="text-primary">Add a product</span>
-                                  </td>
-                                </tr>
                                 <tr>
                                   <td colspan="8"></td>
                                 </tr>
@@ -732,6 +726,7 @@ export default {
       productlist: [],
       customer: [],
       state: {},
+      delivery_no:null,
       shipping_policy: [
         { label: "As soon as possible", value: "direct" },
         { label: "When all products are ready", value: "one" },
@@ -960,7 +955,7 @@ export default {
       let val = (value / 1).toFixed(2).replace(",", ".");
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
-    Confirm_Order(){
+    confirm_order(){
       axios.post("/api/sale/confirm", this.state)
       .then((response) => {
         if (response.data.status == "success") {
@@ -991,6 +986,39 @@ export default {
           }
         }
       });
+    },
+    delivere_orders(){
+       axios.post("/api/sale/delivere", this.state)
+      .then((response) => {
+        if (response.data.status == "success") {
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$router.push({ name: "delivery_form", params:{id : btoa(this.delivery_no)}});
+        } else {
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: response.data.message,
+          });
+        }
+      })
+    },
+    delivere_process(){
+      axios.post("/api/stock_pickings/store", this.state)
+      .then((response) => {
+        if (response.data.status == "success") {
+          this.delivery_no = response.data.message
+          this.delivere_orders();
+        } else {
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: response.data.message,
+          });
+        }
+      })
     },
     submit($e) {
       axios

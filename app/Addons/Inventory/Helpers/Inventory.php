@@ -6,6 +6,7 @@ use App\Addons\Inventory\Models\category;
 use App\Addons\Inventory\Models\product;
 use App\Addons\Inventory\Models\delivere_product;
 use App\Addons\Inventory\Models\receive_product;
+use App\Addons\Inventory\Models\product_warehouse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use File;
@@ -70,5 +71,10 @@ class Inventory {
     public static function getReceiveByBill($id){
         $receive = receive_product::with('po')->where('purchase_no',$id)->first();
         return $receive;
+    }
+
+    public static function checkWarehouseCode($id){
+        $warehouse = product_warehouse::findOrFail($id);
+        return $warehouse->code;
     }
 }

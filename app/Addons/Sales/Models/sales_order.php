@@ -3,6 +3,7 @@
 namespace App\Addons\Sales\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Addons\Inventory\Models\stock_picking;
 
 class sales_order extends Model
 {
@@ -26,5 +27,9 @@ class sales_order extends Model
     public function sales_person()
     {
         return $this->belongsTo('App\Models\Human_Resource\hr_employee','sales','user_id');
+    }
+    public function picking()
+    {
+        return $this->BelongsTo(stock_picking::class);
     }
 }

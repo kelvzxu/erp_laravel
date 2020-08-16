@@ -55,6 +55,9 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
     Route::post('warehouse/store','ProductWarehouseController@store');
     Route::post('warehouse/update','ProductWarehouseController@update');
 
+    Route::post('stock_pickings/store','StockPickingsController@store');
+    Route::get('stock_pickings/search/{id}', 'StockPickingsController@getStockPicking');
+
     Route::get('Removal/Strategy','ProductRemovalController@fetchRemovalStrategy');
     
 });
@@ -74,6 +77,7 @@ Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
     Route::post('/sale/store', 'SalesOrdersController@store');
     Route::post('/sale/update', 'SalesOrdersController@update');
     Route::post('/sale/confirm', 'SalesOrdersController@confirm');
+    Route::post('/sale/delivere', 'SalesOrdersController@delivere');
     Route::get('/sale/search/{id}', 'SalesOrdersController@getSalesOrder');
 });
 // ==== Contact ====
