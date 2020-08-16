@@ -88,7 +88,12 @@ Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
     Route::post('customer/search/{id}', 'ResCustomersController@searchapi');
     Route::post('customer/store', 'ResCustomersController@store');
     Route::post('customer/update', 'ResCustomersController@update');
-    Route::post('partner/search', 'ResPartnersController@searchapi');
+
+    Route::post('vendor/list', 'ResPartnersController@fetchVendor');
+    Route::post('vendor/company/list', 'ResPartnersController@fetchCompany');
+    Route::post('vendor/search/{id}', 'ResPartnersController@searchapi');
+    Route::post('vendor/store', 'ResPartnersController@store');
+    Route::post('vendor/update', 'ResPartnersController@update');
 });
 
 // ==== UOM ====

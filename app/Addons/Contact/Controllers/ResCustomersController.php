@@ -13,7 +13,7 @@ use App\Http\Controllers\controller as Controller;
 use File;
 
 class ResCustomersController extends Controller
-{
+{ 
     function UploadFile($name, $photo)
     {
         $extension = explode('/', explode(':', substr($photo, 0, strpos($photo, ';')))[1])[1];
@@ -54,38 +54,11 @@ class ResCustomersController extends Controller
         }
 
         try{
-            res_customer::create([
-                'name'=> $request->name,
-                'display_name'=> $display_name,
-                'parent_id'=> $request->parent_id,
-                'ref'=> $request->ref,
-                'lag'=> $request->lag,
-                'tz'=> $request->tz,
-                'currency_id'=> $request->currency_id,
-                'website'=> $request->website,
-                'active'=> $active=True,
-                'address'=> $request->address,
-                'street'=> $request->street,
-                'street2'=> $request->street2,
-                'zip'=> $request->zip,
-                'city'=> $request->city,
-                'state_id'=> $request->state_id,
-                'country_id'=> $request->country_id,
-                'email'=> $request->email,
-                'phone'=> $request->phone,
-                'mobile'=> $request->mobile,
-                'industry_id'=> $request->industry_id,
-                'sales'=> $request->sales,
-                'payment_terms'=>$request->payment_terms,
-                'note'=>$request->note,
-                'logo'=> $imageName,
-                'vat'=>$request->vat,
-                'blocking_stage'=>$request->blocking_stage,
-                'warning_stage'=>$request->warning_stage,
-                'title'=>$request->title,
-                'company_id'=>$request->company_id,
-                'job_title'=>$request->job_title,
-            ]);
+            $data = $request->all();
+            $data['display_name'] = $display_name;
+            $data['logo'] = $imageName;
+
+            res_customer::create($data);
             return response()->json([
                 'status' => 'success',
                 'message' => "Partner $request->name ($display_name) Created Successfully"
@@ -118,42 +91,19 @@ class ResCustomersController extends Controller
         }
 
         try{
-            res_customer::findOrFail($request->id)->update([
-                'name'=> $request->name,
-                'display_name'=> $display_name,
-                'parent_id'=> $request->parent_id,
-                'ref'=> $request->ref,
-                'lag'=> $request->lag,
-                'tz'=> $request->tz,
-                'currency_id'=> $request->currency_id,
-                'website'=> $request->website,
-                'active'=> $active=True,
-                'address'=> $request->address,
-                'street'=> $request->street,
-                'street2'=> $request->street2,
-                'zip'=> $request->zip,
-                'city'=> $request->city,
-                'state_id'=> $request->state_id,
-                'country_id'=> $request->country_id,
-                'email'=> $request->email,
-                'phone'=> $request->phone,
-                'mobile'=> $request->mobile,
-                'industry_id'=> $request->industry_id,
-                'sales'=> $request->sales,
-                'payment_terms'=>$request->payment_terms,
-                'note'=>$request->note,
-                'logo'=> $imageName,
-                'vat'=>$request->vat,
-                'blocking_stage'=>$request->blocking_stage,
-                'warning_stage'=>$request->warning_stage,
-                'title'=>$request->title,
-                'company_id'=>$request->company_id,
-                'job_title'=>$request->job_title,
-            ]);
-            return response()->json([
-                'status' => 'success',
-                'message' => "Partner $request->name ($display_name) Update Successfully"
-            ]);
+            $partner=res_customer::findOrFail($request->id);
+
+            $data = $request->all();
+            $data['display_name'] = $display_name;
+            $data['logo'] = $imageName;
+
+            dd($data);
+            // $partner->update($data);
+
+            // return response()->json([
+            //     'status' => 'success',
+            //     'message' => "Partner $request->name ($display_name) Update Successfully"
+            // ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failed',
@@ -162,12 +112,6 @@ class ResCustomersController extends Controller
         }
     } 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\res_customer  $res_customer
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(res_customer $res_customer)
     {
         $customer = res_customer::where('id',$res_customer->id);

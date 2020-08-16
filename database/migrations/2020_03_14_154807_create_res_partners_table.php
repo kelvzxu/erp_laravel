@@ -15,7 +15,7 @@ class CreateResPartnersTable extends Migration
     {
         Schema::create('res_partners', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('partner_name')->nullable();
+            $table->string('name')->nullable();
             $table->integer('company_id')->nullable()->index();
             $table->string('display_name')->nullable();
             $table->string('title')->nullable();
@@ -24,14 +24,17 @@ class CreateResPartnersTable extends Migration
             $table->string('lag')->nullable();
             $table->string('tz')->nullable();
             $table->string('user_id')->nullable();
-            $table->string('tax_id')->nullable();
+            $table->string('vat')->nullable();
             $table->integer('currency_id')->nullable()->index();
-            $table->integer('bank_account')->nullable();
+            $table->string('bank_account')->nullable();
             $table->string('website')->nullable();
             $table->string('comment')->nullable();
-            $table->bigInteger('credit')->nullable();
-            $table->bigInteger('debit')->nullable();
+            $table->bigInteger('credit')->nullable()->default(0);
+            $table->bigInteger('debit')->nullable()->default(0);
+            $table->bigInteger('warning_stage')->nullable();
+            $table->bigInteger('blocking_stage')->nullable();
             $table->boolean('active')->nullable();
+            $table->boolean('id_pkp')->nullable();
             $table->string('address')->nullable();
             $table->string('street')->nullable();
             $table->string('street2')->nullable();
@@ -44,11 +47,9 @@ class CreateResPartnersTable extends Migration
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
-            $table->boolean('is_company')->nullable();
             $table->integer('industry_id')->nullable()->index();
-            $table->string('commercial_company_name')->nullable();
-            $table->string('company_name')->nullable();
             $table->string('additional_info')->nullable();
+            $table->string('job_title')->nullable();
             $table->string('logo')->nullable();
             $table->timestamps();
             $table->softDeletes();

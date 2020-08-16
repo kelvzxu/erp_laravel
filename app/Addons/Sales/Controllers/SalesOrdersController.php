@@ -57,6 +57,8 @@ class SalesOrdersController extends Controller
         $data = $request->except('products'); 
         $data['order_no'] = $Order_no;
 
+        dd($data);
+
         $sales = sales_order::create($data);
 
         $sales->products()->saveMany($products);

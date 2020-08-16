@@ -7,7 +7,7 @@
             <div>
               <ol class="breadcrumb" role="navigation">
                 <li class="breadcrumb-item" accesskey="b">
-                   <router-link class="text-primary" :to="{ name:'customer_index' }">Customer</router-link>
+                   <router-link class="text-primary" :to="{ name:'customer_index' }">Customers</router-link>
                 </li>
                 <li class="breadcrumb-item active">{{state.display_name}}</li>
               </ol>
@@ -1137,7 +1137,7 @@ export default {
       },
       prepare_parent_address()
       {
-        axios.post(`/api/customer/search/${state.customer}`).then(response => {
+        axios.post(`/api/customer/search/${state.parent_id}`).then(response => {
           this.result = response.data.data;
           this.state.address = this.result.address;
           this.state.street = this.result.street;

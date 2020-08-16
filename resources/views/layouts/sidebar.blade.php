@@ -50,7 +50,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/contact/customer/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170" id="customer" class="menu-item">
+                        <a href="/contact/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170" id="customer" class="menu-item">
                             <i class="metismenu-icon fa fa-user"></i>
                             Customers
                         </a>
@@ -94,7 +94,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route ('partner')}}" id="partner" class="menu-item">
+                        <a href="/contact/web/model=res.partner&view_type=kanban,list&cids=&menu_id=160" id="partner" class="menu-item">
                             <i class="metismenu-icon fa fa-building "></i>
                             Vendors
                         </a>

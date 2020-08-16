@@ -7,7 +7,7 @@
             <div>
               <ol class="breadcrumb" role="navigation">
                 <li class="breadcrumb-item" accesskey="b">
-                  <router-link class="text-primary" :to="{ name:'customer_index' }">Customer</router-link>
+                  <router-link class="text-primary" :to="{ name:'customer_index' }">Customers</router-link>
                 </li>
                 <li class="breadcrumb-item active">New</li>
               </ol>
@@ -805,7 +805,7 @@
                             </table>
                           </div>
                         </div>
-                      </div>
+                      </div> 
                       <div class="o_group">
                         <div class="o_horizontal_separator">Credit Limit</div>
                         <table class="o_group o_inner_group o_group_col_6">
@@ -859,146 +859,6 @@
                         id="o_field_input_89"
                         style="overflow-y: hidden; height: 50px; resize: none;"
                       ></textarea>
-                      <textarea
-                        disabled
-                        style="position: absolute; opacity: 0; height: 10px; border-top-width: 0px; border-bottom-width: 0px; padding: 0px; overflow: hidden; top: -10000px; left: -10000px; width: 0px;"
-                      ></textarea>
-                      <table class="o_group o_inner_group o_invisible_modifier">
-                        <tbody>
-                          <tr></tr>
-                          <tr>
-                            <td colspan="4" style="width: 200%;">
-                              <div class="o_horizontal_separator">Warning on the Sales Order</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <select
-                                class="o_input o_field_widget"
-                                name="sale_warn"
-                                id="o_field_input_90"
-                                data-original-title
-                                title
-                              >
-                                <option value="false"></option>
-                                <option value="&quot;no-message&quot;">No Message</option>
-                                <option value="&quot;warning&quot;">Warning</option>
-                                <option value="&quot;block&quot;">Blocking Message</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="3" style="width: 150%;">
-                              <span
-                                class="o_field_text o_field_widget o_readonly_modifier"
-                                name="sale_warn_msg"
-                              ></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group o_invisible_modifier">
-                        <tbody>
-                          <tr></tr>
-                          <tr>
-                            <td colspan="4" style="width: 200%;">
-                              <div class="o_horizontal_separator">Warning on the Purchase Order</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <select
-                                class="o_input o_field_widget"
-                                name="purchase_warn"
-                                id="o_field_input_92"
-                                data-original-title
-                                title
-                              >
-                                <option value="false"></option>
-                                <option value="&quot;no-message&quot;">No Message</option>
-                                <option value="&quot;warning&quot;">Warning</option>
-                                <option value="&quot;block&quot;">Blocking Message</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="3" style="width: 150%;">
-                              <span
-                                class="o_field_text o_field_widget o_readonly_modifier"
-                                name="purchase_warn_msg"
-                              ></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group o_invisible_modifier">
-                        <tbody>
-                          <tr></tr>
-                          <tr>
-                            <td colspan="4" style="width: 200%;">
-                              <div class="o_horizontal_separator">Warning on the Invoice</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <select
-                                class="o_input o_field_widget"
-                                name="invoice_warn"
-                                id="o_field_input_94"
-                                data-original-title
-                                title
-                              >
-                                <option value="false"></option>
-                                <option value="&quot;no-message&quot;">No Message</option>
-                                <option value="&quot;warning&quot;">Warning</option>
-                                <option value="&quot;block&quot;">Blocking Message</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="3" style="width: 150%;">
-                              <span
-                                class="o_field_text o_field_widget o_readonly_modifier"
-                                name="invoice_warn_msg"
-                              ></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <table class="o_group o_inner_group o_invisible_modifier">
-                        <tbody>
-                          <tr></tr>
-                          <tr>
-                            <td colspan="4" style="width: 200%;">
-                              <div class="o_horizontal_separator">Warning on the Picking</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="width: 50%;">
-                              <select
-                                class="o_input o_field_widget"
-                                name="picking_warn"
-                                id="o_field_input_96"
-                                data-original-title
-                                title
-                              >
-                                <option value="false"></option>
-                                <option value="&quot;no-message&quot;">No Message</option>
-                                <option value="&quot;warning&quot;">Warning</option>
-                                <option value="&quot;block&quot;">Blocking Message</option>
-                              </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="3" style="width: 150%;">
-                              <span
-                                class="o_field_text o_field_widget o_readonly_modifier"
-                                name="picking_warn_msg"
-                              ></span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
                     </div>
                   </div>
                 </div>
@@ -1037,8 +897,6 @@ export default {
         sales: null,
         payment_terms: 1,
         industry_id: null,
-        receivable_account: 1,
-        journal: 1,
         blocking_stage: null,
         warning_stage: null,
       },
@@ -1189,7 +1047,11 @@ export default {
         .get("/api/Addons/Check/Accounting")
         .then((response) => {
           this.result = response.data.result;
-          if (this.result == true) this.accounting = "installed";
+          if (this.result == true){
+            this.accounting = "installed";
+            this.state.receivable_account= 1;
+            this.state.journal=1;
+          }
         })
         .catch((error) => console.error(error));
     },
@@ -1209,7 +1071,7 @@ export default {
     },
     prepare_parent_address() {
       axios
-        .post(`/api/customer/search/${state.customer}`)
+        .post(`/api/customer/search/${state.parent_id}`)
         .then((response) => {
           this.result = response.data.data;
           this.state.address = this.result.address;

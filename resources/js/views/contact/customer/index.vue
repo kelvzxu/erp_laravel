@@ -3,7 +3,7 @@
     <div class="o_control_panel">
       <div>
         <ol class="breadcrumb" role="navigation">
-          <router-link class="text-primary" :to="{ name:'customer_index' }">Customer</router-link>
+          <router-link class="text-primary" :to="{ name:'customer_index' }">Customers</router-link>
         </ol>
         <div class="o_cp_searchview" role="search">
           <div class="o_searchview" role="search" aria-autocomplete="list">

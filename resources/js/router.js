@@ -32,6 +32,11 @@ import customer_index from './views/contact/customer/index.vue'
 import customer_create from './views/contact/customer/create.vue'
 import customer_edit from './views/contact/customer/edit.vue'
 
+// === vendor ===
+import vendor_index from './views/contact/vendor/index.vue'
+import vendor_create from './views/contact/vendor/create.vue'
+import vendor_edit from './views/contact/vendor/edit.vue'
+
 // === Company ===
 import company_index from './views/base/company/index.vue'
 import company_create from './views/base/company/create.vue'
@@ -129,17 +134,17 @@ const router = new VueRouter({
             component: sales_view
         },
         {
-            path: '/contact/customer/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170',
+            path: '/contact/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170',
             name: 'customer_index',
             component: customer_index
         },
         {
-            path: '/contact/customer/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
+            path: '/contact/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
             name: 'customer_create',
             component: customer_create
         },
         {
-            path: '/contact/customer/:id/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
+            path: '/contact/:id/web/action=292&model=res.partner&view_type=forms&cids=&menu_id=170',
             name: 'customer_edit',
             component: customer_edit
         },
@@ -177,6 +182,21 @@ const router = new VueRouter({
             path: '/logistic/:id/web/action=148&model=stock.picking&type=delivery&view_type=form&cids=&menu_id=725',
             name: 'delivery_form',
             component: delivery_form
+        },
+        {
+            path: '/contact/web/model=res.partner&view_type=kanban,list&cids=&menu_id=160',
+            name: 'vendor_index',
+            component: vendor_index
+        },
+        {
+            path: '/contact/web/action=282&model=res.partner&view_type=forms&cids=&menu_id=161',
+            name: 'vendor_create',
+            component: vendor_create
+        },
+        {
+            path: '/contact/:id/web/action=283&model=res.partner&view_type=forms&cids=&menu_id=162',
+            name: 'vendor_edit',
+            component: vendor_edit
         },
 
     ]

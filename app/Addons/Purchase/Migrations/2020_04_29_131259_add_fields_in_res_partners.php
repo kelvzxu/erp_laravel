@@ -14,7 +14,7 @@ class AddFieldsInResPartners extends Migration
     public function up()
     {
         Schema::table('res_partners', function (Blueprint $table) {
-            $table->integer('mcd')->nullable()->index();
+            $table->integer('merchandise')->nullable()->index();
             $table->integer('payment_terms')->nullable();
             $table->string('note')->nullable();
         });

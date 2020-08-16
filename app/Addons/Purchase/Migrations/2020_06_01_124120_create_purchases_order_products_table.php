@@ -17,8 +17,14 @@ class CreatePurchasesOrderProductsTable extends Migration
             $table->increments('id');
             $table->integer('purchases_order_id')->unsigned();
             $table->integer('name');
+            $table->string('description');
+            $table->integer('product_uom');
+            $table->integer('product_uom_category');
             $table->integer('qty');
             $table->bigInteger('price');
+            $table->bigInteger('price_subtotal');
+            $table->bigInteger('taxes');
+            $table->bigInteger('price_tax');
             $table->bigInteger('total');
             $table->timestamps();
         });
