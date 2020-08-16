@@ -98,12 +98,12 @@ class ResCustomersController extends Controller
             $data['logo'] = $imageName;
 
             dd($data);
-            // $partner->update($data);
+            $partner->update($data);
 
-            // return response()->json([
-            //     'status' => 'success',
-            //     'message' => "Partner $request->name ($display_name) Update Successfully"
-            // ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Partner $request->name ($display_name) Update Successfully"
+            ]);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => 'failed',
