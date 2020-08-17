@@ -30,36 +30,6 @@ class ProductController extends Controller
         return $imageName;
     }
 
-    public function index()
-    {
-        $products = product::with('category')->orderBy('name', 'ASC')->paginate(30);
-        return view('products.index', compact('products'));
-    }
-
-    public function search(Request $request)
-    {
-        $key=$request->filter;
-        $value=$request->value;
-        if ($key!=""){
-            $products = product::with('category')
-                    ->where($key,'like',"%".$value."%")
-                    ->orderBy('name', 'ASC')
-                    ->paginate(10);
-            $products ->appends(['filter' => $key ,'value' => $value,'submit' => 'Submit' ])->links();
-        }else{
-            $products = product::with('category')->orderBy('name', 'ASC')->paginate(30);
-        }
-        return view('products.index',compact('products'));
-    }
-
-    public function create()
-    {
-        $categories = Inventory::categories();
-        $account = Accounting::account_account();
-        $journal = Accounting::account_journal();
-        return view('products.create', compact('categories','journal','account'));
-    }
-
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -74,26 +44,12 @@ class ProductController extends Controller
         if ($image_64 != ""){
             $imageName = $this->UploadFile($request->name,$image_64);
         }
-        try {
-            $product = product::create([
-                'code' => $request->code,
-                'name' => $request->name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'cost' =>$request->cost,
-                'tax_id' =>$request->tax_id,
-                'category_id' => $request->category_id,
-                'company_id' => $request->company_id,
-                'barcode' => $request->barcode,
-                'photo' => $imageName,
-                'type' => $request->type,
-                'uom_id' =>$request->uom_id,
-                'uom_po_id' =>$request->uom_po_id,
-                'can_be_sold'=>$request->can_be_sold,
-                'can_be_purchase'=>$request->can_be_purchase,
-                'create_uid' =>$request->create_uid,
-                'quantity'=>0,
-            ]);
+        try { 
+
+            $data = $request->all();
+            $data['photo'] = $imageName;
+
+            $product = product::create($data);
             return response()->json([
                 'status' => 'success',
                 'message' => "Product $request->name Created Successfully"
@@ -104,27 +60,6 @@ class ProductController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-    }
-
- 
-    public function destroy($id)
-    {
-        $products = product::find($id);
-        if (!empty($products->photo)) {
-            File::delete(public_path('uploads/product/' . $products->photo));
-        }
-        $products->delete();
-        Toastr::success('Product ' . $products->name . ' Delete Successfully','Success');
-                return redirect(route('product'));
-    }
-
-    public function edit(Request $request)
-    {
-        $product = Inventory::getProduct($request->id);
-        $categories = Inventory::categories();
-        $account = Accounting::account_account();
-        $journal = Accounting::account_journal();
-        return view('products.edit', compact('product', 'categories','journal','account'));
     }
 
     public function update(Request $request)
@@ -141,27 +76,15 @@ class ProductController extends Controller
         $imageName = $product->photo;
         if ($image_64 != ""){
             $imageName = $this->UploadFile($request->name,$image_64);
+            if (!empty($product->photo)) {
+                File::delete(public_path('uploads/Products/' . $product->photo));
+            }
         }
         try {
-            $product->update([
-                'code' => $request->code,
-                'name' => $request->name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'cost' =>$request->cost,
-                'tax_id' =>$request->tax_id,
-                'category_id' => $request->category_id,
-                'company_id' => $request->company_id,
-                'barcode' => $request->barcode,
-                'photo' => $imageName,
-                'type' => $request->type,
-                'uom_id' =>$request->uom_id,
-                'uom_po_id' =>$request->uom_po_id,
-                'can_be_sold'=>$request->can_be_sold,
-                'can_be_purchase'=>$request->can_be_purchase,
-                'create_uid' =>$request->create_uid,
-                'quantity'=>0,
-            ]);
+            $data = $request->all();
+            $data['photo'] = $imageName;
+
+            $product->update($data);
             return response()->json([
                 'status' => 'success',
                 'message' => "Product $request->name Updated Successfully"
@@ -259,13 +182,29 @@ class ProductController extends Controller
         }
     }
 
+    public function ProductBuy()
+    {
+        try {
+            $products = Inventory::can_be_purchase();
+            return response()->json([
+                'status' => 'success',
+                'data' => $products
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
+    }
+
     public function getProductById(Request $request)
     {
         $this->validate($request, [
             'id' => 'required'
         ]);
 
-        $product = product::with('stock','uom','category')->where('id', $request->id)->first();
+        $product = product::with('stock','uom','uom_po','category')->where('id', $request->id)->first();
         if ($product) {
             return response()->json([
                 'status' => 'success',

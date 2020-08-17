@@ -2,9 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 // === UOM ===
-import uom_index from './views/uom/index.vue'
-import uom_create from './views/uom/create.vue'
-import uom_edit from './views/uom/edit.vue'
+import uom_index from './views/inventory/uom/index.vue'
+import uom_create from './views/inventory/uom/create.vue'
+import uom_edit from './views/inventory/uom/edit.vue'
 
 // === Inventory Products ===
 import product_index from './views/inventory/product/index.vue'
@@ -22,10 +22,16 @@ import warehouse_create from './views/inventory/warehouse/create.vue'
 import warehouse_edit from './views/inventory/warehouse/edit.vue'
 
 // === Sales ===
-import sales_index from './views/sales/index.vue'
-import sales_create from './views/sales/create.vue'
-import sales_edit from './views/sales/edit.vue'
-import sales_view from './views/sales/view.vue'
+import sales_index from './views/sales/form/index.vue'
+import sales_create from './views/sales/form/create.vue'
+import sales_edit from './views/sales/form/edit.vue'
+import sales_view from './views/sales/form/view.vue'
+
+// === Purchases ===
+import purchases_index from './views/purchases/form/index.vue'
+import purchases_create from './views/purchases/form/create.vue'
+import purchases_edit from './views/purchases/form/edit.vue'
+import purchases_view from './views/purchases/form/view.vue'
 
 // === Customer ===
 import customer_index from './views/contact/customer/index.vue'
@@ -132,6 +138,26 @@ const router = new VueRouter({
             path: '/sales/:id/web/action=249&model=sale.order&view_type=forms&cids=&menu_id=160',
             name: 'sales_view',
             component: sales_view
+        },
+        {
+            path: '/purchases/web/model=purchase.order&view_type=list&cids=&menu_id=150',
+            name: 'purchases_index',
+            component: purchases_index
+        },
+        {
+            path: '/purchases/web/action=293&model=purchase.order&view_type=forms&cids=&menu_id=151',
+            name: 'purchases_create',
+            component: purchases_create
+        },
+        {
+            path: '/purchases/:id/web/action=294&model=purchase.order&view_type=forms&cids=&menu_id=152',
+            name: 'purchases_edit',
+            component: purchases_edit
+        },
+        {
+            path: '/purchases/:id/web/action=295&model=purchase.order&view_type=forms&cids=&menu_id=153',
+            name: 'purchases_view',
+            component: purchases_view
         },
         {
             path: '/contact/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170',

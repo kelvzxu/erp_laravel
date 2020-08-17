@@ -1248,8 +1248,8 @@ export default {
       state: {
         photo: "",
         name: "",
-        can_be_sold: "",
-        can_be_purchase: "",
+        can_be_sold: false,
+        can_be_purchase: false,
         type: "consum",
         category_id: 1,
         code: "",

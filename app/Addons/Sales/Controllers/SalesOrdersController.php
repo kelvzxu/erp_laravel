@@ -57,8 +57,6 @@ class SalesOrdersController extends Controller
         $data = $request->except('products'); 
         $data['order_no'] = $Order_no;
 
-        dd($data);
-
         $sales = sales_order::create($data);
 
         $sales->products()->saveMany($products);
@@ -112,7 +110,7 @@ class SalesOrdersController extends Controller
     public function getSalesOrder($id)
     {
         try{
-            $orders = sales_order::with('partner','sales_person','products','products.uom','products.product')->findOrFail($id);
+            $orders = sales_order::with('partner','sales_person','products','company','products.uom','products.product')->findOrFail($id);
             return response()->json([
                 'status' => 'success',
                 'result' => $orders

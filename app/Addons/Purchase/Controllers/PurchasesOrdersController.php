@@ -5,18 +5,46 @@ namespace App\Addons\Purchase\Controllers;
 use App\Http\Controllers\controller as Controller;
 use App\Addons\Purchase\Models\purchases_order;
 use App\Addons\Purchase\Models\purchases_order_products;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\access_right;
-use App\User;
 use PDF;
 use Partner;
 use Inventory;
 
 class PurchasesOrdersController extends Controller
 {
+    public function fetchPurchasesOrder(){
+        try {
+            $response = purchases_order::with('partner','merchandises','partner.currency','company')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
+    }
+
+    public function getPurchasesOrder($id)
+    {
+        try{
+            $response = purchases_order::with('partner','merchandises','products','company','products.uom','products.product')->findOrFail($id);
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+
     public function calculate_code(){
         $year=date("Y");
         $prefixcode = "PO/$year/";
@@ -28,23 +56,10 @@ class PurchasesOrdersController extends Controller
         } 
     }
 
-    public function index(){
-        $orders = purchases_order::with('partner','sales')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(30);
-        return view('purchases.index', compact('orders'));
-    }
-
-    public function create(){
-        $partner = Partner::vendor();
-        $product = Inventory::can_be_purchase();
-        return view('purchases.create', compact('product','partner'));
-    }
-
     public function store(Request $request){
         $this->validate($request, [
             'vendor' => 'required|max:255',
-            'order_date' => 'required|date_format:Y-m-d',
+            'order_date' => 'required',
             'discount' => 'required|numeric|min:0',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
@@ -62,67 +77,37 @@ class PurchasesOrdersController extends Controller
         if($products->isEmpty()) {
             return response()
             ->json([
-                'products_empty' => ['One or more Product is required.']
+                'status' => 'failed',
+                'errors' => ['result' => ['One or more Product is required.']]
             ], 422);
         }
 
         $data = $request->except('products'); 
         $data['order_no'] = $Order_no;
-        $data['merchandise'] = Auth::id();
-        $data['sub_total'] = $products->sum('total');
-        $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
         $purchases = purchases_order::create($data);
 
         $purchases->products()->saveMany($products);
 
-        return response()
-            ->json([
-                'created' => 'success',
-                'id' => $purchases->id
-            ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => "Order $Order_no Created Successfully"
+        ]);
     }
     
-    public function show($id)
-    {
-        $orders = purchases_order::with('partner','sales','products')->findOrFail($id);
-        $receipt = Inventory::getReceiveByBill($id);
-        return view('purchases.show', compact('orders','receipt'));
-    }
 
-    public function edit($id)
-    {
-        $orders = purchases_order::with('partner','sales','products','products.product')->findOrFail($id);
-        $receipt = Inventory::getReceiveByBill($id);
-        return view('purchases.edit', compact('orders','receipt'));
-    }
-
-    public function confirm($id)
-    {
-        try{
-            $orders = purchases_order::where('id',$id)->first()->update([
-                'confirm_date'=>date('Y-m-d'),
-                'status' =>"PO"
-            ]);
-            Toastr::success('Confirm Order Successfully','Success');
-        }catch (\Exception $e) {
-            Toastr::error('Check In Error!','Something Wrong');
-        }
-        return redirect()->back();
-    }
-
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $this->validate($request, [
             'vendor' => 'required|max:255',
-            'order_date' => 'required|date_format:Y-m-d',
+            'order_date' => 'required',
             'discount' => 'required|numeric|min:0',
             'products.*.name' => 'required|max:255',
             'products.*.price' => 'required|numeric|min:1',
             'products.*.qty' => 'required|integer|min:1'
         ]);
 
-        $purchase = purchases_order::findOrFail($id);
+        $purchase = purchases_order::findOrFail($request->id);
         $old_total = $purchase->grand_total;
 
         $products = collect($request->products)->transform(function($product) {
@@ -133,13 +118,12 @@ class PurchasesOrdersController extends Controller
         if($products->isEmpty()) {
             return response()
             ->json([
-                'products_empty' => ['One or more Product is required.']
+                'status' => 'failed',
+                'errors' => ['result' => ['One or more Product is required.']]
             ], 422);
         }
 
         $data = $request->except('products');
-        $data['sub_total'] = $products->sum('total');
-        $data['grand_total'] = $data['sub_total'] - $data['discount'];
 
         $purchase->update($data);
 
@@ -147,11 +131,10 @@ class PurchasesOrdersController extends Controller
 
         $purchase->products()->saveMany($products);
 
-        return response()
-            ->json([
-                'updated' => "success",
-                'id' => $purchase->id
-            ]);
+        return response()->json([
+            'status' => 'success',
+            'message' => "Order $purchase->order_no Updated Successfully"
+        ]);
     }
 
     public function report()

@@ -9,7 +9,9 @@ use App\Addons\Uom\Models\uom_uom;
 class Product extends Model
 {
     use softDeletes;
-    protected $guarded = [];
+    protected $fillable = [
+        'name','code','barcode','description','type','category_id','company_id','price','cost','tax_id','volume','weight','quantity','can_be_sold','can_be_purchase','uom_id','uom_po_id','photo','create_uid',
+    ];
     
     public function category()
     {
@@ -19,6 +21,11 @@ class Product extends Model
     public function uom()
     {
         return $this->belongsTo(uom_uom::class,'uom_id');
+    }
+
+    public function uom_po()
+    {
+        return $this->belongsTo(uom_uom::class,'uom_po_id');
     }
 
     public function stock()

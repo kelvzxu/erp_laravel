@@ -88,7 +88,7 @@
                 @if (AccessRight::access()->purchase == true) 
                 <li class="app-sidebar__heading">Purchase</li>
                     <li>
-                        <a href="{{ route ('purchase_orders')}}" id="purchases_orders" class="menu-item">
+                        <a href="/purchases/web/model=purchase.order&view_type=list&cids=&menu_id=150" id="purchases_orders" class="menu-item">
                             <i class="metismenu-icon fa fa-shopping-basket"></i>
                             Purchase Order
                         </a>

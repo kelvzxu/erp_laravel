@@ -42,6 +42,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('sales.vue');
     })->where('any', '.*');
 
+    Route::get('/purchases/{any}', function () {
+        return view('purchases.vue');
+    })->where('any', '.*');
+
     Route::get('/contact/{any}',function(){
         return view('contact.partner.vue');
     })->where('any', '.*');
@@ -154,28 +158,6 @@ Route::group(['middleware' => 'auth'], function (){
         Route::get('purchases/Report', 'PurchasesOrdersController@report')->name('purchase_orders.report');
         Route::get('purchases/print/{id}', 'PurchasesOrdersController@print')->name('purchase_orders.print_pdf');
         Route::get('purchases/Report/Print', 'PurchasesOrdersController@print_report')->name('purchase_orders.print');
-    });
-
-    // ==== Contact ====
-    Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()
-    {
-        // ==== Customer ====
-        Route::get('customer','ResCustomersController@index')->name('customer');
-        Route::get('customer/new','ResCustomersController@create')->name('customer.new');
-        Route::post('customer/store','ResCustomersController@store')->name('customer.store');
-        Route::get('customer/show/{res_customer}','ResCustomersController@show')->name('customer.show');
-        Route::post('customer/update','ResCustomersController@update')->name('customer.update');
-        Route::get('customer/destroy/{res_customer}','ResCustomersController@destroy')->name('customer.destroy');
-        Route::get('customer/filter','ResCustomersController@search')->name('customer.filter');
-
-        // ==== Vendor =====
-        Route::get('partner', 'ResPartnersController@index')->name('partner');
-        Route::get('partner/new', 'ResPartnersController@create')->name('partner.new');
-        Route::post('partner/store','ResPartnersController@store')->name('partner.store');
-        Route::get('partner/show/{res_partner}','ResPartnersController@show')->name('partner.show');
-        Route::post('partner/update','ResPartnersController@update')->name('partner.update');
-        Route::get('partner/destroy/{res_partner}','ResPartnersController@destroy')->name('partner.destroy');
-        Route::get('partner/filter', 'ResPartnersController@search')->name('partner.filter');
     });
 
     // ==== Inventory ==== 

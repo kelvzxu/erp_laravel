@@ -42,6 +42,7 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
     Route::post('Product/store','ProductController@store');
     Route::post('Product/update','ProductController@update');
     Route::get('Products/sale','ProductController@ProductSale');
+    Route::get('Products/Buy','ProductController@ProductBuy');
     Route::get('getProduct','ProductController@getProduct');
     Route::get('getProduct/id','ProductController@getProductById');
 
@@ -79,6 +80,17 @@ Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
     Route::post('/sale/confirm', 'SalesOrdersController@confirm');
     Route::post('/sale/delivere', 'SalesOrdersController@delivere');
     Route::get('/sale/search/{id}', 'SalesOrdersController@getSalesOrder');
+});
+
+// ==== Purchases ====
+Route::group(['namespace' => '\App\Addons\Purchase\Controllers'], function()
+{
+    Route::get('/purchase/list', 'PurchasesOrdersController@fetchPurchasesOrder');
+    Route::post('/purchase/store', 'PurchasesOrdersController@store');
+    Route::post('/purchase/update', 'PurchasesOrdersController@update');
+    Route::post('/purchase/confirm', 'PurchasesOrdersController@confirm');
+    Route::post('/purchase/delivere', 'PurchasesOrdersController@delivere');
+    Route::get('/purchase/search/{id}', 'PurchasesOrdersController@getPurchasesOrder');
 });
 // ==== Contact ====
 Route::group(['namespace' => '\App\Addons\Contact\Controllers'], function()

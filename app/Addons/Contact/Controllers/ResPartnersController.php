@@ -124,6 +124,9 @@ class ResPartnersController extends Controller
         $display_name = $request->name;
         if ($image_64 != ""){
             $imageName = $this->UploadFile($request->name,$image_64);
+            if (!empty($partner->logo)) {
+                File::delete(public_path('uploads/Vendors/' . $partner->logo));
+            }
         }
 
         if ($request->parent_id != null){
@@ -136,8 +139,6 @@ class ResPartnersController extends Controller
             $data = $request->all();
             $data['display_name'] = $display_name;
             $data['logo'] = $imageName;
-
-            // dd($data);
 
             $partner->update($data);
             

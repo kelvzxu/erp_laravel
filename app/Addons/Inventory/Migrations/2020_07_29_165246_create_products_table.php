@@ -27,9 +27,9 @@ class CreateProductsTable extends Migration
             $table->integer('tax_id')->nullable()->default(0);
             $table->integer('volume')->nullable()->default(0);
             $table->integer('weight')->nullable()->default(0);
-            $table->double('quantity')->nullable()->index();
-            $table->boolean('can_be_sold')->default(False);
-            $table->boolean('can_be_purchase')->default(False);
+            $table->double('quantity')->nullable()->default(0);
+            $table->boolean('can_be_sold')->nullable()->default(False);
+            $table->boolean('can_be_purchase')->nullable()->default(False);
             $table->integer('uom_id')->nullable()->default(0);
             $table->integer('uom_po_id')->nullable()->default(0);
             $table->string('photo')->nullable();
