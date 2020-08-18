@@ -32,6 +32,55 @@ class StockPickingsController extends Controller
         }
     }
 
+    public function fetchReceiptPicking()
+    {
+        try{
+            $response = stock_picking::with('company','purchases_order','purchases_order.partner')->where('picking_type','Receipts')->orderby('created_at','DESC')->get();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+
+    public function fetchDeliverePicking()
+    {
+        try{
+            $response = stock_picking::with('company','sales_order','sales_order.partner')->where('picking_type','Delivery Orders')->orderby('created_at','DESC')->get();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+
+    public function todo(Request $request){
+        try{
+            $response = stock_picking::findOrFail($request->id)->update([
+                'state' =>"Ready"
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Stock Picking $request->name Ready"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function calculate_code($code,$uniq){
         $year=date("Y");
         $month=date("m");

@@ -99,7 +99,7 @@
               data-toggle="tab"
               disable_anchor="true"
               href="#notebook_page_511"
-              class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list"
+              class="nav-link btn btn-secondary fa fa-lg fa-list-ul o_cp_switch_list active"
               role="tab"
               aria-selected="true"
             ></a>
@@ -107,7 +107,7 @@
               data-toggle="tab"
               disable_anchor="true"
               href="#notebook_page_521"
-              class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban active"
+              class="nav-link btn btn-secondary fa fa-lg fa-th-large o_cp_switch_kanban"
               role="tab"
             ></a>
           </nav>
@@ -115,7 +115,7 @@
       </div>
     </div>
     <div class="tab-content">
-      <div class="tab-pane" id="notebook_page_511">
+      <div class="tab-pane active" id="notebook_page_511">
         <div class="panel-body">
           <div v-if="pagination.total != 0" class="o_content">
             <div class="o_list_view o_sale_order o_list_optional_columns">
@@ -142,12 +142,12 @@
                       class="table-row"
                       @click="show(row)"
                     >
-                      <td>{{row.code}}</td>
                       <td>{{row.name}}</td>
-                      <td>{{formatPrice(row.price)}}</td>
-                      <td>{{formatPrice(row.cost)}}</td>
-                      <td>{{row.quantity}}</td>
-                      <td>{{row.uom.name}}</td>
+                      <td>{{row.sales_order.partner.name}}</td>
+                      <td>{{row.schedule_date}}</td>
+                      <td>{{row.picking_type}}</td>
+                      <td>{{row.state}}</td>
+                      <td>{{row.company.company_name}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -166,67 +166,34 @@
           </div>
         </div>
       </div>
-      <div class="tab-pane active" id="notebook_page_521">
-        <div v-if="pagination.total != 0" class="o_kanban_view o_kanban_ungrouped">
-          <div
-            v-for="row in paginatedata"
-            class="oe_kanban_global_click o_kanban_record"
-            v-bind:key="row.id"
-            @click="show(row)"
-          >
-            <div class="o_kanban_image">
-              <img
-                v-if="row.photo == null"
-                v-bind:src="'/images/icons/camera.png'"
-                alt="Product"
-                class="o_image_64_contain"
-              />
-              <img
-                v-else
-                v-bind:src="'/uploads/Products/'+row.photo"
-                alt="Product"
-                class="o_image_64_contain"
-              />
-            </div>
-            <div class="oe_kanban_details">
-              <strong class="o_kanban_record_title">
-                <span>{{row.name}}</span>
-                <small>
-                  [
-                  <span>{{row.code}}</span>]
-                </small>
+      <div class="tab-pane" id="notebook_page_521">
+        <div class="o_kanban_view o_kanban_mobile o_kanban_ungrouped">
+          <div  v-for="row in paginatedata" :key="row.id" class="oe_kanban_card oe_kanban_global_click o_kanban_record">
+            <div class="o_kanban_record_top mb8">
+              <div class="o_kanban_record_headings">
+                <strong class="o_kanban_record_title">
+                  <span>{{row.name}}</span>
+                </strong>
+              </div>
+              <strong>
+                <div v-if="row.state == 'Ready'" class="o_field_widget badge badge-primary">
+                  {{row.state}}
+                </div>
+                <div v-if="row.state == 'draft'" class="o_field_widget badge badge-secondary">
+                  {{row.state}}
+                </div>
               </strong>
-              <div name="tags"></div>
-              <ul>
-                <li>
-                  Price:
-                  <span
-                    class="o_field_monetary o_field_number o_field_widget"
-                    name="lst_price"
-                  >Rp&nbsp;{{formatPrice(row.price)}}</span>
-                </li>
-                <li>
-                  On hand:
-                  <span>{{row.quantity}}</span>
-                  <span>{{row.uom.name}}</span>
-                </li>
-              </ul>
-              <div name="tags"></div>
+            </div>
+            <div class="o_kanban_record_bottom">
+              <div class="oe_kanban_bottom_left">
+                {{row.sales_order.partner.name}}
+              </div>
+              <div class="oe_kanban_bottom_right">
+                {{row.schedule_date}}
+              </div>
             </div>
           </div>
-          <div v-for="row in ghost" :key="row.id" class="o_kanban_record o_kanban_ghost" />
-        </div>
-        <div v-else class="o_kanban_view o_kanban_ungrouped">
-          <div class="o_nocontent_help">
-            <p class="o_view_nocontent_smiling_face">
-              <img v-bind:src="'/images/icons/smiling_face.svg'" alt />
-              <br />Create a new Products and Start your trading
-            </p>
-            <p>
-              You must define a product for everything you sell or purchase,
-              whether it's a storable product, a consumable or a service.
-            </p>
-          </div>
+          <div v-for="row in ghost" :key="row.id" class='o_kanban_record o_kanban_ghost'/>
         </div>
       </div>
     </div>
@@ -240,17 +207,17 @@ export default {
     .then(response => {
         this.warehouse = response.data.result;
     }).catch(error => console.error(error));
-    this.fetchproducts();
+    this.prepare_data_value();
   },
   data() {
     let sortOrders = {};
     let columns = [
-      { label: "Internal Reference", name: "code" },
-      { label: "Name", name: "name" },
-      { label: "Sales Price", name: "price" },
-      { label: "Cost", name: "cost" },
-      { label: "Quantity On Hand", name: "quantity" },
-      { label: "Unit Of Measure", name: "uom_id" },
+      { label: "Reference", name: "name" },
+      { label: "Contact", name: "partner_id" },
+      { label: "Scheduled Date", name: "schedule_date" },
+      { label: "Picking Type", name: "picking_type" },
+      { label: "Status", name: "state" },
+      { label: "Company", name: "company_id" },
     ];
     columns.forEach((column) => {
       sortOrders[column.name] = -1;
@@ -278,11 +245,11 @@ export default {
     };
   },
   methods: {
-    fetchproducts() {
+    prepare_data_value() {
       axios
-        .get("/api/Products")
+        .get("/api/stock_pickings/delivere")
         .then((response) => {
-          this.data = response.data.data;
+          this.data = response.data.result;
           this.pagination.total = this.data.length;
         })
         .catch((error) => console.error(error));
@@ -315,14 +282,14 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     show(row) {
-      this.$router.push({ name: "product_edit", params: { id: btoa(row.id) } });
+      this.$router.push({ name: "delivery_form", params: { id: btoa(row.id) } });
     },
   },
   computed: {
     filterdata() {
-      let product = this.data;
+      let value = this.data;
       if (this.search) {
-        product = product.filter((row) => {
+        value = value.filter((row) => {
           return Object.keys(row).some((key) => {
             return (
               String(row[key])
@@ -335,7 +302,7 @@ export default {
       let sortKey = this.sortKey;
       let order = this.sortOrders[sortKey] || 1;
       if (sortKey) {
-        product = product.slice().sort((a, b) => {
+        value = value.slice().sort((a, b) => {
           let index = this.getIndex(this.columns, "name", sortKey);
           a = String(a[sortKey]).toLowerCase();
           b = String(b[sortKey]).toLowerCase();
@@ -357,7 +324,7 @@ export default {
           }
         });
       }
-      return product;
+      return value;
     },
     paginatedata() {
       return this.paginate(

@@ -9,7 +9,7 @@
                 <router-link class="text-primary" :to="{ name:'logistic_dasboard' }">Logistics Dasboard</router-link>
               </li>
               <li class="breadcrumb-item" accesskey="b">
-                <router-link class="text-primary" :to="{ name:'receipts_index', params:{id : warehouse_id} }">{{state.purchases_warehouse.name}}: Receipts</router-link>
+                <router-link class="text-primary" :to="{ name:'receipt_index', params:{id : warehouse_id} }">{{state.purchases_warehouse.name}}: Receipts</router-link>
               </li>
               <li class="breadcrumb-item active">{{state.name}}</li>
             </ol>
@@ -59,10 +59,9 @@
               <div class="o_statusbar_buttons">
                 <button
                   type="button"
-                  name="action_confirm"
-                  class="btn btn-primary o_invisible_modifier"
-                  data-original-title
-                  title
+                  v-if="state.state == 'draft'"
+                  @click="MarkAsTodo"
+                  class="btn btn-primary"
                 >
                   <span>Mark as Todo</span>
                 </button>
@@ -77,10 +76,9 @@
                 </button>
                 <button
                   type="button"
+                  v-if="state.state == 'Ready'"
                   name="button_validate"
                   class="btn btn-primary"
-                  data-original-title
-                  title
                 >
                   <span>Validate</span>
                 </button>
@@ -169,27 +167,27 @@
               </div>
               <div
                 class="o_statusbar_status o_field_widget o_readonly_modifier"
-                name="state"
-                data-original-title
-                title
-              >
+                >
                 <button
                   type="button"
-                  data-value="done"
-                  disabled="disabled"
-                  title="Not active state"
-                  aria-pressed="false"
+                  v-if="state.state == 'Done'"
+                  class="btn o_arrow_button btn-primary disabled"
+                >Done</button>
+                <button
+                  type="button"
+                  v-else
                   class="btn o_arrow_button btn-secondary disabled"
                 >Done</button>
 
                 <button
                   type="button"
-                  data-value="assigned"
-                  disabled="disabled"
-                  title="Current state"
-                  aria-pressed="true"
+                  v-if="state.state == 'Ready'"
                   class="btn o_arrow_button btn-primary disabled"
-                  aria-current="step"
+                >Ready</button>
+                <button
+                  type="button"
+                  v-else
+                  class="btn o_arrow_button btn-secondary disabled"
                 >Ready</button>
 
                 <button
@@ -203,10 +201,13 @@
 
                 <button
                   type="button"
-                  data-value="draft"
-                  disabled="disabled"
-                  title="Not active state"
-                  aria-pressed="false"
+                  v-if="state.state == 'draft'"
+                  class="btn o_arrow_button btn-primary disabled"
+                >Draft</button>
+
+                <button
+                  type="button"
+                  v-else
                   class="btn o_arrow_button btn-secondary disabled"
                 >Draft</button>
               </div>
@@ -652,6 +653,24 @@ export default {
   methods: {
     viewCustomer() {
       alert('okkk')
+    },
+    MarkAsTodo(){
+      axios.post("/api/stock_pickings/todo", this.state)
+      .then((response) => {
+        if (response.data.status == "success") {
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$router.push({ name:'receipt_index', params:{id : this.warehouse_id} });
+        } else {
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: response.data.message,
+          });
+        }
+      });
     }
   }
 
