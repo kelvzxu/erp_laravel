@@ -95,7 +95,6 @@ class PurchasesOrdersController extends Controller
         ]);
     }
     
-
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -135,6 +134,43 @@ class PurchasesOrdersController extends Controller
             'status' => 'success',
             'message' => "Order $purchase->order_no Updated Successfully"
         ]);
+    }
+
+    public function confirm(Request $request)
+    {
+        try{
+            $orders = purchases_order::findOrFail($request->id)->update([
+                'confirm_date'=>date('Y-m-d'),
+                'state' =>"purchase"
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Confirm Order $request->order_no Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function receipts(Request $request)
+    {
+        try{
+            $orders = purchases_order::findOrFail($request->id)->update([
+                'receipt'=>true,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Receipts Orders Created Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
     }
 
     public function report()

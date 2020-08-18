@@ -7,7 +7,13 @@
         >
           <div class="o_control_panel">
             <div class="o_panel">
-              <div class="title h2 mb0 mt4 text-muted d-none d-md-block">Settings</div>
+              <div class="title mb0 mt4 d-none d-md-block">
+                <ol class="breadcrumb" role="navigation">
+                  <li class="breadcrumb-item" accesskey="b">
+                    <router-link class="text-primary" :to="{ name:'general_setting' }">General Settings</router-link>
+                  </li>
+                </ol>
+              </div>
               <div class="o_setting_search">
                 <input type="text" class="searchInput" placeholder="Search..." />
                 <span class="searchIcon">

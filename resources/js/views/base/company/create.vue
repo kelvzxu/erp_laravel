@@ -3,7 +3,7 @@
     <div class="o_action o_view_controller">
       <div class="o_cp_controller">
         <div class="o_control_panel">
-          <div>
+          <div> 
             <ol class="breadcrumb" role="navigation">
               <li class="breadcrumb-item" accesskey="b">
                 <router-link class="text-primary" :to="{ name:'company_index' }">Companies</router-link>

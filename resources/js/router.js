@@ -50,7 +50,7 @@ import company_create from './views/base/company/create.vue'
 // === Logistic ===
 import logistic_dasboard from './views/logistic/dasboard.vue'
 import receipt_index from './views/logistic/receipt/index.vue'
-import receipt_edit from './views/logistic/receipt/form.vue'
+import receipt_form from './views/logistic/receipt/form.vue'
 import delivery_index from './views/logistic/delivery/index.vue'
 import delivery_form from './views/logistic/delivery/form.vue'
 
@@ -199,8 +199,8 @@ const router = new VueRouter({
         },
         {
             path: '/logistic/:id/web/action=138&model=stock.picking&type=receipt&view_type=kanban&cids=&menu_id=715',
-            name: 'receipt_edit',
-            component: receipt_edit
+            name: 'receipt_form',
+            component: receipt_form
         },
         {
             path: '/logistic/:id/web/action=157&model=stock.picking&type=delivery&view_type=kanban&cids=&menu_id=175',

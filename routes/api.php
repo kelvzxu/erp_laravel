@@ -89,7 +89,7 @@ Route::group(['namespace' => '\App\Addons\Purchase\Controllers'], function()
     Route::post('/purchase/store', 'PurchasesOrdersController@store');
     Route::post('/purchase/update', 'PurchasesOrdersController@update');
     Route::post('/purchase/confirm', 'PurchasesOrdersController@confirm');
-    Route::post('/purchase/delivere', 'PurchasesOrdersController@delivere');
+    Route::post('/purchase/receipts', 'PurchasesOrdersController@receipts');
     Route::get('/purchase/search/{id}', 'PurchasesOrdersController@getPurchasesOrder');
 });
 // ==== Contact ====

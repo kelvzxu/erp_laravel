@@ -63,8 +63,8 @@
                   <button v-if="state.state == 'Quotation'" type="button" class="btn btn-primary" @click="confirm_order">
                     <span>Confirm</span>
                   </button>
-                  <button v-if="state.state == 'purchase' && state.receipt == false" type="button" class="btn btn-primary" @click="delivere_process">
-                    <span>Delivery</span>
+                  <button v-if="state.state == 'purchase' && state.receipt == false" type="button" class="btn btn-primary" @click="receipts_process">
+                    <span>Receipts</span>
                   </button>
                   <button type="button" class="btn btn-secondary">
                     <span>Cancel</span>
@@ -92,7 +92,7 @@
                     aria-current="step"
                   >Quotation</button>
                 </div>
-                <div v-if="state.state == 'sale'" class="o_statusbar_status o_field_widget o_readonly_modifier" name="state">
+                <div v-if="state.state == 'purchase'" class="o_statusbar_status o_field_widget o_readonly_modifier" name="state">
                   <button
                     type="button"
                     disabled="disabled"
@@ -747,14 +747,14 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     },
     confirm_order(){
-      axios.post("/api/sale/confirm", this.state)
+      axios.post("/api/purchase/confirm", this.state)
       .then((response) => {
         if (response.data.status == "success") {
           Toast.fire({
             icon: "success",
             title: response.data.message,
           });
-          this.$router.push({ name: "sales_index" });
+          this.$router.push({ name: "purchases_index" });
         } else {
           Swal.fire({
             type: "warning",
@@ -778,15 +778,15 @@ export default {
         }
       });
     },
-    delivere_orders(){
-       axios.post("/api/sale/delivere", this.state)
+    receipts(){
+       axios.post("/api/purchase/receipts", this.state)
       .then((response) => {
         if (response.data.status == "success") {
           Toast.fire({
             icon: "success",
             title: response.data.message,
           });
-          this.$router.push({ name: "delivery_form", params:{id : btoa(this.delivery_no)}});
+          this.$router.push({ name: "receipt_form", params:{id : btoa(this.delivery_no)}});
         } else {
           Swal.fire({
             type: "warning",
@@ -796,12 +796,12 @@ export default {
         }
       })
     },
-    delivere_process(){
+    receipts_process(){
       axios.post("/api/stock_pickings/store", this.state)
       .then((response) => {
         if (response.data.status == "success") {
           this.delivery_no = response.data.message
-          this.delivere_orders();
+          this.receipts();
         } else {
           Swal.fire({
             type: "warning",
