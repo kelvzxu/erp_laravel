@@ -26725,3 +26725,64 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
 .o_list_view .o_list_table .o_data_row.o_selected_row>.o_data_cell:not(.o_readonly_modifier):not(.o_invisible_modifier)>.o_field_badge {
     width: auto;
 }
+
+/* /purchase/static/src/scss/purchase.scss defined in bundle 'web.assets_backend' */
+.o_purchase_dashboard {
+    flex: 1 0 100%;
+    padding: 10px 10px 18px 10px;
+    background-color: white;
+    position: relative;
+    max-width: 100%;
+}
+
+.o_purchase_dashboard .row {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.o_purchase_dashboard .o_dashboard_action {
+    cursor: pointer;
+}
+
+.o_purchase_dashboard .table {
+    margin-bottom: 0;
+    table-layout: fixed;
+    border-spacing: 10px 0px;
+    border-collapse: separate;
+    font-size: 13px;
+}
+
+.o_purchase_dashboard .table>thead>tr>td,
+.o_purchase_dashboard .table tbody>tr>td {
+    text-align: center;
+    width: 25%;
+    height: 33px;
+    vertical-align: middle;
+    border-top: 1px solid white;
+    background-color: #e2e2e0;
+}
+
+.o_purchase_dashboard .table>thead>tr>td.o_text,
+.o_purchase_dashboard .table tbody>tr>td.o_text {
+    background-color: white;
+}
+
+.o_purchase_dashboard .table>thead>tr>td>a:hover,
+.o_purchase_dashboard .table tbody>tr>td>a:hover {
+    text-decoration: none;
+}
+
+.o_purchase_dashboard .table>thead>tr>td.o_main,
+.o_purchase_dashboard .table tbody>tr>td.o_main {
+    background-color: #7C7BAD;
+}
+
+.o_purchase_dashboard .table>thead>tr>td.o_main:hover,
+.o_purchase_dashboard .table tbody>tr>td.o_main:hover {
+    background-color: #5f5e97;
+}
+
+.o_purchase_dashboard .table>thead>tr>td.o_main>a,
+.o_purchase_dashboard .table tbody>tr>td.o_main>a {
+    color: white;
+}
