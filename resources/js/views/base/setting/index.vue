@@ -1035,7 +1035,7 @@
                   <div class="row mt16 o_settings_container">
                     <div class="col-12 col-lg-6 o_setting_box" id="appstore">
                       <div class="d-flex">
-                        <div class="o_setting_right_pane">
+                        <div class="o_setting_right_pane mr-3">
                           <a
                             class="d-block mx-auto"
                             href="https://kltech-intl.technology"
@@ -1044,9 +1044,17 @@
                             <img
                               alt="kltech-intl.technology"
                               class="d-block mx-auto img img-fluid"
-                              width="150px"
+                              width="190px"
                               v-bind:src="'/images/icons/kltech-intl.png'"
                             />
+                          </a>
+                        </div>
+                        <div>
+                          <a class="d-block mx-auto"
+                            href="https://laravel.com/"
+                            target="blank">
+                              <img class="mark" v-bind:src="'/images/logo/logomark.min.svg'" alt="Laravel">
+                              <img class="type" v-bind:src="'/images/logo/logotype.min.svg'" alt="Laravel">
                           </a>
                         </div>
                       </div>
