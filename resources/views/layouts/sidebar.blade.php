@@ -414,7 +414,7 @@
                     </li>
                 </li>
                 <li class="app-sidebar__heading">Settings
-                    <li>
+                    <!-- <li>
                         <a href="#" id="setting">
                             <i class="metismenu-icon fa fa-users"></i>
                             Manage Users
@@ -439,6 +439,12 @@
                         <a href="/setting/company/web/model=res.company&view_type=list&cids=&menu_id=294" id="companies">
                             <i class="metismenu-icon fa fa-building">
                             </i>Manage Companies
+                        </a>
+                    </li> -->
+                    <li>
+                        <a href="/config/web/action=80&model=res.config.settings&view_type=form&cids=1&menu_id=3">
+                            <i class="metismenu-icon fa fa-cogs">
+                            </i>General Settings
                         </a>
                     </li>
                 </li>

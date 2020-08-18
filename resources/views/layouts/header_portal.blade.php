@@ -82,7 +82,7 @@
 
       @yield('content')
 
-      {{-- footer --}}
+    
     <footer class="ftco-footer ftco-section">
       <div class="container">
         <div class="row mb-5">

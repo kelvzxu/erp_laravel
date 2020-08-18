@@ -21861,7 +21861,7 @@ select.o_field_widget.o_input {
 }
 
 .o_base_settings .o_setting_container .settings>.app_settings_block .o_settings_container {
-    max-width: 992px;
+    max-width: 1200px;
     padding: 0 16px;
 }
 

@@ -54,6 +54,9 @@ import receipt_edit from './views/logistic/receipt/form.vue'
 import delivery_index from './views/logistic/delivery/index.vue'
 import delivery_form from './views/logistic/delivery/form.vue'
 
+// === General Settings ===
+import general_setting from './views/base/setting/index.vue'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -224,7 +227,11 @@ const router = new VueRouter({
             name: 'vendor_edit',
             component: vendor_edit
         },
-
+        {
+            path: '/config/web/action=80&model=res.config.settings&view_type=form&cids=1&menu_id=3',
+            name: 'general_setting',
+            component: general_setting
+        },
     ]
 })
 

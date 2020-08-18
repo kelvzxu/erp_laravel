@@ -54,6 +54,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('setting.company.vue');
     })->where('any', '.*');
 
+    Route::get('/config/web/{any}',function(){
+        return view('setting.general.vue');
+    })->where('any', '.*');
+
     // ==== Apps ====
     Route::get('Apps','AppsController@index')->name('Apps.index');
     Route::get('Apps/install/{id}','AppsController@install')->name('Apps.install');
