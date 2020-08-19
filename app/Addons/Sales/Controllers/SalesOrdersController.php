@@ -2,18 +2,14 @@
 
 namespace App\Addons\Sales\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\controller as Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer\customer_dept;
 use App\Addons\Sales\Models\sales_order;
 use App\Addons\Sales\Models\sales_order_product;
-use App\Models\Product\Product;
-use Brian2694\Toastr\Facades\Toastr;
-use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 use PDF;
-use Partner;
-use Inventory;
+use DB;
 
 class SalesOrdersController extends Controller
 {
@@ -216,5 +212,17 @@ class SalesOrdersController extends Controller
                 'data' => []
             ]);
         }
+    }
+
+    public function sales_analysis()
+    {
+        $filter = request()->year . '-' . request()->month;
+        $parse = Carbon::parse($filter);
+        $array_date = range($parse->startOfMonth()->format('d'), $parse->endOfMonth()->format('d'));
+        
+        $sales = sales_order::select(DB::raw('date(created_at) as date,sum(grand_total) as total'))
+        ->where('created_at', 'LIKE', '%' . $filter . '%')
+        ->groupBy(DB::raw('date(created_at)'))->get();
+        dd($sales);
     }
 }

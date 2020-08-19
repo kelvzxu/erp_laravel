@@ -64,9 +64,9 @@
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('sales_orders.report')}}" id="report_invoice" class="menu-item" >
+                                <a href="/sales/web/action=320&model=sale.report&view_type=graph&cids=&menu_id=213" >
                                     <i class="metismenu-icon"></i>
-                                    Report Sales Order
+                                    Sales Analysis
                                 </a>
                             </li>
                             <li>

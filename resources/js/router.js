@@ -26,6 +26,7 @@ import sales_index from './views/sales/form/index.vue'
 import sales_create from './views/sales/form/create.vue'
 import sales_edit from './views/sales/form/edit.vue'
 import sales_view from './views/sales/form/view.vue'
+import sales_analysis from './views/sales/report/graph.vue'
 
 // === Purchases ===
 import purchases_index from './views/purchases/form/index.vue'
@@ -141,6 +142,11 @@ const router = new VueRouter({
             path: '/sales/:id/web/action=249&model=sale.order&view_type=forms&cids=&menu_id=160',
             name: 'sales_view',
             component: sales_view
+        },
+        {
+            path: '/sales/web/action=320&model=sale.report&view_type=graph&cids=&menu_id=213',
+            name: 'sales_analysis',
+            component: sales_analysis
         },
         {
             path: '/purchases/web/model=purchase.order&view_type=list&cids=&menu_id=150',

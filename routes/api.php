@@ -79,6 +79,7 @@ Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
     Route::post('/sale/update', 'SalesOrdersController@update');
     Route::post('/sale/confirm', 'SalesOrdersController@confirm');
     Route::post('/sale/delivere', 'SalesOrdersController@delivere');
+    Route::get('/sale/analysis', 'SalesOrdersController@sales_analysis');
     Route::get('/sale/search/{id}', 'SalesOrdersController@getSalesOrder');
 });
 
