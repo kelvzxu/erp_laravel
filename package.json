@@ -29,6 +29,7 @@
     "dependencies": {
         "bootstrap-vue": "^2.16.0",
         "chart.js": "^2.9.3",
+        "express": "^4.17.1",
         "laravel-echo": "^1.8.1",
         "moment": "^2.27.0",
         "pusher-js": "^5.1.1",

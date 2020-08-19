@@ -6,12 +6,12 @@
           <div>
             <ol class="breadcrumb" role="navigation">
               <li class="breadcrumb-item">
-                <a href="#">Quotations</a>
+                <router-link class="text-primary" :to="{ name:'logistic_dasboard' }">Logistics Dasboard</router-link>
               </li>
               <li class="breadcrumb-item" accesskey="b">
-                <a href="#">S00001</a>
+                <router-link class="text-primary" :to="{ name:'receipt_index', params:{id : warehouse_id} }">{{state.purchases_warehouse.name}}: Receipts</router-link>
               </li>
-              <li class="breadcrumb-item active">WH/OUT/00001</li>
+              <li class="breadcrumb-item active">{{state.name}}</li>
             </ol>
             <div class="o_cp_searchview" role="search"></div>
           </div>
@@ -59,10 +59,9 @@
               <div class="o_statusbar_buttons">
                 <button
                   type="button"
-                  name="action_confirm"
-                  class="btn btn-primary o_invisible_modifier"
-                  data-original-title
-                  title
+                  v-if="state.state == 'draft'"
+                  @click="MarkAsTodo"
+                  class="btn btn-primary"
                 >
                   <span>Mark as Todo</span>
                 </button>
@@ -77,10 +76,9 @@
                 </button>
                 <button
                   type="button"
+                  v-if="state.state == 'Ready'"
                   name="button_validate"
                   class="btn btn-primary"
-                  data-original-title
-                  title
                 >
                   <span>Validate</span>
                 </button>
@@ -169,27 +167,27 @@
               </div>
               <div
                 class="o_statusbar_status o_field_widget o_readonly_modifier"
-                name="state"
-                data-original-title
-                title
-              >
+                >
                 <button
                   type="button"
-                  data-value="done"
-                  disabled="disabled"
-                  title="Not active state"
-                  aria-pressed="false"
+                  v-if="state.state == 'Done'"
+                  class="btn o_arrow_button btn-primary disabled"
+                >Done</button>
+                <button
+                  type="button"
+                  v-else
                   class="btn o_arrow_button btn-secondary disabled"
                 >Done</button>
 
                 <button
                   type="button"
-                  data-value="assigned"
-                  disabled="disabled"
-                  title="Current state"
-                  aria-pressed="true"
+                  v-if="state.state == 'Ready'"
                   class="btn o_arrow_button btn-primary disabled"
-                  aria-current="step"
+                >Ready</button>
+                <button
+                  type="button"
+                  v-else
+                  class="btn o_arrow_button btn-secondary disabled"
                 >Ready</button>
 
                 <button
@@ -203,10 +201,13 @@
 
                 <button
                   type="button"
-                  data-value="draft"
-                  disabled="disabled"
-                  title="Not active state"
-                  aria-pressed="false"
+                  v-if="state.state == 'draft'"
+                  class="btn o_arrow_button btn-primary disabled"
+                >Draft</button>
+
+                <button
+                  type="button"
+                  v-else
                   class="btn o_arrow_button btn-secondary disabled"
                 >Draft</button>
               </div>
@@ -294,7 +295,7 @@
                   name="name"
                   data-original-title
                   title
-                >WH/OUT/00001</span>
+                >{{state.name}}</span>
               </h1>
               <div class="o_group">
                 <div class="row">
@@ -311,42 +312,15 @@
                                 data-original-title
                                 title
                               >Delivery Address</label>
-                              <label
-                                class="o_form_label o_invisible_modifier"
-                                for="o_field_input_425"
-                                style="font-weight:bold;"
-                              >Receive From</label>
-                              <label
-                                class="o_form_label o_invisible_modifier"
-                                for="o_field_input_425"
-                                style="font-weight:bold;"
-                              >Contact</label>
                             </div>
                           </td>
                           <td style="width: 100%;">
-                            <div
-                              class="o_field_widget o_field_many2one o_with_button"
-                              aria-atomic="true"
-                              name="partner_id"
+                            <a
+                              class="o_form_uri o_field_widget o_readonly_modifier o_required_modifier"
+                              @click="viewCustomer" style="cursor:pointer;"
                             >
-                              <div class="o_input_dropdown">
-                                <input
-                                  type="text"
-                                  class="o_input ui-autocomplete-input"
-                                  autocomplete="off"
-                                  id="o_field_input_425"
-                                />
-                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                              </div>
-                              <button
-                                type="button"
-                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                tabindex="-1"
-                                draggable="false"
-                                aria-label="External link"
-                                title="External link"
-                              ></button>
-                            </div>
+                              <span>{{state.purchases_order.partner.display_name}}</span>
+                            </a>
                           </td>
                         </tr>
                         <tr>
@@ -359,74 +333,9 @@
                             >Operation Type</label>
                           </td>
                           <td style="width: 100%;">
-                            <a
-                              class="o_form_uri o_field_widget o_readonly_modifier o_required_modifier"
-                              href="#id=2&amp;model=stock.picking.type"
-                              name="picking_type_id"
-                              id="o_field_input_426"
-                            >
-                              <span>My Company: Delivery Orders</span>
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="o_td_label">
-                            <label
-                              class="o_form_label o_invisible_modifier o_readonly_modifier o_required_modifier"
-                              for="o_field_input_427"
-                              data-original-title
-                              title
-                            >Source Location</label>
-                          </td>
-                          <td style="width: 100%;">
-                            <a
-                              class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier o_required_modifier"
-                              href="#id=8&amp;model=stock.location"
-                              name="location_id"
-                              id="o_field_input_427"
-                            >
-                              <span>WH/Stock</span>
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="o_td_label">
-                            <label
-                              class="o_form_label o_invisible_modifier o_readonly_modifier o_required_modifier"
-                              for="o_field_input_428"
-                              data-original-title
-                              title
-                            >Destination Location</label>
-                          </td>
-                          <td style="width: 100%;">
-                            <a
-                              class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier o_required_modifier"
-                              href="#id=5&amp;model=stock.location"
-                              name="location_dest_id"
-                              id="o_field_input_428"
-                            >
-                              <span>Partner Locations/Customers</span>
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="o_td_label">
-                            <label
-                              class="o_form_label o_invisible_modifier o_readonly_modifier o_form_label_empty"
-                              for="o_field_input_429"
-                              data-original-title
-                              title
-                            >Back Order of</label>
-                          </td>
-                          <td style="width: 100%;">
-                            <a
-                              class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier o_field_empty"
-                              href="#"
-                              name="backorder_id"
-                              id="o_field_input_429"
-                            >
-                              <span></span>
-                            </a>
+                            <span
+                              class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
+                            >{{state.company.company_name}}: {{state.picking_type}}</span>
                           </td>
                         </tr>
                       </tbody>
@@ -445,39 +354,9 @@
                             >Scheduled Date</label>
                           </td>
                           <td style="width: 100%;">
-                            <div
-                              class="o_datepicker o_field_date o_field_widget o_required_modifier"
-                              aria-atomic="true"
-                              id="datepicker500"
-                              data-target-input="nearest"
-                              name="scheduled_date"
-                            >
-                              <input
-                                type="text"
-                                class="o_datepicker_input o_input datetimepicker-input"
-                                name="scheduled_date"
-                                data-target="#datepicker500"
-                                placeholder
-                                id="o_field_input_430"
-                              />
-                              <span class="o_datepicker_button"></span>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="o_td_label">
-                            <label
-                              class="o_form_label o_invisible_modifier o_readonly_modifier o_form_label_empty"
-                              for="o_field_input_431"
-                              data-original-title
-                              title
-                            >Effective Date</label>
-                          </td>
-                          <td style="width: 100%;">
                             <span
-                              class="o_field_date o_field_widget o_invisible_modifier o_readonly_modifier o_field_empty"
-                              name="date_done"
-                            ></span>
+                              class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
+                            >{{state.schedule_date}}</span>
                           </td>
                         </tr>
                         <tr>
@@ -490,49 +369,12 @@
                             >Source Document</label>
                           </td>
                           <td style="width: 100%;">
-                            <input
-                              class="o_field_char o_field_widget o_input"
-                              name="origin"
-                              placeholder="e.g. PO0032"
-                              type="text"
-                              id="o_field_input_432"
-                            />
-                          </td>
-                        </tr>
-                        <tr>
-                          <td class="o_td_label">
-                            <label
-                              class="o_form_label o_invisible_modifier"
-                              for="o_field_input_433"
-                              data-original-title
-                              title
-                            >Assign Owner</label>
-                          </td>
-                          <td style="width: 100%;">
-                            <div
-                              class="o_field_widget o_field_many2one o_invisible_modifier"
-                              aria-atomic="true"
-                              name="owner_id"
+                            <a
+                              class="o_form_uri o_field_widget o_readonly_modifier o_required_modifier"
+                              @click="viewCustomer" style="cursor:pointer;"
                             >
-                              <div class="o_input_dropdown">
-                                <input
-                                  type="text"
-                                  class="o_input ui-autocomplete-input"
-                                  autocomplete="off"
-                                  id="o_field_input_433"
-                                />
-                                <a role="button" class="o_dropdown_button" draggable="false"></a>
-                              </div>
-                              <button
-                                type="button"
-                                class="fa fa-external-link btn btn-secondary o_external_button"
-                                tabindex="-1"
-                                draggable="false"
-                                aria-label="External link"
-                                title="External link"
-                                style="display: none;"
-                              ></button>
-                            </div>
+                              <span>{{state.origin}}</span>
+                            </a>
                           </td>
                         </tr>
                       </tbody>
@@ -542,24 +384,6 @@
               </div>
               <div class="o_notebook">
                 <ul class="nav nav-tabs">
-                  <li class="nav-item o_invisible_modifier">
-                    <a
-                      data-toggle="tab"
-                      disable_anchor="true"
-                      href="#notebook_page_482"
-                      class="nav-link"
-                      role="tab"
-                    >Detailed Operations</a>
-                  </li>
-                  <li class="nav-item o_invisible_modifier">
-                    <a
-                      data-toggle="tab"
-                      disable_anchor="true"
-                      href="#notebook_page_483"
-                      class="nav-link"
-                      role="tab"
-                    >Detailed Operations</a>
-                  </li>
                   <li class="nav-item">
                     <a
                       data-toggle="tab"
@@ -589,421 +413,6 @@
                   </li>
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane" id="notebook_page_482">
-                    <div
-                      class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list o_readonly_modifier"
-                      name="move_line_nosuggest_ids"
-                      id="o_field_input_477"
-                      data-original-title
-                      title
-                    >
-                      <div class="o_cp_controller">
-                        <div class="o_x2m_control_panel">
-                          <nav
-                            class="o_cp_buttons"
-                            aria-label="Control panel toolbar"
-                            role="toolbar"
-                          ></nav>
-                          <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                            <div class="o_pager o_hidden">
-                              <span class="o_pager_counter">
-                                <span class="o_pager_value"></span> /
-                                <span class="o_pager_limit"></span>
-                              </span>
-                              <span class="btn-group" aria-atomic="true">
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                  aria-label="Previous"
-                                  title="Previous"
-                                  tabindex="-1"
-                                ></button>
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                  aria-label="Next"
-                                  title="Next"
-                                  tabindex="-1"
-                                ></button>
-                              </span>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
-                      <div class="o_list_view">
-                        <div class="table-responsive">
-                          <table
-                            class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped o_empty_list"
-                          >
-                            <thead>
-                              <tr>
-                                <th
-                                  data-name="product_id"
-                                  tabindex="-1"
-                                  class="o_column_sortable"
-                                  data-original-title
-                                  title
-                                >Product</th>
-                                <th
-                                  data-name="product_uom_qty"
-                                  tabindex="-1"
-                                  class="o_column_sortable o_list_number_th"
-                                  data-original-title
-                                  title
-                                >Reserved</th>
-                                <th
-                                  data-name="qty_done"
-                                  tabindex="-1"
-                                  class="o_column_sortable o_list_number_th"
-                                  data-original-title
-                                  title
-                                >Done</th>
-                              </tr>
-                            </thead>
-                            <tbody class="ui-sortable">
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td class="product_id"></td>
-                                <td class="product_uom_qty"></td>
-                                <td class="qty_done"></td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list o_invisible_modifier"
-                      name="package_level_ids_details"
-                      id="o_field_input_478"
-                      data-original-title
-                      title
-                    >
-                      <div class="o_cp_controller">
-                        <div class="o_x2m_control_panel">
-                          <nav
-                            class="o_cp_buttons"
-                            aria-label="Control panel toolbar"
-                            role="toolbar"
-                          ></nav>
-                          <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                            <div class="o_pager o_hidden">
-                              <span class="o_pager_counter">
-                                <span class="o_pager_value"></span> /
-                                <span class="o_pager_limit"></span>
-                              </span>
-                              <span class="btn-group" aria-atomic="true">
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                  aria-label="Previous"
-                                  title="Previous"
-                                  tabindex="-1"
-                                ></button>
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                  aria-label="Next"
-                                  title="Next"
-                                  tabindex="-1"
-                                ></button>
-                              </span>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
-                      <div class="o_list_view">
-                        <div class="table-responsive">
-                          <table
-                            class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped o_empty_list"
-                          >
-                            <thead>
-                              <tr>
-                                <th
-                                  data-name="package_id"
-                                  tabindex="-1"
-                                  class="o_column_sortable"
-                                  data-original-title
-                                  title
-                                >Package</th>
-                                <th data-name="state" tabindex="-1" data-original-title title>State</th>
-                                <th data-name="is_done" tabindex="-1" data-original-title title>Done</th>
-                                <th data-name="action_show_package_details"></th>
-                                <th class="o_list_record_remove_header"></th>
-                              </tr>
-                            </thead>
-                            <tbody class="ui-sortable">
-                              <tr>
-                                <td colspan="5" class="o_field_x2many_list_row_add">
-                                  <a href="#" role="button">Add a line</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td class="package_id"></td>
-                                <td class="state"></td>
-                                <td class="is_done"></td>
-                                <td class="action_show_package_details"></td>
-                                <td></td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary o_invisible_modifier"
-                      name="put_in_pack"
-                      invisible="1"
-                      data-original-title
-                      title
-                    >
-                      <span>Put in Pack</span>
-                    </button>
-                  </div>
-                  <div class="tab-pane" id="notebook_page_483">
-                    <div
-                      class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list o_readonly_modifier"
-                      name="move_line_ids_without_package"
-                      id="o_field_input_479"
-                      data-original-title
-                      title
-                    >
-                      <div class="o_cp_controller">
-                        <div class="o_x2m_control_panel">
-                          <nav
-                            class="o_cp_buttons"
-                            aria-label="Control panel toolbar"
-                            role="toolbar"
-                          ></nav>
-                          <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                            <div class="o_pager o_hidden">
-                              <span class="o_pager_counter">
-                                <span class="o_pager_value"></span> /
-                                <span class="o_pager_limit"></span>
-                              </span>
-                              <span class="btn-group" aria-atomic="true">
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                  aria-label="Previous"
-                                  title="Previous"
-                                  tabindex="-1"
-                                ></button>
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                  aria-label="Next"
-                                  title="Next"
-                                  tabindex="-1"
-                                ></button>
-                              </span>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
-                      <div class="o_list_view">
-                        <div class="table-responsive">
-                          <table
-                            class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped"
-                          >
-                            <thead>
-                              <tr>
-                                <th
-                                  data-name="product_id"
-                                  tabindex="-1"
-                                  class="o_column_sortable"
-                                  data-original-title
-                                  title
-                                >
-                                  Product
-                                  <span class="o_resize"></span>
-                                </th>
-                                <th
-                                  data-name="product_uom_qty"
-                                  tabindex="-1"
-                                  class="o_column_sortable o_list_number_th"
-                                  data-original-title
-                                  title
-                                >
-                                  Reserved
-                                  <span class="o_resize"></span>
-                                </th>
-                                <th
-                                  data-name="qty_done"
-                                  tabindex="-1"
-                                  class="o_column_sortable o_list_number_th"
-                                  data-original-title
-                                  title
-                                >
-                                  Done
-                                  <span class="o_resize"></span>
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody class="ui-sortable">
-                              <tr class="o_data_row" data-id="stock.move.line_409">
-                                <td
-                                  class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier o_required_modifier"
-                                  tabindex="-1"
-                                  title="Four Person Desk"
-                                >Four Person Desk</td>
-                                <td
-                                  class="o_data_cell o_field_cell o_list_number o_readonly_modifier o_required_modifier"
-                                  tabindex="-1"
-                                  title="1.000"
-                                >1.000</td>
-                                <td
-                                  class="o_data_cell o_field_cell o_list_number"
-                                  tabindex="-1"
-                                  title="0.000"
-                                >0.000</td>
-                              </tr>
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="3">&nbsp;</td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td class="product_id"></td>
-                                <td class="product_uom_qty"></td>
-                                <td class="qty_done"></td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list o_invisible_modifier"
-                      name="package_level_ids_details"
-                      id="o_field_input_478"
-                      data-original-title
-                      title
-                    >
-                      <div class="o_cp_controller">
-                        <div class="o_x2m_control_panel">
-                          <nav
-                            class="o_cp_buttons"
-                            aria-label="Control panel toolbar"
-                            role="toolbar"
-                          ></nav>
-                          <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                            <div class="o_pager o_hidden">
-                              <span class="o_pager_counter">
-                                <span class="o_pager_value"></span> /
-                                <span class="o_pager_limit"></span>
-                              </span>
-                              <span class="btn-group" aria-atomic="true">
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                  aria-label="Previous"
-                                  title="Previous"
-                                  tabindex="-1"
-                                ></button>
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                  aria-label="Next"
-                                  title="Next"
-                                  tabindex="-1"
-                                ></button>
-                              </span>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
-                      <div class="o_list_view">
-                        <div class="table-responsive">
-                          <table
-                            class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped o_empty_list"
-                          >
-                            <thead>
-                              <tr>
-                                <th
-                                  data-name="package_id"
-                                  tabindex="-1"
-                                  class="o_column_sortable"
-                                  data-original-title
-                                  title
-                                >Package</th>
-                                <th data-name="state" tabindex="-1" data-original-title title>State</th>
-                                <th data-name="is_done" tabindex="-1" data-original-title title>Done</th>
-                                <th data-name="action_show_package_details"></th>
-                                <th class="o_list_record_remove_header"></th>
-                              </tr>
-                            </thead>
-                            <tbody class="ui-sortable">
-                              <tr>
-                                <td colspan="5" class="o_field_x2many_list_row_add">
-                                  <a href="#" role="button">Add a line</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td class="package_id"></td>
-                                <td class="state"></td>
-                                <td class="is_done"></td>
-                                <td class="action_show_package_details"></td>
-                                <td></td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary o_invisible_modifier"
-                      name="put_in_pack"
-                      invisible="1"
-                      data-original-title
-                      title
-                    >
-                      <span>Put in Pack</span>
-                    </button>
-                  </div>
                   <div class="tab-pane active" id="notebook_page_484">
                     <div
                       class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list"
@@ -1012,39 +421,6 @@
                       data-original-title
                       title
                     >
-                      <div class="o_cp_controller">
-                        <div class="o_x2m_control_panel">
-                          <nav
-                            class="o_cp_buttons"
-                            aria-label="Control panel toolbar"
-                            role="toolbar"
-                          ></nav>
-                          <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                            <div class="o_pager o_hidden">
-                              <span class="o_pager_counter">
-                                <span class="o_pager_value"></span> /
-                                <span class="o_pager_limit"></span>
-                              </span>
-                              <span class="btn-group" aria-atomic="true">
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                  aria-label="Previous"
-                                  title="Previous"
-                                  tabindex="-1"
-                                ></button>
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                  aria-label="Next"
-                                  title="Next"
-                                  tabindex="-1"
-                                ></button>
-                              </span>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
                       <div class="o_list_view o_list_optional_columns">
                         <div class="table-responsive">
                           <table
@@ -1055,143 +431,67 @@
                               <tr>
                                 <th
                                   data-name="product_id"
-                                  tabindex="-1"
-                                  class="o_column_sortable"
-                                  data-original-title
-                                  title
                                   style="width: 223px;"
                                 >
                                   Product
                                   <span class="o_resize"></span>
                                 </th>
                                 <th
+                                  data-name="product_description"
+                                  style="min-width: 92px; width: 367px;"
+                                >
+                                  Description
+                                  <span class="o_resize"></span>
+                                </th>
+                                <th
                                   data-name="product_uom_qty"
-                                  tabindex="-1"
-                                  class="o_column_sortable o_list_number_th"
-                                  data-original-title
-                                  title
                                   style="min-width: 92px; width: 183px;"
                                 >
                                   Demand
                                   <span class="o_resize"></span>
                                 </th>
                                 <th
-                                  data-name="reserved_availability"
-                                  tabindex="-1"
-                                  class="o_list_number_th"
-                                  data-original-title
-                                  title
-                                  style="min-width: 92px; width: 183px;"
-                                >
-                                  Reserved
-                                  <span class="o_resize"></span>
-                                </th>
-                                <th
                                   data-name="quantity_done"
-                                  tabindex="-1"
-                                  class="o_list_number_th"
-                                  data-original-title
-                                  title
-                                  style="min-width: 92px; width: 367px;"
+                                  style="min-width: 92px; width: 183px;"
                                 >
                                   Done
                                   <span class="o_resize"></span>
                                 </th>
-                                <th data-name="action_show_details" style="width: 18px;"></th>
-                                <th data-name="action_assign_serial" style="width: 18px;"></th>
                                 <th class="o_list_record_remove_header" style="width: 32px;"></th>
                               </tr>
                             </thead>
                             <tbody class="ui-sortable">
-                              <tr class="o_data_row o_selected_row" data-id="stock.move_417">
+                              <tr class="o_data_row o_selected_row" v-for="line in state.picking_line"
+                                  v-bind:key="line.id">
                                 <td
-                                  class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier o_required_modifier"
-                                  tabindex="-1"
-                                  title="Four Person Desk"
-                                >
-                                  <a
-                                    class="o_form_uri o_field_widget o_readonly_modifier o_required_modifier"
-                                    href="#"
-                                    name="product_id"
-                                  >Four Person Desk</a>
-                                </td>
-                                <td
-                                  class="o_data_cell o_field_cell o_list_number o_readonly_modifier o_required_modifier"
-                                  tabindex="-1"
-                                  title="1.000"
-                                >
+                                  class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier o_required_modifier">
                                   <span
-                                    class="o_field_float o_field_number o_field_widget o_readonly_modifier o_required_modifier"
-                                    name="product_uom_qty"
-                                  >1.000</span>
+                                    class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
+                                  >{{line.product.name}}</span>
                                 </td>
                                 <td
-                                  class="o_data_cell o_field_cell o_list_number o_readonly_modifier"
-                                  tabindex="-1"
-                                  title="1.000"
+                                  class="o_field_widget o_readonly_modifier"
                                 >
                                   <span
                                     class="o_field_float o_field_number o_field_widget o_readonly_modifier"
-                                    name="reserved_availability"
-                                  >1.000</span>
+                                  >{{line.description}}</span>
+                                </td>
+                                <td
+                                  class="o_data_cell o_field_cell o_list_number o_readonly_modifier o_required_modifier"
+                                >
+                                  <span
+                                    class="o_field_float o_field_number o_field_widget o_readonly_modifier o_required_modifier"
+                                  >{{line.qty}}</span>
                                 </td>
                                 <td
                                   class="o_data_cell o_field_cell o_list_number"
-                                  tabindex="-1"
-                                  title="0.000"
                                 >
                                   <input
                                     class="o_field_float o_field_number o_field_widget o_input"
-                                    name="quantity_done"
-                                    placeholder
-                                    type="text"
+                                    v-model="line.done_qty"
                                   />
                                 </td>
-                                <td
-                                  class="o_data_cell o_list_button o_invisible_modifier"
-                                  tabindex="-1"
-                                >
-                                  <button
-                                    type="button"
-                                    name="action_show_details"
-                                    class="btn o_icon_button o_invisible_modifier"
-                                    title="Register lots, packs, location"
-                                  >
-                                    <i class="fa fa-fw o_button_icon fa-list"></i>
-                                  </button>
-                                </td>
-                                <td
-                                  class="o_data_cell o_list_button o_invisible_modifier"
-                                  tabindex="-1"
-                                >
-                                  <button
-                                    type="button"
-                                    name="action_assign_serial"
-                                    role="img"
-                                    title="Assign Serial Numbers"
-                                    class="btn o_icon_button o_invisible_modifier"
-                                  >
-                                    <i class="fa fa-fw o_button_icon fa-plus-square"></i>
-                                  </button>
-                                </td>
-                                <td class="o_list_record_remove">
-                                  <button
-                                    class="fa fa-trash-o"
-                                    name="delete"
-                                    aria-label="Delete row 1"
-                                  ></button>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="7" class="o_field_x2many_list_row_add">
-                                  <a href="#" role="button">Add a line</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="7">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="7">&nbsp;</td>
+                                <td class="o_list_record_remove"></td>
                               </tr>
                             </tbody>
                             <tfoot>
@@ -1200,8 +500,6 @@
                                 <td class="product_uom_qty"></td>
                                 <td class="reserved_availability"></td>
                                 <td class="quantity_done"></td>
-                                <td class="action_show_details"></td>
-                                <td class="action_assign_serial"></td>
                                 <td></td>
                               </tr>
                             </tfoot>
@@ -1216,147 +514,9 @@
                             data-toggle="dropdown"
                             aria-expanded="false"
                           ></a>
-                          <div
-                            class="dropdown-menu o_optional_columns_dropdown dropdown-menu-right"
-                            role="menu"
-                          >
-                            <div class="dropdown-item">
-                              <div class="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  id="checkbox-501"
-                                  class="custom-control-input"
-                                  name="description_picking"
-                                />
-                                <label
-                                  for="checkbox-501"
-                                  class="custom-control-label"
-                                >Description (description_picking)</label>
-                              </div>
-                            </div>
-                            <div class="dropdown-item">
-                              <div class="custom-control custom-checkbox">
-                                <input
-                                  type="checkbox"
-                                  id="checkbox-502"
-                                  class="custom-control-input"
-                                  name="date_expected"
-                                />
-                                <label
-                                  for="checkbox-502"
-                                  class="custom-control-label"
-                                >Expected Date (date_expected)</label>
-                              </div>
-                            </div>
-                          </div>
                         </div>
                       </div>
                     </div>
-                    <span
-                      class="o_field_integer o_field_number o_field_widget o_invisible_modifier o_readonly_modifier"
-                      name="id"
-                      data-original-title
-                      title
-                    >1</span>
-                    <div
-                      class="o_field_one2many o_field_widget o_field_x2many o_field_x2many_list o_invisible_modifier"
-                      name="package_level_ids"
-                      id="o_field_input_481"
-                      data-original-title
-                      title
-                    >
-                      <div class="o_cp_controller">
-                        <div class="o_x2m_control_panel">
-                          <nav
-                            class="o_cp_buttons"
-                            aria-label="Control panel toolbar"
-                            role="toolbar"
-                          ></nav>
-                          <nav class="o_cp_pager" aria-label="Pager" role="toolbar">
-                            <div class="o_pager o_hidden">
-                              <span class="o_pager_counter">
-                                <span class="o_pager_value"></span> /
-                                <span class="o_pager_limit"></span>
-                              </span>
-                              <span class="btn-group" aria-atomic="true">
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-left btn btn-secondary o_pager_previous"
-                                  aria-label="Previous"
-                                  title="Previous"
-                                  tabindex="-1"
-                                ></button>
-                                <button
-                                  type="button"
-                                  class="fa fa-chevron-right btn btn-secondary o_pager_next"
-                                  aria-label="Next"
-                                  title="Next"
-                                  tabindex="-1"
-                                ></button>
-                              </span>
-                            </div>
-                          </nav>
-                        </div>
-                      </div>
-                      <div class="o_list_view">
-                        <div class="table-responsive">
-                          <table
-                            class="o_list_table table table-sm table-hover table-striped o_list_table_ungrouped o_empty_list"
-                          >
-                            <thead>
-                              <tr>
-                                <th
-                                  data-name="package_id"
-                                  tabindex="-1"
-                                  class="o_column_sortable"
-                                  data-original-title
-                                  title
-                                >Package</th>
-                                <th data-name="state" tabindex="-1" data-original-title title>State</th>
-                                <th data-name="is_done" tabindex="-1" data-original-title title>Done</th>
-                                <th data-name="action_show_package_details"></th>
-                                <th class="o_list_record_remove_header"></th>
-                              </tr>
-                            </thead>
-                            <tbody class="ui-sortable">
-                              <tr>
-                                <td colspan="5" class="o_field_x2many_list_row_add">
-                                  <a href="#" role="button">Add a line</a>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                              <tr>
-                                <td colspan="5">&nbsp;</td>
-                              </tr>
-                            </tbody>
-                            <tfoot>
-                              <tr>
-                                <td class="package_id"></td>
-                                <td class="state"></td>
-                                <td class="is_done"></td>
-                                <td class="action_show_package_details"></td>
-                                <td></td>
-                              </tr>
-                            </tfoot>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      class="btn btn-primary o_invisible_modifier"
-                      name="put_in_pack"
-                      invisible="1"
-                      data-original-title
-                      title
-                    >
-                      <span>Put in Pack</span>
-                    </button>
                   </div>
                   <div class="tab-pane" id="notebook_page_485">
                     <div class="o_group">
@@ -1370,19 +530,13 @@
                           <tr>
                             <td class="o_td_label">
                               <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_438"
-                                data-original-title
-                                title
+                                class="o_form_label o_readonly_modifier"
                               >Type of Operation</label>
                             </td>
                             <td style="width: 100%;">
                               <span
-                                name="picking_type_code"
-                                class="o_field_widget o_invisible_modifier o_readonly_modifier"
-                                data-original-title
-                                title
-                              >Delivery</span>
+                                class="o_field_widget o_readonly_modifier"
+                              >{{state.picking_type}}</span>
                             </td>
                           </tr>
                           <tr>
@@ -1396,49 +550,17 @@
                             </td>
                             <td style="width: 100%;">
                               <select
-                                class="o_input o_field_widget o_required_modifier"
-                                name="move_type"
-                                id="o_field_input_439"
+                                class="o_input o_field_widget ui-autocomplete-input"
+                                name="type"
+                                v-model="state.move_type"
                               >
-                                <option value="false" style="display: none"></option>
-                                <option value="&quot;direct&quot;" style>As soon as possible</option>
-                                <option value="&quot;one&quot;" style>When all products are ready</option>
+                                <option
+                                  v-for="row in shipping_policy"
+                                  :select="row.value == state.move_type"
+                                  :key="row.value"
+                                  :value="row.value"
+                                >{{ row.label }}</option>
                               </select>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label"
-                                for="o_field_input_440"
-                                data-original-title
-                                title
-                              >Priority</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <div class="o_priority o_field_widget" name="priority">
-                                <a
-                                  href="#"
-                                  title="Normal"
-                                  aria-label="Normal"
-                                  data-index="1"
-                                  class="o_priority_star fa fa-star"
-                                ></a>
-                                <a
-                                  href="#"
-                                  title="Urgent"
-                                  aria-label="Urgent"
-                                  data-index="2"
-                                  class="o_priority_star fa fa-star-o"
-                                ></a>
-                                <a
-                                  href="#"
-                                  title="Very Urgent"
-                                  aria-label="Very Urgent"
-                                  data-index="3"
-                                  class="o_priority_star fa fa-star-o"
-                                ></a>
-                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -1451,30 +573,9 @@
                               >Responsible</label>
                             </td>
                             <td style="width: 100%;">
-                              <div
-                                class="o_field_widget o_field_many2one"
-                                aria-atomic="true"
-                                name="user_id"
-                              >
-                                <div class="o_input_dropdown">
-                                  <input
-                                    type="text"
-                                    class="o_input ui-autocomplete-input"
-                                    autocomplete="off"
-                                    id="o_field_input_441"
-                                  />
-                                  <a role="button" class="o_dropdown_button" draggable="false"></a>
-                                </div>
-                                <button
-                                  type="button"
-                                  class="fa fa-external-link btn btn-secondary o_external_button"
-                                  tabindex="-1"
-                                  draggable="false"
-                                  aria-label="External link"
-                                  title="External link"
-                                  style="display: none;"
-                                ></button>
-                              </div>
+                              <span
+                                  class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
+                                >{{state.responsible.employee_name}}</span>
                             </td>
                           </tr>
                           <tr>
@@ -1493,27 +594,7 @@
                                 name="group_id"
                                 id="o_field_input_442"
                               >
-                                <span>S00001</span>
-                              </a>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td class="o_td_label">
-                              <label
-                                class="o_form_label o_invisible_modifier o_readonly_modifier"
-                                for="o_field_input_443"
-                                data-original-title
-                                title
-                              >Company</label>
-                            </td>
-                            <td style="width: 100%;">
-                              <a
-                                class="o_form_uri o_field_widget o_invisible_modifier o_readonly_modifier"
-                                href="#id=1&amp;model=res.company"
-                                name="company_id"
-                                id="o_field_input_443"
-                              >
-                                <span>My Company</span>
+                                <span>{{state.origin}}</span>
                               </a>
                             </td>
                           </tr>
@@ -1548,5 +629,50 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return{
+      state:{},
+      warehouse_id:null,
+      shipping_policy: [
+        { label: "As soon as possible", value: "direct" },
+        { label: "When all products are ready", value: "one" },
+      ],
+    }
+  },
+  created() {
+    axios.get(`/api/stock_pickings/search/${atob(this.$route.params.id)}`).then(response => {
+      this.state = response.data.result;
+      console.log(this.state)
+      this.warehouse_id = btoa(this.state.purchases_warehouse.id);
+    }).catch(error => console.error(error));
+  },
+  mounted() {
+    console.log('mounted')
+  },
+  methods: {
+    viewCustomer() {
+      alert('okkk')
+    },
+    MarkAsTodo(){
+      axios.post("/api/stock_pickings/todo", this.state)
+      .then((response) => {
+        if (response.data.status == "success") {
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$router.push({ name:'receipt_index', params:{id : this.warehouse_id} });
+        } else {
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: response.data.message,
+          });
+        }
+      });
+    }
+  }
+
+};
 </script>

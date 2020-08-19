@@ -16,6 +16,9 @@ class StockPickingsController extends Controller
             if ($request->picking_type == 'Delivery Orders'){
                 $response = stock_picking::with('picking_line','picking_line.product','responsible','company','sales_order','sales_order.partner','sales_warehouse')->findOrFail ($id);
             }
+            if ($request->picking_type == 'Receipts'){
+                $response = stock_picking::with('picking_line','picking_line.product','responsible','company','purchases_order','purchases_order.partner','purchases_warehouse')->findOrFail ($id);
+            }
 
             return response()->json([
                 'status' => 'success',
@@ -29,10 +32,59 @@ class StockPickingsController extends Controller
         }
     }
 
-    public function calculate_code($code){
+    public function fetchReceiptPicking()
+    {
+        try{
+            $response = stock_picking::with('company','purchases_order','purchases_order.partner')->where('picking_type','Receipts')->orderby('created_at','DESC')->get();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+
+    public function fetchDeliverePicking()
+    {
+        try{
+            $response = stock_picking::with('company','sales_order','sales_order.partner')->where('picking_type','Delivery Orders')->orderby('created_at','DESC')->get();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+
+    public function todo(Request $request){
+        try{
+            $response = stock_picking::findOrFail($request->id)->update([
+                'state' =>"Ready"
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Stock Picking $request->name Ready"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function calculate_code($code,$uniq){
         $year=date("Y");
         $month=date("m");
-        $prefixcode = "$code/OUT/$year/$month/";
+        $prefixcode = "$code/$uniq/$year/$month/";
         $count = stock_picking::where('name','like',"%".$prefixcode."%")->count();
         if ($count==0){
             return "$prefixcode"."000001";
@@ -44,18 +96,21 @@ class StockPickingsController extends Controller
     public function store(Request $request){
         try {
             $code = Inventory::checkWarehouseCode($request->product_warehouse_id);
-            $name = $this->calculate_code($code);
-
+            
             if ($request->state == 'sale'){
+                $name = $this->calculate_code($code,'OUT');
                 $location = $request->product_warehouse_id;
                 $destination = $request->id;
                 $type = 'Delivery Orders';
                 $partner = $request->customer;
                 $user = $request->sales;
             }else if ($request->state == 'purchase'){
+                $name = $this->calculate_code($code,'IN');
                 $destination = $request->product_warehouse_id;
                 $location = $request->id;
                 $type = 'Receipts';
+                $partner = $request->vendor;
+                $user = $request->merchandise;
             }
 
             $products = collect($request->products)->transform(function($product) {

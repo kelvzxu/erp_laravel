@@ -4,6 +4,7 @@ namespace App\Addons\Inventory\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Addons\Sales\Models\sales_order;
+use App\Addons\Purchase\Models\purchases_order;
 use App\Models\Human_Resource\hr_employee;
 use App\Models\Company\res_company;
 
@@ -23,9 +24,19 @@ class stock_picking extends Model
         return $this->BelongsTo(sales_order::class,'order_id');
     }
 
+    public function purchases_order()
+    {
+        return $this->BelongsTo(purchases_order::class,'order_id');
+    }
+
     public function sales_warehouse()
     {
         return $this->BelongsTo(product_warehouse::class,'location_id');
+    }
+
+    public function purchases_warehouse()
+    {
+        return $this->BelongsTo(product_warehouse::class,'destination_id');
     }
 
     public function company()
