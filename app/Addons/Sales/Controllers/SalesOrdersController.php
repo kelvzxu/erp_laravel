@@ -223,6 +223,17 @@ class SalesOrdersController extends Controller
         $sales = sales_order::select(DB::raw('date(created_at) as date,sum(grand_total) as total'))
         ->where('created_at', 'LIKE', '%' . $filter . '%')
         ->groupBy(DB::raw('date(created_at)'))->get();
-        dd($sales);
+
+        $data=[];
+        foreach ($array_date as $row) {
+            $f_date = strlen($row) == 1 ? 0 . $row:$row;
+            $date = $filter . '-' . $f_date;
+            $total = $sales->firstWhere('date', $date);
+            $data[] = [
+                'date' =>$date,
+                'total' => $total ? $total->total:0
+            ];
+        }
+        return $data;
     }
 }

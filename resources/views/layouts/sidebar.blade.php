@@ -69,18 +69,6 @@
                                     Sales Analysis
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route ('return-invoice.index')}}" id="report-return_inv" class="menu-item">
-                                    <i class="metismenu-icon"></i>
-                                    Report Return Invoice
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route ('CustomerDebt.report')}}" id="report-return" class="menu-item">
-                                    <i class="metismenu-icon"></i>
-                                    Report customer debt
-                                </a>
-                            </li>
                         </ul>
                     </li>
                     @endif

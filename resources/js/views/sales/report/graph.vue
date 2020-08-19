@@ -145,6 +145,15 @@
         </div>
       </div>
     </div>
+    <div class="o_content">
+        <div class="o_graph_renderer">
+            <line-chart
+                :data="transaction_data" 
+                :options="chartOptions" 
+                :labels="labels"
+                />
+        </div>
+    </div>
   </div>
 </template>
 <script>
@@ -168,6 +177,8 @@ export default {
       },
       month: moment().format("MM"), 
       year: moment().format("Y"),
+      state: null,
+      loaded: false,
     };
   },
   watch: {
@@ -190,35 +201,29 @@ export default {
 //     }),
 //     //LIST TAHUN DARI 2010 SAMPAI TAHUN SAAT INI UNTUK DILOOPING DI FILTER TAG
     years() {
-      return _.range(2010, moment().add(1, "years").format("Y"));
+      return _.range(2015, moment().add(1, "years").format("Y"));
     },
-//     //DATA LABELS YANG DITERIMA DARI SERVER
-//     labels() {
-//       //KARENA FORMAT DATANYA BERISI TOTAL DAN DATE, MAKA KITA FILTER HANYA AKAN MENGAMBIL DATENYA SAJA
-//       return _.map(this.transactions, function (o) {
-//         return moment(o.date).format("DD");
-//       });
-//     },
-//     //DATA TOTAL TRANSAKSI YANG DITERIMA DARI SERVER
-//     transaction_data() {
-//       //KITA FILTER KARENA HANYA AKAN MENGAMBIL TOTAL VALUENYA SAJA
-//       return _.map(this.transactions, function (o) {
-//         return o.total;
-//       });
-//     },
+    labels() {
+      return _.map(this.state, function (self) {
+        return moment(self.date).format("DD");
+      });
+    },
+    transaction_data() {
+      return _.map(this.state, function (self) {
+        return self.total;
+      });
+    },
   },
   methods: {
     getChartData(payload) {
-        console.log(payload.month)
       axios
         .get(`/api/sale/analysis?month=${payload.month}&year=${payload.year}`)
         .then((response) => {
-    //       // //KEMUDIAN KIRIM DATA NYA KE MUTATION UNTUK KEMUDIAN DISIMPAN KE STATE
-    //       // commit("ASSIGN_DATA_TRANSACTION", response.data);
-    //       // resolve(response.data);
+            this.state = response.data;
+            this.loaded = true;
         });
     },
   },
-  components: { "line-chart": LineChart }, //DEFINISIKAN CUSTOM TAG UNTUK COMPONENT YANG DIBUAT SEBELUMNYA
+  components: { "line-chart": LineChart },
 };
 </script>
