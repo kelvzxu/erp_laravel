@@ -58,7 +58,7 @@
                     @if(UserGroup::group() == 2) 
                     <li>
                         <a href="" id="sales_report">
-                            <i class="metismenu-icon fa fa-file-pdf-o"></i>
+                            <i class="metismenu-icon fa fa-line-chart "></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
@@ -90,21 +90,15 @@
                     @if(UserGroup::group() == 2)
                     <li>
                         <a href="#" id="purchase_report">
-                            <i class="metismenu-icon fa fa-file-pdf-o"></i>
+                            <i class="metismenu-icon fa fa-line-chart "></i>
                             Report
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('purchase_orders.report')}}" id="report_po" class="menu-item">
+                                <a href="/purchases/web/action=310&model=purchase.report&view_type=graph&cids=&menu_id=154">
                                     <i class="metismenu-icon"></i>
                                     Purchase Order Report
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route ('return-po.index')}}" id="report-return_po">
-                                    <i class="metismenu-icon"></i>
-                                    Report Return Bill
                                 </a>
                             </li>
                         </ul>

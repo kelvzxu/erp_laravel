@@ -33,6 +33,7 @@ import purchases_index from './views/purchases/form/index.vue'
 import purchases_create from './views/purchases/form/create.vue'
 import purchases_edit from './views/purchases/form/edit.vue'
 import purchases_view from './views/purchases/form/view.vue'
+import purchases_analysis from './views/purchases/report/graph.vue'
 
 // === Customer ===
 import customer_index from './views/contact/customer/index.vue'
@@ -167,6 +168,11 @@ const router = new VueRouter({
             path: '/purchases/:id/web/action=295&model=purchase.order&view_type=forms&cids=&menu_id=153',
             name: 'purchases_view',
             component: purchases_view
+        },
+        {
+            path: '/purchases/web/action=310&model=purchase.report&view_type=graph&cids=&menu_id=154',
+            name: 'purchases_analysis',
+            component: purchases_analysis
         },
         {
             path: '/contact/web/model=res.partner&view_type=kanban,list&cids=&menu_id=170',

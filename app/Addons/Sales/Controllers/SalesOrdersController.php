@@ -4,7 +4,6 @@ namespace App\Addons\Sales\Controllers;
 
 use App\Http\Controllers\controller as Controller;
 use Illuminate\Http\Request;
-use App\Models\Customer\customer_dept;
 use App\Addons\Sales\Models\sales_order;
 use App\Addons\Sales\Models\sales_order_product;
 use Carbon\Carbon;
@@ -156,6 +155,45 @@ class SalesOrdersController extends Controller
         }
     }
 
+    public function fetchSalesOrder(){
+        try {
+            $response = sales_order::with('partner','sales_person','partner.currency','company')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'data' => []
+            ]);
+        }
+    }
+
+    public function sales_analysis()
+    {
+        $filter = request()->year . '-' . request()->month;
+        $parse = Carbon::parse($filter);
+        $array_date = range($parse->startOfMonth()->format('d'), $parse->endOfMonth()->format('d'));
+        
+        $sales = sales_order::select(DB::raw('date(created_at) as date,sum(grand_total) as total'))
+        ->where('created_at', 'LIKE', '%' . $filter . '%')
+        ->groupBy(DB::raw('date(created_at)'))->get();
+
+        $data=[];
+        foreach ($array_date as $row) {
+            $f_date = strlen($row) == 1 ? 0 . $row:$row;
+            $date = $filter . '-' . $f_date;
+            $total = $sales->firstWhere('date', $date);
+            $data[] = [
+                'date' =>$date,
+                'total' => $total ? $total->total:0
+            ];
+        }
+        return $data;
+    }
 
     public function report()
     {
@@ -195,45 +233,5 @@ class SalesOrdersController extends Controller
             Toastr::error('an unexpected error occurred, please contact Your Support Service','Something Went Wrong');
             return redirect()->back();
         }
-    }
-
-    public function fetchSalesOrder(){
-        try {
-            $response = sales_order::with('partner','sales_person','partner.currency','company')
-                    ->orderBy('created_at', 'desc')
-                    ->get();
-            return response()->json([
-                'status' => 'success',
-                'data' => $response
-            ], 200);
-        } catch (\Exception $e){
-            return response()->json([
-                'status' => 'failed',
-                'data' => []
-            ]);
-        }
-    }
-
-    public function sales_analysis()
-    {
-        $filter = request()->year . '-' . request()->month;
-        $parse = Carbon::parse($filter);
-        $array_date = range($parse->startOfMonth()->format('d'), $parse->endOfMonth()->format('d'));
-        
-        $sales = sales_order::select(DB::raw('date(created_at) as date,sum(grand_total) as total'))
-        ->where('created_at', 'LIKE', '%' . $filter . '%')
-        ->groupBy(DB::raw('date(created_at)'))->get();
-
-        $data=[];
-        foreach ($array_date as $row) {
-            $f_date = strlen($row) == 1 ? 0 . $row:$row;
-            $date = $filter . '-' . $f_date;
-            $total = $sales->firstWhere('date', $date);
-            $data[] = [
-                'date' =>$date,
-                'total' => $total ? $total->total:0
-            ];
-        }
-        return $data;
     }
 }

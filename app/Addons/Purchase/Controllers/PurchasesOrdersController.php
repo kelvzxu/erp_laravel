@@ -3,12 +3,12 @@
 namespace App\Addons\Purchase\Controllers;
 
 use App\Http\Controllers\controller as Controller;
+use Illuminate\Http\Request;
 use App\Addons\Purchase\Models\purchases_order;
 use App\Addons\Purchase\Models\purchases_order_products;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 use PDF;
-use Partner;
-use Inventory;
+use DB;
 
 class PurchasesOrdersController extends Controller
 {
@@ -171,6 +171,29 @@ class PurchasesOrdersController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
+    }
+
+    public function purchases_analysis()
+    {
+        $filter = request()->year . '-' . request()->month;
+        $parse = Carbon::parse($filter);
+        $array_date = range($parse->startOfMonth()->format('d'), $parse->endOfMonth()->format('d'));
+        
+        $purchases = purchases_order::select(DB::raw('date(created_at) as date,sum(grand_total) as total'))
+        ->where('created_at', 'LIKE', '%' . $filter . '%')
+        ->groupBy(DB::raw('date(created_at)'))->get();
+
+        $data=[];
+        foreach ($array_date as $row) {
+            $f_date = strlen($row) == 1 ? 0 . $row:$row;
+            $date = $filter . '-' . $f_date;
+            $total = $purchases->firstWhere('date', $date);
+            $data[] = [
+                'date' =>$date,
+                'total' => $total ? $total->total:0
+            ];
+        }
+        return $data;
     }
 
     public function report()
