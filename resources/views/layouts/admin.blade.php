@@ -86,7 +86,7 @@
                                 Projects
                             </a>
                         </li>
-                        <li class="dropdown nav-item">
+                        <li class="dropdown nav-item o_invisible_modifier">
                             <a aria-haspopup="true" data-toggle="dropdown" class="nav-link" aria-expanded="true">
                                 <i class="nav-link-icon fa fa-cog"></i> Setting
                                 <i class="fa fa-angle-down ml-2 opacity-5"></i>

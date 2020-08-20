@@ -32,10 +32,10 @@ class StockPickingsController extends Controller
         }
     }
 
-    public function fetchReceiptPicking()
+    public function fetchReceiptPicking($id)
     {
         try{
-            $response = stock_picking::with('company','purchases_order','purchases_order.partner')->where('picking_type','Receipts')->orderby('created_at','DESC')->get();
+            $response = stock_picking::with('company','purchases_order','purchases_order.partner')->where('picking_type','Receipts')->where('destination_id',$id)->orderby('created_at','DESC')->get();
             return response()->json([
                 'status' => 'success',
                 'result' => $response

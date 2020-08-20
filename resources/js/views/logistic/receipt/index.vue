@@ -247,7 +247,7 @@ export default {
   methods: {
     prepare_data_value() {
       axios
-        .get("/api/stock_pickings/receipts")
+        .get(`/api/stock_pickings/receipts/${atob(this.$route.params.id)}`)
         .then((response) => {
           this.data = response.data.result;
           this.pagination.total = this.data.length;

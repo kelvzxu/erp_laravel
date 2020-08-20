@@ -59,7 +59,7 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
     Route::post('stock_pickings/store','StockPickingsController@store');
     Route::post('stock_pickings/todo','StockPickingsController@todo');
     Route::get('stock_pickings/search/{id}', 'StockPickingsController@getStockPicking');
-    Route::get('stock_pickings/receipts','StockPickingsController@fetchReceiptPicking');
+    Route::get('stock_pickings/receipts/{id}','StockPickingsController@fetchReceiptPicking');
     Route::get('stock_pickings/delivere','StockPickingsController@fetchDeliverePicking');
 
     Route::get('Removal/Strategy','ProductRemovalController@fetchRemovalStrategy');
