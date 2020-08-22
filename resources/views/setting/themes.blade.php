@@ -1,7 +1,13 @@
 <div class="ui-theme-settings">
+    @if (!empty($data->photo))
     <button type="button" id="TooltipDemo" class="btn-open-options">
         <img src="{{asset('images/icons/avatar.png')}}" class="o_m3o_avatar ">
     </button>
+    @else
+    <button type="button" id="TooltipDemo" class="btn-open-options">
+        <img src="{{asset('images/icons/avatar.png')}}" class="o_m3o_avatar ">
+    </button>
+    @endif 
     <div class="theme-settings__inner">
         <div class="scrollbar-container">
             <div class="theme-settings__options-wrapper">

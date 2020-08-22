@@ -21,8 +21,8 @@ class CreateProductQuantsTable extends Migration
             $table->integer('lot_id')->nullable()->index();
             $table->integer('package_id')->nullable()->index();
             $table->integer('owner_id')->nullable()->index();
-            $table->double('quantity')->nullable()->index();
-            $table->integer('reserved_quantity')->nullable()->index();
+            $table->double('quantity')->nullable()->default(0);
+            $table->integer('reserved_quantity')->nullable()->default(0);
             $table->integer('minimum_quantity')->nullable()->index();
             $table->integer('create_uid');
             $table->timestamps();

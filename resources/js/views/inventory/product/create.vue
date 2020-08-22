@@ -1345,23 +1345,45 @@ export default {
     set_image(file) {
       document.getElementById("picture").src = file;
     },
+    store_quant(){
+      axios.post("/api/Products/quant/store",this.state).then((response)=>{
+        if (response.data.status == "success") {
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$router.push({ name: "product_index" });
+        } else {
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: response.data.message,
+          });
+        }
+      })
+    },
     submit($e) {
       axios
         .post("/api/Product/store", this.state)
         .then((response) => {
-          if (response.data.status == "success") {
-            Toast.fire({
-              icon: "success",
-              title: response.data.message,
-            });
-            this.$router.push({ name: "product_index" });
-          } else {
-            Swal.fire({
-              type: "warning",
-              title: "Something went wrong!",
-              text: response.data.message,
-            });
+          if (this.state.type == 'product')
+            this.store_quant();
+          else {
+            if (response.data.status == "success") {
+              Toast.fire({
+                icon: "success",
+                title: response.data.message,
+              });
+              this.$router.push({ name: "product_index" });
+            } else {
+              Swal.fire({
+                type: "warning",
+                title: "Something went wrong!",
+                text: response.data.message,
+              });
+            }
           }
+
         })
         .catch((error) => {
           if (error) {

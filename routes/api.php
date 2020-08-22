@@ -46,6 +46,8 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
     Route::get('getProduct','ProductController@getProduct');
     Route::get('getProduct/id','ProductController@getProductById');
 
+    Route::post('Products/quant/store','ProductQuantController@store');
+
     Route::get('Products/category','CategoryController@fetchCategory');
     Route::post('Product/category/store','CategoryController@store');
     Route::post('Product/category/update','CategoryController@update');

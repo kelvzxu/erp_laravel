@@ -88,7 +88,7 @@
                 @foreach($employee as $data)
                 <a class="oe_kanban_global_click o_kanban_record_has_image_fill o_hr_kanban_record o_kanban_record" modifiers="{}"
                     tabindex="0" role="article" style="color: black;text-decoration: none;" href="{{route('employee.edit',$data->id)}}">
-                    @if (!empty($data->logo))
+                    @if (!empty($data->photo))
                     <div class="o_field_image o_field_widget o_kanban_image_fill_left o_hr_rounded_circle" 
                         data-zoom-image="{{asset('uploads/Employees/'.$data->photo)}}"
                         style="background-image: url('{{asset('uploads/Employees/'.$data->photo)}}');">
