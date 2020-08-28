@@ -313,15 +313,15 @@
                 @if (AccessRight::access()->human_resources == True ) 
                 <li class="app-sidebar__heading">Human Resource</li>
                     <li>
-                        <a href="{{ route ('employee')}}" id="employee">
+                        <a href="/hr/employee/web/model=hr.employee&view_type=kanban,list&cids=&menu_id=99">
                             <i class="metismenu-icon fa fa-users">
                             </i>Employee
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route ('recruitment')}}" class="development">
-                            <i class="metismenu-icon fa fa-user-plus">
-                            </i>Recruitment
+                        <a href="/hr/contract/web/model=hr.contract&view_type=kanban,list&cids=&menu_id=97">
+                            <i class="metismenu-icon fa fa-book">
+                            </i>Contracts
                         </a>
                     </li>
                     <li>

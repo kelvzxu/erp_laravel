@@ -49,6 +49,14 @@ Route::group(['middleware' => 'auth'], function (){
     Route::get('/contact/{any}',function(){
         return view('contact.partner.vue');
     })->where('any', '.*');
+    
+    Route::get('/hr/employee/{any}',function(){
+        return view('hr.employee.vue');
+    })->where('any', '.*');
+
+    Route::get('/hr/contract/{any}',function(){
+        return view('hr.contract.vue');
+    })->where('any', '.*');
 
     Route::get('/setting/company/{any}',function(){
         return view('setting.company.vue');

@@ -56,6 +56,14 @@ import receipt_form from './views/logistic/receipt/form.vue'
 import delivery_index from './views/logistic/delivery/index.vue'
 import delivery_form from './views/logistic/delivery/form.vue'
 
+// === Employee ===
+import employee_index from './views/human_resource/employee/index.vue'
+import employee_create from './views/human_resource/employee/create.vue'
+
+// === Contract ===
+import contract_index from './views/human_resource/contract/index.vue'
+import contract_create from './views/human_resource/contract/create.vue'
+
 // === General Settings ===
 import general_setting from './views/base/setting/index.vue'
 
@@ -238,6 +246,26 @@ const router = new VueRouter({
             path: '/contact/:id/web/action=283&model=res.partner&view_type=forms&cids=&menu_id=162',
             name: 'vendor_edit',
             component: vendor_edit
+        },
+        {
+            path: '/hr/employee/web/model=hr.employee&view_type=kanban,list&cids=&menu_id=99',
+            name: 'employee_index',
+            component: employee_index
+        },
+        {
+            path: '/hr/employee/web/action=142&model=hr.employee&view_type=form&cids=&menu_id=154',
+            name: 'employee_create',
+            component: employee_create
+        },
+        {
+            path: '/hr/contract/web/model=hr.contract&view_type=kanban,list&cids=&menu_id=97',
+            name: 'contract_index',
+            component: contract_index
+        },
+        {
+            path: '/hr/contract/web/action=162&model=hr.contract&view_type=form&cids=&menu_id=97',
+            name: 'contract_create',
+            component: contract_create
         },
         {
             path: '/config/web/action=80&model=res.config.settings&view_type=form&cids=1&menu_id=3',

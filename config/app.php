@@ -186,6 +186,7 @@ return [
          */
         App\Addons\Accounting\Illuminate\AccountingServiceProvider::class,
         App\Addons\Contact\Illuminate\PartnerServiceProvider::class,
+        App\Addons\HumanResource\Illuminate\HumanResourceServiceProvider::class,
         App\Addons\Inventory\Illuminate\InventoryServiceProvider::class,
         App\Addons\Invoicing\Illuminate\InvoicingServiceProvider::class,
         App\Addons\Purchase\Illuminate\PurchaseServiceProvider::class,
@@ -282,6 +283,7 @@ return [
         'Partner' =>App\Addons\Contact\Helpers\Partner::class,
         'Purchase'=>App\Addons\Purchase\Helpers\Purchase::class,
         'Sale' => App\Addons\Sales\Helpers\Sales::class,
+        'hr' => App\Addons\HumanResource\Helpers\HumanResource::class,
     ],
 
 ];
