@@ -64,6 +64,10 @@ import employee_create from './views/human_resource/employee/create.vue'
 import contract_index from './views/human_resource/contract/index.vue'
 import contract_create from './views/human_resource/contract/create.vue'
 
+// === Department ===
+import department_index from './views/human_resource/department/index.vue'
+import department_create from './views/human_resource/department/create.vue'
+
 // === General Settings ===
 import general_setting from './views/base/setting/index.vue'
 
@@ -266,6 +270,16 @@ const router = new VueRouter({
             path: '/hr/contract/web/action=162&model=hr.contract&view_type=form&cids=&menu_id=97',
             name: 'contract_create',
             component: contract_create
+        },
+        {
+            path: '/hr/department/web/model=hr.department&view_type=kanban,list&cids=&menu_id=98',
+            name: 'department_index',
+            component: department_index
+        },
+        {
+            path: '/hr/department/web/action=147&model=hr.department&view_type=kanban,list&cids=&menu_id=98',
+            name: 'department_create',
+            component: department_create
         },
         {
             path: '/config/web/action=80&model=res.config.settings&view_type=form&cids=1&menu_id=3',

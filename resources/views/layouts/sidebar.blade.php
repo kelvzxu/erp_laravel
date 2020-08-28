@@ -324,7 +324,7 @@
                             </i>Contracts
                         </a>
                     </li>
-                    <li>
+                    <li class="o_invisible_modifier">
                         <a href="#" id="leave-mgmt">
                             <i class="metismenu-icon fa fa-calendar-times-o"></i>
                             Leave Management
@@ -339,7 +339,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="o_invisible_modifier">
                         <a href="#" id="payroll" class="menu-item">
                             <i class="metismenu-icon fa fa-credit-card-alt"></i>
                             Payroll Management
@@ -365,21 +365,21 @@
                     @if(UserGroup::group() == 2)
                     <li>
                         <a href="#" id="hr-management">
-                            <i class="metismenu-icon fa fa-file-text"></i>
-                            System Management
+                            <i class="metismenu-icon fa fa-cogs"></i>
+                            Configuration
                             <i class="metismenu-state-icon fa fa-angle-double-down caret-left"></i>
                         </a>
                         <ul>
                             <li>
-                                <a href="{{ route ('department')}}" id="department">
+                                <a href="/hr/department/web/model=hr.department&view_type=kanban,list&cids=&menu_id=98">
                                     <i class="metismenu-icon"></i>
-                                    Department
+                                    Departments
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route ('jobs')}}" id="jobs">
                                     <i class="metismenu-icon">
-                                    </i>Jobs
+                                    </i>Job Positions
                                 </a>
                             </li>
                         </ul>

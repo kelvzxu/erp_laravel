@@ -58,6 +58,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('hr.contract.vue');
     })->where('any', '.*');
 
+    Route::get('/hr/department/{any}',function(){
+        return view('hr.department.vue');
+    })->where('any', '.*');
+
     Route::get('/setting/company/{any}',function(){
         return view('setting.company.vue');
     })->where('any', '.*');
