@@ -78,15 +78,7 @@
                   type="button"
                   v-if="state.state == 'Ready'"
                   class="btn btn-primary"
-                >
-                  <span>Validate</span>
-                </button>
-                <button
-                  type="button"
-                  name="button_validate"
-                  class="btn o_btn_validate btn-secondary o_invisible_modifier"
-                  data-original-title
-                  title
+                  @click="validate"
                 >
                   <span>Validate</span>
                 </button>
@@ -669,6 +661,28 @@ export default {
           });
         }
       });
+    },
+    validate_picking(){
+      axios.post("/api/stock_pickings/validate", this.state)
+      .then((response) => {
+        // if (response.data.status == "success") {
+        //   Toast.fire({
+        //     icon: "success",
+        //     title: response.data.message,
+        //   });
+        //   this.$router.push({ name:'delivery_index', params:{id : this.warehouse_id} });
+        // } else {
+        //   Swal.fire({
+        //     type: "warning",
+        //     title: "Something went wrong!",
+        //     text: response.data.message,
+        //   });
+        // }
+      });
+    },
+    validate(){
+      this.validate_picking();
+      
     }
   }
 

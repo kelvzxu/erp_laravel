@@ -47,6 +47,7 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
     Route::get('getProduct/id','ProductController@getProductById');
 
     Route::post('Products/quant/store','ProductQuantController@store');
+    Route::post('Products/warehouse/quant/store','ProductQuantController@store_product');
 
     Route::get('Products/category','CategoryController@fetchCategory');
     Route::post('Product/category/store','CategoryController@store');
@@ -60,6 +61,7 @@ Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
 
     Route::post('stock_pickings/store','StockPickingsController@store');
     Route::post('stock_pickings/todo','StockPickingsController@todo');
+    Route::post('stock_pickings/validate','StockPickingsController@validate_picking');
     Route::get('stock_pickings/search/{id}', 'StockPickingsController@getStockPicking');
     Route::get('stock_pickings/receipts/{id}','StockPickingsController@fetchReceiptPicking');
     Route::get('stock_pickings/delivere','StockPickingsController@fetchDeliverePicking');

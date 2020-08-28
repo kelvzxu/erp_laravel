@@ -153,4 +153,21 @@ class StockPickingsController extends Controller
             ]);
         }
     }
+
+    public function validate_picking(Request $request)
+    {
+        try{
+            foreach ($request->picking_line as $products){
+                stock_picking_line::find($products['id'])->update($products);
+            }
+            stock_picking::findOrFail($request->id)->update([
+                'state' =>"done"
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
 }

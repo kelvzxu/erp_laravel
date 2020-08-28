@@ -1184,13 +1184,14 @@ export default {
       uom : [],
       company: [],
       accounts: false,
+      old_type:null,
     };
   },
   created() {
     const params ={id : atob(this.$route.params.id)};
       axios.get('/api/getProduct/id',{params}).then(response => {
         this.state = response.data.data;
-        console.log(this.state);
+        this.old_type = this.state.type;
       }).catch(error => console.error(error));
   },
   mounted() {
@@ -1255,25 +1256,48 @@ export default {
       // alert("set")
       document.getElementById("picture").src = file;
     },
+    store_quant(){
+      axios.post("/api/Products/quant/store",this.state).then((response)=>{
+        if (response.data.status == "success") {
+          Toast.fire({
+            icon: "success",
+            title: response.data.message,
+          });
+          this.$router.push({ name: "product_index" });
+        } else {
+          Swal.fire({
+            type: "warning",
+            title: "Something went wrong!",
+            text: response.data.message,
+          });
+        }
+      })
+    },
     submit($e) {
       this.state.photo = this.newphoto;
       axios
         .post("/api/Product/update", this.state)
         .then((response) => {
-          if (response.data.status == "success") {
-            Toast.fire({
-              icon: 'success',
-              title: response.data.message,
-            })
-            this.$router.push({name: 'product_index'})
+          if (this.old_type != 'product'){
+            console.log('okk')
+            if (this.state.type == 'product'){
+              this.store_quant();
+            }
           }
-          else{
-            Swal.fire({
-              type: 'warning',
-              title: 'Something went wrong!',
-              text: response.data.message,
-            })
-          }
+            if (response.data.status == "success") {
+              Toast.fire({
+                icon: 'success',
+                title: response.data.message,
+              })
+              this.$router.push({name: 'product_index'})
+            }
+            else{
+              Swal.fire({
+                type: 'warning',
+                title: 'Something went wrong!',
+                text: response.data.message,
+              })
+            }
         })
         .catch((error) => {
           if (error) {
