@@ -7542,6 +7542,7 @@ button.bg-beta:focus {
     color: #FFFFFF;
 }
 
+
 .bg-gamma {
     background-color: #5C5B80 !important;
     color: #FFFFFF;
@@ -26785,4 +26786,263 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
 .o_purchase_dashboard .table>thead>tr>td.o_main>a,
 .o_purchase_dashboard .table tbody>tr>td.o_main>a {
     color: white;
+}
+
+.o_kanban_view #oe_hr_attendance_status {
+    margin-right: .3em;
+}
+
+#oe_hr_attendance_status {
+    color: #f0eeee;
+}
+
+#oe_hr_attendance_status.oe_hr_attendance_status_green {
+    color: #28a745;
+}
+
+#oe_hr_attendance_status.oe_hr_attendance_status_red {
+    color: #dc3545;
+}
+
+.o_hr_attendance_kiosk_backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.o_hr_attendance_clock {
+    display: none;
+    position: relative;
+    width: 100%;
+    padding: 0.5em;
+    background-color: rgba(0, 0, 0, 0.3);
+    font: normal 1.2em SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    color: white;
+}
+
+@media (min-width: 768px) {
+    .o_hr_attendance_clock {
+        position: absolute;
+        top: 20px;
+        left: auto;
+        bottom: auto;
+        right: 20px;
+        width: auto;
+        padding: 3px 10px 3px 10px;
+        border-radius: 3px;
+        font-size: 1.5em;
+    }
+}
+
+.o_hr_attendance_kiosk_mode_container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: column nowrap;
+    flex-flow: column nowrap;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    top: 280px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    
+}
+
+@media (min-width: 768px) {
+    .o_hr_attendance_kiosk_mode_container {
+        justify-content: center;
+    }
+}
+
+.o_hr_attendance_kiosk_mode {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+@media (max-width: 767.98px) {
+    .o_hr_attendance_kiosk_mode {
+        overflow: hidden;
+        padding: 0 2em 2em;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 0 auto;
+        flex: 1 0 auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .o_hr_attendance_kiosk_mode {
+        padding: 2em 4em;
+        width: auto;
+        max-width: 550px;
+        width: 100%;
+        border-radius: 0.2em;
+        font-size: 1.2em;
+        animation: fadeInDownSmall .3s;
+    }
+}
+
+@media (min-width: 768px) {
+    .o_hr_attendance_kiosk_mode .o_hr_attendance_kiosk_welcome_row {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .o_hr_attendance_kiosk_mode .o_hr_attendance_kiosk_welcome_row>div {
+        margin-bottom: 20px;
+    }
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_kiosk_welcome_row img {
+    max-width: 80px;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_sign_in_out_icon {
+    cursor: pointer;
+    margin: 0.1em 0 0.1em;
+    padding: 0.15em 0.3em;
+    border-radius: .1em;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_sign_in_out_icon.btn-secondary:hover {
+    color: #7C7BAD;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_back_button .visible-xs {
+    background: #e9ecef;
+    margin: 0 -2em;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_back_button .visible-xs .fa {
+    position: absolute;
+    top: 0.75em;
+    left: auto;
+    bottom: auto;
+    right: auto;
+    margin-left: -1.5em;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_back_button .d-none.d-md-inline-block.btn-secondary {
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: auto;
+    right: auto;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    padding-left: 14px;
+    line-height: 1.5em;
+    text-align: left;
+    color: #4c4c4c;
+    font-size: 1.6em;
+    z-index: 1;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+.o_hr_attendance_kiosk_mode .btn-secondary {
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_user_badge {
+    background: linear-gradient(to right bottom, #77717e, #c9a8a9);
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_user_badge img {
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 1px solid #d7d7d7;
+}
+
+@media (max-width: 767.98px) {
+    .o_hr_attendance_kiosk_mode .o_hr_attendance_user_badge {
+        margin: 1em -2em 0;
+        background: transparent;
+    }
+}
+
+@media (min-width: 768px) {
+    .o_hr_attendance_kiosk_mode .o_hr_attendance_user_badge {
+        margin: 0;
+        height: 90px;
+        border-radius: .2em .2em 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        position: absolute;
+        top: auto;
+        left: 0;
+        bottom: 100%;
+        right: 0;
+        transform: translateY(3px);
+    }
+
+    .o_hr_attendance_kiosk_mode .o_hr_attendance_user_badge img {
+        width: 80px;
+        height: 80px;
+        transform: translateX(-50%) translateY(35%);
+        position: absolute;
+        top: auto;
+        left: auto;
+        bottom: 0;
+        right: auto;
+    }
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_user_badge+h1 {
+    margin-top: .4em;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_pin_pad [class*="col-"] {
+    padding: 4px;
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_pin_pad [class*="col-"] .o_hr_attendance_PINbox {
+    font-size: 2em;
+    border: none;
+    padding: 0 1rem;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.o_hr_attendance_kiosk_mode .o_hr_attendance_random_message {
+    font-style: italic;
+}
+
+.o_hr_attendance_kiosk_mode .message_demo_barcodes {
+    font-size: 0.9em;
+    margin: 0;
+}
+
+.o_hr_attendance_kiosk_mode img.o_hr_attendance_kiosk_company_image {
+    overflow: hidden;
+    margin: 1rem 0 4rem;
+    width: 200px;
+}
+
+.o_hr_attendance_kiosk_mode p {
+    text-align: left;
+    margin: 3rem 0;
+}
+
+.o_hr_attendance_kiosk_mode>button {
+    font-size: 1.2em;
+    margin-bottom: 2rem;
+    width: 100%;
+    font-weight: 400;
+}
+
+.o_hr_attendance_kiosk_mode>button:last-child {
+    margin-bottom: 0;
 }

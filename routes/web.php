@@ -70,6 +70,10 @@ Route::group(['middleware' => 'auth'], function (){
         return view('setting.company.vue');
     })->where('any', '.*');
 
+    Route::get('/attendance/{any}',function(){
+        return view('setting.company.vue');
+    })->where('any', '.*');
+
     Route::get('/config/web/{any}',function(){
         return view('setting.general.vue');
     })->where('any', '.*');
@@ -81,8 +85,8 @@ Route::group(['middleware' => 'auth'], function (){
     // ==== Attendance ====
     Route::post('/checkin{id}', 'HrAttendanceController@store')->name('checkin');
     Route::post('/checkout{id}', 'HrAttendanceController@update')->name('checkout');
-    Route::get('/attendance', 'HrAttendanceController@index')->name('attendance');
-    Route::get('/attendance/filter', 'HrAttendanceController@search')->name('attendance.filter');
+    Route::get('/attendances', 'HrAttendanceController@index')->name('attendance');
+    Route::get('/attendances/filter', 'HrAttendanceController@search')->name('attendance.filter');
 
     Route::post('chat', 'ChatController@store')->name('chat.store');
     Route::post('chat/join', 'ChatController@join')->name('chat.join');

@@ -72,6 +72,9 @@ import department_create from './views/human_resource/department/create.vue'
 import job_index from './views/human_resource/jobs/index.vue'
 import job_create from './views/human_resource/jobs/create.vue'
 
+// === Attendance ===
+import attendance from './views/attendance/checkin/index.vue'
+
 // === General Settings ===
 import general_setting from './views/base/setting/index.vue'
 
@@ -294,6 +297,11 @@ const router = new VueRouter({
             path: '/hr/job/web/action=136&model=hr.job&view_type=kanban,list&cids=&menu_id=96',
             name: 'job_create',
             component: job_create
+        },
+        {
+            path: '/attendance/web/action=227&cids=1&type=checkin_checkout&menu_id=154',
+            name: 'attendance',
+            component: attendance
         },
         {
             path: '/config/web/action=80&model=res.config.settings&view_type=form&cids=1&menu_id=3',

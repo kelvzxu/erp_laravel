@@ -41,6 +41,13 @@
                         Home
                     </a>
                 </li>
+                <li class="app-sidebar__heading">Attendances</li>
+                <li>
+                    <a href="/attendance/web/action=227&cids=1&type=checkin_checkout&menu_id=154">
+                        <i class="metismenu-icon fa fa-clock-o"></i>
+                        Check In/ Check Out
+                    </a>
+                </li>
                 @if (AccessRight::access()->sales == true)
                 <li class="app-sidebar__heading">Sales</li>
                     <li>
