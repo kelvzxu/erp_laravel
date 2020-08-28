@@ -377,7 +377,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route ('jobs')}}" id="jobs">
+                                <a href="/hr/job/web/model=hr.job&view_type=kanban,list&cids=&menu_id=96">
                                     <i class="metismenu-icon">
                                     </i>Job Positions
                                 </a>
