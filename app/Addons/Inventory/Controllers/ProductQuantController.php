@@ -3,6 +3,7 @@
 namespace App\Addons\Inventory\Controllers;
 
 use App\Http\Controllers\controller as Controller;
+use App\Addons\Inventory\Models\category;
 use App\Addons\Inventory\Models\product;
 use App\Addons\Inventory\Models\product_quant;
 use App\Addons\Inventory\Models\product_warehouse;
@@ -57,6 +58,26 @@ class ProductQuantController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    public function UpdateQuant(Request $request, $products)
+    {
+        $pickingtype = $request->picking_type;
+        if ($pickingtype == "Delivery Orders"){
+            $location = $request->location_id;
+        }
+        $product = product_quant::where('product_id',$products['product_id'])->where('location_id',$location)->first();
+        $quantity = $product->quantity;
+        if ($pickingtype == "Delivery Orders"){
+            $product->update([
+                'quantity' => $quantity - $products['done_qty'],
+            ]);
+        }
+        if ($pickingtype == "Receipts"){
+            $product->update([
+                'quantity' => $quantity + $products['done_qty'],
             ]);
         }
     }

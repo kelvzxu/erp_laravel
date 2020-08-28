@@ -12145,7 +12145,7 @@ html .o_web_client {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
-    background-image: white;
+    /* background-image: white; */
     -webkit-flex-flow: column nowrap;
     flex-flow: column nowrap;
 }

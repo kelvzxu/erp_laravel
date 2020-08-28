@@ -67,15 +67,6 @@
                 </button>
                 <button
                   type="button"
-                  name="action_assign"
-                  class="btn btn-primary o_invisible_modifier"
-                  data-original-title
-                  title
-                >
-                  <span>Check Availability</span>
-                </button>
-                <button
-                  type="button"
                   v-if="state.state == 'Ready'"
                   class="btn btn-primary"
                   @click="validate"
@@ -93,39 +84,10 @@
                 </button>
                 <button
                   type="button"
-                  name="500"
-                  class="btn btn-secondary o_invisible_modifier"
-                  data-original-title
-                  title
-                >
-                  <span>Print</span>
-                </button>
-                <button
-                  type="button"
-                  name="520"
-                  class="btn btn-secondary o_invisible_modifier"
-                  data-original-title
-                  title
+                  v-if="state.state == 'Done'"
+                  class="btn btn-secondary"
                 >
                   <span>Return</span>
-                </button>
-                <button
-                  type="button"
-                  name="do_unreserve"
-                  class="btn btn-secondary"
-                  data-original-title
-                  title
-                >
-                  <span>Unreserve</span>
-                </button>
-                <button
-                  type="button"
-                  name="button_scrap"
-                  class="btn btn-secondary"
-                  data-original-title
-                  title
-                >
-                  <span>Scrap</span>
                 </button>
                 <button
                   type="button"

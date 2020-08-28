@@ -107,7 +107,7 @@
       </div>
 
       <div class="o_content o_controller_with_searchpanel">
-        <div class="o_search_panel">
+        <div class="o_search_panel d-none d-md-block" style="height:100vh">
           <section class="o_search_panel_section o_search_panel_category">
             <header class="o_search_panel_section_header text-uppercase">
               <i class="mr-1 fa fa-users o_search_panel_section_icon" style></i>

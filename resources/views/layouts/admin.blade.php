@@ -275,7 +275,7 @@
         <div class="app-main">
             @include('layouts.sidebar')
             <div class="app-main__outer">
-                <div class="o_web_client bg-white">
+                <div class="o_web_client">
                     @yield('content')
                 </div>
                 <!-- <div class="app-wrapper-footer">

@@ -14,7 +14,7 @@ class StockPickingsController extends Controller
         try{
             $request = stock_picking::findOrFail($id);
             if ($request->picking_type == 'Delivery Orders'){
-                $response = stock_picking::with('picking_line','picking_line.product','responsible','company','sales_order','sales_order.partner','sales_warehouse')->findOrFail ($id);
+                $response = stock_picking::with('picking_line','picking_line.product','responsible','company','sales_order','sales_order.partner','sales_order.products','sales_warehouse')->findOrFail ($id);
             }
             if ($request->picking_type == 'Receipts'){
                 $response = stock_picking::with('picking_line','picking_line.product','responsible','company','purchases_order','purchases_order.partner','purchases_warehouse')->findOrFail ($id);
@@ -159,9 +159,13 @@ class StockPickingsController extends Controller
         try{
             foreach ($request->picking_line as $products){
                 stock_picking_line::find($products['id'])->update($products);
+                $type = $products['product']['type'];
+                if ($type == "product"){
+                    app(ProductQuantController::class)->UpdateQuant($request,$products,);
+                }
             }
             stock_picking::findOrFail($request->id)->update([
-                'state' =>"done"
+                'state' =>"Done"
             ]);
         } catch (\Exception $e) {
             return response()->json([

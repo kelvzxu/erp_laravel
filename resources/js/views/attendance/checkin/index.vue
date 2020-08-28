@@ -11,7 +11,7 @@
             <div class="o_hr_attendance_user_badge o_home_menu_background">
               <img
                 class="img rounded-circle"
-                src="/web/image?model=hr.employee&amp;field=image_128&amp;id=1"
+                src="/images/icons/avatar.png"
                 title="Kelvin Leonardi"
                 alt="Kelvin Leonardi"
               />

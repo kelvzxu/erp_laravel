@@ -96,6 +96,11 @@ class ProductController extends Controller
             ]);
         }
     }
+
+    public function UpdateCost(Request $request){
+        echo "update Costing";
+    }
+
     public function searchapi(Request $request)
     {
         $this->validate($request, [
