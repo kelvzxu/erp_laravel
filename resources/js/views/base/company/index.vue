@@ -3,7 +3,10 @@
     <div class="o_control_panel">
       <div>
         <ol class="breadcrumb" role="navigation">
-          <li class="breadcrumb-item" accesskey="b">
+          <li class="breadcrumb-item">
+            <router-link class="text-primary" :to="{ name:'general_setting' }">General Settings</router-link>
+          </li>
+          <li class="breadcrumb-item">
             <router-link class="text-primary" :to="{ name:'company_index' }">Companies</router-link>
           </li>
         </ol>

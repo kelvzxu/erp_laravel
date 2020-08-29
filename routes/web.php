@@ -71,7 +71,11 @@ Route::group(['middleware' => 'auth'], function (){
     })->where('any', '.*');
 
     Route::get('/attendance/{any}',function(){
-        return view('setting.company.vue');
+        return view('attendance.vue');
+    })->where('any', '.*');
+
+    Route::get('/language/{any}',function(){
+        return view('setting.language.vue');
     })->where('any', '.*');
 
     Route::get('/config/web/{any}',function(){

@@ -3,9 +3,12 @@
     <div class="o_action o_view_controller">
       <div class="o_cp_controller">
         <div class="o_control_panel">
-          <div> 
+          <div>
             <ol class="breadcrumb" role="navigation">
-              <li class="breadcrumb-item" accesskey="b">
+              <li class="breadcrumb-item">
+                <router-link class="text-primary" :to="{ name:'general_setting' }">General Settings</router-link>
+              </li>
+              <li class="breadcrumb-item">
                 <router-link class="text-primary" :to="{ name:'company_index' }">Companies</router-link>
               </li>
               <li class="breadcrumb-item active">New</li>
@@ -24,7 +27,7 @@
                     title
                   >
                     <button
-                      type="submit"
+                      @click="store"
                       class="btn btn-primary text-white o_form_button_save"
                       accesskey="s"
                     >Save</button>
@@ -87,7 +90,7 @@
                     class="o_field_partner_autocomplete dropdown open o_field_widget o_required_modifier"
                     name="name"
                   >
-                    <input class="o_input" placeholder type="text" v-model="state.name" />
+                    <input class="o_input" placeholder type="text" v-model="state.company_name" />
                   </div>
                 </h1>
               </div>
@@ -580,7 +583,7 @@ export default {
   data() {
     return {
       state: {
-        name: "",
+        company_name: "",
         parent_id: null,
         country_id: null,
         state_id: null,
@@ -652,6 +655,12 @@ export default {
       if (this.state.country_id == null) this.fetchState();
       else this.getState(this.state.country_id);
     },
+    getState(value) {
+      const url = "/api/state/search?data=" + value;
+      axios.get(url).then((response) => {
+        this.country_state = response.data.data;
+      });
+    },
     onChangeCountry() {
       this.prepare_country_state();
     },
@@ -670,6 +679,38 @@ export default {
     },
     set_image(file) {
       document.getElementById("picture").src = file;
+    },
+    store() {
+      axios
+        .post("/api/company/store", this.state)
+        .then((response) => {
+          if (response.data.status == "success") {
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$router.push({ name: "company_index" });
+          } else {
+            Swal.fire({
+              type: "warning",
+              title: "Something went wrong!",
+              text: response.data.message,
+            });
+          }
+        })
+        .catch((error) => {
+          if (error) {
+            if (error.response.status == 422) {
+              var error = error.response.data.errors;
+              error = error[Object.keys(error)[0]];
+              Swal.fire({
+                type: "warning",
+                title: "Something went wrong!",
+                text: error[0],
+              });
+            }
+          }
+        });
     },
   },
 };

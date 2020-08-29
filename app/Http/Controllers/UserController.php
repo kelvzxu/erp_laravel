@@ -40,4 +40,35 @@ class UserController extends Controller
             'result' => []
         ]);
     }
+
+    public function CountInternalUser()
+    {
+        try {
+            $response = User::with('type')->where('user_type',1)->count();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
+    public function CountPortalUser()
+    {
+        try {
+            $response = User::with('type')->where('user_type',2)->count();
+            return response()->json([
+                'status' => 'success',
+                'result' => $response
+            ], 200);
+        } catch (\Exception $e){
+            return response()->json([
+                'status' => 'failed',
+                'result' => []
+            ]);
+        }
+    }
 }
