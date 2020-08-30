@@ -10,7 +10,7 @@ class purchases_order extends Model
 {
     protected $fillable = [
         'order_no','order_date','confirm_date','expiration','vendor','vendor_reference','sub_total',
-        'discount','taxes','grand_total','invoice','state','receipt','receipt_validate','product_warehouse_id',
+        'discount','taxes','grand_total','invoice','state','picking','picking_validate','product_warehouse_id',
         'company_id','note','is_locked','shipping_policy','merchandise',
     ];
 

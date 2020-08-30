@@ -113,7 +113,7 @@ class SalesOrdersController extends Controller
                                                         'delivery_qty'=>$product['done_qty']
                                                     ]);
             }
-            $orders = sales_order::where('id',$request->id)->first()->update([
+            $orders = sales_order::where('id',$request->order_id)->first()->update([
                 'picking_validate'=>true,
             ]);
             return response()->json([
@@ -126,8 +126,6 @@ class SalesOrdersController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-
-
     }
 
     public function getSalesOrder($id)

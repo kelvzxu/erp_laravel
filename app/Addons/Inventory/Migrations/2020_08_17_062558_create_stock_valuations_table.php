@@ -17,7 +17,7 @@ class CreateStockValuationsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('company_id')->nullable()->default(1);
             $table->integer('product_id')->nullable();
-            $table->integer('quantity')->default(0);
+            $table->double('quantity')->default(0);
             $table->integer('unit_cost')->default(0);
             $table->integer('value')->default(0);
             $table->integer('remaining_qty')->default(0);

@@ -17,7 +17,7 @@ class CreateStockMovesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('company_id')->nullable()->default(1);
             $table->integer('product_id')->nullable();
-            $table->integer('quantity')->default(0);
+            $table->double('quantity')->default(0);
             $table->integer('product_uom')->default(0);
             $table->integer('location_id')->default(0);
             $table->integer('location_destination')->default(0);

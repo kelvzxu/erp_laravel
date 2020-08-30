@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Addons\Inventory\Models\stock_picking;
 use App\Addons\Inventory\Models\stock_picking_line;
 use App\Addons\Sales\Controllers\SalesOrdersController;
+use App\Addons\Purchase\Controllers\PurchasesOrdersController;
 use App\Http\Controllers\controller as Controller;
 use Inventory;
 
@@ -171,6 +172,8 @@ class StockPickingsController extends Controller
             }
             if ($request->picking_type == "Delivery Orders"){
                 app(SalesOrdersController::class)->updateDelivery($request);
+            } else if ($request->picking_type == "Receipts"){
+                app(PurchasesOrdersController::class)->updateReceipt($request);
             }
             stock_picking::findOrFail($request->id)->update([
                 'state' =>"Done"

@@ -14,11 +14,13 @@ class StockMovesController extends Controller
         $pickingtype = $request->picking_type;
         if ($pickingtype == "Delivery Orders"){
             $location =  product_warehouse::findorFail($request->location_id);
+            $location = $location->name;
             $destination = $request->origin;
         }
         if ($pickingtype == "Receipts"){
             $location =  $request->origin;
-            $destination =  product_warehouse::findorFail($request->location_id);
+            $destination =  product_warehouse::findorFail($request->destination_id);
+            $destination = $destination->name;
         }
         $data = [
             'company_id'=>$request->company_id,
@@ -27,7 +29,7 @@ class StockMovesController extends Controller
             'product_uom'=>$products['product_uom'],
             'location_id'=>$request->location_id,
             'location_destination'=>$request->destination_id,
-            'location_name'=>$location->name,
+            'location_name'=>$location,
             'location_destination_name'=>$destination,
             'partner_id'=>$request->partner_id,
             'state'=>'done',
