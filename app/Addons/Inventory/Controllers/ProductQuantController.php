@@ -68,6 +68,9 @@ class ProductQuantController extends Controller
         if ($pickingtype == "Delivery Orders"){
             $location = $request->location_id;
         }
+        if ($pickingtype == "Receipts"){
+            $location = $request->destination_id;
+        }
         $product = product_quant::where('product_id',$products['product_id'])->where('location_id',$location)->first();
         $quantity = $product->quantity;
         if ($pickingtype == "Delivery Orders"){

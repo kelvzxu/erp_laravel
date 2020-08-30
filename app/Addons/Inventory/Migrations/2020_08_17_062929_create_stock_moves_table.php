@@ -18,12 +18,13 @@ class CreateStockMovesTable extends Migration
             $table->integer('company_id')->nullable()->default(1);
             $table->integer('product_id')->nullable();
             $table->integer('quantity')->default(0);
-            $table->integer('product_uom_qty')->default(0);
             $table->integer('product_uom')->default(0);
             $table->integer('location_id')->default(0);
             $table->integer('location_destination')->default(0);
+            $table->string('location_name')->nullable();
+            $table->string('location_destination_name')->nullable();
             $table->integer('partner_id')->default(0);
-            $table->string('state')->default('DRAFT');
+            $table->string('state')->default('draft');
             $table->string('type');
             $table->string('reference')->nullable();
             $table->integer('create_uid')->nullable();

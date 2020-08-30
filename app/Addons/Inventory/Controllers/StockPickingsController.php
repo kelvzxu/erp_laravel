@@ -4,6 +4,7 @@ namespace App\Addons\Inventory\Controllers;
 use Illuminate\Http\Request;
 use App\Addons\Inventory\Models\stock_picking;
 use App\Addons\Inventory\Models\stock_picking_line;
+use App\Addons\Sales\Controllers\SalesOrdersController;
 use App\Http\Controllers\controller as Controller;
 use Inventory;
 
@@ -161,11 +162,22 @@ class StockPickingsController extends Controller
                 stock_picking_line::find($products['id'])->update($products);
                 $type = $products['product']['type'];
                 if ($type == "product"){
-                    app(ProductQuantController::class)->UpdateQuant($request,$products,);
+                    app(ProductQuantController::class)->UpdateQuant($request,$products);
                 }
+                if ($products['done_qty'] > 0){
+                    app(StockMovesController::class)->store($request,$products);
+                    app(StockValuationController::class)->store($request,$products);
+                }
+            }
+            if ($request->picking_type == "Delivery Orders"){
+                app(SalesOrdersController::class)->updateDelivery($request);
             }
             stock_picking::findOrFail($request->id)->update([
                 'state' =>"Done"
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "$request->name Validate Successfully",
             ]);
         } catch (\Exception $e) {
             return response()->json([

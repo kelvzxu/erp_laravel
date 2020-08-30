@@ -63,7 +63,7 @@
                   <button v-if="state.state == 'Quotation'" type="button" class="btn btn-primary" @click="confirm_order">
                     <span>Confirm</span>
                   </button>
-                  <button v-if="state.state == 'sale' && state.receipt == false" type="button" class="btn btn-primary" @click="delivere_process">
+                  <button v-if="state.state == 'sale' && state.picking == false" type="button" class="btn btn-primary" @click="delivere_process">
                     <span>Delivery</span>
                   </button>
                   <button type="button" class="btn btn-secondary">
@@ -75,41 +75,25 @@
                   name="authorized_transaction_ids"
                   id="o_field_input_6402"
                 ></div>
-                <div v-if="state.state == 'Quotation'" class="o_statusbar_status o_field_widget o_readonly_modifier" name="state">
+                <div class="o_statusbar_status o_field_widget o_readonly_modifier" name="state">
                   <button
+                    v-if="state.state == 'sale'"
                     type="button"
-                    data-value="sale"
-                    disabled="disabled"
-                    title="Not active state"
-                    aria-pressed="false"
+                    class="btn o_arrow_button btn-primary disabled"
+                  >Sales Order</button>
+                  <button
+                    v-else
+                    type="button"
                     class="btn o_arrow_button btn-secondary disabled"
                   >Sales Order</button>
                   <button
+                    v-if="state.state == 'Quotation'"
                     type="button"
-                    data-value="draft"
-                    disabled="disabled"
-                    title="Current state"
-                    aria-pressed="true"
                     class="btn o_arrow_button btn-primary disabled"
-                    aria-current="step"
                   >Quotation</button>
-                </div>
-                <div v-if="state.state == 'sale'" class="o_statusbar_status o_field_widget o_readonly_modifier" name="state">
                   <button
+                    v-else
                     type="button"
-                    data-value="draft"
-                    disabled="disabled"
-                    title="Current state"
-                    aria-pressed="true"
-                    class="btn o_arrow_button btn-primary disabled"
-                    aria-current="step"
-                  >Sales Order</button>
-                  <button
-                    type="button"
-                    data-value="sale"
-                    disabled="disabled"
-                    title="Not active state"
-                    aria-pressed="false"
                     class="btn o_arrow_button btn-secondary disabled"
                   >Quotation</button>
                 </div>

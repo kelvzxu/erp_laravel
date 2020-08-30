@@ -87,13 +87,14 @@ Route::group(['namespace' => '\App\Addons\Accounting\Controllers'], function()
 // ==== Sales ====
 Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
 {
-    Route::get('/sale/list', 'SalesOrdersController@fetchSalesOrder');
-    Route::post('/sale/store', 'SalesOrdersController@store');
-    Route::post('/sale/update', 'SalesOrdersController@update');
-    Route::post('/sale/confirm', 'SalesOrdersController@confirm');
-    Route::post('/sale/delivere', 'SalesOrdersController@delivere');
-    Route::get('/sale/analysis', 'SalesOrdersController@sales_analysis');
-    Route::get('/sale/search/{id}', 'SalesOrdersController@getSalesOrder');
+    Route::get('sale/list', 'SalesOrdersController@fetchSalesOrder');
+    Route::post('sale/store', 'SalesOrdersController@store');
+    Route::post('sale/update', 'SalesOrdersController@update');
+    Route::post('sale/update/delivery', 'SalesOrdersController@updateDelivery');
+    Route::post('sale/confirm', 'SalesOrdersController@confirm');
+    Route::post('sale/delivere', 'SalesOrdersController@delivere');
+    Route::get('sale/analysis', 'SalesOrdersController@sales_analysis');
+    Route::get('sale/search/{id}', 'SalesOrdersController@getSalesOrder');
 });
 
 // ==== Purchases ====
