@@ -15,6 +15,8 @@ class CreateResCompaniesUsersRelTable extends Migration
     {
         Schema::create('res_companies_users_rel', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('user_id');
+            $table->string('company_id');
             $table->timestamps();
         });
     }
