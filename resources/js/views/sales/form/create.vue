@@ -297,6 +297,13 @@
                                     class="o_column_sortable o_list_number_th"
                                     title="Quantity"
                                     style="width: 92px;"
+                                  >Quantity</th>
+                                  <th
+                                    data-name="product_uom_qty"
+                                    tabindex="-1"
+                                    class="o_column_sortable o_list_number_th"
+                                    title="Quantity"
+                                    style="width: 92px;"
                                   >UoM</th>
                                   <th
                                     data-name="price_unit"
@@ -366,8 +373,14 @@
                                   <td class="o_data_cell o_field_cell o_list_number" tabindex="-1">
                                     <input
                                       class="o_field_float o_field_number o_field_widget o_input"
-                                      @change="compute_total(product)"
-                                      v-model="product.qty"
+                                      @change="compute_qty(product,$event)"
+                                      :value="product.qty"
+                                    />
+                                  </td>
+                                  <td class="o_data_cell o_field_cell o_list_number" tabindex="-1">
+                                    <input
+                                      class="o_field_float o_field_number o_field_widget o_input"
+                                      v-model="product.product_uom_qty"
                                     />
                                   </td>
                                   <td
@@ -390,14 +403,14 @@
                                     <input
                                       class="o_field_float o_field_number o_field_widget o_input"
                                       name="price_unit"
-                                      @change="compute_total(product)"
+                                      @change="compute_price(product)"
                                       v-model="product.price"
                                     />
                                   </td>
                                   <td class="o_data_cell o_field_cell o_list_number" tabindex="-1">
                                     <input
                                       type="text"
-                                      @change="compute_total(product)"
+                                      @change="compute_price(product)"
                                       class="o_field_float o_field_number o_field_widget o_input"
                                       v-model="product.taxes"
                                     />
@@ -418,12 +431,12 @@
                               <tfoot>
                                 <tr class="bg-white">
                                   <td></td>
-                                  <td colspan="7" class="o_field_x2many_list_row_add">
+                                  <td colspan="8" class="o_field_x2many_list_row_add">
                                     <span @click="addLine" class="text-primary">Add a product</span>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td colspan="8"></td>
+                                  <td colspan="9"></td>
                                 </tr>
                               </tfoot>
                               <i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
@@ -787,6 +800,7 @@ export default {
             price: 0,
             qty: 1,
             taxes: 0,
+            product_uom_qty:1,
             product_uom: 0,
             product_uom_category: 0,
             price_tax: 0,
@@ -824,6 +838,7 @@ export default {
         description: "",
         price: 0,
         qty: 1,
+        product_uom_qty: 1,
         taxes: 0,
         product_uom: 0,
         product_uom_category: 0,
@@ -899,6 +914,7 @@ export default {
             description: `[${this.result.code}] ${this.result.name}`,
             price: this.result.price,
             qty: 1,
+            product_uom_qty: 1,
             product_uom: this.result.uom.id,
             product_uom_category: this.result.uom.category_id,
             taxes: this.result.tax_id,
@@ -944,6 +960,10 @@ export default {
     },
     onChangeUom(self, $event) {
       this.new_uom = event.target.value;
+      this.task = 'compute_price_uom';
+      this.search_uom(self, this.new_uom, this.task)
+    },
+    search_uom(self, uom, task){
       axios
         .get(`/api/uom/get_uom/${this.new_uom}`)
         .then((response) => {
@@ -960,8 +980,37 @@ export default {
                 "The default Unit of Measure and the sale Unit of Measure must be in the same category.",
             });
           } else {
-            this.compute_PriceUom(self, this.type, this.factor, this.new_uom);
+            if (task != 'compute_uom_qty'){
+              this.compute_PriceUom(self, this.type, this.factor, this.new_uom);
+            }
+            this.compute_Uom_Qty(self, this.type, this.factor, this.new_uom);
           }
+        })
+        .catch((error) => console.error(error));
+    },
+    compute_Uom_Qty(self, uom_type, factor, new_uom) {
+      const params = { id: self.name };
+      axios
+        .get("/api/getProduct/id", { params })
+        .then((response) => {
+          this.value = response.data.data;
+          this.price = this.value.price;
+          axios
+            .get(`/api/uom/get_uom/${self.product_uom}`)
+            .then((response) => {
+              this.result = response.data.result;
+              this.type = this.result.uom_type;
+              this.factor = this.result.factor;
+              if (this.type == "reference") {
+                self.product_uom_qty = (self.product_uom_qty / factor).toFixed(0);
+                console.log(self.product_uom_qty)
+              } else {
+                this.uom_qty = (self.product_uom_qty * this.factor).toFixed(0);
+                self.product_uom_qty = (this.uom_qty  / factor).toFixed(0);
+                console.log(self.product_uom_qty)
+              }
+            })
+            .catch((error) => console.error(error));
         })
         .catch((error) => console.error(error));
     },
@@ -980,18 +1029,35 @@ export default {
               this.factor = this.result.factor;
               if (this.type == "reference") {
                 self.price = (self.price / factor).toFixed(0);
-                self.product_uom = new_uom;
                 this.compute_total(self);
+                self.product_uom = new_uom;
               } else {
                 this.reference_price = (self.price * this.factor).toFixed(0);
                 self.price = (this.reference_price / factor).toFixed(0);
-                self.product_uom = new_uom;
                 this.compute_total(self);
+                self.product_uom = new_uom;
               }
             })
             .catch((error) => console.error(error));
         })
         .catch((error) => console.error(error));
+    },
+    compute_qty(product){
+      this.new_qty = event.target.value;
+      if (this.new_qty > product.qty){ 
+        console.log('besar')
+        product.qty = this.new_qty
+        product.product_uom_qty = product.qty * product.product_uom_qty
+      }
+      if (this.new_qty < product.qty){
+        this.factor = product.product_uom_qty / product.qty
+        product.qty = this.new_qty
+        product.product_uom_qty = product.qty * this.factor
+      }
+      this.compute_total(product)
+    },
+    compute_price(product){
+      this.compute_total(product)
     },
     compute_total(product) {
       product.price_subtotal = product.qty * product.price;
