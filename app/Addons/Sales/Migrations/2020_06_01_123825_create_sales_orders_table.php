@@ -27,8 +27,8 @@ class CreateSalesOrdersTable extends Migration
             $table->bigInteger('grand_total')->nullable();
             $table->boolean('invoice')->default(False);
             $table->string('state')->default("Quotation");
-            $table->boolean('receipt')->default(False);
-            $table->boolean('receipt_validate')->default(False);
+            $table->boolean('picking')->default(False);
+            $table->boolean('picking_validate')->default(False);
             $table->integer('product_warehouse_id')->nullable();
             $table->integer('company_id')->nullable();
             $table->string('note')->nullable();

@@ -136,6 +136,32 @@ class PurchasesOrdersController extends Controller
         ]);
     }
 
+    public function updateReceipt(Request $request)
+    {
+        try{
+            foreach ($request->picking_line as $product){
+                $order_line = purchases_order_products::where('name',$product['product_id'])
+                                                    ->where('purchases_order_id',$request->order_id)
+                                                    ->where('qty',$product['qty'])
+                                                    ->update([
+                                                        'receipt_qty'=>$product['done_qty']
+                                                    ]);
+            }
+            $orders = purchases_order::where('id',$request->order_id)->first()->update([
+                'picking_validate'=>true,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => "Successfully"
+            ]);
+        }catch (\Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function confirm(Request $request)
     {
         try{
@@ -159,7 +185,7 @@ class PurchasesOrdersController extends Controller
     {
         try{
             $orders = purchases_order::findOrFail($request->id)->update([
-                'receipt'=>true,
+                'picking'=>true,
             ]);
             return response()->json([
                 'status' => 'success',

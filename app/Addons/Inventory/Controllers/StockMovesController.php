@@ -4,83 +4,39 @@ namespace App\Addons\Inventory\Controllers;
 
 use App\Http\Controllers\controller as Controller;
 use App\Addons\Inventory\Models\stock_move;
+use App\Addons\Inventory\Models\product_warehouse;
 use Illuminate\Http\Request;
 
 class StockMovesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function store(Request $request, $products)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\stock_move  $stock_move
-     * @return \Illuminate\Http\Response
-     */
-    public function show(stock_move $stock_move)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\stock_move  $stock_move
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(stock_move $stock_move)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\stock_move  $stock_move
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, stock_move $stock_move)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\stock_move  $stock_move
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(stock_move $stock_move)
-    {
-        //
+        $pickingtype = $request->picking_type;
+        if ($pickingtype == "Delivery Orders"){
+            $location =  product_warehouse::findorFail($request->location_id);
+            $location = $location->name;
+            $destination = $request->origin;
+        }
+        if ($pickingtype == "Receipts"){
+            $location =  $request->origin;
+            $destination =  product_warehouse::findorFail($request->destination_id);
+            $destination = $destination->name;
+        }
+        $data = [
+            'company_id'=>$request->company_id,
+            'product_id'=>$products['product_id'],
+            'quantity'=>$products['done_qty'],
+            'product_uom'=>$products['product_uom'],
+            'location_id'=>$request->location_id,
+            'location_destination'=>$request->destination_id,
+            'location_name'=>$location,
+            'location_destination_name'=>$destination,
+            'partner_id'=>$request->partner_id,
+            'state'=>'done',
+            'type'=>$request->picking_type,
+            'reference'=>$request->name,
+            'create_uid'=>$request->create_uid,
+        ];
+        stock_move::create($data);
     }
 }

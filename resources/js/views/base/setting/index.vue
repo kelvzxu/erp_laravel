@@ -10,7 +10,10 @@
               <div class="title mb0 mt4 d-none d-md-block">
                 <ol class="breadcrumb" role="navigation">
                   <li class="breadcrumb-item" accesskey="b">
-                    <router-link class="text-primary" :to="{ name:'general_setting' }">General Settings</router-link>
+                    <router-link
+                      class="text-primary"
+                      :to="{ name:'general_setting' }"
+                    >General Settings</router-link>
                   </li>
                 </ol>
               </div>
@@ -61,12 +64,10 @@
                         <span class="fa fa-lg fa-users"></span>
                         <span
                           class="o_field_integer o_field_number o_field_widget o_readonly_modifier w-auto pl-3 font-weight-bold"
-                        >2</span>
-                        <span
-                          class="o_form_label"
-                        >Internal Users</span>
+                        >{{data.internaluser}}</span>
+                        <span class="o_form_label">Internal Users</span>
                         <br />
-                        <a 
+                        <a
                           href="/User/InternalUser"
                           class="btn btn-link o_web_settings_access_rights"
                         >
@@ -80,15 +81,10 @@
                         <span class="fa fa-lg fa-users"></span>
                         <span
                           class="o_field_integer o_field_number o_field_widget o_readonly_modifier w-auto pl-3 font-weight-bold"
-                        >2</span>
-                        <span
-                          class="o_form_label"
-                        >Portal Users</span>
+                        >{{data.portaluser}}</span>
+                        <span class="o_form_label">Portal Users</span>
                         <br />
-                        <a 
-                          href="/User/Portal"
-                          class="btn btn-link o_web_settings_access_rights"
-                        >
+                        <a href="/User/Portal" class="btn btn-link o_web_settings_access_rights">
                           <i class="fa fa-fw o_button_icon fa-arrow-right"></i>
                           <span>Manage Users</span>
                         </a>
@@ -130,12 +126,13 @@
                     </div>
                     <div class="col-12 col-lg-6 o_setting_box">
                       <div class="o_setting_right_pane">
+                        <span class="fa fa-lg fa-building-o"></span>
                         <span
                           class="o_field_integer o_field_number o_field_widget o_readonly_modifier w-auto pl-1 font-weight-bold"
                           name="company_count"
                           data-original-title
                           title
-                        >1</span>
+                        >{{data.company}}</span>
                         <span class="o_form_label">Companies</span>
                         <br />
                         <div class="mt8">
@@ -163,21 +160,168 @@
                             name="language_count"
                             data-original-title
                             title
-                          >1</span>
+                          >{{data.lang}}</span>
                           <span class="o_form_label">Languages</span>
                         </div>
                         <div class="mt8">
-                          <button
+                          <router-link
                             type="button"
-                            name="55"
+                            :to="{ name:'lang_index' }"
                             class="btn btn-link"
-                            data-original-title
-                            title
                           >
                             <i class="fa fa-fw o_button_icon fa-arrow-right"></i>
                             <span>Manage Languages</span>
-                          </button>
+                          </router-link>
                         </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="currencies">
+                  <h2>Currencies</h2>
+                  <div class="row o_settings_container mt16">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                      <div class="o_setting_left_pane"></div>
+                      <div class="o_setting_right_pane">
+                        <span class="o_form_label">
+                          <span class="highlighter"></span>Main Currency
+                        </span>
+                        <span
+                          class="fa fa-lg fa-building-o"
+                          title="Values set here are company-specific."
+                          aria-label="Values set here are company-specific."
+                          role="img"
+                        ></span>
+                        <div class="text-muted">Main currency of your company</div>
+                        <div class="content-group">
+                          <div class="mt16 row">
+                            <label
+                              class="o_form_label col-3 col-lg-3 o_light_label"
+                              for="o_field_input_121"
+                              data-original-title
+                              title
+                            >Currency</label>
+                            <div class="o_field_widget o_field_many2one o_required_modifier">
+                              <select
+                                v-model="state.default_currency"
+                                class="o_input ui-autocomplete-input"
+                              >
+                                <option :select="state.default_currency" :value="null"></option>
+                                <option
+                                  v-for="row in currency"
+                                  :select="row.id == state.default_currency"
+                                  :key="row.id"
+                                  :value="row.id"
+                                >{{ row.currency_name }} ({{ row.symbol }})</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box">
+                      <div class="o_setting_left_pane">
+                        <div
+                          class="o_field_boolean o_field_widget custom-control custom-checkbox"
+                          name="group_multi_currency"
+                        >
+                          <input
+                            type="checkbox"
+                            id="o_field_input_160"
+                            class="custom-control-input"
+                            @change="mutli_currency"
+                          />
+                          <label for="o_field_input_160" class="custom-control-label">&#8203;</label>
+                        </div>
+                      </div>
+                      <div class="o_setting_right_pane">
+                        <label
+                          class="o_form_label"
+                          for="o_field_input_160"
+                          data-original-title
+                          title
+                        >
+                          <span class="highlighter"></span>Multi-Currencies
+                        </label>
+                        <div class="text-muted">Record transactions in foreign currencies</div>
+                        <div class="content-group" v-if="state.mutli_currency == true">
+                          <div class="mt8">
+                            <button
+                              type="button"
+                              name="71"
+                              class="btn btn-link"
+                              data-original-title
+                              title
+                            >
+                              <i class="fa fa-fw o_button_icon fa-arrow-right"></i>
+                              <span>Activate Other Currencies</span>
+                            </button>
+                          </div>
+                          <div class="row mt16 o_invisible_modifier">
+                            <label
+                              class="o_form_label col-lg-3 o_light_label"
+                              for="o_field_input_161"
+                              data-original-title
+                              title
+                            >
+                              <span class="highlighter"></span>Exchange Gain or Loss Journal
+                            </label>
+                            <div
+                              class="o_field_widget o_field_many2one o_with_button"
+                              aria-atomic="true"
+                              name="currency_exchange_journal_id"
+                            >
+                              <div class="o_input_dropdown">
+                                <input
+                                  type="text"
+                                  class="o_input ui-autocomplete-input"
+                                  autocomplete="off"
+                                  id="o_field_input_161"
+                                />
+                                <a role="button" class="o_dropdown_button" draggable="false"></a>
+                              </div>
+                              <button
+                                type="button"
+                                class="fa fa-external-link btn btn-secondary o_external_button"
+                                tabindex="-1"
+                                draggable="false"
+                                aria-label="External link"
+                                title="External link"
+                              ></button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="col-12 col-lg-6 o_setting_box o_invisible_modifier"
+                      attrs="{'invisible': [('group_multi_currency', '=', False)]}"
+                    >
+                      <div class="o_setting_left_pane">
+                        <div
+                          class="o_field_boolean o_field_widget custom-control custom-checkbox"
+                          name="module_currency_rate_live"
+                        >
+                          <input type="checkbox" id="checkbox-1125" class="custom-control-input" />
+                          <label for="checkbox-1125" class="custom-control-label">&#8203;</label>
+                        </div>
+                      </div>
+                      <div class="o_setting_right_pane">
+                        <label
+                          class="o_form_label"
+                          for="o_field_input_162"
+                          data-original-title
+                          title
+                        >
+                          Automatic Currency Rates&nbsp;
+                          <span
+                            class="badge badge-primary oe_inline o_enterprise_label"
+                          >Enterprise</span>
+                        </label>
+                        <div
+                          class="text-muted"
+                          id="update_currency_live"
+                        >Update exchange rates automatically</div>
                       </div>
                     </div>
                   </div>
@@ -309,10 +453,6 @@
                       </div>
                     </div>
                   </div>
-                </div>
-                <div id="statistics">
-                  <h2>Statistics</h2>
-                  <div class="row mt16 o_settings_container" id="statistics_div"></div>
                 </div>
                 <div id="contacts_settings">
                   <h2>Contacts</h2>
@@ -711,7 +851,9 @@
                           title
                         >
                           Inter-Company Transactions&nbsp;
-                          <span class="badge badge-primary oe_inline o_enterprise_label">Enterprise</span>
+                          <span
+                            class="badge badge-primary oe_inline o_enterprise_label"
+                          >Enterprise</span>
                         </label>
                         <span
                           class="fa fa-lg fa-building-o o_invisible_modifier"
@@ -1056,11 +1198,17 @@
                           </a>
                         </div>
                         <div>
-                          <a class="d-block mx-auto"
-                            href="https://laravel.com/"
-                            target="blank">
-                              <img class="mark" v-bind:src="'/images/logo/logomark.min.svg'" alt="Laravel">
-                              <img class="type" v-bind:src="'/images/logo/logotype.min.svg'" alt="Laravel">
+                          <a class="d-block mx-auto" href="https://laravel.com/" target="blank">
+                            <img
+                              class="mark"
+                              v-bind:src="'/images/logo/logomark.min.svg'"
+                              alt="Laravel"
+                            />
+                            <img
+                              class="type"
+                              v-bind:src="'/images/logo/logotype.min.svg'"
+                              alt="Laravel"
+                            />
                           </a>
                         </div>
                       </div>
@@ -1110,7 +1258,81 @@
     </div>
   </div>
 </template>
-
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      data: {
+        lang: null,
+      },
+      state: {
+        mutli_currency: false,
+        default_currency: null,
+      },
+      currency: {},
+    };
+  },
+  mounted() {
+    this.prepare_data();
+    this.fetchCurrency();
+  },
+  methods: {
+    prepare_data() {
+      this.count_internal_user();
+      this.count_portal_user();
+      this.count_company();
+      this.count_language();
+    },
+    count_internal_user() {
+      axios
+        .get("/api/user/internal/count")
+        .then((response) => {
+          this.data.internaluser = response.data.result;
+        })
+        .catch((error) => console.error(error));
+    },
+    count_portal_user() {
+      axios
+        .get("/api/user/portal/count")
+        .then((response) => {
+          this.data.portaluser = response.data.result;
+        })
+        .catch((error) => console.error(error));
+    },
+    count_company() {
+      axios
+        .get("/api/company/count")
+        .then((response) => {
+          this.data.company = response.data.result;
+        })
+        .catch((error) => console.error(error));
+    },
+    count_language() {
+      axios
+        .get("/api/lang/count")
+        .then((response) => {
+          this.data.lang = response.data.result;
+        })
+        .catch((error) => console.error(error));
+    },
+    fetchCurrency() {
+      axios
+        .get("/api/currency")
+        .then((response) => {
+          this.currency = response.data;
+        })
+        .catch((error) => console.error(error));
+    },
+    mutli_currency() {
+      console.log(this.state.mutli_currency);
+      if (this.state.mutli_currency == true) {
+        console.log("okk");
+        this.state.mutli_currency = false;
+      } else if (this.state.mutli_currency == false) {
+        console.log("siap");
+        this.state.mutli_currency = true;
+      }
+    },
+  },
+};
 </script>

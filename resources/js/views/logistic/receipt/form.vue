@@ -67,27 +67,9 @@
                 </button>
                 <button
                   type="button"
-                  name="action_assign"
-                  class="btn btn-primary o_invisible_modifier"
-                  data-original-title
-                  title
-                >
-                  <span>Check Availability</span>
-                </button>
-                <button
-                  type="button"
                   v-if="state.state == 'Ready'"
-                  name="button_validate"
+                  @click="validate"
                   class="btn btn-primary"
-                >
-                  <span>Validate</span>
-                </button>
-                <button
-                  type="button"
-                  name="button_validate"
-                  class="btn o_btn_validate btn-secondary o_invisible_modifier"
-                  data-original-title
-                  title
                 >
                   <span>Validate</span>
                 </button>
@@ -671,7 +653,29 @@ export default {
           });
         }
       });
-    }
+    },
+    validate_picking() {
+      axios
+        .post("/api/stock_pickings/validate", this.state)
+        .then((response) => {
+          if (response.data.status == "success") {
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$router.push({ name:'receipt_index', params:{id : this.warehouse_id} });
+          } else {
+            Swal.fire({
+              type: "warning",
+              title: "Something went wrong!",
+              text: response.data.message,
+            });
+          }
+        });
+    },
+    validate() {
+      this.validate_picking();
+    },
   }
 
 };

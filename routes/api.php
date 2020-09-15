@@ -24,6 +24,10 @@ Route::get('state/search','ResCountryStatesController@search');
 Route::get('currency','ResCurrencyController@index');
 Route::get('industry','ResPartnerIndustryController@index');
 Route::get('lang','ResLangController@index');
+Route::get('lang/count','ResLangController@CountActiveLang');
+Route::get('lang/fetch','ResLangController@FetchLang');
+Route::post('lang/search/{id}', 'ResLangController@GetLang');
+Route::post('lang/activate','ResLangController@activate');
 Route::get('tz','ResTimeZoneController@index');
 Route::post('/leave', 'ManageSalaryController@getcount');
 Route::post('employee/search', 'HrEmployeesController@searchapi');
@@ -33,7 +37,8 @@ Route::post('/atd-count', 'HrAttendanceController@getcount');
 
 // company
 Route::get('company','ResCompaniesController@companies');
-Route::get('company/store','ResCompaniesController@store');
+Route::post('company/store','ResCompaniesController@store');
+Route::get('company/count','ResCompaniesController@CountCompanies');
 
 // ==== Inventory ==== 
 Route::group(['namespace' => '\App\Addons\Inventory\Controllers'], function()
@@ -82,13 +87,14 @@ Route::group(['namespace' => '\App\Addons\Accounting\Controllers'], function()
 // ==== Sales ====
 Route::group(['namespace' => '\App\Addons\Sales\Controllers'], function()
 {
-    Route::get('/sale/list', 'SalesOrdersController@fetchSalesOrder');
-    Route::post('/sale/store', 'SalesOrdersController@store');
-    Route::post('/sale/update', 'SalesOrdersController@update');
-    Route::post('/sale/confirm', 'SalesOrdersController@confirm');
-    Route::post('/sale/delivere', 'SalesOrdersController@delivere');
-    Route::get('/sale/analysis', 'SalesOrdersController@sales_analysis');
-    Route::get('/sale/search/{id}', 'SalesOrdersController@getSalesOrder');
+    Route::get('sale/list', 'SalesOrdersController@fetchSalesOrder');
+    Route::post('sale/store', 'SalesOrdersController@store');
+    Route::post('sale/update', 'SalesOrdersController@update');
+    Route::post('sale/update/delivery', 'SalesOrdersController@updateDelivery');
+    Route::post('sale/confirm', 'SalesOrdersController@confirm');
+    Route::post('sale/delivere', 'SalesOrdersController@delivere');
+    Route::get('sale/analysis', 'SalesOrdersController@sales_analysis');
+    Route::get('sale/search/{id}', 'SalesOrdersController@getSalesOrder');
 });
 
 // ==== Purchases ====
@@ -133,6 +139,8 @@ Route::group(['namespace' => '\App\Addons\Uom\Controllers'], function()
 // get Access Rights
 Route::get('/user/Access/{id}','UserController@getAccessRight');
 Route::get('/user/{id}','UserController@getUser');
+Route::get('/user/internal/count','UserController@CountInternalUser');
+Route::get('/user/portal/count','UserController@CountportalUser');
 
 // Addons
 Route::get('/Addons/Check/{id}','AppsController@check_installed');

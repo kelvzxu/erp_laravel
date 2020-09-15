@@ -20,7 +20,8 @@ class CreatePurchasesOrderProductsTable extends Migration
             $table->string('description');
             $table->integer('product_uom');
             $table->integer('product_uom_category');
-            $table->integer('qty');
+            $table->double('qty');
+            $table->double('receipt_qty')->nullable()->default(0);
             $table->bigInteger('price');
             $table->bigInteger('price_subtotal');
             $table->bigInteger('taxes');

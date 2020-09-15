@@ -6,10 +6,16 @@
           <div>
             <ol class="breadcrumb" role="navigation">
               <li class="breadcrumb-item">
-                <router-link class="text-primary" :to="{ name:'logistic_dasboard' }">Logistics Dasboard</router-link>
+                <router-link
+                  class="text-primary"
+                  :to="{ name:'logistic_dasboard' }"
+                >Logistics Dasboard</router-link>
               </li>
               <li class="breadcrumb-item" accesskey="b">
-                <router-link class="text-primary" :to="{ name:'delivery_index', params:{id : warehouse_id} }">{{state.sales_warehouse.name}}: Delivery Orders</router-link>
+                <router-link
+                  class="text-primary"
+                  :to="{ name:'delivery_index', params:{id : warehouse_id} }"
+                >{{state.sales_warehouse.name}}: Delivery Orders</router-link>
               </li>
               <li class="breadcrumb-item active">{{state.name}}</li>
             </ol>
@@ -82,11 +88,7 @@
                 >
                   <span>Print</span>
                 </button>
-                <button
-                  type="button"
-                  v-if="state.state == 'Done'"
-                  class="btn btn-secondary"
-                >
+                <button type="button" v-if="state.state == 'Done'" class="btn btn-secondary">
                   <span>Return</span>
                 </button>
                 <button
@@ -118,30 +120,20 @@
                   <span>Cancel</span>
                 </button>
               </div>
-              <div
-                class="o_statusbar_status o_field_widget o_readonly_modifier"
-                >
+              <div class="o_statusbar_status o_field_widget o_readonly_modifier">
                 <button
                   type="button"
                   v-if="state.state == 'Done'"
                   class="btn o_arrow_button btn-primary disabled"
                 >Done</button>
-                <button
-                  type="button"
-                  v-else
-                  class="btn o_arrow_button btn-secondary disabled"
-                >Done</button>
+                <button type="button" v-else class="btn o_arrow_button btn-secondary disabled">Done</button>
 
                 <button
                   type="button"
                   v-if="state.state == 'Ready'"
                   class="btn o_arrow_button btn-primary disabled"
                 >Ready</button>
-                <button
-                  type="button"
-                  v-else
-                  class="btn o_arrow_button btn-secondary disabled"
-                >Ready</button>
+                <button type="button" v-else class="btn o_arrow_button btn-secondary disabled">Ready</button>
 
                 <button
                   type="button"
@@ -158,11 +150,7 @@
                   class="btn o_arrow_button btn-primary disabled"
                 >Draft</button>
 
-                <button
-                  type="button"
-                  v-else
-                  class="btn o_arrow_button btn-secondary disabled"
-                >Draft</button>
+                <button type="button" v-else class="btn o_arrow_button btn-secondary disabled">Draft</button>
               </div>
               <div
                 class="o_field_boolean o_field_widget custom-control custom-checkbox o_invisible_modifier o_readonly_modifier"
@@ -270,7 +258,8 @@
                           <td style="width: 100%;">
                             <a
                               class="o_form_uri o_field_widget o_readonly_modifier o_required_modifier"
-                              @click="viewCustomer" style="cursor:pointer;"
+                              @click="viewCustomer"
+                              style="cursor:pointer;"
                             >
                               <span>{{state.sales_order.partner.display_name}}</span>
                             </a>
@@ -324,7 +313,8 @@
                           <td style="width: 100%;">
                             <a
                               class="o_form_uri o_field_widget o_readonly_modifier o_required_modifier"
-                              @click="viewCustomer" style="cursor:pointer;"
+                              @click="viewCustomer"
+                              style="cursor:pointer;"
                             >
                               <span>{{state.origin}}</span>
                             </a>
@@ -382,10 +372,7 @@
                           >
                             <thead>
                               <tr>
-                                <th
-                                  data-name="product_id"
-                                  style="width: 223px;"
-                                >
+                                <th data-name="product_id" style="width: 223px;">
                                   Product
                                   <span class="o_resize"></span>
                                 </th>
@@ -414,17 +401,19 @@
                               </tr>
                             </thead>
                             <tbody class="ui-sortable">
-                              <tr class="o_data_row o_selected_row" v-for="line in state.picking_line"
-                                  v-bind:key="line.id">
+                              <tr
+                                class="o_data_row o_selected_row"
+                                v-for="line in state.picking_line"
+                                v-bind:key="line.id"
+                              >
                                 <td
-                                  class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier o_required_modifier">
+                                  class="o_data_cell o_field_cell o_list_many2one o_readonly_modifier o_required_modifier"
+                                >
                                   <span
                                     class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
                                   >{{line.product.name}}</span>
                                 </td>
-                                <td
-                                  class="o_field_widget o_readonly_modifier"
-                                >
+                                <td class="o_field_widget o_readonly_modifier">
                                   <span
                                     class="o_field_float o_field_number o_field_widget o_readonly_modifier"
                                   >{{line.description}}</span>
@@ -436,9 +425,7 @@
                                     class="o_field_float o_field_number o_field_widget o_readonly_modifier o_required_modifier"
                                   >{{line.qty}}</span>
                                 </td>
-                                <td
-                                  class="o_data_cell o_field_cell o_list_number"
-                                >
+                                <td class="o_data_cell o_field_cell o_list_number">
                                   <input
                                     class="o_field_float o_field_number o_field_widget o_input"
                                     v-model="line.done_qty"
@@ -482,9 +469,7 @@
                           </tr>
                           <tr>
                             <td class="o_td_label">
-                              <label
-                                class="o_form_label o_readonly_modifier"
-                              >Type of Operation</label>
+                              <label class="o_form_label o_readonly_modifier">Type of Operation</label>
                             </td>
                             <td style="width: 100%;">
                               <span
@@ -527,8 +512,8 @@
                             </td>
                             <td style="width: 100%;">
                               <span
-                                  class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
-                                >{{state.responsible.employee_name}}</span>
+                                class="o_field_widget o_readonly_modifier o_required_modifier mr-1"
+                              >{{state.responsible.employee_name}}</span>
                             </td>
                           </tr>
                           <tr>
@@ -583,38 +568,43 @@
 
 <script>
 export default {
-  data(){
-    return{
-      state:{},
-      warehouse_id:null,
+  data() {
+    return {
+      state: {},
+      warehouse_id: null,
       shipping_policy: [
         { label: "As soon as possible", value: "direct" },
         { label: "When all products are ready", value: "one" },
       ],
-    }
+    };
   },
   created() {
-    axios.get(`/api/stock_pickings/search/${atob(this.$route.params.id)}`).then(response => {
-      this.state = response.data.result;
-      this.warehouse_id = btoa(this.state.sales_warehouse.id);
-    }).catch(error => console.error(error));
+    axios
+      .get(`/api/stock_pickings/search/${atob(this.$route.params.id)}`)
+      .then((response) => {
+        this.state = response.data.result;
+        this.warehouse_id = btoa(this.state.sales_warehouse.id);
+      })
+      .catch((error) => console.error(error));
   },
   mounted() {
-    console.log('mounted')
+    console.log("mounted");
   },
   methods: {
     viewCustomer() {
       // this.$router.push({ name:'customer_edit', params:{id : btoa(this.state.partner_id)} });
     },
-    MarkAsTodo(){
-      axios.post("/api/stock_pickings/todo", this.state)
-      .then((response) => {
+    MarkAsTodo() {
+      axios.post("/api/stock_pickings/todo", this.state).then((response) => {
         if (response.data.status == "success") {
           Toast.fire({
             icon: "success",
             title: response.data.message,
           });
-          this.$router.push({ name:'delivery_index', params:{id : this.warehouse_id} });
+          this.$router.push({
+            name: "delivery_index",
+            params: { id: this.warehouse_id },
+          });
         } else {
           Swal.fire({
             type: "warning",
@@ -624,29 +614,28 @@ export default {
         }
       });
     },
-    validate_picking(){
-      axios.post("/api/stock_pickings/validate", this.state)
-      .then((response) => {
-        // if (response.data.status == "success") {
-        //   Toast.fire({
-        //     icon: "success",
-        //     title: response.data.message,
-        //   });
-        //   this.$router.push({ name:'delivery_index', params:{id : this.warehouse_id} });
-        // } else {
-        //   Swal.fire({
-        //     type: "warning",
-        //     title: "Something went wrong!",
-        //     text: response.data.message,
-        //   });
-        // }
-      });
+    validate_picking() {
+      axios
+        .post("/api/stock_pickings/validate", this.state)
+        .then((response) => {
+          if (response.data.status == "success") {
+            Toast.fire({
+              icon: "success",
+              title: response.data.message,
+            });
+            this.$router.push({ name:'delivery_index', params:{id : this.warehouse_id} });
+          } else {
+            Swal.fire({
+              type: "warning",
+              title: "Something went wrong!",
+              text: response.data.message,
+            });
+          }
+        });
     },
-    validate(){
+    validate() {
       this.validate_picking();
-      
-    }
-  }
-
+    },
+  },
 };
 </script>

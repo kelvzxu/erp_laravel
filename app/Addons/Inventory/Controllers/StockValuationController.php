@@ -3,84 +3,34 @@
 namespace App\Addons\Inventory\Controllers;
 
 use App\Http\Controllers\controller as Controller;
+use App\Addons\Inventory\Models\stock_move;
 use App\Addons\Inventory\Models\stock_valuation;
 use Illuminate\Http\Request;
 
 class StockValuationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function store(Request $request,$products)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\stock_valuation  $stock_valuation
-     * @return \Illuminate\Http\Response
-     */
-    public function show(stock_valuation $stock_valuation)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\stock_valuation  $stock_valuation
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(stock_valuation $stock_valuation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\stock_valuation  $stock_valuation
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, stock_valuation $stock_valuation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\stock_valuation  $stock_valuation
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(stock_valuation $stock_valuation)
-    {
-        //
+        $stock_move = stock_move::where([['reference',$request->name],['type',$request->picking_type],['product_id',$products['product_id']]])->first();
+        $product_name= $products['product']['name'];
+        $quantity = $products['done_qty'];
+        $unit_cost = $products['product']['cost'];
+        $value = $products['done_qty'] * $products['product']['cost'];
+        if ($request->picking_type == "Delivery Orders"){
+            $quantity = "-$quantity";
+            $unit_cost = "-$unit_cost";
+            $value = "-$value";
+        }
+        $data= [
+            'company_id'=>$request->company_id,
+            'product_id'=>$products['product_id'],
+            'quantity'=>$quantity,
+            'unit_cost'=>$unit_cost,
+            'value'=>$value,
+            'description'=>"$request->name - $product_name",
+            'stock_move_id'=>$stock_move->id,
+            'create_uid'=>$request->create_uid,
+        ];
+        stock_valuation::create($data);
     }
 }

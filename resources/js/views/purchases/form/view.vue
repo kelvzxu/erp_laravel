@@ -63,7 +63,7 @@
                   <button v-if="state.state == 'Quotation'" type="button" class="btn btn-primary" @click="confirm_order">
                     <span>Confirm</span>
                   </button>
-                  <button v-if="state.state == 'purchase' && state.receipt == false" type="button" class="btn btn-primary" @click="receipts_process">
+                  <button v-if="state.state == 'purchase' && state.picking == false" type="button" class="btn btn-primary" @click="receipts_process">
                     <span>Receipts</span>
                   </button>
                   <button type="button" class="btn btn-secondary">

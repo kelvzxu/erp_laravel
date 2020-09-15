@@ -78,6 +78,10 @@ import attendance from './views/attendance/checkin/index.vue'
 // === General Settings ===
 import general_setting from './views/base/setting/index.vue'
 
+// === Language ===
+import lang_index from './views/base/language/index.vue'
+import lang_edit from './views/base/language/form.vue'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -302,6 +306,16 @@ const router = new VueRouter({
             path: '/attendance/web/action=227&cids=1&type=checkin_checkout&menu_id=154',
             name: 'attendance',
             component: attendance
+        },
+        {
+            path: '/language/web/action=8&model=res.lang&view_type=list&cids=1&menu_id=4',
+            name: 'lang_index',
+            component: lang_index
+        },
+        {
+            path: '/language/:id/web/action=8&model=res.lang&view_type=list&cids=1&menu_id=4',
+            name: 'lang_edit',
+            component: lang_edit
         },
         {
             path: '/config/web/action=80&model=res.config.settings&view_type=form&cids=1&menu_id=3',
