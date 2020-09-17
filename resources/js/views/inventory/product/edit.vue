@@ -528,15 +528,12 @@
                                   <td class="o_td_label">
                                     <label
                                       class="o_form_label o_required_modifier"
-                                      for="o_field_input_214"
-                                      data-original-title
-                                      title
                                     >Unit of Measure</label>
                                   </td>
                                   <td style="width: 100%;">
                                     <select
                                       class="o_input o_field_widget o_required_modifier"
-                                      name="type"
+                                      @change="onChangeUom(state)"
                                       v-model="state.uom_id"
                                     >
                                       <option
@@ -548,10 +545,6 @@
                                       <button
                                         type="button"
                                         class="fa fa-external-link btn btn-secondary o_external_button"
-                                        tabindex="-1"
-                                        draggable="false"
-                                        aria-label="External link"
-                                        title="External link"
                                       ></button>
                                     </select>
                                   </td>
@@ -568,6 +561,7 @@
                                   <td style="width: 100%;">
                                     <select
                                       class="o_input o_field_widget o_required_modifier"
+                                      @change="onChangeUomPo(state)"
                                       name="type"
                                       v-model="state.uom_po_id"
                                     >
@@ -580,10 +574,6 @@
                                       <button
                                         type="button"
                                         class="fa fa-external-link btn btn-secondary o_external_button"
-                                        tabindex="-1"
-                                        draggable="false"
-                                        aria-label="External link"
-                                        title="External link"
                                       ></button>
                                     </select>
                                   </td>
@@ -1230,6 +1220,36 @@ export default {
         this.company = response.data.data;
       })
       .catch((error) => console.error(error));
+    },
+    onChangeUom(self) {
+      axios
+        .get(`/api/uom/get_uom/${self.uom_id}`)
+        .then((response) => {
+          this.result = response.data.result;
+          self.uom_category = this.result.category_id;
+          self.uom_po_id = self.uom_id;
+        })
+        .catch((error) => console.error(error));
+    },
+    onChangeUomPo(self) {
+      this.search_uom(self);
+    },
+    search_uom(self){
+      axios
+        .get(`/api/uom/get_uom/${self.uom_po_id}`)
+        .then((response) => {
+          this.result = response.data.result;
+          if (this.result.category_id != self.uom_category) {
+            self.uom_po_id = self.uom_id;
+            Swal.fire({
+              type: "warning",
+              title: "Something went wrong!",
+              text:
+                "The default Unit of Measure and the purchase Unit of Measure must be in the same category.",
+            });
+          }
+        })
+        .catch((error) => console.error(error));
     },
     CheckAccounting() {
        axios

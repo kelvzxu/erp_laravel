@@ -559,9 +559,9 @@
                                   <td style="width: 100%;">
                                     <select
                                       class="o_input o_field_widget o_required_modifier"
-                                      @change="onChangeUomPo(state, $event)"
+                                      @change="onChangeUomPo(state)"
                                       name="type"
-                                      :value="state.uom_po_id"
+                                      v-model="state.uom_po_id"
                                     >
                                       <option
                                         v-for="row in uom"
@@ -1013,18 +1013,12 @@
                                     <input
                                       type="text"
                                       class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_588"
                                     />
                                     <a role="button" class="o_dropdown_button" draggable="false"></a>
                                   </div>
                                   <button
                                     type="button"
                                     class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
                                   ></button>
                                 </div>
                               </td>
@@ -1056,10 +1050,6 @@
                                   <button
                                     type="button"
                                     class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
                                   ></button>
                                 </div>
                               </td>
@@ -1068,9 +1058,6 @@
                               <td class="o_td_label">
                                 <label
                                   class="o_form_label"
-                                  for="o_field_input_590"
-                                  data-original-title
-                                  title
                                 >Stock Journal</label>
                               </td>
                               <td style="width: 100%;">
@@ -1083,18 +1070,12 @@
                                     <input
                                       type="text"
                                       class="o_input ui-autocomplete-input"
-                                      autocomplete="off"
-                                      id="o_field_input_590"
                                     />
                                     <a role="button" class="o_dropdown_button" draggable="false"></a>
                                   </div>
                                   <button
                                     type="button"
                                     class="fa fa-external-link btn btn-secondary o_external_button"
-                                    tabindex="-1"
-                                    draggable="false"
-                                    aria-label="External link"
-                                    title="External link"
                                   ></button>
                                 </div>
                               </td>
@@ -1325,26 +1306,22 @@ export default {
         })
         .catch((error) => console.error(error));
     },
-    onChangeUomPo(self, $event) {
-      this.new_uom = event.target.value;
-      this.search_uom(self ,this.new_uom);
+    onChangeUomPo(self) {
+      this.search_uom(self);
     },
-    search_uom(self, new_uom){
+    search_uom(self){
       axios
-        .get(`/api/uom/get_uom/${new_uom}`)
+        .get(`/api/uom/get_uom/${self.uom_po_id}`)
         .then((response) => {
           this.result = response.data.result;
-          this.type = this.result.uom_type;
           if (this.result.category_id != self.uom_category) {
+            self.uom_po_id = self.uom_id;
             Swal.fire({
               type: "warning",
               title: "Something went wrong!",
               text:
                 "The default Unit of Measure and the purchase Unit of Measure must be in the same category.",
             });
-          }
-          else{
-            self.uom_po_id = new_uom;
           }
         })
         .catch((error) => console.error(error));
