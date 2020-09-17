@@ -5,7 +5,6 @@
 <a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/badge/Master-Docs-blueviolet" alt="Documentation"></a>
 <a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/badge/Version-2.0.3-blue" alt="Latest Stable Version"></a>
 <a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/github/license/kelvzxu/erp_laravel" alt="License"></a>
-<a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/github/downloads/kelvzxu/erp_laravel/total.svg?label=Downloads" alt="License"></a>
 </p>
 
 ## Enterprise Resource Planning
