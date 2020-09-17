@@ -297,13 +297,6 @@
                                     class="o_column_sortable o_list_number_th"
                                     title="Quantity"
                                     style="width: 92px;"
-                                  >Quantity</th>
-                                  <th
-                                    data-name="product_uom_qty"
-                                    tabindex="-1"
-                                    class="o_column_sortable o_list_number_th"
-                                    title="Quantity"
-                                    style="width: 92px;"
                                   >UoM</th>
                                   <th
                                     data-name="price_unit"
@@ -377,12 +370,6 @@
                                       :value="product.qty"
                                     />
                                   </td>
-                                  <td class="o_data_cell o_field_cell o_list_number" tabindex="-1">
-                                    <input
-                                      class="o_field_float o_field_number o_field_widget o_input"
-                                      v-model="product.product_uom_qty"
-                                    />
-                                  </td>
                                   <td
                                     class="o_data_cell o_field_cell o_list_many2one o_product_configurator_cell"
                                   >
@@ -431,12 +418,12 @@
                               <tfoot>
                                 <tr class="bg-white">
                                   <td></td>
-                                  <td colspan="8" class="o_field_x2many_list_row_add">
+                                  <td colspan="7" class="o_field_x2many_list_row_add">
                                     <span @click="addLine" class="text-primary">Add a product</span>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td colspan="9"></td>
+                                  <td colspan="8"></td>
                                 </tr>
                               </tfoot>
                               <i class="o_optional_columns_dropdown_toggle fa fa-ellipsis-v"></i>
@@ -1044,16 +1031,9 @@ export default {
     },
     compute_qty(product){
       this.new_qty = event.target.value;
-      if (this.new_qty > product.qty){ 
-        console.log('besar')
-        product.qty = this.new_qty
-        product.product_uom_qty = product.qty * product.product_uom_qty
-      }
-      if (this.new_qty < product.qty){
-        this.factor = product.product_uom_qty / product.qty
-        product.qty = this.new_qty
-        product.product_uom_qty = product.qty * this.factor
-      }
+      this.factor = product.product_uom_qty / product.qty
+      product.qty = this.new_qty
+      product.product_uom_qty = product.qty * this.factor
       this.compute_total(product)
     },
     compute_price(product){
