@@ -118,6 +118,7 @@ class StockPickingsController extends Controller
             $products = collect($request->products)->transform(function($product) {
                 $product['id'] = mt_rand();
                 $product['product_id'] = $product['name'];
+                $product['qty']=$product['product_uom_qty'];
                 $product['done_qty'] = 0;
                 return new stock_picking_line($product);
             });

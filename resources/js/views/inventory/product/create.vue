@@ -526,15 +526,12 @@
                                   <td class="o_td_label">
                                     <label
                                       class="o_form_label o_required_modifier"
-                                      for="o_field_input_214"
-                                      data-original-title
-                                      title
                                     >Unit of Measure</label>
                                   </td>
                                   <td style="width: 100%;">
                                     <select
                                       class="o_input o_field_widget o_required_modifier"
-                                      name="type"
+                                      @change="onChangeUom(state)"
                                       v-model="state.uom_id"
                                     >
                                       <option
@@ -546,10 +543,6 @@
                                       <button
                                         type="button"
                                         class="fa fa-external-link btn btn-secondary o_external_button"
-                                        tabindex="-1"
-                                        draggable="false"
-                                        aria-label="External link"
-                                        title="External link"
                                       ></button>
                                     </select>
                                   </td>
@@ -566,8 +559,9 @@
                                   <td style="width: 100%;">
                                     <select
                                       class="o_input o_field_widget o_required_modifier"
+                                      @change="onChangeUomPo(state, $event)"
                                       name="type"
-                                      v-model="state.uom_po_id"
+                                      :value="state.uom_po_id"
                                     >
                                       <option
                                         v-for="row in uom"
@@ -1260,6 +1254,7 @@ export default {
         cost: "0",
         uom_id: "1",
         uom_po_id: "1",
+        uom_category: "1",
         description: "",
         create_uid: "",
         volume: "0",
@@ -1317,6 +1312,40 @@ export default {
         .get("/api/company")
         .then((response) => {
           this.company = response.data.data;
+        })
+        .catch((error) => console.error(error));
+    },
+    onChangeUom(self) {
+      axios
+        .get(`/api/uom/get_uom/${self.uom_id}`)
+        .then((response) => {
+          this.result = response.data.result;
+          self.uom_category = this.result.category_id;
+          self.uom_po_id = self.uom_id;
+        })
+        .catch((error) => console.error(error));
+    },
+    onChangeUomPo(self, $event) {
+      this.new_uom = event.target.value;
+      this.search_uom(self ,this.new_uom);
+    },
+    search_uom(self, new_uom){
+      axios
+        .get(`/api/uom/get_uom/${new_uom}`)
+        .then((response) => {
+          this.result = response.data.result;
+          this.type = this.result.uom_type;
+          if (this.result.category_id != self.uom_category) {
+            Swal.fire({
+              type: "warning",
+              title: "Something went wrong!",
+              text:
+                "The default Unit of Measure and the purchase Unit of Measure must be in the same category.",
+            });
+          }
+          else{
+            self.uom_po_id = new_uom;
+          }
         })
         .catch((error) => console.error(error));
     },

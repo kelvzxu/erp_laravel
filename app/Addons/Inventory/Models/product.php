@@ -10,7 +10,7 @@ class Product extends Model
 {
     use softDeletes;
     protected $fillable = [
-        'name','code','barcode','description','type','category_id','company_id','price','cost','tax_id','volume','weight','quantity','can_be_sold','can_be_purchase','uom_id','uom_po_id','photo','create_uid',
+        'name','code','barcode','description','type','category_id','company_id','price','cost','tax_id','volume','weight','quantity','can_be_sold','can_be_purchase','uom_id','uom_po_id','uom_category','photo','create_uid',
     ];
 
     public function quantity()

@@ -963,9 +963,9 @@ export default {
       this.task = 'compute_price_uom';
       this.search_uom(self, this.new_uom, this.task)
     },
-    search_uom(self, uom, task){
+    search_uom(self, new_uom, task){
       axios
-        .get(`/api/uom/get_uom/${this.new_uom}`)
+        .get(`/api/uom/get_uom/${new_uom}`)
         .then((response) => {
           this.result = response.data.result;
           this.type = this.result.uom_type;
@@ -981,9 +981,9 @@ export default {
             });
           } else {
             if (task != 'compute_uom_qty'){
-              this.compute_PriceUom(self, this.type, this.factor, this.new_uom);
+              this.compute_PriceUom(self, this.type, this.factor, new_uom);
             }
-            this.compute_Uom_Qty(self, this.type, this.factor, this.new_uom);
+            this.compute_Uom_Qty(self, this.type, this.factor, new_uom);
           }
         })
         .catch((error) => console.error(error));

@@ -19,6 +19,7 @@ class CreateSalesOrderProductsTable extends Migration
             $table->integer('name');
             $table->string('description');
             $table->integer('product_uom');
+            $table->integer('product_uom_qty');
             $table->integer('product_uom_category');
             $table->double('qty');
             $table->double('delivery_qty')->nullable()->default(0);

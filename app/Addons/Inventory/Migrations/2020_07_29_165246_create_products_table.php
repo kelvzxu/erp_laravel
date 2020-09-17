@@ -32,6 +32,7 @@ class CreateProductsTable extends Migration
             $table->boolean('can_be_purchase')->nullable()->default(False);
             $table->integer('uom_id')->nullable()->default(0);
             $table->integer('uom_po_id')->nullable()->default(0);
+            $table->integer('uom_category')->nullable()->default(0);
             $table->string('photo')->nullable();
             $table->integer('create_uid');
             $table->timestamps();
