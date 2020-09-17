@@ -3,7 +3,7 @@
 <p align="center">
 <a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/badge/Master-Success-success" alt="Build Status"></a>
 <a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/badge/Master-Docs-blueviolet" alt="Documentation"></a>
-<a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/badge/Version-2.0.3-blue" alt="Latest Stable Version"></a>
+<a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/github/v/release/kelvzxu/erp_laravel?label=Version" alt="Latest Stable Version"></a>
 <a href="https://kltech-intl.odoo.com"><img src="https://img.shields.io/github/license/kelvzxu/erp_laravel" alt="License"></a>
 </p>
 
