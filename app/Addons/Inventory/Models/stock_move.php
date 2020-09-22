@@ -11,7 +11,7 @@ class stock_move extends Model
         'company_id','product_id','quantity','product_uom',
         'location_id','location_destination','location_name',
         'location_destination_name','partner_id','state','type',
-        'reference','create_uid',
+        'reference','order_line_id','create_uid',
     ];
     public function valuation()
     {

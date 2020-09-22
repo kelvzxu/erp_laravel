@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class stock_picking_line extends Model
 {
     protected $fillable = [
-        'stock_picking_id','product_id','description','qty','product_uom','done_qty',
+        'stock_picking_id','product_id','description','qty','product_uom','done_qty','order_line_id',
     ];
     
     public function Picking(){

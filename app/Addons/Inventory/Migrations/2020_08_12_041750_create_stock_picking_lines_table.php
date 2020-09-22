@@ -21,6 +21,7 @@ class CreateStockPickingLinesTable extends Migration
             $table->integer('qty');
             $table->integer('product_uom');
             $table->integer('done_qty');
+            $table->integer('order_line_id')->nullable();
             $table->timestamps();
         });
     }

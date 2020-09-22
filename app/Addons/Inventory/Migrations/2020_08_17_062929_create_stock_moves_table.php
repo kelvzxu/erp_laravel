@@ -27,6 +27,7 @@ class CreateStockMovesTable extends Migration
             $table->string('state')->default('draft');
             $table->string('type');
             $table->string('reference')->nullable();
+            $table->integer('order_line_id')->nullable();
             $table->integer('create_uid')->nullable();
             $table->timestamps();
         });

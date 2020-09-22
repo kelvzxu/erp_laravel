@@ -108,7 +108,7 @@ class SalesOrdersController extends Controller
             foreach ($request->picking_line as $product){
                 $order_line = sales_order_product::where('name',$product['product_id'])
                                                     ->where('sales_order_id',$request->order_id)
-                                                    ->where('qty',$product['qty'])
+                                                    ->where('product_uom_qty',$product['qty'])
                                                     ->update([
                                                         'delivery_qty'=>$product['done_qty']
                                                     ]);
