@@ -8,7 +8,7 @@ use App\Addons\Uom\Models\uom_uom;
 class purchases_order_products extends Model
 {
     protected $fillable = [
-        'purchases_order_id','name','description','product_uom','product_uom_category','qty','price','price_subtotal','taxes','price_tax','total',
+        'purchases_order_id','name','description','product_uom','product_uom_qty','product_uom_category','qty','price','price_subtotal','taxes','price_tax','total',
     ];
 
     public function purchase()

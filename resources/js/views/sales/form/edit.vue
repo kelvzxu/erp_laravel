@@ -968,11 +968,11 @@ export default {
               this.type = this.result.uom_type;
               this.factor = this.result.factor;
               if (this.type == "reference") {
-                self.product_uom_qty = (self.product_uom_qty / factor).toFixed(0);
+                self.product_uom_qty =  Math.round((this.uom_qty  / factor) * 100)/100;
                 console.log(self.product_uom_qty)
               } else {
-                this.uom_qty = (self.product_uom_qty * this.factor).toFixed(0);
-                self.product_uom_qty = (this.uom_qty  / factor).toFixed(0);
+                this.uom_qty = self.product_uom_qty * this.factor
+                self.product_uom_qty = Math.round((this.uom_qty  / factor) * 100)/100;
                 console.log(self.product_uom_qty)
               }
             })
@@ -993,15 +993,15 @@ export default {
               this.result = response.data.result;
               this.type = this.result.uom_type;
               this.factor = this.result.factor;
+              this.reference_price = self.price * this.factor
               if (this.type == "reference") {
-                self.price = (self.price / factor).toFixed(0);
-                this.compute_total(self);
+                self.price = Math.round((this.reference_price / factor) * 100)/100;
                 self.product_uom = new_uom;
+                this.compute_total(self);
               } else {
-                this.reference_price = (self.price * this.factor).toFixed(0);
-                self.price = (this.reference_price / factor).toFixed(0);
-                this.compute_total(self);
+                self.price = Math.round((this.reference_price / factor) * 100)/100;
                 self.product_uom = new_uom;
+                this.compute_total(self);
               }
             })
             .catch((error) => console.error(error));
