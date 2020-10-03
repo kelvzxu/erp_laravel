@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInvoiceProductsTable extends Migration
+class CreateInvoiceLinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateInvoiceProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_products', function (Blueprint $table) {
+        Schema::create('invoice_lines', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('invoice_id')->unsigned();
             $table->integer('name');
@@ -30,6 +30,6 @@ class CreateInvoiceProductsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('invoice_products');
+        Schema::drop('invoice_lines');
     }
 }
