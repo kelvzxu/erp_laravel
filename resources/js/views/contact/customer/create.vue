@@ -181,7 +181,7 @@
                 </div>
                 <div class="o_group">
                   <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                       <table class="o_group o_inner_group">
                         <tbody>
                           <tr>
@@ -308,7 +308,7 @@
                         </tbody>
                       </table>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 col-md-6">
                       <table class="o_group o_inner_group">
                         <tbody>
                           <tr v-if="state.title == 'individual'">
@@ -329,14 +329,12 @@
                               <label class="o_form_label" for="o_field_input_25">Phone</label>
                             </td>
                             <td style="width: 100%;">
-                              <div class="o_row">
                                 <input
                                   class="o_field_phone o_field_widget o_input"
                                   v-model="state.phone"
                                   placeholder
                                   type="text"
                                 />
-                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -344,14 +342,12 @@
                               <label class="o_form_label" for="o_field_input_26">Mobile</label>
                             </td>
                             <td style="width: 100%;">
-                              <div class="o_row">
                                 <input
                                   class="o_field_phone o_field_widget o_input"
                                   v-model="state.mobile"
                                   placeholder
                                   type="text"
                                 />
-                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -359,14 +355,12 @@
                               <label class="o_form_label oe_inline" for="o_field_input_30">Email</label>
                             </td>
                             <td style="width: 100%;">
-                              <div class="o_row o_row_readonly">
                                 <input
                                   class="o_field_email o_field_widget o_input"
                                   v-model="state.email"
                                   placeholder
                                   type="text"
                                 />
-                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -387,7 +381,6 @@
                               <label class="o_form_label" data-original-title title>Language</label>
                             </td>
                             <td style="width: 100%;">
-                              <div class="o_row">
                                 <select v-model="state.lag" class="o_input o_field_widget">
                                   <option :select="state.lag" :value="null">language</option>
                                   <option
@@ -397,14 +390,6 @@
                                     :value="row.id"
                                   >{{ row.lang_name }}</option>
                                 </select>
-                                <button
-                                  type="button"
-                                  name="55"
-                                  class="btn btn-sm btn-link mb4 fa fa-globe"
-                                  aria-label="More languages"
-                                  title="More languages"
-                                ></button>
-                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -412,7 +397,6 @@
                               <label class="o_form_label" for="o_field_input_35">Currency</label>
                             </td>
                             <td style="width: 100%;">
-                              <div class="o_input_dropdown">
                                 <select
                                   v-model="state.currency_id"
                                   class="o_input ui-autocomplete-input"
@@ -425,7 +409,6 @@
                                     :value="row.id"
                                   >{{ row.currency_name }} ({{ row.symbol }})</option>
                                 </select>
-                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -466,7 +449,7 @@
                     <div class="tab-pane active" id="notebook_page_37">
                       <div class="o_group">
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-12 col-md-6">
                             <table class="o_group o_inner_group">
                               <tbody>
                                 <tr>
@@ -541,7 +524,7 @@
                               </tbody>
                             </table>
                           </div>
-                          <div class="col-6">
+                          <div class="col-12 col-md-6">
                             <table class="o_group o_inner_group">
                               <tbody>
                                 <tr>
@@ -644,7 +627,7 @@
                     <div class="tab-pane" id="notebook_page_47">
                       <div class="o_group">
                         <div class="row">
-                          <div class="col-6">
+                          <div class="col-12 col-md-6">
                             <table class="o_group o_inner_group">
                               <tbody>
                                 <tr>
@@ -731,7 +714,7 @@
                               </tbody>
                             </table>
                           </div>
-                          <div class="col-6">
+                          <div class="col-12 col-md-6">
                             <table v-if="accounting == 'installed'" class="o_group o_inner_group">
                               <tbody>
                                 <tr>

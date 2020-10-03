@@ -768,7 +768,6 @@ export default {
         customer_reference: "",
         order_date: "",
         expiration: "",
-        sub_total: "",
         discount: 0,
         taxes: "",
         grand_total: 0,

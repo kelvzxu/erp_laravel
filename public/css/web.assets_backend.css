@@ -26851,7 +26851,7 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
     left: 0;
     bottom: 0;
     right: 0;
-    
+
 }
 
 @media (min-width: 768px) {
@@ -27045,4 +27045,10 @@ table.o_section_list_view tr.o_data_row.o_is_line_section {
 
 .o_hr_attendance_kiosk_mode>button:last-child {
     margin-bottom: 0;
+}
+
+.app-sidebar-menuitem {
+    width: 23px;
+    height: 22px;
+    margin-right: 5px;
 }
