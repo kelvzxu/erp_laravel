@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,37 +161,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        UxWeb\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
-         * Enterprise System Providers
+         * Package Service Providers...
          */
-        App\Providers\AddonsProvider::class,
-        App\Providers\HumanResourceProvider::class,
-        App\Providers\LanguageProvider::class,
-        App\Providers\ResCountryProvider::class,
-        App\Providers\ResCurrencyProvider::class,
-        App\Providers\ResPartnerProvider::class,
-        App\Providers\TimeZoneProvider::class,
-        App\Providers\UserAccessProvider::class,
-        App\Providers\UserGroupProvider::class,
-
-        /*
-         * Enterprise System Providers Function
-         */
-        App\Providers\EncryptServiceProvider::class,
-
-        /*
-         * Enterprise System Providers Addons
-         */
-        App\Addons\Accounting\Illuminate\AccountingServiceProvider::class,
-        App\Addons\Contact\Illuminate\PartnerServiceProvider::class,
-        App\Addons\HumanResource\Illuminate\HumanResourceServiceProvider::class,
-        App\Addons\Inventory\Illuminate\InventoryServiceProvider::class,
-        App\Addons\Invoicing\Illuminate\InvoicingServiceProvider::class,
-        App\Addons\Purchase\Illuminate\PurchaseServiceProvider::class,
-        App\Addons\Sales\Illuminate\SalesServiceProvider::class,
-
 
         /*
          * Application Service Providers...
@@ -228,12 +201,14 @@ return [
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
+        'Date' => Illuminate\Support\Facades\Date::class,
         'DB' => Illuminate\Support\Facades\DB::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
         'Gate' => Illuminate\Support\Facades\Gate::class,
         'Hash' => Illuminate\Support\Facades\Hash::class,
+        'Http' => Illuminate\Support\Facades\Http::class,
         'Lang' => Illuminate\Support\Facades\Lang::class,
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
@@ -241,7 +216,7 @@ return [
         'Password' => Illuminate\Support\Facades\Password::class,
         'Queue' => Illuminate\Support\Facades\Queue::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,
-        'Redis' => Illuminate\Support\Facades\Redis::class,
+        // 'Redis' => Illuminate\Support\Facades\Redis::class,
         'Request' => Illuminate\Support\Facades\Request::class,
         'Response' => Illuminate\Support\Facades\Response::class,
         'Route' => Illuminate\Support\Facades\Route::class,
@@ -252,38 +227,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Alert' => UxWeb\SweetAlert\SweetAlert::class,
-        'Toast' => Brian2694\Toastr\Facades\Toastr::class,
 
-        /*
-         * Enterprise System Aliases
-         */
-        'Addons'=> App\Helpers\Addons::class,
-        'AccessRight' => App\Helpers\Access::class,
-        'HumanResource' => App\Helpers\HumanResource::class,
-        'Language' => App\Helpers\Language::class,
-        'ResCountry' => App\Helpers\Country::class,
-        'ResCurrency'=> App\Helpers\currency::class,
-        'ResPartner'=> App\Helpers\Partner::class,
-        'TimeZone'=> App\Helpers\EnterpriseTimezone::class,
-        'UserGroup' => App\Helpers\Group::class,
-
-        /*
-         * Function Enterprise System Aliases
-         */
-        'Encrypt' => App\Functions\Encrypt::class,
-
-        /*
-         * Addons Enterprise System Aliases
-         */
-        'Accounting' =>App\Addons\Accounting\Helpers\Accounting::class,
-        'Inventory' => App\Addons\Inventory\Helpers\Inventory::class,
-        'Invoicing' => App\Addons\Invoicing\Helpers\Invoicing::class,
-        'Partner' =>App\Addons\Contact\Helpers\Partner::class,
-        'Purchase'=>App\Addons\Purchase\Helpers\Purchase::class,
-        'Sale' => App\Addons\Sales\Helpers\Sales::class,
-        'hr' => App\Addons\HumanResource\Helpers\HumanResource::class,
     ],
 
 ];

@@ -29,15 +29,5 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    
-    'firebase' => [
-        'api_key' => 'AIzaSyAFmeni6MHXXBLq0cttflQCMDAtM8LSgNo',
-        'auth_domain' => 'test-firebase-4a026.firebaseapp.com',
-        'database_url' => 'https://test-firebase-4a026.firebaseio.com',
-        'secret' => 'QBfP5XiiNgYPVzKNNu6sFOFzIpsIvPxHrhhhcX4f',
-        'storage_bucket' => 'test-firebase-4a026',
-        'project_id' => 'test-firebase-4a026',
-        'messaging_sender_id' => '566744477744'
-    ]
 
 ];
