@@ -10,7 +10,7 @@ class BaseController extends Controller
     public function AuthorizesDatabase(){
         $datasource = $this->CheckDatasource();
         if ($datasource == 'Success'){
-            echo "success";
+            return redirect()->route('CreateDatabase');
         }else{  
             return redirect()->route('RegisterDatasource');
         }
@@ -57,11 +57,10 @@ class BaseController extends Controller
     }
     
     public function DatasourceRegistration(){
-        // echo('hallo');
-        // return Jetstream::inertia()->render($request, 'base/DatasourceRegister');
+        return view('web.datasource');
     }
     
     public function CreateDatabase(){
-        echo('hallo');
+        return view('web.create_database');
     }
 }
