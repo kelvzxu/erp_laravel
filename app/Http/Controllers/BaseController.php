@@ -9,10 +9,11 @@ class BaseController extends Controller
 {
     public function AuthorizesDatabase(){
         $datasource = $this->CheckDatasource();
-        if ($datasource == 'Success'){
-            return redirect()->route('CreateDatabase');
-        }else{  
+        if ($datasource != 'Success'){
             return redirect()->route('RegisterDatasource');
+        }
+        else{  
+            return redirect()->route('CreateDatabase');
         }
     }
     
@@ -57,10 +58,72 @@ class BaseController extends Controller
     }
     
     public function DatasourceRegistration(){
-        return view('web.datasource');
+        $master_passwd = false;
+        if (!env('APP_PASSWD')){
+            $master_passwd = $this->GeneratePasswd();
+        }
+        return view('web.datasource',compact('master_passwd'));
     }
     
     public function CreateDatabase(){
-        return view('web.create_database');
+        $datasource = $this->CheckDatasource();
+        if ($datasource == 'Success'){
+            return view('web.create_database');
+        }else{
+            return redirect()->route('RegisterDatasource');
+        }
+    }
+
+    public function DatasourceSaved(Request $request){
+        echo(env('APP_PASSWD'));
+        echo"<br>";
+        echo"-----";
+        echo"<br>";
+        echo($request->master_pwd);
+        if (env('APP_PASSWD') === $request->master_pwd){
+            echo"true";
+            $path = base_path('.env');
+            $Host = env('DB_HOST');
+            $Port = env('DB_PORT');
+            $User = env('DB_USERNAME');
+            $Password = env('DB_PASSWORD');
+
+
+            file_put_contents($path, str_replace(
+                'DB_HOST='.$Host, 'DB_HOST='.$request->host, file_get_contents($path)
+            ));
+            file_put_contents($path, str_replace(
+                'DB_PORT='.$Port, 'DB_PORT='.$request->port, file_get_contents($path)
+            ));
+            file_put_contents($path, str_replace(
+                'DB_USERNAME='.$User, 'DB_USERNAME='.$request->user, file_get_contents($path)
+            ));
+            file_put_contents($path, str_replace(
+                'DB_PASSWORD='.$Password, 'DB_PASSWORD='.$request->password, file_get_contents($path)
+            ));
+
+            return redirect()->route('CreateDatabase');
+        }else{
+            echo"false";
+        }
+    }
+
+    public function GeneratePasswd(){
+        $path = base_path('.env');
+        $x = 1;
+        $password = '';
+        while($x <= 4) {
+            $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            $password = $password . substr( str_shuffle( $chars ), 0, 4 ) ;
+            $x++;
+            if($x <= 4)
+            {
+                $password = $password . '-';
+            }
+        } 
+        file_put_contents($path, str_replace(
+            'APP_PASSWD=', 'APP_PASSWD='.$password, file_get_contents($path)
+        ));
+        return $password;
     }
 }
