@@ -21,5 +21,6 @@ Route::get('/', [BaseController::class, 'AuthorizesDatabase']);
         });
         Route::group(['prefix'=>'datasource'],function(){
             Route::get('/registration', [BaseController::class, 'DatasourceRegistration'])->name('RegisterDatasource');
+            Route::post('/save', [BaseController::class, 'DatasourceSaved'])->name('SaveDatasource');
     });
 });

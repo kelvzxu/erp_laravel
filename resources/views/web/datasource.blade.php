@@ -1,7 +1,19 @@
 @extends('web.layout_admin')
 @section('title','Laravel | Register Datasource')
 @section('content')
-    <form role="form" action="/web/datasource/save" method="post">  
+    @if ($master_passwd != false)
+        <div class="alert alert-warning" role="alert">
+            <div class="text-center">Warning !</div>
+            Your Enterprise database is not protected. To secure it,
+            We have generated the following password for it:
+            <div id="laravel_master_passwd" class="text-center my-2">{{$master_passwd ?? ''}}</div>
+            <div class="d-flex justify-content-end">
+                <button value="copy" onclick="copyToClipboard(laravel_master_passwd)" class="btn btn-outline-danger">Copy Password</button>
+            </div>
+        </div>
+    @endif
+    <form role="form" action="{{route('SaveDatasource')}}" method="post">  
+        @csrf
         <div class="form-group row">
             <label for="master_pwd" class="col-md-4 col-form-label">Master Password</label>
             <div class="col-md-8 input-group">

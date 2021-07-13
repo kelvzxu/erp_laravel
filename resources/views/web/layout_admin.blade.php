@@ -40,6 +40,14 @@
                 element.type = "password";
             }
         }
+        function copyToClipboard(id){
+            var range = document.createRange();
+            range.selectNode(id); //changed here
+            window.getSelection().removeAllRanges(); 
+            window.getSelection().addRange(range); 
+            document.execCommand("copy");
+            window.getSelection().removeAllRanges();
+        }
     </script>
 </body>
 </html>
