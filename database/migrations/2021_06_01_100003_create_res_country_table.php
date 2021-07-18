@@ -20,8 +20,8 @@ class CreateResCountryTable extends Migration
             $table->foreignId('currency_id')->references('id')->on('res_currency');
             $table->integer('phone_code');
             $table->string('vat_label')->nullable();
-            $table->boolean('state_required');
-            $table->boolean('zip_required');
+            $table->boolean('state_required')->default(True);
+            $table->boolean('zip_required')->default(True);
             $table->timestamps();
         });
     }
