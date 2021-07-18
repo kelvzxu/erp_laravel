@@ -19,10 +19,10 @@ class CreateResCurrencyTable extends Migration
             $table->string('symbol');
             $table->float('rounding');
             $table->integer('decimal_places');
-            $table->boolean('active');
-            $table->enum('position',['after','before']);
-            $table->string('currency_unit_label');
-            $table->string('currency_subunit_label');
+            $table->boolean('active')->default(True);
+            $table->enum('position',['after','before'])->default('after');
+            $table->string('currency_unit_label')->nullable();
+            $table->string('currency_subunit_label')->nullable();
             $table->timestamps();
         });
     }
