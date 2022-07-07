@@ -31,7 +31,7 @@
         "chart.js": "^2.9.3",
         "express": "^4.17.1",
         "laravel-echo": "^1.8.1",
-        "moment": "^2.27.0",
+        "moment": "^2.29.4",
         "pusher-js": "^5.1.1",
         "sweetalert2": "^9.17.1",
         "vue-chartjs": "^3.5.1",
