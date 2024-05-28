@@ -15,13 +15,13 @@ class UserTypeSeeder extends Seeder
             ['name' => 'Internal User']
         );
         DB::table('user_types')->insert(
-            ['name' => 'Portal'],
+            ['name' => 'Portal']
         );
         DB::table('user_groups')->insert(
             ['name' => 'user']
         );
         DB::table('user_groups')->insert(
-            ['name' => 'manager'],
+            ['name' => 'manager']
         );
     }
 }
