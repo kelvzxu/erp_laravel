@@ -19,17 +19,19 @@ Route::get('/', function () {
 });
 Route::prefix('/web')->group(function () {
     Route::prefix('/database')->group(function () {
+        Route::prefix('security')->group(function () {
+            Route::post('/set-password', [DatabaseController::class, 'setMasterPassword'])->name('database.password');
+        });
         Route::prefix('/provider')->group(function () {
             Route::get('/', [DatabaseController::class, 'provider'])->name('database.provider');
             Route::post('/register', [DatabaseController::class, 'register'])->name('database.register');
         });
 
-        Route::get('/manager', function () {
-            return view('database.database');
-        })->name('database.create');
-
+        Route::get('/manager', function () {return view('database.database');})->name('database.create');
+        Route::get('/setup', [DatabaseController::class, 'DatabaseSetup'])->name('database.setup');
         Route::get('/selector', [DatabaseController::class, 'DatabaseSelector'])->name('database.selector');
-
+        Route::post('/create', [DatabaseController::class, 'DatabaseCreate'])->name('database.create');
+        Route::delete('/database/destroy', [DatabaseController::class, 'DatabaseDestroy'])->name('database.destroy');
     });
 });
 

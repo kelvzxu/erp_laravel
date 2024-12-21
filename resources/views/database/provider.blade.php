@@ -1,44 +1,57 @@
 @extends('layout_admin')
 @section('title','Laravel | Register Datasource')
 @section('content')
-    <form role="form" action="/web/database/provider/register" method="post">  
+    <form role="form" action="/web/database/provider/register" method="post">
         @csrf
-        <div class="form-group row">
-            <label for="master_pwd" class="col-md-4 col-form-label">Master Password</label>
-            <div class="col-md-8 input-group">
-                <input id="master_pwd" name="master_pwd" class="form-control" required="required" autofocus="autofocus" type="password" autocomplete="current-password">
-                <div class="input-group-append">
-                    <span class="fa fa-eye o_little_eye input-group-text" aria-hidden="true" style="cursor: pointer;" onclick="ShowPassword('master_pwd')"></span>
-                </div>
+
+        @if($errors->has('connection'))
+            <div class="alert alert-danger">
+                {{ $errors->first('connection') }}
             </div>
-        </div>
-        <div class="form-group row">
-            <label for="host" class="col-md-4 col-form-label">Host</label>
-            <div class="col-md-8">
-                <input id="host" type="text" name="host" class="form-control" required="required" autocomplete="off" >
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="port" class="col-md-4 col-form-label">Port</label>
-            <div class="col-md-8">
-                <input id="port" type="text" name="port" class="form-control" required="required" autocomplete="off" pattern="[0-9]+" title="please enter number only" >
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="user" class="col-md-4 col-form-label">Database User</label>
-            <div class="col-md-8">
-                <input id="user" type="text" name="user" class="form-control" required="required" autocomplete="off">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="password" class="col-md-4 col-form-label">Password</label>
-            <div class="col-md-8 input-group">
-                <input id="password" type="password" name="password" class="form-control" required="required" autocomplete="off">
-                <div class="input-group-append">
-                    <span class="fa fa-eye o_little_eye input-group-text" aria-hidden="true" style="cursor: pointer;" onclick="ShowPassword('password')"></span>
-                </div>
-            </div>
-        </div>
+        @endif
+
+        <x-forms.input-field
+            id="master_pwd"
+            name="master_pwd"
+            type="password"
+            label="Master Password"
+            required="true"
+        />
+
+        <x-forms.input-field
+            id="host"
+            name="host"
+            type="text"
+            label="Host"
+            required="true"
+        />
+
+        <x-forms.input-field
+            id="port"
+            name="port"
+            type="text"
+            label="Port"
+            required="true"
+            pattern="[0-9]+"
+            title="Please enter number only"
+        />
+
+        <x-forms.input-field
+            id="user"
+            name="user"
+            type="text"
+            label="Database User"
+            required="true"
+        />
+
+        <x-forms.input-field
+            id="password"
+            name="password"
+            type="password"
+            label="Password"
+            required="true"
+        />
+
         <input type="submit" value="Save & Test Connection" class="btn btn-primary float-left">
     </form>
 @endsection
