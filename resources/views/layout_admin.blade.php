@@ -7,8 +7,12 @@
     <title>@yield('title')</title>
     <!-- Styles -->
     <link href="{{ asset('css/web_assets_apps.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Scripts -->
     <script src="{{ asset('js/web_assets_apps.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 <body>
