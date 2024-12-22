@@ -16131,3 +16131,11 @@ h3 {
     border-color: #dee2e6;
   }
 }
+
+#background {
+  position: absolute; 
+  z-index: -1;
+  left: -5rem;
+  top: 0px; 
+  max-width: 877px;
+}

@@ -16,14 +16,14 @@
                 </a>
                 <div class="btn-group btn-group-sm float-end">
                     <button type="button" class="o_database_action btn btn-primary">
-                        <i class="fa fa-floppy-o fa-fw"></i> Backup
+                        <i class="fas fa-save"></i> Backup
                     </button>
                     <button type="button" class="o_database_action btn btn-secondary">
-                        <i class="fa fa-files-o fa-fw"></i> Duplicate
+                        <i class="fas fa-copy"></i> Duplicate
                     </button>
                     <div class="btn-group btn-group-sm float-end">
                         <button type="button" class="o_database_action btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDatabaseModal" data-database="{{ $database }}">
-                            <i class="fa fa-trash-o fa-fw"></i> Delete
+                            <i class="fas fa-trash"></i> Delete
                         </button>
                     </div>
                 </div>

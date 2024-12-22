@@ -100,6 +100,154 @@ class DatabaseController extends Controller
         return redirect('/')->with('success', 'Environment variables updated successfully!');
     }
 
+    private function createDefaultData($request, $connection)
+    {
+        $partnerId = $this->createPartner(
+            $request->input('company'),
+            $request->input('email'),
+            $connection 
+        );
+
+        $this->createUser(
+            $request->input('company'),
+            $request->input('email'),
+            $request->input('password'),
+            $request->input('phone'),
+            $partnerId,
+            $connection 
+        );
+    }
+
+    /**
+     * Create a new database.
+     *
+     * This function uses a SQL `CREATE DATABASE` statement to create a new PostgreSQL database.
+     * Logs the success or failure of the operation. Throws an exception if the creation fails.
+     *
+     * @param string $dbName The name of the database to create.
+     * @throws \Exception If the database creation fails.
+     * @return void
+     */
+    private function createDatabase($dbName)
+    {
+        try {
+            DB::statement("CREATE DATABASE \"$dbName\"");
+            Log::info("Database '$dbName' created successfully.");
+        } catch (\Exception $e) {
+            Log::error("Error creating database '$dbName': " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Run migrations on the dynamic database connection.
+     *
+     * This function uses Laravel's Artisan command to execute database migrations
+     * for the `dynamic` connection. It logs the success or failure of the operation.
+     *
+     * @throws \Exception If the migrations fail to run.
+     * @return void
+     */
+    private function runMigrations()
+    {
+        try {
+            \Artisan::call('migrate', ['--database' => 'dynamic']);
+            Log::info("Migrations executed successfully on dynamic connection.");
+        } catch (\Exception $e) {
+            Log::error("Error running migrations: " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+
+    /**
+     * Run seeders on the dynamic database connection.
+     *
+     * This function uses Laravel's Artisan command to execute the `DataSeeder`
+     * class on the `dynamic` connection. It logs the success or failure of the operation.
+     *
+     * @throws \Exception If the seeders fail to run.
+     * @return void
+     */
+    private function runSeeders()
+    {
+        try {
+            // Execute the seeders using Artisan command for the dynamic connection
+            \Artisan::call('db:seed', [
+                '--class' => 'DataSeeder', 
+                '--database' => 'dynamic',
+            ]);
+
+            // Log a success message for tracking the seeding process
+            Log::info("Seeders executed successfully on dynamic connection.");
+        } catch (\Exception $e) {
+            // Log an error message with the exception details
+            Log::error("Error running seeders: " . $e->getMessage());
+
+            // Re-throw the exception to notify the calling function of the failure
+            throw $e;
+        }
+    }
+
+
+
+    /**
+     * Create a partner in the res_partner table.
+     *
+     * @param string $name
+     * @param string $email
+     * @param \Illuminate\Database\Connection $connection
+     * @return int Partner ID
+     */
+    private function createPartner($name, $email, $connection)
+    {
+        try {
+            $partnerId = $connection->table('res_partner')->insertGetId([
+                'name' => $name,
+                'email' => $email,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            Log::info("Partner '$email' created successfully with ID $partnerId.");
+            return $partnerId;
+        } catch (\Exception $e) {
+            Log::error("Error creating partner '$email': " . $e->getMessage());
+            throw $e;
+        }
+    }
+
+
+    /**
+     * Create a user in the res_users table.
+     *
+     * @param string $name
+     * @param string $email
+     * @param string $password
+     * @param string $phone
+     * @param int $partnerId
+     * @param \Illuminate\Database\Connection $connection
+     * @return void
+     */
+    private function createUser($name, $email, $password, $phone, $partner, $connection)
+    {
+        try {
+            $connection->table('res_users')->insert([
+                'name' => $name,
+                'email' => $email,
+                'password' => bcrypt($password),
+                'partner_id' => $partner,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            Log::info("User '$email' created successfully in the database.");
+        } catch (\Exception $e) {
+            Log::error("Error creating user '$email': " . $e->getMessage());
+            throw $e;
+        }
+    }
+
     /**
      * Create a new database.
      */
@@ -115,19 +263,27 @@ class DatabaseController extends Controller
         ]);
 
         $dbName = $request->input('name');
+        $masterPassword = $request->input('master_pwd');
 
-        try {
-            DB::statement("CREATE DATABASE \"$dbName\"");
+        return $this->validateAndProceed($masterPassword, function () use ($dbName, $request) {
+            try {
+                $this->createDatabase($dbName);
+    
+                $this->configureDynamicConnection($dbName);
+                $connection = DB::connection('dynamic');
+                $connection->getPdo();
+    
+                $this->runMigrations();
+                $this->runSeeders();
+                $this->createDefaultData($request, $connection);
+    
+                return redirect()->route('database.selector')->with('success', "Database '$dbName' created successfully!");
 
-            $this->configureDynamicConnection($dbName);
-            DB::connection('dynamic')->getPdo();
-
-            \Artisan::call('migrate', ['--database' => 'dynamic']);
-            return redirect()->route('database.selector')->with('success', "Database '$dbName' created successfully!");
-        } catch (\Exception $e) {
-            Log::error("Error creating database '$dbName': " . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
-        }
+            } catch (\Exception $e) {
+                Log::error("Error creating database '$dbName': " . $e->getMessage());
+                return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            }
+        });
     }
 
     /**
@@ -142,40 +298,51 @@ class DatabaseController extends Controller
 
         $dbName = $request->input('db');
         $masterPassword = $request->input('master_password');
-
-        try {
-            if (Crypt::decryptString(env('APP_PASSWD')) === $masterPassword) {
+        return $this->validateAndProceed($masterPassword, function () use ($dbName) {
+            try {
                 DB::statement("DROP DATABASE \"$dbName\"");
                 return redirect()->back()->with('success', "Database '$dbName' deleted successfully!");
+            } catch (\Exception $e) {
+                Log::error("Error deleting database '$dbName': " . $e->getMessage());
+                return redirect()->back()->withErrors(['error' => $e->getMessage()]);
             }
+        });
+    }
 
-            return redirect()->back()->withErrors(['error' => 'Invalid master password.']);
+    /**
+     * Verify the master password against the stored encrypted password.
+     *
+     * @param string $masterPassword The master password to verify.
+     * @return bool Returns true if the password matches, false otherwise.
+     * @throws \Exception If the decryption fails.
+     */
+    private function verifyMasterPassword($masterPassword)
+    {
+        try {
+            // Decrypt the stored password from the environment and compare
+            return Crypt::decryptString(env('APP_PASSWD')) === $masterPassword;
         } catch (\Exception $e) {
-            Log::error("Error deleting database '$dbName': " . $e->getMessage());
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+            Log::error("Error verifying master password: " . $e->getMessage());
+            throw $e;
         }
     }
 
     /**
-     * Set the master password.
+     * Validate master password and execute a callback.
+     *
+     * @param string $masterPassword The master password provided by the user.
+     * @param \Closure $callback A callback function to execute if the password is valid.
+     * @return mixed
      */
-    public function setMasterPassword(Request $request)
+    private function validateAndProceed($masterPassword, \Closure $callback)
     {
-        $request->validate([
-            'master_password' => 'required|string|min:8',
-            'confirm_master_password' => 'required|string|same:master_password',
-        ]);
-
-        try {
-            $this->updateEnvVariables([
-                'APP_PASSWD' => Crypt::encryptString($request->input('master_password')),
-            ]);
-            return redirect()->back()->with('success', 'Master password set successfully!');
-        } catch (\Exception $e) {
-            return redirect()->back()->withErrors(['error' => 'Failed to set master password: ' . $e->getMessage()]);
+        if ($this->verifyMasterPassword($masterPassword)) {
+            return $callback();
         }
+        
+        return back()->withErrors(['master_pwd' => 'Incorrect master password']);
     }
-
+    
     /**
      * Helper: Query all databases except templates.
      */
@@ -238,4 +405,25 @@ class DatabaseController extends Controller
         file_put_contents($envPath, $envContent);
         \Artisan::call('config:clear');
     }
+    
+    /**
+     * Set the master password.
+     */
+    public function setMasterPassword(Request $request)
+    {
+        $request->validate([
+            'master_password' => 'required|string|min:8',
+            'confirm_master_password' => 'required|string|same:master_password',
+        ]);
+
+        try {
+            $this->updateEnvVariables([
+                'APP_PASSWD' => Crypt::encryptString($request->input('master_password')),
+            ]);
+            return redirect()->back()->with('success', 'Master password set successfully!');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Failed to set master password: ' . $e->getMessage()]);
+        }
+    }
+
 }
