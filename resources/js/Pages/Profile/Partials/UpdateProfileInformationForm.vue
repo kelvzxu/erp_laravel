@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     mustVerifyEmail: {
@@ -16,10 +17,22 @@ defineProps({
 
 const user = usePage().props.auth.user;
 
+const previewPhoto = ref(user.profile_photo_path ? `/storage/${user.profile_photo_path}` : null);
+
 const form = useForm({
     name: user.name,
     email: user.email,
+    profile_photo_path: null,
 });
+
+const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        form.profile_photo_path = file; // Masukkan file ke form
+        console.log('Form Data:', form.data());
+        previewPhoto.value = URL.createObjectURL(file); // Update preview dengan URL sementara
+    }
+};
 </script>
 
 <template>
@@ -32,7 +45,38 @@ const form = useForm({
             </p>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+        <form @submit.prevent="form.post(route('profile.update'))" class="mt-6 space-y-6">
+            <!-- Foto Profil -->
+            <div>
+                <InputLabel for="profile_photo" value="Profile Photo" />
+
+                <div class="flex items-center space-x-4">
+                    <!-- Tampilkan Pratinjau Foto Profil -->
+                    <img
+                        v-if="previewPhoto"
+                        :src="previewPhoto"
+                        alt="Profile Photo"
+                        class="h-20 w-20 rounded-full object-cover"
+                    />
+                    <img
+                        v-else
+                        src="https://via.placeholder.com/150"
+                        alt="Default Profile Photo"
+                        class="h-20 w-20 rounded-full object-cover"
+                    />
+
+                    <input
+                        id="profile_photo_path"
+                        type="file"
+                        class="mt-1 block w-full"
+                        @change="handleFileChange"
+                    />
+                </div>
+
+                <InputError class="mt-2" :message="form.errors.profile_photo" />
+            </div>
+
+            <!-- Nama -->
             <div>
                 <InputLabel for="name" value="Name" />
 
@@ -49,6 +93,7 @@ const form = useForm({
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
+            <!-- Email -->
             <div>
                 <InputLabel for="email" value="Email" />
 

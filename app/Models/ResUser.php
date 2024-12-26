@@ -22,6 +22,7 @@ class ResUser extends Authenticatable
         'email',
         'password',
         'partner_id',
+        'profile_photo_path',
     ];
 
     /**
